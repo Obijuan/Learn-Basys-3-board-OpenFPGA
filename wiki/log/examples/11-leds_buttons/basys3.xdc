@@ -25,16 +25,16 @@ set_property -dict { PACKAGE_PIN L1    IOSTANDARD LVCMOS33 } [get_ports {led15}]
 #------ Botones
 
 #-- Centro
-set_property -dict { PACKAGE_PIN U18   IOSTANDARD LVCMOS33 } [get_ports {button0}]
+set_property -dict { PACKAGE_PIN U18   IOSTANDARD LVCMOS33 } [get_ports {buttons[0]}]
 
 #-- Arriba
-set_property -dict { PACKAGE_PIN T18   IOSTANDARD LVCMOS33 } [get_ports {button1}]
+set_property -dict { PACKAGE_PIN T18   IOSTANDARD LVCMOS33 } [get_ports {buttons[1]}]
 
 #-- Izquierda
-set_property -dict { PACKAGE_PIN W19   IOSTANDARD LVCMOS33 } [get_ports {button2}]
+set_property -dict { PACKAGE_PIN W19   IOSTANDARD LVCMOS33 } [get_ports {buttons[2]}]
 
 #-- Derecha
-set_property -dict { PACKAGE_PIN T17   IOSTANDARD LVCMOS33 } [get_ports {button3}]
+set_property -dict { PACKAGE_PIN T17   IOSTANDARD LVCMOS33 } [get_ports {buttons[3]}]
 
 #-- 
-set_property -dict { PACKAGE_PIN U17   IOSTANDARD LVCMOS33 } [get_ports {button4}]
+set_property -dict { PACKAGE_PIN U17   IOSTANDARD LVCMOS33 } [get_ports {buttons[4]}]

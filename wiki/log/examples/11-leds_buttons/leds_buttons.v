@@ -4,11 +4,7 @@
 //-- El boton central se muestra en el LED 15
 
 module leds_buttons (
-    input wire button0,  //-- Centro
-    input wire button1,  //-- Arriba
-    input wire button2,  //-- Izquierda
-    input wire button3,  //-- Derecha
-    input wire button4,  //-- Abajo
+    input wire [4:0] buttons,  //-- Centro
 
     output wire led11,
     output wire led12,
@@ -17,10 +13,10 @@ module leds_buttons (
     output wire led15
 );
 
-assign led11 = button4;
-assign led12 = button3;
-assign led13 = button2;
-assign led14 = button1;
-assign led15 = button0;
+assign led11 = buttons[4]; //-- Abajo
+assign led12 = buttons[3]; //-- Derecha
+assign led13 = buttons[2]; //-- Izquierda
+assign led14 = buttons[1]; //-- Arriba
+assign led15 = buttons[0]; //-- Centro
 
 endmodule
