@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-NAME=toggle_led
+NAME=button_posedge
 
 apio raw -- openFPGALoader --board basys3 --bitstream $NAME.bit
 

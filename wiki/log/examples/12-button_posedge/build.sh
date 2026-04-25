@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 #-- Nombre del fichero con el ejemplo (sin extension)
-NAME=toggle_led
+NAME=button_posedge
 DEPS="synchonizer.v"
 
 #-- Colores
@@ -26,7 +26,7 @@ PART1=$PART"-1"
 echo -e $BLUE"\n➡️  Sintetizando..."$RESET
 apio raw -- yosys -p "synth_xilinx  \
               -arch xc7 -top $NAME; write_json $NAME.json" \
-              $NAME.v synchronizer.v -q
+              $NAME.v utils.v -q
 
 if [ $? -ne 0 ]; then
     echo -e $RED"> Abortando...\n"$RESET
