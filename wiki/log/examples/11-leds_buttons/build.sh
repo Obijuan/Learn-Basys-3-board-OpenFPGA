@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 #-- Nombre del fichero con el ejemplo (sin extension)
-NAME=led_button
+NAME=leds_buttons
 
 #-- Colores
 GREEN='\033[0;32m'

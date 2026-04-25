@@ -3,7 +3,7 @@
 //-- Mostrar el estado de un pulsador en un led
 //-- El boton central se muestra en el LED 15
 
-module led_button (
+module leds_buttons (
     input wire button0,  //-- Centro
     input wire button1,  //-- Arriba
     input wire button2,  //-- Izquierda
