@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+#-- Colores
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+BLUE='\033[0;34m'
+RESET='\033[0m'  #-- Color por defecto
+
 #-- Path del nextpnr-xilinx
 NEXTPNR_XILINX_DIR="/snap/openxc7/current/opt/nextpnr-xilinx"
 
@@ -10,18 +16,60 @@ PRJXRAY_DB_DIR=${NEXTPNR_XILINX_DIR}"/external/prjxray-db/artix7"
 PART=xc7a35tcpg236
 PART1=$PART"-1"
 
-#-- Realizar la sintesis
+#------------------------------
+#-- SINTESIS
+#------------------------------
+echo -e $BLUE"\n➡️  Sintetizando..."$RESET
 apio raw -- yosys -p "synth_xilinx -flatten -abc9  \
               -arch xc7 -top ledon; write_json ledon.json" \
               ledon.v  -q
 
+if [ $? -ne 0 ]; then
+    echo -e $RED"> Abortando...\n"$RESET
+    exit 1
+fi
+
+
+#--------------------------------------
+#-- RUTADO
+#--------------------------------------
+echo -e $BLUE"➡️  Rutando..."$RESET
 openxc7.nextpnr-xilinx --chipdb ../chipdb/$PART.bin \
        --xdc ledon.xdc --json ledon.json --fasm ledon.fasm -q
 
-openxc7.fasm2frames --part $PART1 \
-  --db-root $PRJXRAY_DB_DIR ledon.fasm > ledon.frames
+if [ $? -ne 0 ]; then
+    echo -e $RED"> Abortando...\n"$RESET
+    exit 1
+fi
 
+#--------------------------------------------
+#-- GENERACION DEL BITSTREAM
+#--------------------------------------------
+
+#-- Generacion del bitstream
+echo -e $BLUE"➡️  Generando bitstream..."$RESET
+openxc7.fasm2frames --part $PART1 \
+  --db-root $PRJXRAY_DB_DIR \
+  ledon.fasm > ledon.frames 2> /dev/null
+
+if [ $? -ne 0 ]; then
+    echo -e $RED"> Abortando...\n"$RESET
+    exit 1
+fi
+
+#------------------------------
+#-- Compresion del Bitstream
+#------------------------------
+echo -e $BLUE"➡️  Comprimiendo..."
 openxc7.xc7frames2bit --part_file $PRJXRAY_DB_DIR/$PART1/part.yaml \
   --part_name $PART1 --frm_file ledon.frames \
   --output_file ledon.bit
+
+if [ $? -ne 0 ]; then
+    echo -e $RED"> Abortando...\n"$RESET
+    exit 1
+fi
+
+echo -e $GREEN"✅ OK!\n"$RESET
+
 
