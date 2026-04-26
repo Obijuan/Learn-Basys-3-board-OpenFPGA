@@ -15,9 +15,9 @@ module display0_lamp_test (
 wire [3:0] disp_sel; //-- Seleccion del display (0-3)
 wire [7:0] seg;      //-- Segmentos a encender
 
-
-assign display_sel = 4'b1110;
-assign segments = 8'h00;
+//-- Conexion con el display
+assign segments = ~seg;
+assign display_sel = ~disp_sel;
 
 // //-- Conexion con el display
 // assign segments = ~seg;
@@ -32,6 +32,13 @@ assign segments = 8'h00;
 
 // //-- Encender todos los segmentos y el punto
 // assign segments = 8'h01;
+
+
+
+assign seg = 8'h01;
+assign disp_sel = (1 << 0);
+
+assign leds[3:0] = disp_sel;
 
 endmodule
 
