@@ -154,7 +154,7 @@ module debounce (
     output reg value_out
 );
 
-parameter SIZE = 17;
+parameter SIZE = 18;
 
 wire timeout;
 reg bounce_cnt_state;
