@@ -12,33 +12,24 @@ module display0_lamp_test (
 
 //------ DISPLAY DE 7 SEGMENTOS
 //-- Señales para el usuario, con logica positiva
-wire [3:0] disp_sel; //-- Seleccion del display (0-3)
+wire [1:0] disp_sel; //-- Seleccion del display (0-3)
 wire [7:0] seg;      //-- Segmentos a encender
 
+//-- Mapear las señales del usuario a las reales
 //-- Conexion con el display
 assign segments = ~seg;
-assign display_sel = ~disp_sel;
 
-// //-- Conexion con el display
-// assign segments = ~seg;
+//-- Decodificador de 2 a 4, negado
+assign display_sel = ~(1 << disp_sel);
 
-// //-- Decodificador 2 a 4. Negado
-// assign display_sel = ~(1 << disp_sel);
+//-------------------------
+//--       MAIN
+//-------------------------
+//-- Encender todos los segmentos
+assign seg = 8'hFF;
 
-// //--------- MAIN
-
-// //-- Seleccionar display 0 (0, 1, 2 y 3)
-// assign display_sel = 4'h0;
-
-// //-- Encender todos los segmentos y el punto
-// assign segments = 8'h01;
-
-
-
-assign seg = 8'h01;
-assign disp_sel = (1 << 0);
-
-assign leds[3:0] = disp_sel;
+//-- Seleccionar display 0 (menor peso)
+assign disp_sel = 0;
 
 endmodule
 
