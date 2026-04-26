@@ -42,21 +42,6 @@ wire [1:0] gen;
 //-- Seleccionar display
 assign disp_sel = gen;
 
-//---------------------------
-//-- CONVERSORES BCD-7SEG
-//---------------------------
-wire [7:0] seg0;
-bcd_to_7seg u_conv0_bcd2seg (
-    .bcd_in(4'h0),
-    .disp_out(seg0)
-);
-
-wire [7:0] seg1;
-bcd_to_7seg u_conv1_bcd2seg (
-    .bcd_in(4'h0),
-    .disp_out(seg1)
-);
-
 //-- Funcion para obtener el codigo de cada
 //-- letra, a partir de su codigo ASCII
 function [7:0] letra (
