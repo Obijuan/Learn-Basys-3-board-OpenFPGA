@@ -138,14 +138,18 @@ localparam APAGADO = 4'h0;
 wire draw;
 assign draw = (col < LINE_WIDTH) && (row < FRAME_HEIGHT);
 
+//-- Fin del frame
+wire end_frame;
+assign end_frame = (row > FRAME_HEIGHT);
+
 //-- Señal de refresco: se ha salido de la zona visible, por tanto
 //-- se puede colocar un nuevo valor en la señal de video para
 //-- el siguiente frame
 wire refresh;
-negedge_detector u_negedge (
+posedge_detector u_posedge (
     .clk(clk),
-    .value(draw),
-    .neg_edge(refresh)
+    .value(end_frame),
+    .pos_edge(refresh)
 );
 
 //-- Enviar las señales de sincronizacion a la VGA
