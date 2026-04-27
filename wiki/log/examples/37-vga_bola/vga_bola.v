@@ -223,19 +223,24 @@ localparam HERO_WY = 10;
 localparam HERO_VX = 9'd1;
 localparam HERO_VY = 9'd1;
 
+//-- Posiciones iniciales
+localparam HERO_X = 50;
+localparam HERO_Y = 40;
+
 //-- Posicion del suelo y la pared derecha
-localparam PARED_X = 100;
+localparam PARED_X = 200;
+localparam SUELO_Y = 80;
 
 //-- Objeto a dibujar:  Un personaje, que es un cuadrado
 wire hero;
-reg [9:0] hero_x = 50;
-reg [8:0] hero_y = 40;
+reg [9:0] hero_x = HERO_X;
+reg [8:0] hero_y = HERO_Y;
 assign hero = (px >= hero_x) && (px <= hero_x + HERO_WX) &&
               (py >= hero_y) && (py <= hero_y + HERO_WY); 
 
 //-- Suelo
 wire suelo;
-assign suelo = (py >= 100);
+assign suelo = (py >= SUELO_Y);
 
 //-- pared
 wire pared;
@@ -255,27 +260,27 @@ assign left_end = (hero_x <= 2);
 wire top_end;
 wire bottom_end;
 assign top_end = (hero_y == 10);
-assign bottom_end = (hero_y == 100 - HERO_WY);
+assign bottom_end = (hero_y == SUELO_Y - HERO_WY);
 
 //-----------------------------------------
 //-- VELOCIDAD
 //-----------------------------------------
-reg [9:0] hero_vx = 9'd1;
-reg [8:0] hero_vy = 8'd1;
+reg [9:0] hero_vx = HERO_VX;
+reg [8:0] hero_vy = HERO_VY;
 
 always @(posedge clk) begin
 
     //-- Actualizar velocidad x
-    if (left_end && (hero_vx==-9'd1))
-        hero_vx <= 9'd1; 
-    else if (right_end && (hero_vx==9'd1))
-        hero_vx <= -9'd1;
+    if (left_end && (hero_vx==-HERO_VX))
+        hero_vx <= HERO_VX; 
+    else if (right_end && (hero_vx==HERO_VX))
+        hero_vx <= -HERO_VX;
 
     //-- Actualizar velocidad y
-    if (top_end && (hero_vy==-8'd1))
-        hero_vy <= 8'd1;
-    else if (bottom_end && hero_vy==8'd1)
-            hero_vy <= -8'd1;
+    if (top_end && (hero_vy==-HERO_VY))
+        hero_vy <= HERO_VY;
+    else if (bottom_end && hero_vy==HERO_VY)
+            hero_vy <= -HERO_VY;
 end
 
 //-------------------------------------------
