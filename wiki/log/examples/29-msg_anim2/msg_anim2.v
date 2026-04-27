@@ -69,9 +69,10 @@ localparam ESP = 5'd26;
 
 
 //-- Registro con las letras a mostrar en el display
-reg [59:0] msg = { ESP, ESP, ESP, ESP,
-                   letra("H"), letra("O"), letra("L"), letra("A"),
-                   ESP, ESP, ESP, ESP};
+localparam [39:0] INIT =  
+     { ESP, ESP, ESP, ESP, 
+       letra("H"), letra("O"), letra("L"), letra("A")};
+reg [39:0] msg = INIT; 
 
 //-- Mostrar las letras en el display
 assign seg = letter;
@@ -94,15 +95,13 @@ disp_letter u_disp_letter0 (
 
 //-- Contador de limites, para que la palabra NO se
 //-- salga de su zona
-reg [3:0] cnt_zone = 4;
+reg [3:0] cnt_zone = 7;
 
 //--- Registro de desplazamiento de las letras
 always @(posedge clk) begin
     if (init) begin
-        msg <= { ESP, ESP, ESP, ESP,
-                   letra("H"), letra("O"), letra("L"), letra("A"),
-                   ESP, ESP, ESP, ESP};
-        cnt_zone <= 4;
+        msg <= INIT;
+        cnt_zone <= 0;
     end
     else if (shift) begin
         msg <= {msg[54:0], ESP}; 
@@ -112,7 +111,7 @@ end
 
 //-- Reinicio de la secuencia
 wire init;
-assign init = (cnt_zone == 11 && shift);
+assign init = (cnt_zone == 7 && shift);
 
 endmodule
 
