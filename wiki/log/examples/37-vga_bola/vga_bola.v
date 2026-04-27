@@ -220,12 +220,12 @@ localparam HERO_WX = 10;
 localparam HERO_WY = 10;
 
 //-- Velocidad x del personaje
-localparam HERO_VX = -1;
+localparam HERO_VX = 0;
 localparam HERO_VY = 0;
 
 //-- Objeto a dibujar:  Un personaje, que es un cuadrado
 wire hero;
-reg [9:0] hero_x = 300;
+reg [9:0] hero_x = 50;
 reg [8:0] hero_y = 40;
 assign hero = (px >= hero_x) && (px <= hero_x + HERO_WX) &&
               (py >= hero_y) && (py <= hero_y + HERO_WY); 
@@ -237,30 +237,34 @@ assign video = hero;
 //-- Limite derecho
 wire right_end;
 wire left_end;
-assign right_end = (hero_x == 200);
-assign left_end = (hero_x == 0);
+assign right_end = (hero_x >= 100);
+assign left_end = (hero_x <= 2);
 
 //-- Limites verticales
 wire top_end;
 wire bottom_end;
-assign top_end = (hero_y == 0);
-assign bottom_end = (hero_y >= 480-HERO_WY);
+assign top_end = (hero_y == 10);
+assign bottom_end = (hero_y == 100);
 
 //-----------------------------------------
 //-- VELOCIDAD
 //-----------------------------------------
-reg [9:0] hero_vx = -9'd1;
+reg [9:0] hero_vx = 9'd1;
+reg [8:0] hero_vy = 8'd1;
 
 always @(posedge clk) begin
-    //if (hero_vx > 0 && right_end && refresh)
-    //  hero_vx <= -hero_vx;
-end
 
-always @(posedge clk) begin
+    //-- Actualizar velocidad x
     if (left_end && (hero_vx==-9'd1))
         hero_vx <= 9'd1; 
     else if (right_end && (hero_vx==9'd1))
         hero_vx <= -9'd1;
+
+    //-- Actualizar velocidad y
+    if (top_end && (hero_vy==-8'd1))
+        hero_vy <= 8'd1;
+    else if (bottom_end && hero_vy==8'd1)
+            hero_vy <= -8'd1;
 end
 
 //-------------------------------------------
@@ -270,6 +274,7 @@ end
 always @(posedge clk) begin
     if (refresh) begin
         hero_x <= (hero_x + hero_vx);
+        hero_y <= (hero_y + hero_vy);
     end
 end
 
