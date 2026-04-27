@@ -1,6 +1,8 @@
 `default_nettype none   
 
 
+//-- Se muestra el mensaje "HOLA" en el display de 7 segmentos
+//-- Con los pulsadores izquierda-derecha se mueve manualmente
 module msg_anim (
     input wire clk, 
     input wire [4:0] buttons,
