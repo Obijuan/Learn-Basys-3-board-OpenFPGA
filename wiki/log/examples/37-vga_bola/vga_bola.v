@@ -219,9 +219,12 @@ assign py = draw ? row : 0;
 localparam HERO_WX = 10;
 localparam HERO_WY = 10;
 
-//-- Velocidad x del personaje
-localparam HERO_VX = 0;
-localparam HERO_VY = 0;
+//-- Velocidades iniciales
+localparam HERO_VX = 9'd1;
+localparam HERO_VY = 9'd1;
+
+//-- Posicion del suelo y la pared derecha
+localparam PARED_X = 100;
 
 //-- Objeto a dibujar:  Un personaje, que es un cuadrado
 wire hero;
@@ -230,21 +233,29 @@ reg [8:0] hero_y = 40;
 assign hero = (px >= hero_x) && (px <= hero_x + HERO_WX) &&
               (py >= hero_y) && (py <= hero_y + HERO_WY); 
 
+//-- Suelo
+wire suelo;
+assign suelo = (py >= 100);
+
+//-- pared
+wire pared;
+assign pared = (px >= PARED_X);
+
 //-- Dibujar personaje
 wire video;
-assign video = hero;
+assign video = hero || suelo || pared;
                 
 //-- Limite derecho
 wire right_end;
 wire left_end;
-assign right_end = (hero_x >= 100);
+assign right_end = (hero_x >= PARED_X - HERO_WX);
 assign left_end = (hero_x <= 2);
 
 //-- Limites verticales
 wire top_end;
 wire bottom_end;
 assign top_end = (hero_y == 10);
-assign bottom_end = (hero_y == 100);
+assign bottom_end = (hero_y == 100 - HERO_WY);
 
 //-----------------------------------------
 //-- VELOCIDAD
