@@ -3,10 +3,8 @@
 //-- Led parpadeante
 module blinky (
     input clk,
-    output wire led
+    output wire [15:0] leds
 );
-    //-- Numero de led a hacer parpadear
-    localparam N = 15;
 
     //-- Contador de 25 bits
     reg [24:0] counter;
@@ -14,7 +12,7 @@ module blinky (
         counter <= counter + 1;
     end
 
-    //-- Mostrar en el led el bit de mayor peso del contador
-    assign led = counter[24];
+    //-- Mostrar en el LED0 el bit de mayor peso del contador
+    assign leds[0] = counter[24];
 
 endmodule
