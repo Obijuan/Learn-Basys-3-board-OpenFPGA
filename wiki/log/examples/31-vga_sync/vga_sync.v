@@ -105,31 +105,40 @@ end
 
 
 //-----------------------------------------------------------
+//-- Asignacion de señales a la VGA
+
+//-- Intensidad del verde (0-15)
+localparam INTENSIDAD = 4'h7;
+localparam APAGADO = 4'h0;
+
+//-- Solo hay que asignar color si estamos en la zona visible
+//-- De lo contrario NO se vera nada en la VGA
+//-- draw=1 cuando estamos en la zona visible y 0 en caso contrario
 wire draw;
 assign draw = (col < LINE_WIDTH) && (row < FRAME_HEIGHT);
 
-
-always @(posedge vga_clk) begin
-
 //-- Enviar las señales de sincronizacion a la VGA
-    vga_hsync = hsync;
-    vga_vsync = vsync;
+assign vga_hsync = hsync;
+assign vga_vsync = vsync;
+
 //--- Establecer colores
-    vga_red   = draw ? 4'hF : 4'h0;
-    vga_blue  = draw ? 4'hF : 4'h0;
-    vga_green = draw ? 4'hF : 4'h0; 
-end
+assign vga_red   = 4'h0;  //-- Deshabilitado
+assign vga_blue  = 4'h0;  //-- Deshabilitado
+assign vga_green = (video & draw) ? INTENSIDAD : APAGADO;
 
+//-------------------------------------------------------
+//-- GENERACION DE LA SEÑAL DE VIDEO
 
+//-- Señal de video a generar
+wire video;
 
+//-- Encender todos los piexeles (de la zona visible)
+assign video = 1;
 
 //-- TEST
 assign leds[15] = hsync;
 assign leds[14] = vsync;
 assign leds[13] = draw;
-
-
-
 
 endmodule
 
