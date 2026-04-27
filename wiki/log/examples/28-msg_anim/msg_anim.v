@@ -85,17 +85,18 @@ localparam ESP = 5'd26;
 
 
 //-- Registro con las letras a mostrar en el display
-reg [29:0] msg = { ESP, ESP, 
-                   letra("H"), letra("O"), letra("L"), letra("A")};
+reg [59:0] msg = { ESP, ESP, ESP, ESP,
+                   letra("H"), letra("O"), letra("L"), letra("A"),
+                   ESP, ESP, ESP, ESP};
 
 //-- Mostrar las letras en el display
 assign seg = letter;
 
 //-- Letras a sacar en el display
-assign code = gen==2'b11 ? msg[19:15] :
-              gen==2'b10 ? msg[14:10] :
-              gen==2'b01 ? msg[9: 5] :
-              gen==2'b00 ? msg[4 : 0] :
+assign code = gen==2'b11 ? msg[39:35] :
+              gen==2'b10 ? msg[34:30] :
+              gen==2'b01 ? msg[29:25] :
+              gen==2'b00 ? msg[24:20] :
               8'h0;
 
 //-- Generador de letras
@@ -107,14 +108,21 @@ disp_letter u_disp_letter0 (
 );
 
 
+//-- Contador de limites, para que la palabra NO se
+//-- salga de su zona
+reg [3:0] cnt_zone = 4;
+
 //--- Registro de desplazamiento de las letras
 always @(posedge clk) begin
-    if (butt_left_press)
-        msg <= {msg[24:0], ESP}; 
-    else if (butt_right_press)
-        msg <= {ESP,msg[29:5]};
+    if (butt_left_press && cnt_zone < 8) begin
+        msg <= {msg[54:0], ESP}; 
+        cnt_zone <= cnt_zone + 1;
+    end
+    else if (butt_right_press && cnt_zone > 0) begin
+        msg <= {ESP,msg[59:5]};
+        cnt_zone <= cnt_zone - 1;
+    end
 end
-
 
 endmodule
 
