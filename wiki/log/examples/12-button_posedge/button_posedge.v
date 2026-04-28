@@ -1,6 +1,6 @@
 `default_nettype none   
 
-//-- Contar los flancos de subida en un pulsador
+//-- Contar los flancos de subida en un pulsador CENTRAL
 //-- (Incluidos los que llegan por rebotes)
 
 module button_posedge (
@@ -9,12 +9,15 @@ module button_posedge (
     output wire [15:0] leds
 );
 
+//-- Poscion del boton central
+localparam BTN_CENTER = 0;
+
 //──────── Sincronizador para el pulsador
 //── Pulsador sincronizado
 wire button_sync;
 synchronizer u_sync (
     .clk(clk),
-    .async_in(buttons[0]),
+    .async_in(buttons[BTN_CENTER]),
     .sync_out(button_sync)
 );
 
