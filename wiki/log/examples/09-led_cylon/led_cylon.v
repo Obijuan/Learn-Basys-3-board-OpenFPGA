@@ -1,7 +1,7 @@
 `default_nettype none   
 
-//-- Movimiento del led como un zylon
-//-- (Coche fantastico)
+//-- Movimiento del led como un Cylon
+//-- (o Coche fantastico, knight rider)
 
 module led_cylon (
     input clk,
