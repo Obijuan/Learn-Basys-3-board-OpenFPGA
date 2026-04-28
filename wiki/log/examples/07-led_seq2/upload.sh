@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 
-NAME=led_seq2
+#-- Obtener el nombre del directorio actual,
+CURRENT_DIR=${PWD##*/}
+
+#-- Obtener el nombre del ejemplo, eliminando los 3
+NAME=${CURRENT_DIR:3}
+
+
 
 apio raw -- openFPGALoader --board basys3 --bitstream $NAME.bit
 
