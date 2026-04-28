@@ -1,14 +1,23 @@
 #!/usr/bin/env bash
 
-#-- Nombre del fichero con el ejemplo (sin extension)
-NAME=toggle_buttons
-DEPS="utils.v"
-
 #-- Colores
 GREEN='\033[0;32m'
 RED='\033[0;31m'
 BLUE='\033[0;34m'
+YELLOW='\033[1;33m'
 RESET='\033[0m'  #-- Color por defecto
+
+#-- Obtener el nombre del directorio actual,
+#-- ${PWD##*/} elimina todo hasta la última barra diagonal
+CURRENT_DIR=${PWD##*/}
+
+#-- Obtener el nombre del ejemplo, eliminando los 3
+#-- primeros caracteres
+#-- La sintaxis ${variable:posicion} empieza a contar desde 0
+NAME=${CURRENT_DIR:3}
+
+#-- Dependencias
+DEPS="../lib/signals.v ../lib/buttons.v"
 
 #-- Path del nextpnr-xilinx
 NEXTPNR_XILINX_DIR="/snap/openxc7/current/opt/nextpnr-xilinx"
@@ -20,13 +29,19 @@ PRJXRAY_DB_DIR=${NEXTPNR_XILINX_DIR}"/external/prjxray-db/artix7"
 PART=xc7a35tcpg236
 PART1=$PART"-1"
 
+#-- Indicar el nombre del ejemplo actual (sin extension)
+echo -e "\n$YELLOW─────────────────────────────────"
+echo -e "🟡 $YELLOW$NAME$RESET"
+echo -e "$YELLOW─────────────────────────────────"$RESET
+
 #------------------------------
 #-- SINTESIS
 #------------------------------
-echo -e $BLUE"\n➡️  Sintetizando..."$RESET
-apio raw -- yosys -p "synth_xilinx  \
-              -arch xc7 -top $NAME; write_json $NAME.json" \
-              $NAME.v $DEPS -q
+echo -e $BLUE"➡️  Sintetizando..."$RESET
+apio raw -- yosys -p "read_verilog -I../lib $NAME.v $DEPS; \
+              synth_xilinx -arch xc7 -top $NAME; \
+              write_json $NAME.json" \
+              -q
 
 if [ $? -ne 0 ]; then
     echo -e $RED"> Abortando...\n"$RESET
@@ -74,6 +89,8 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-echo -e $GREEN"✅ OK!\n"$RESET
+echo -e "$GREEN─────────────────────────────────"
+echo -e $GREEN"✅ OK!"$RESET
+echo -e "$GREEN─────────────────────────────────\n"$RESET
 
 
