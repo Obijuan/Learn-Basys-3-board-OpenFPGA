@@ -4,10 +4,10 @@
 //-- El boton central se muestra en el LED 15
 
 module led_button (
-    input wire button,
-    output wire led,
+    input wire [4:0] buttons,
+    output wire [15:0] leds,
 );
 
-assign led = button;
+assign leds[15] = buttons[0];
 
 endmodule
