@@ -8,21 +8,24 @@ module button_edges (
     output wire [15:0] leds
 );
 
-//------- Sincronizador para el pulsador
-//-- Pulsador sincronizado
+//-- Poscion del boton central
+localparam BTN_CENTER = 0;
+
+//──────── Sincronizador para el pulsador
+//── Pulsador sincronizado
 wire button_sync;
 synchronizer u_sync (
     .clk(clk),
-    .async_in(buttons[0]),
+    .async_in(buttons[BTN_CENTER]),
     .sync_out(button_sync)
 );
 
-//---- Detectar flancos en el pulsador
+//──────── Detectar flancos en el pulsador
 wire button_action;
 edge_detector u_edge (
     .clk(clk),
     .value(button_sync),
-    .edges(button_action)
+    .tic(button_action)
 );
 
 //-- Contador de pulsaciones y liberaciones
