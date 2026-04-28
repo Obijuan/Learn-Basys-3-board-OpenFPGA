@@ -86,3 +86,54 @@ assign tic_press   = ~idle & cnt_max & (state==0);
 assign tic_release = ~idle & cnt_max & (state==1);
 
 endmodule
+
+
+
+//──────────────────────────────────────────────────────────────────────
+//──  BOTON DE CAMBIO
+//──────────────────────────────────────────────────────────────────────
+//── Convertir un pulsador en un botón de CAMBIO
+//── Su estado interno cambia cada vez que se aprieta el botón
+//── Por la salida se obtiene:
+//──   * Estado actual del boton
+//──   * Señal de cambio: El pulsador ha cambiado de estado
+//──────────────────────────────────────────────────────────────────────
+module toggle_button (
+    input wire clk,
+    input wire btn_pin,  //-- Pin del boton
+
+    output wire btn_state,   //-- Estado del pulsador
+    output wire tic_change,  //-- Evento: Cambio de estado
+);
+
+//-- Pulsador apretado
+wire btn_press;
+
+//──────── PROCESAR PULSADOR
+normal_button u_btn0(
+    .clk(clk),
+    .btn_pin(btn_pin),  
+    .btn_state(),  //-- No usado  
+    .tic_press(btn_press),         //-- Pulsador normal apretado
+    .tic_release(),  //-- No usado
+);
+
+//-- Conectar el pulsador a un biestable T
+reg state;
+always @(posedge clk) begin
+    if (btn_press)
+        state <= ~state; 
+end
+
+//──────── DETECTOR DE FLANCOS
+//-- Para detectar los cambios
+edge_detector u_edge (
+    .clk(clk),
+    .value(state),
+    .tic(tic_change)
+);
+
+//-- Devolver el estado del boton
+assign btn_state = state;
+
+endmodule
