@@ -17,7 +17,7 @@ CURRENT_DIR=${PWD##*/}
 NAME=${CURRENT_DIR:3}
 
 #-- Dependencias
-DEPS="signals.v"
+DEPS="../lib/signals.v"
 
 #-- Path del nextpnr-xilinx
 NEXTPNR_XILINX_DIR="/snap/openxc7/current/opt/nextpnr-xilinx"
