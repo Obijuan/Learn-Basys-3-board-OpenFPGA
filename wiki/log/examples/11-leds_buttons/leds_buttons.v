@@ -1,7 +1,7 @@
 `default_nettype none   
 
-//-- Mostrar el estado de un pulsador en un led
-//-- El boton central se muestra en el LED 15
+//-- Mostrar el estado los 5 pulsadores en
+//-- 5 LEDs de mayor peso
 
 module leds_buttons (
     input wire [4:0] buttons, 
@@ -16,6 +16,6 @@ assign leds[15:11] = buttons;
 //-- Si se asignan valores a los leds restantes
 //-- se obtiene este error
 //-- ERROR: Invalid global constant node 'INT_L_X0Y3/GND_WIRE'
-//assign leds[10:0] = 11'h0;
+assign leds[10:0] = 11'h0;
 
 endmodule
