@@ -13,7 +13,7 @@ localparam POS_INI = 0;
 localparam VEL_INI = 9'd22;
 
 //────────────────────────────────────────────
-//-- PULSADORES
+//── PULSADORES
 //────────────────────────────────────────────
 //-- Se usa el pulsador UP para comenzar la simulacion
 wire btn_up;
@@ -26,41 +26,15 @@ normal_button u_btn_up(
     .tic_release(),  //-- No usado
 );
 
-//-- Se usa el pulsador IZQ para generar tics de simulacion
-//-- manuales
-wire btn_izq;
-wire btn_izq_press;
-normal_button u_btn_izq(
-    .clk(clk),
-    .btn_pin(buttons[BTN_LEFT]),  
-    .btn_state(btn_izq),
-    .tic_press(btn_izq_press),
-    .tic_release(),  //-- No usado
-);
 
-
-//-- Se usa el pulsador DOWN para el reset
-wire btn_down;
-normal_button u_btn_down(
-    .clk(clk),
-    .btn_pin(buttons[BTN_DOWN]),  
-    .btn_state(btn_down),
-    .tic_press(),    //-- No usado
-    .tic_release(),  //-- No usado
-);
-
-//------- RESET
-//-- Señal de reset
-wire reset; 
-assign reset = btn_down;
-
-//----------------------------------------
-//-- TEMPORIZADOR DE TIEMPO DE SIMULACION
-//----------------------------------------
+//──────────────────────────────────────────
+//── TEMPORIZADOR DE TIEMPO DE SIMULACION
+//──────────────────────────────────────────
 localparam TBIT = 22;
+
 reg [TBIT:0] sim_time = 0;
 always @(posedge clk) begin
-    if (reset || step)
+    if (step)
       sim_time <= 0;
     else begin
         sim_time <= sim_time + 1;
@@ -69,7 +43,7 @@ end
 
 //-- Señal de paso de simulacion 
 wire step;
-assign step = sim_time[TBIT];  //butt_izq_press;  //-- Manual
+assign step = sim_time[TBIT]; 
 
 //-- Señal de comienzo
 wire start;
@@ -79,9 +53,9 @@ assign start = btn_up;
 wire is_ground;
 
 
-//---------------------------------------
-//-- AUTOMATA
-//---------------------------------------
+//─────────────────────────────────
+//── AUTOMATA
+//─────────────────────────────────
 //-- Estados
 reg E0 = 1;  //-- REPOSO
 reg E1 = 0;  //-- MOVIMIENTO
@@ -91,11 +65,7 @@ wire next;
 
 //-- Evolucion del estado
 always @(posedge clk) begin
-    if (reset) begin
-        E0 <= 1;
-        E1 <= 0;
-    end
-    else if (next) begin
+    if (next) begin
         E0 <= E1;
         E1 <= E0;
     end
@@ -112,28 +82,28 @@ assign T10 = E1 && is_ground && step;
 assign next = T01 || T10;
 
 
-
-
 //-- Detectar colision con suelo!
 assign is_ground = pos[8] || pos==8'h0;
 
-//--------------------------------------------
-//-- Posicion de la particula
-//-- Usamos 8 bits
-//---------------------------------------------
+//────────────────────────────────────────────
+//──  Posicion de la particula
+//──  Usamos 8 bits
+//────────────────────────────────────────────
 reg [8:0] pos = POS_INI;
 always @(posedge clk) begin
-    if (reset || T10) 
+    if (T10) 
         pos <= POS_INI;
     
     else if ((E1 && step) || T01)
         pos <= pos + vel;
 end
 
-//-- Velocidad de la particula
+//────────────────────────────────────────────
+///──   Velocidad de la particula
+//────────────────────────────────────────────
 reg [8:0] vel = VEL_INI;
 always @(posedge clk) begin
-    if (reset || T10)
+    if (T10)
         vel <= VEL_INI;
     else if ((E1 && step) || T01)
         vel <= vel + accel;
