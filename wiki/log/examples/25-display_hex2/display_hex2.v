@@ -32,16 +32,10 @@ display7seg u_disp7 (
 //──────────────────────────────────
 //── CONVERSORES BCD-7SEG
 //──────────────────────────────────
-wire [7:0] seg0;
+wire [3:0] num;
 bcd_to_7seg u_conv_bcd2seg0 (
-    .bcd_in(num0),
-    .disp_out(seg0)
-);
-
-wire [7:0] seg1;
-bcd_to_7seg u_conv_bcd2seg1 (
-    .bcd_in(num1),
-    .disp_out(seg1)
+    .bcd_in(num),
+    .disp_out(seg)
 );
 
 //────────────────────────────────────────────
@@ -72,6 +66,8 @@ normal_button u_btn_left(
 //─────────────────────────────────────
 //──  PRESCALER DE N BITS
 //─────────────────────────────────────
+//-- Generador de señal cuadrada
+wire gen;
 prescaler #(.N(20)
 ) u_press0 (
     .clk(clk),
@@ -79,10 +75,6 @@ prescaler #(.N(20)
     .signal(gen),  
     .done()
 );
-
-//-- Generador de señal cuadrada
-wire gen;
-
 
 //─────────────────────────────────
 //──   MAIN
@@ -103,11 +95,11 @@ always @(posedge clk) begin
 end
 
 //-- Seleccionar display
-assign disp_sel = gen;
+//-- Alternar entre el display 1 y 0
+assign disp_sel = {1'b0, gen};
 
-//-- Mostrar el digito en el display, multiplexado
-assign seg = gen ? seg1 : seg0;
-
+//-- Multiplexar los digitos
+assign num = gen ? num1 : num0;
 
 endmodule
 
