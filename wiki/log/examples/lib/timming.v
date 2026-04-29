@@ -30,3 +30,28 @@ assign done = |value;
 assign signal = value[N-1];
 
 endmodule
+
+
+//─────────────────────────────────────
+//──  PRESCALER DE N BITS
+//──  Salida de 2 bits
+//─────────────────────────────────────
+module prescaler2 (
+    input wire clk,
+    output wire [1:0] signal,  //-- Señal cuadrada de salida
+);
+
+//-- Parametro: Numero de bits del prescaler
+parameter N = 20;
+
+//-- Registro del prescaler
+reg [N-1:0] value = 0;
+always @(posedge clk) begin
+    value <= value + 1;
+end
+
+//-- Asignar la salida
+assign signal = value[N-1:N-2];
+
+endmodule
+
