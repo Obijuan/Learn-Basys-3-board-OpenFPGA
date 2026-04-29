@@ -1,5 +1,5 @@
 `default_nettype none   
-
+`include "buttons.vh" 
 
 module particle_gravity (
     input wire clk, 
@@ -7,57 +7,52 @@ module particle_gravity (
     output wire [15:0] leds
 );
 
-//-- Constantes para pulsadores
-localparam CENTER = 0;
-localparam UP = 1;
-localparam DOWN = 4;
-localparam LEFT = 2;
-localparam RIGHT = 3;
 
-//-- Valores iniciales
+//-- Valores iniciales de la partícula
 localparam POS_INI = 0;
 localparam VEL_INI = 9'd22;
 
-//--------------------------------------------
+//────────────────────────────────────────────
 //-- PULSADORES
-//--------------------------------------------
+//────────────────────────────────────────────
 //-- Se usa el pulsador UP para comenzar la simulacion
-wire butt_up;
-wire butt_up_press;
-button_input u_btn_up (
+wire btn_up;
+wire btn_up_press;
+normal_button u_btn_up(
     .clk(clk),
-    .button_pin_in(buttons[UP]),  //-- Pulsador arriba
-    .button_state_out(butt_up),
-    .press_out(butt_up_press),
-    .release_out()  //-- Sin conectar
+    .btn_pin(buttons[BTN_UP]),  
+    .btn_state(btn_up),
+    .tic_press(btn_up_press),
+    .tic_release(),  //-- No usado
 );
 
 //-- Se usa el pulsador IZQ para generar tics de simulacion
 //-- manuales
-wire butt_izq;
-wire butt_izq_press;
-button_input u_btn_izq (
+wire btn_izq;
+wire btn_izq_press;
+normal_button u_btn_izq(
     .clk(clk),
-    .button_pin_in(buttons[LEFT]),  //-- Pulsador arriba
-    .button_state_out(butt_izq),
-    .press_out(butt_izq_press),
-    .release_out()  //-- Sin conectar
+    .btn_pin(buttons[BTN_LEFT]),  
+    .btn_state(btn_izq),
+    .tic_press(btn_izq_press),
+    .tic_release(),  //-- No usado
 );
 
+
 //-- Se usa el pulsador DOWN para el reset
-wire butt_down;;
-button_input u_btn_down (
+wire btn_down;
+normal_button u_btn_down(
     .clk(clk),
-    .button_pin_in(buttons[DOWN]),
-    .button_state_out(butt_down),
-    .press_out(),   //-- Sin conectar
-    .release_out()  //-- Sin conectar
+    .btn_pin(buttons[BTN_DOWN]),  
+    .btn_state(btn_down),
+    .tic_press(),    //-- No usado
+    .tic_release(),  //-- No usado
 );
 
 //------- RESET
 //-- Señal de reset
 wire reset; 
-assign reset = butt_down;
+assign reset = btn_down;
 
 //----------------------------------------
 //-- TEMPORIZADOR DE TIEMPO DE SIMULACION
@@ -78,7 +73,7 @@ assign step = sim_time[TBIT];  //butt_izq_press;  //-- Manual
 
 //-- Señal de comienzo
 wire start;
-assign start = butt_up;
+assign start = btn_up;
 
 //-- Señal de contacto con el suelo
 wire is_ground;
