@@ -1,4 +1,5 @@
-`default_nettype none   
+`default_nettype none 
+`include "buttons.vh"   
 
 
 //-- Encender los segmentos del display actual con los switches
@@ -12,7 +13,9 @@ module display_switches (
     output wire [3:0] display_sel
 );
 
-//------ DISPLAY DE 7 SEGMENTOS
+//─────────────────────────────────
+//──   DISPLAY DE 7 SEGMENTOS
+//─────────────────────────────────
 //-- Señales para el usuario, con logica positiva
 wire [1:0] disp_sel; //-- Seleccion del display (0-3)
 wire [7:0] seg;      //-- Segmentos a encender
@@ -24,27 +27,25 @@ assign segments = ~seg;
 //-- Decodificador de 2 a 4, negado
 assign display_sel = ~(1 << disp_sel);
 
-//------ PULSADORES
-//-- Constantes para pulsadores
-localparam CENTER = 0;
-localparam UP = 1;
-localparam DOWN = 4;
-localparam LEFT = 2;
-localparam RIGHT = 3;
+//────────────────────────────────────────────
+//── PULSADORES
+//────────────────────────────────────────────
+wire btn_izq;
+wire btn_izq_press;
 
-wire butt_izq;
-wire butt_izq_press;
-button_input u_btn_izq (
+normal_button u_btn_izq(
     .clk(clk),
-    .button_pin_in(buttons[LEFT]), 
-    .button_state_out(butt_izq),
-    .press_out(butt_izq_press),
-    .release_out()  //-- Sin conectar
+    .btn_pin(buttons[BTN_LEFT]),  
+    .btn_state(btn_izq),
+    .tic_press(btn_izq_press),
+    .tic_release(), 
 );
 
-//-------------------------
-//--       MAIN
-//-------------------------
+
+//─────────────────────────────────
+//──   MAIN
+//─────────────────────────────────
+
 //-- Llevar los 8 switches de menor peso a sus
 //-- correspondientes leds
 assign leds[7:0] = switches[7:0];
@@ -55,7 +56,7 @@ assign seg = switches[7:0];
 //-- Contador para seleccionar el display actual
 reg [1:0] ndisp = 0;
 always @(posedge clk) begin
-    if (butt_izq_press)
+    if (btn_izq_press)
       ndisp <= ndisp + 1;
 end
 
