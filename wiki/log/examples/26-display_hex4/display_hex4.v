@@ -57,7 +57,8 @@ prescaler2 #(.N(20)
 //-- Seleccionar display
 assign disp_sel = gen;
 
-//-- Mostrar los digitos en el display
+//-- Multiplexar los digitos BCD que vienen
+//-- de los switches
 assign num = gen==2'b00 ? switches[3:0] : 
              gen==2'b01 ? switches[7:4] : 
              gen==2'b10 ? switches[11:8] :
