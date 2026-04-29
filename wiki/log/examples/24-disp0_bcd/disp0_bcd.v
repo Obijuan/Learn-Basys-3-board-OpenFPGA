@@ -1,5 +1,5 @@
 `default_nettype none   
-
+`include "buttons.vh"   
 
 
 //-- Mostrar un digito BCD en el display 7 segmentos
@@ -14,57 +14,58 @@ module disp0_bcd (
     output wire [3:0] display_sel
 );
 
-//------ DISPLAY DE 7 SEGMENTOS
+//─────────────────────────────────
+//──   DISPLAY DE 7 SEGMENTOS
+//─────────────────────────────────
 //-- Señales para el usuario, con logica positiva
-wire [1:0] disp_sel; //-- Seleccion del display (0-3)
 wire [7:0] seg;      //-- Segmentos a encender
+wire [1:0] disp_sel; //-- Seleccion del display (0-3)
 
-//-- Mapear las señales del usuario a las reales
-//-- Conexion con el display
-assign segments = ~seg;
+display7seg u_disp7 (
+    .seg_in(seg),
+    .sel_in(disp_sel),
 
-//-- Decodificador de 2 a 4, negado
-assign display_sel = ~(1 << disp_sel);
+    //-- Conexion al display físico
+    .segments_out(segments),
+    .display_sel_out(display_sel)
+);
 
-//------ PULSADORES
-//-- Constantes para pulsadores
-localparam CENTER = 0;
-localparam UP = 1;
-localparam DOWN = 4;
-localparam LEFT = 2;
-localparam RIGHT = 3;
+//──────────────────────────────────
+//── CONVERSOR BCD-7SEG
+//──────────────────────────────────
+bcd_to_7seg u_conv_bcd2seg (
+    .bcd_in(num),
+    .disp_out(seg)
+);
 
-wire butt_up;
-wire butt_up_press;
-button_input u_btn_izq (
+//────────────────────────────────────────────
+//── PULSADORES
+//────────────────────────────────────────────
+wire btn_up;
+wire btn_up_press;
+
+normal_button u_btn_up(
     .clk(clk),
-    .button_pin_in(buttons[UP]), 
-    .button_state_out(butt_up),
-    .press_out(butt_up_press),
-    .release_out()  //-- Sin conectar
+    .btn_pin(buttons[BTN_UP]),  
+    .btn_state(btn_up),
+    .tic_press(btn_up_press),
+    .tic_release(), 
 );
 
 
-//-------------------------
-//--       MAIN
-//-------------------------
+//─────────────────────────────────
+//──   MAIN
+//─────────────────────────────────
+
 //-- Contador BCD
 reg [3:0] num = 0;
 always @(posedge clk) begin
-    if (butt_up_press)
+    if (btn_up_press)
         num <= num + 1; 
 end
 
 //-- Seleccionar display
 assign disp_sel = 0;
-
-//---------------------------
-//-- CONVERSOR BCD-7SEG
-//---------------------------
-bcd_to_7seg u_conv_bcd2seg (
-    .bcd_in(num),
-    .disp_out(seg)
-);
 
 
 endmodule

@@ -16,8 +16,11 @@ CURRENT_DIR=${PWD##*/}
 #-- La sintaxis ${variable:posicion} empieza a contar desde 0
 NAME=${CURRENT_DIR:3}
 
+#-- Directorio donde esta la librearia
+LIB="../lib"
+
 #-- Dependencias
-DEPS="utils.v"
+DEPS="$LIB/signals.v $LIB/buttons.v  $LIB/disp7seg.v"
 
 #-- Path del nextpnr-xilinx
 NEXTPNR_XILINX_DIR="/snap/openxc7/current/opt/nextpnr-xilinx"
@@ -38,9 +41,10 @@ echo -e "$YELLOW─────────────────────�
 #-- SINTESIS
 #------------------------------
 echo -e $BLUE"➡️  Sintetizando..."$RESET
-apio raw -- yosys -p "synth_xilinx  \
-              -arch xc7 -top $NAME; write_json $NAME.json" \
-              $NAME.v $DEPS -q
+apio raw -- yosys -p "read_verilog -I../lib $NAME.v $DEPS; \
+              synth_xilinx -arch xc7 -top $NAME; \
+              write_json $NAME.json" \
+              -q
 
 if [ $? -ne 0 ]; then
     echo -e $RED"> Abortando...\n"$RESET
