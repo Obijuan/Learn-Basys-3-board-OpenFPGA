@@ -67,6 +67,5 @@ end
 //-- Seleccionar display
 assign disp_sel = 0;
 
-
 endmodule
 
