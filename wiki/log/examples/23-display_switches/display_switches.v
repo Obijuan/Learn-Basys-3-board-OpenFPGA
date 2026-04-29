@@ -17,15 +17,17 @@ module display_switches (
 //──   DISPLAY DE 7 SEGMENTOS
 //─────────────────────────────────
 //-- Señales para el usuario, con logica positiva
-wire [1:0] disp_sel; //-- Seleccion del display (0-3)
 wire [7:0] seg;      //-- Segmentos a encender
+wire [1:0] disp_sel; //-- Seleccion del display (0-3)
 
-//-- Mapear las señales del usuario a las reales
-//-- Conexion con el display
-assign segments = ~seg;
+display7seg u_disp7 (
+    .seg_in(seg),
+    .sel_in(disp_sel),
 
-//-- Decodificador de 2 a 4, negado
-assign display_sel = ~(1 << disp_sel);
+    //-- Conexion al display físico
+    .segments_out(segments),
+    .display_sel_out(display_sel)
+);
 
 //────────────────────────────────────────────
 //── PULSADORES
@@ -40,7 +42,6 @@ normal_button u_btn_izq(
     .tic_press(btn_izq_press),
     .tic_release(), 
 );
-
 
 //─────────────────────────────────
 //──   MAIN

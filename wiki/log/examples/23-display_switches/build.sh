@@ -16,8 +16,11 @@ CURRENT_DIR=${PWD##*/}
 #-- La sintaxis ${variable:posicion} empieza a contar desde 0
 NAME=${CURRENT_DIR:3}
 
+#-- Directorio donde esta la librearia
+LIB="../lib"
+
 #-- Dependencias
-DEPS="../lib/signals.v ../lib/buttons.v"
+DEPS="$LIB/signals.v $LIB/buttons.v  $LIB/disp7seg.v"
 
 #-- Path del nextpnr-xilinx
 NEXTPNR_XILINX_DIR="/snap/openxc7/current/opt/nextpnr-xilinx"
