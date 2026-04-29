@@ -12,9 +12,7 @@ module toggle_buttons_gen (
 localparam N = 5;
 
 //-- Señales de los pulsadores listas para usarse
-wire [4:0] button_state;  //-- Estado del pulsador
-wire [4:0] press;         //-- Tic de pulsado
-reg [4:0] btn_toggle = 5'h0;    //-- Estado de los pulsadores de cambio (TFFs)
+reg [4:0] btn_toggle;
 
 //------- Instanciar modulos para los N botones
 
@@ -24,22 +22,16 @@ genvar i;
 generate
 
     //-- Para cada pulsador...
-    for (i = 0; i < N; i = i + 1) begin : inst_button_input
+    for (i = 0; i < N; i = i + 1) begin : inst_toggle_button
 
-        //-- Instanciar modulo de acceso a pulsador i
-        button_input u_butt (
+        //-- Instanciar modulo de acceso al pulsador i
+        toggle_button u_toggle0 (
             .clk(clk),
-            .button_pin_in(buttons[i]),
-            .button_state_out(button_state[i]),
-            .press_out(press[i]),
-            .release_out()  //-- Sin conectar
+            .btn_pin(buttons[i]),
+            .btn_state(btn_toggle[i]),
+            .tic_change(),  //-- No usado
         );
 
-        //-- Conectar su salida a un biestable T
-        always @(posedge clk) begin
-            if (press[i])
-                btn_toggle[i] <= ~btn_toggle[i]; 
-        end
 
         //-- SALIDA
         //-- Conectar salidas biestable T a LEDs
