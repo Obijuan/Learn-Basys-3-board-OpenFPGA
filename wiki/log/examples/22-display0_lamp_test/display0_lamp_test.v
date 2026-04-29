@@ -10,7 +10,9 @@ module display0_lamp_test (
     output wire [3:0] display_sel
 );
 
-//------ DISPLAY DE 7 SEGMENTOS
+//─────────────────────────────────
+//──   DISPLAY DE 7 SEGMENTOS
+//─────────────────────────────────
 //-- Señales para el usuario, con logica positiva
 wire [1:0] disp_sel; //-- Seleccion del display (0-3)
 wire [7:0] seg;      //-- Segmentos a encender
@@ -22,9 +24,11 @@ assign segments = ~seg;
 //-- Decodificador de 2 a 4, negado
 assign display_sel = ~(1 << disp_sel);
 
-//-------------------------
-//--       MAIN
-//-------------------------
+
+//─────────────────────────────────
+//──       MAIN
+//─────────────────────────────────
+
 //-- Encender todos los segmentos
 assign seg = 8'hFF;
 
