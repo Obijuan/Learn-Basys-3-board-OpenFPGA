@@ -104,6 +104,7 @@ always @* begin
         23: letter <= 8'h76;  //-- 'X'
         24: letter <= 8'h6E;  //-- 'Y'
         25: letter <= 8'h5B;  //-- 'Z'
+        26: letter <= 8'h00;  //-- ' '
         default: letter <= 8'hFF;
     endcase;
 end
