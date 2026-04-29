@@ -66,3 +66,50 @@ assign disp_out = d7seg;
 
 endmodule
 
+
+//─────────────────────────────────────────────
+//──  GENERADOR DE LETRAS PARA DISPLAY DE 7 SEG
+//─────────────────────────────────────────────
+module disp_letter (
+    input wire [4:0] code_in,
+    output wire [7:0] letter_out
+);
+  
+reg [7:0] letter;   //-- Letra a enviar al display
+always @* begin
+    case (code_in)
+        0: letter <= 8'h77;  //-- 'A'
+        1: letter <= 8'h7C;  //-- 'B'
+        2: letter <= 8'h39;  //-- 'C'
+        3: letter <= 8'h5E;  //-- 'D'
+        4: letter <= 8'h79;  //-- 'E'
+        5: letter <= 8'h71;  //-- 'F'
+        6: letter <= 8'h7B;  //-- 'G'
+        7: letter <= 8'h76;  //-- 'H'
+        8: letter <= 8'h30;  //-- 'I'
+        9: letter <= 8'h1E;  //-- 'J'
+        10: letter <= 8'h70;  //-- 'K'
+        11: letter <= 8'h38;  //-- 'L'
+        12: letter <= 8'h55;  //-- 'M'
+        13: letter <= 8'h54;  //-- 'N'
+        14: letter <= 8'h3F;  //-- 'O'
+        15: letter <= 8'h73;  //-- 'P'
+        16: letter <= 8'h67;  //-- 'Q'
+        17: letter <= 8'h50;  //-- 'R'
+        18: letter <= 8'h6D;  //-- 'S'
+        19: letter <= 8'h78;  //-- 'T'
+        20: letter <= 8'h3E;  //-- 'U'
+        21: letter <= 8'h3E;  //-- 'V'
+        22: letter <= 8'h4F;  //-- 'W'
+        23: letter <= 8'h76;  //-- 'X'
+        24: letter <= 8'h6E;  //-- 'Y'
+        25: letter <= 8'h5B;  //-- 'Z'
+        default: letter <= 8'hFF;
+    endcase;
+end
+
+//-- Devolver resultado
+assign letter_out = letter;
+
+endmodule
+

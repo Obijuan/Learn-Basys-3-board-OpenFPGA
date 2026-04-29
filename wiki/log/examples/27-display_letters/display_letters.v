@@ -1,5 +1,6 @@
 `default_nettype none   
 
+//-- Mosrar el mensaje "HOLA" en los displays
 
 module display_letters (
     input wire clk, 
@@ -10,21 +11,26 @@ module display_letters (
     output wire [3:0] display_sel
 );
 
-//------ DISPLAY DE 7 SEGMENTOS
+//─────────────────────────────────
+//──   DISPLAY DE 7 SEGMENTOS
+//─────────────────────────────────
 //-- Señales para el usuario, con logica positiva
-wire [1:0] disp_sel; //-- Seleccion del display (0-3)
 wire [7:0] seg;      //-- Segmentos a encender
+wire [1:0] disp_sel; //-- Seleccion del display (0-3)
 
-//-- Mapear las señales del usuario a las reales
-//-- Conexion con el display
-assign segments = ~seg;
+display7seg u_disp7 (
+    .seg_in(seg),
+    .sel_in(disp_sel),
 
-//-- Decodificador de 2 a 4, negado
-assign display_sel = ~(1 << disp_sel);
+    //-- Conexion al display físico
+    .segments_out(segments),
+    .display_sel_out(display_sel)
+);
 
-//----------------------------
-//-- PRESCALER
-//----------------------------
+//──────────────────────
+//──  PRESCALER 
+//──────────────────────
+wire [1:0] gen;
 
 prescaler2 #(.N(20)
 ) u_press0 (
@@ -32,15 +38,6 @@ prescaler2 #(.N(20)
     .signal(gen),  
 );
 
-//-- Generador de señal cuadrada
-wire [1:0] gen;
-
-//-------------------------
-//--       MAIN
-//-------------------------
-
-//-- Seleccionar display
-assign disp_sel = gen;
 
 //-- Funcion para obtener el codigo de cada
 //-- letra, a partir de su codigo ASCII
@@ -51,6 +48,11 @@ function [7:0] letra (
     letra = car-65;
 endfunction
 
+//─────────────────────────
+//──       MAIN
+//─────────────────────────
+//-- Seleccionar display
+assign disp_sel = gen;
 
 //-- Mostrar las letras en el display
 assign seg = letter;
@@ -69,7 +71,6 @@ disp_letter u_disp_letter0 (
     .code_in(code),
     .letter_out(letter)
 );
-
 
 endmodule
 
