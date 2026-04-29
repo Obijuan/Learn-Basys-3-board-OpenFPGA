@@ -27,6 +27,17 @@ display7seg u_disp7 (
     .display_sel_out(display_sel)
 );
 
+//─────────────────────────────
+//──  GENERADOR DE LETRAS
+//─────────────────────────────
+wire [7:0] letter;
+wire [4:0] code;
+disp_letter u_disp_letter0 (
+    .code_in(code),
+    .letter_out(letter)
+);
+
+
 //──────────────────────
 //──  PRESCALER 
 //──────────────────────
@@ -39,7 +50,7 @@ prescaler2 #(.N(20)
 );
 
 
-//-- Funcion para obtener el codigo de cada
+//-- Funcion de ayuda para obtener el codigo de cada
 //-- letra, a partir de su codigo ASCII
 function [7:0] letra (
     input [7:0] car
@@ -64,13 +75,6 @@ assign code = gen==2'b11 ? letra("H") :
               gen==2'b00 ? letra("A") :
               8'h0;
 
-//-- Generador de letras
-wire [7:0] letter;
-wire [4:0] code;
-disp_letter u_disp_letter0 (
-    .code_in(code),
-    .letter_out(letter)
-);
 
 endmodule
 
