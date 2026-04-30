@@ -64,8 +64,8 @@ vga_sync u_vga_sync (
 );
 
 //-- Intensidad del verde (0-15)
-localparam INTENSIDAD = 4'h7;
-localparam APAGADO = 4'h0;
+localparam [3:0] INTENSIDAD = 4'h7;
+localparam [3:0] APAGADO = 4'h0;
 
 //--- Establecer colores
 assign vga_green = (video & draw) ? INTENSIDAD : APAGADO;
