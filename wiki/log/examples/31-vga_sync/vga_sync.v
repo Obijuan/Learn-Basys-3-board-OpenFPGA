@@ -138,7 +138,7 @@ assign vga_green = (video & draw) ? INTENSIDAD : APAGADO;
 //-- Señal de video a generar
 wire video;
 
-//-- Encender todos los piexeles (de la zona visible)
+//-- Encender todos los pixeles (de la zona visible)
 assign video = 1;
 
 //-- TEST
