@@ -51,8 +51,8 @@ vga_sync u_vga_sync (
     .clk(clk),
     .vga_clk(vga_clk),
 
-    .col_(col),
-    .row_(row),
+    .col_(),
+    .row_(),
     .draw(draw),
     .refresh(refresh),
 
@@ -61,14 +61,14 @@ vga_sync u_vga_sync (
 );
 
 //-- TEMPORAL!!
-wire [9:0] col;
-wire [8:0] row;
+//wire [9:0] col;
+//wire [8:0] row;
 
 //──────────────────────────────────
 //── PARAMETROS DE LA VGA
 //──────────────────────────────────
-localparam LINE_WIDTH = 640;
-localparam FRAME_HEIGHT = 480;
+//localparam LINE_WIDTH = 640;
+//localparam FRAME_HEIGHT = 480;
 
 //-- Intensidad del verde (0-15)
 localparam INTENSIDAD = 4'h7;
