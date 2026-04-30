@@ -47,6 +47,7 @@ normal_button u_btn0 (
 wire vga_clk;
 wire draw;
 wire refresh;
+wire video;
 vga_sync u_vga_sync (
     .clk(clk),
     .vga_clk(vga_clk),
@@ -59,16 +60,6 @@ vga_sync u_vga_sync (
     .vga_hsync(vga_hsync),
     .vga_vsync(vga_vsync)
 );
-
-//-- TEMPORAL!!
-//wire [9:0] col;
-//wire [8:0] row;
-
-//──────────────────────────────────
-//── PARAMETROS DE LA VGA
-//──────────────────────────────────
-//localparam LINE_WIDTH = 640;
-//localparam FRAME_HEIGHT = 480;
 
 //-- Intensidad del verde (0-15)
 localparam INTENSIDAD = 4'h7;
@@ -93,7 +84,6 @@ always @(posedge clk) begin
 end
 
 //-- Visualizar el monsterled
-wire video;
 assign video = monster_led;
 
 //-- TEST
