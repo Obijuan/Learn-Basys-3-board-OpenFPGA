@@ -3,7 +3,7 @@
 
 //-- Animacion del mensaje "HOLA". Se mueve automaticamente
 //-- de derecha a izquierda
-module msg_anim2 (
+module msg_anim2_auto (
     input wire clk, 
     input wire [4:0] buttons,
     input wire [15:0] switches, 
@@ -12,30 +12,45 @@ module msg_anim2 (
     output wire [3:0] display_sel
 );
 
-//------ DISPLAY DE 7 SEGMENTOS
+//─────────────────────────────────
+//──   DISPLAY DE 7 SEGMENTOS
+//─────────────────────────────────
 //-- Señales para el usuario, con logica positiva
-wire [1:0] disp_sel; //-- Seleccion del display (0-3)
 wire [7:0] seg;      //-- Segmentos a encender
+wire [1:0] disp_sel; //-- Seleccion del display (0-3)
 
-//-- Mapear las señales del usuario a las reales
-//-- Conexion con el display
-assign segments = ~seg;
+display7seg u_disp7 (
+    .seg_in(seg),
+    .sel_in(disp_sel),
+    .segments_out(segments),
+    .display_sel_out(display_sel)
+);
 
-//-- Decodificador de 2 a 4, negado
-assign display_sel = ~(1 << disp_sel);
+//─────────────────────────────
+//──  GENERADOR DE LETRAS
+//─────────────────────────────
+wire [7:0] letter;
+wire [4:0] code;
+disp_letter u_disp_letter0 (
+    .code_in(code),
+    .letter_out(letter)
+);
 
+//──────────────────────
+//──  PRESCALER 
+//──────────────────────
+wire [1:0] gen;
 
-//----------------------------
-//-- PRESCALERS
-//----------------------------
-//-- Para los displays de 7 segmentos
+//-- Prescaler para el DISPLAY 7-seg
 prescaler2 #(.N(20)
 ) u_press0 (
     .clk(clk),
     .signal(gen),  
 );
 
-//-- Perscaler para la animacion
+//------- Perscaler para la animacion
+//-- Señal de movimiento para la animacion
+wire shift;
 prescaler #(.N(26)
 ) u_press1 (
     .clk(clk),
@@ -43,15 +58,9 @@ prescaler #(.N(26)
     .done(shift)
 );
 
-//-- Generador de señal cuadrada
-wire [1:0] gen;
-
-//-- Señal de movimiento para la animacion
-wire shift;
-
-//-------------------------
-//--       MAIN
-//-------------------------
+//─────────────────────────
+//──       MAIN
+//─────────────────────────
 
 //-- Seleccionar display
 assign disp_sel = gen;
@@ -84,15 +93,6 @@ assign code = gen==2'b11 ? msg[39:35] :
               gen==2'b00 ? msg[24:20] :
               8'h0;
 
-//-- Generador de letras
-wire [7:0] letter;
-wire [4:0] code;
-disp_letter u_disp_letter0 (
-    .code_in(code),
-    .letter_out(letter)
-);
-
-
 //-- Contador de limites, para que la palabra NO se
 //-- salga de su zona
 reg [3:0] cnt_zone = 7;
@@ -104,7 +104,7 @@ always @(posedge clk) begin
         cnt_zone <= 0;
     end
     else if (shift) begin
-        msg <= {msg[54:0], ESP}; 
+        msg <= {msg[34:0], ESP}; 
         cnt_zone <= cnt_zone + 1;
     end
 end
@@ -112,6 +112,8 @@ end
 //-- Reinicio de la secuencia
 wire init;
 assign init = (cnt_zone == 7 && shift);
+
+assign leds[15] = shift;
 
 endmodule
 

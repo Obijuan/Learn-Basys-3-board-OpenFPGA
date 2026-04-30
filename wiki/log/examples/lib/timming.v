@@ -24,7 +24,7 @@ end
 //-- Cuando esta todo a 1s ha llegado a su valor
 //-- maximo, y en el siguiente ciclo comienza un
 //-- periodo nuevo
-assign done = |value;
+assign done = &value;
 
 //-- Asignar la salida
 assign signal = value[N-1];
