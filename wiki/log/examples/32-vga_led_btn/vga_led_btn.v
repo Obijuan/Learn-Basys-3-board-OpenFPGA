@@ -1,4 +1,6 @@
 `default_nettype none   
+`include "buttons.vh" 
+
 
 module vga_led_btn (
     input wire clk, 
@@ -24,24 +26,19 @@ module vga_led_btn (
     output wire       vga_vsync
 );
 
-//------------------------------------------------------
-//-- BOTONES
-
-//-- Constantes para pulsadores
-localparam CENTER = 0;
-localparam UP = 1;
-localparam DOWN = 4;
-localparam LEFT = 2;
-localparam RIGHT = 3;
-
+//────────────────────────────────────────────
+//── PULSADORES
+//────────────────────────────────────────────
+//-- Se usa el pulsador UP para encender el 
+//-- MONSTER-LED (la pantalla VGA se pone verde)
 wire btn_up;
 wire btn_up_press;
-button_input u_btn0 (
+normal_button u_btn0 (
     .clk(clk),
-    .button_pin_in(buttons[UP]), 
-    .button_state_out(btn_up),
-    .press_out(btn_up_press),
-    .release_out()  //-- Sin conectar
+    .btn_pin(buttons[BTN_UP]),  
+    .btn_state(btn_up),
+    .tic_press(btn_up_press),
+    .tic_release(),
 );
 
 
@@ -146,10 +143,10 @@ assign end_frame = (row > FRAME_HEIGHT);
 //-- se puede colocar un nuevo valor en la señal de video para
 //-- el siguiente frame
 wire refresh;
-posedge_detector u_posedge (
+posedge_detector u_posedge0 (
     .clk(clk),
     .value(end_frame),
-    .pos_edge(refresh)
+    .tic(refresh)
 );
 
 //-- Enviar las señales de sincronizacion a la VGA
