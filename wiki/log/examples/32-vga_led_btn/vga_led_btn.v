@@ -66,6 +66,10 @@ vga_sync u_vga_sync (
 //──────────────────────────────────────────
 //── GENERACION DE LA SEÑAL DE VIDEO VERDE
 //──────────────────────────────────────────
+//-- NOTA: Lo suyo sería meter esto dentro del modulo
+//-- vga_sync... pero si se mete, se produce un error extraño
+//-- en el rutado. Yo creo que es un BUG
+//-- 
 
 //-- Intensidad del verde (0-15)
 localparam [3:0] INTENSIDAD = 4'h7;
@@ -75,6 +79,10 @@ localparam [3:0] APAGADO = 4'h0;
 //-- Solo hay señal en la zona visible de la VGA
 //-- de lo contrario NO hya que enviar señal
 assign vga_green = (video & draw) ? INTENSIDAD : APAGADO;
+
+//──────────────────────────────────────────
+//── DAR VALORES A LA SEÑAL DE VIDEO
+//──────────────────────────────────────────
 
 //-- Biestable con el estado del MONSTER-LED
 reg monster_led;
