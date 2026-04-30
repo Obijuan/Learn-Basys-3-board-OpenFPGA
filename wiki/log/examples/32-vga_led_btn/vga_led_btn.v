@@ -57,6 +57,7 @@ vga_sync u_vga_sync (
     .draw(draw),
     .refresh(refresh),
 
+    .vga_red(vga_red),
     .vga_hsync(vga_hsync),
     .vga_vsync(vga_vsync)
 );
@@ -66,7 +67,6 @@ localparam INTENSIDAD = 4'h7;
 localparam APAGADO = 4'h0;
 
 //--- Establecer colores
-assign vga_red   = 4'h0;  //-- Deshabilitado
 assign vga_blue  = 4'h0;  //-- Deshabilitado
 assign vga_green = (video & draw) ? INTENSIDAD : APAGADO;
 

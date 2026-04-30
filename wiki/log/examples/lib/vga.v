@@ -19,6 +19,7 @@ module vga_sync (
     output wire refresh,
 
     //-- Señales de la VGA
+    output wire [3:0] vga_red,
     output wire vga_hsync,
     output wire vga_vsync
 
@@ -133,6 +134,8 @@ posedge_detector u_posedge0 (
     .tic(refresh)
 );
 
+//--- Establecer colores
+assign vga_red = 4'h0;
 
 //-- Enviar las señales de sincronizacion a la VGA
 assign vga_hsync = hsync;
