@@ -17,7 +17,8 @@ module vga_sync (
     output wire [8:0] row_,
 
     //-- Señales de la VGA
-    output wire vga_hsync
+    output wire vga_hsync,
+    output wire vga_vsync
 
 );
 
@@ -89,8 +90,23 @@ always @(posedge vga_clk) begin
     end
 end
 
+//── Contador de sincronizacion vertical
+reg vsync;
+always @(posedge vga_clk) begin
+    if (row < FRAME_HEIGHT + FRAME_FRONT_PORCH) begin
+        vsync <= 1;
+    end
+    else if (row < FRAME_HEIGHT + FRAME_FRONT_PORCH + FRAME_SYNC_PULSE) begin
+        vsync <= 0;
+    end
+    else begin
+        vsync <= 1;
+    end
+end
+
 //-- Enviar las señales de sincronizacion a la VGA
 assign vga_hsync = hsync;
+assign vga_vsync = vsync;
 
 
 //-- TEMPORAL!!
