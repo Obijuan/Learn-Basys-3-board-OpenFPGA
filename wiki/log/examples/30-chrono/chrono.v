@@ -1,8 +1,7 @@
 `default_nettype none   
 
 
-//-- Animacion del mensaje "HOLA". Se mueve automaticamente
-//-- de derecha a izquierda
+//-- Cronometro de 4 digitos (no es tiempo exacto)
 module chrono (
     input wire clk, 
     input wire [4:0] buttons,
@@ -12,56 +11,54 @@ module chrono (
     output wire [3:0] display_sel
 );
 
-//------ DISPLAY DE 7 SEGMENTOS
+//─────────────────────────────────
+//──   DISPLAY DE 7 SEGMENTOS
+//─────────────────────────────────
 //-- Señales para el usuario, con logica positiva
-wire [1:0] disp_sel; //-- Seleccion del display (0-3)
 wire [7:0] seg;      //-- Segmentos a encender
+wire [1:0] disp_sel; //-- Seleccion del display (0-3)
 
-//-- Mapear las señales del usuario a las reales
-//-- Conexion con el display
-assign segments = ~seg;
+display7seg u_disp7 (
+    .seg_in(seg),
+    .sel_in(disp_sel),
+    .segments_out(segments),
+    .display_sel_out(display_sel)
+);
 
-//-- Decodificador de 2 a 4, negado
-assign display_sel = ~(1 << disp_sel);
+//─────────────────────────────────────────────
+//──  CONVESOR DE BCD A 7 SEGMENTOS
+//─────────────────────────────────────────────
+wire [3:0] bcd;
+wire [7:0] disp7;
+bcd_to_7seg U_conv0 (
+    .bcd_in(bcd),
+    .disp_out(disp7)
+);
 
 
-//----------------------------
-//-- PRESCALERS
-//----------------------------
-//-- Para los displays de 7 segmentos
+//──────────────────────
+//──  PRESCALER 
+//──────────────────────
+//-- Temporizacion DISPLAY
+wire [1:0] gen;
 prescaler2 #(.N(20)
 ) u_press0 (
     .clk(clk),
     .signal(gen),  
 );
 
-//-- Perscaler para la cuenta
+//------- Perscaler para el cronometro
+wire timer;
 prescaler #(.N(23)
 ) u_press1 (
     .clk(clk),
-    .signal(), //-- No usado  
+    .signal(),  
     .done(timer)
 );
 
-//-- Generador de señal cuadrada
-wire [1:0] gen;
-
-//-- Señal de temporizacion
-wire timer;
-
-//-------------------------------
-//--  CONVERSOR BCD-7SEG
-//-------------------------------
-wire [7:0] disp7;
-wire [3:0] bcd;
-bcd_to_7seg u_con0 (
-    .bcd_in(bcd),
-    .disp_out(disp7)
-);
-
-//-------------------------
-//--       MAIN
-//-------------------------
+//─────────────────────────
+//──       MAIN
+//─────────────────────────
 
 //-- Seleccionar display
 assign disp_sel = gen;
