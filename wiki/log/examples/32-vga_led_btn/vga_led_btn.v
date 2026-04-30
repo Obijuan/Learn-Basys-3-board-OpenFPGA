@@ -42,7 +42,7 @@ normal_button u_btn0 (
 );
 
 //──────────────────────────────────
-//──   VGA
+//──   VGA VERDE
 //──────────────────────────────────
 wire vga_clk;
 wire draw;
@@ -52,8 +52,8 @@ vga_sync u_vga_sync (
     .clk(clk),
     .vga_clk(vga_clk),
 
-    .col_(),
-    .row_(),
+    .px(),
+    .py(),
     .draw(draw),
     .refresh(refresh),
 
@@ -63,22 +63,29 @@ vga_sync u_vga_sync (
     .vga_vsync(vga_vsync)
 );
 
+//──────────────────────────────────────────
+//── GENERACION DE LA SEÑAL DE VIDEO VERDE
+//──────────────────────────────────────────
+
 //-- Intensidad del verde (0-15)
 localparam [3:0] INTENSIDAD = 4'h7;
 localparam [3:0] APAGADO = 4'h0;
 
-//--- Establecer colores
+//--- Señal de video para el color verde
+//-- Solo hay señal en la zona visible de la VGA
+//-- de lo contrario NO hya que enviar señal
 assign vga_green = (video & draw) ? INTENSIDAD : APAGADO;
-
-//──────────────────────────────────────────
-//── GENERACION DE LA SEÑAL DE VIDEO
-//──────────────────────────────────────────
 
 //-- Biestable con el estado del MONSTER-LED
 reg monster_led;
 always @(posedge clk) begin
 
-    //-- Caputrar el nuevo valor, del pulsador
+    //-- Cuando se termina de pintar el frame,
+    //-- ya se puede capturar el nuevo valor
+    //-- del pulsador
+    //-- Es para evitar que cambie de valor
+    //-- en mitad del frame, lo que provoca un efecto
+    //-- visual extraño
     if (refresh)
       monster_led <= btn_up;
 end

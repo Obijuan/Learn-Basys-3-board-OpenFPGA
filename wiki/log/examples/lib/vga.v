@@ -13,10 +13,10 @@ module vga_sync (
     //-- Reloj para la VGA (25Mhz). Pixel-clock
     output wire vga_clk,
 
-    output wire [9:0] col_, 
-    output wire [8:0] row_,
-    output wire draw,
-    output wire refresh,
+    output wire [9:0] px, //-- Coordenada x del pixel actual
+    output wire [8:0] py, //-- Coordenada y del pixzel actual
+    output wire draw,     //-- Indica la zona visible (draw==1)
+    output wire refresh,  //-- Indica que el frame ha terminado 
 
     //-- Señales de la VGA
     output wire [3:0] vga_red,
@@ -146,7 +146,7 @@ assign vga_vsync = vsync;
 
 
 //-- TEMPORAL!!
-assign col_ = col;
-assign row_ = row;
+assign px = col;
+assign py = row;
 
 endmodule
