@@ -64,14 +64,7 @@ wire [8:0] row;
 //── PARAMETROS DE LA VGA
 //──────────────────────────────────
 localparam LINE_WIDTH = 640;
-localparam LINE_FRONT_PORCH = 16;
-localparam LINE_SYNC_PULSE = 96;
-localparam LINE_BACK_PORCH = 48;
-
 localparam FRAME_HEIGHT = 480;
-localparam FRAME_FRONT_PORCH = 10;
-localparam FRAME_SYNC_PULSE = 2;
-localparam FRAME_BACK_PORCH = 29; //33
 
 
 //───────────────────────────────────────
