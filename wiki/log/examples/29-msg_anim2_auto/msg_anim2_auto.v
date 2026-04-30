@@ -113,7 +113,5 @@ end
 wire init;
 assign init = (cnt_zone == 7 && shift);
 
-assign leds[15] = shift;
-
 endmodule
 
