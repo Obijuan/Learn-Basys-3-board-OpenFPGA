@@ -50,7 +50,9 @@ vga_sync u_vga_sync (
     .vga_clk(vga_clk),
 
     .col_(col),
-    .row_(row)
+    .row_(row),
+
+    .vga_hsync(vga_hsync)
 );
 
 //-- TEMPORAL!!
@@ -72,21 +74,7 @@ localparam FRAME_BACK_PORCH = 29; //33
 
 
 
-//── Contador de sincronizacion horizontal
-reg hsync;
-always @(posedge vga_clk) begin
-    if (col < LINE_WIDTH + LINE_FRONT_PORCH) begin
-        hsync <= 1;
-    end
-    else if (col < LINE_WIDTH + LINE_FRONT_PORCH + LINE_SYNC_PULSE) begin
-        hsync <= 0;
-    end
 
-    //-- Back porch
-    else begin
-        hsync <= 1;
-    end
-end
 
 //── Contador de sincronizacion vertical
 reg vsync;
@@ -131,7 +119,6 @@ posedge_detector u_posedge0 (
 );
 
 //-- Enviar las señales de sincronizacion a la VGA
-assign vga_hsync = hsync;
 assign vga_vsync = vsync;
 
 //--- Establecer colores

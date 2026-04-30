@@ -14,9 +14,25 @@ module vga_sync (
     output wire vga_clk,
 
     output wire [9:0] col_, 
-    output wire [8:0] row_
+    output wire [8:0] row_,
+
+    //-- Señales de la VGA
+    output wire vga_hsync
 
 );
+
+//──────────────────────────────────
+//── PARAMETROS DE LA VGA
+//──────────────────────────────────
+localparam LINE_WIDTH = 640;
+localparam LINE_FRONT_PORCH = 16;
+localparam LINE_SYNC_PULSE = 96;
+localparam LINE_BACK_PORCH = 48;
+
+localparam FRAME_HEIGHT = 480;
+localparam FRAME_FRONT_PORCH = 10;
+localparam FRAME_SYNC_PULSE = 2;
+localparam FRAME_BACK_PORCH = 29; //33
 
 //──────────────────────────────────
 //── RELOJ de la VGA: 25Mhz
@@ -56,6 +72,25 @@ always @(posedge vga_clk) begin
         end
     end
 end
+
+//── Contador de sincronizacion horizontal
+reg hsync;
+always @(posedge vga_clk) begin
+    if (col < LINE_WIDTH + LINE_FRONT_PORCH) begin
+        hsync <= 1;
+    end
+    else if (col < LINE_WIDTH + LINE_FRONT_PORCH + LINE_SYNC_PULSE) begin
+        hsync <= 0;
+    end
+
+    //-- Back porch
+    else begin
+        hsync <= 1;
+    end
+end
+
+//-- Enviar las señales de sincronizacion a la VGA
+assign vga_hsync = hsync;
 
 
 //-- TEMPORAL!!
