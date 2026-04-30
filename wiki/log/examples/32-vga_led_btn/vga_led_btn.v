@@ -41,9 +41,19 @@ normal_button u_btn0 (
     .tic_release(),
 );
 
+//──────────────────────────────────
+//──   VGA
+//──────────────────────────────────
+wire vga_clk;
+vga_sync u_vga_sync (
+    .clk(clk),
+    .vga_clk(vga_clk)
+);
 
-//------------------------------------------------------------
-//-- Parametros de la VGA
+
+//──────────────────────────────────
+//── PARAMETROS DE LA VGA
+//──────────────────────────────────
 localparam LINE_WIDTH = 640;
 localparam LINE_FRONT_PORCH = 16;
 localparam LINE_SYNC_PULSE = 96;
@@ -54,20 +64,9 @@ localparam FRAME_FRONT_PORCH = 10;
 localparam FRAME_SYNC_PULSE = 2;
 localparam FRAME_BACK_PORCH = 29; //33
 
-//------------------------------------------------------------
-//-- Reloj de la vga: 25Mhz
-wire vga_clk;
-reg [1:0] vga_prescaler = 0;
-always @(posedge clk) begin
-    vga_prescaler <= vga_prescaler + 1;
-end
-
-//-- Este es mi pixel clock
-assign vga_clk = vga_prescaler[1];
-
-//-------------------------------------------------------------
-//-- Sincronizacion
-
+//───────────────────────────────────────
+//── SINCRONIZACION
+//───────────────────────────────────────
 //-- Hay 800 pixeles horizontales en total. De todos ellos solo hay 
 //-- 680 visibles. 800 --> necesitamos 10 bits para representarlo
 //--  --> Las columnas se representan con 10 bits
@@ -93,6 +92,7 @@ always @(posedge vga_clk) begin
     end
 end
 
+//── Contador de sincronizacion horizontal
 reg hsync;
 always @(posedge vga_clk) begin
     if (col < LINE_WIDTH + LINE_FRONT_PORCH) begin
@@ -108,6 +108,7 @@ always @(posedge vga_clk) begin
     end
 end
 
+//── Contador de sincronizacion vertical
 reg vsync;
 always @(posedge vga_clk) begin
     if (row < FRAME_HEIGHT + FRAME_FRONT_PORCH) begin
@@ -122,9 +123,9 @@ always @(posedge vga_clk) begin
 end
 
 
-//-----------------------------------------------------------
-//-- Asignacion de señales a la VGA
-
+//───────────────────────────────────────
+//── ASIGNACION DE SEÑALES A LA VGA
+//───────────────────────────────────────
 //-- Intensidad del verde (0-15)
 localparam INTENSIDAD = 4'h7;
 localparam APAGADO = 4'h0;
@@ -158,8 +159,9 @@ assign vga_red   = 4'h0;  //-- Deshabilitado
 assign vga_blue  = 4'h0;  //-- Deshabilitado
 assign vga_green = (video & draw) ? INTENSIDAD : APAGADO;
 
-//-------------------------------------------------------
-//-- GENERACION DE LA SEÑAL DE VIDEO
+//──────────────────────────────────────────
+//── GENERACION DE LA SEÑAL DE VIDEO
+//──────────────────────────────────────────
 
 //-- Biestable con el estado del MONSTER-LED
 reg monster_led;

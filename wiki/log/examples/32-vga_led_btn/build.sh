@@ -21,7 +21,7 @@ LIB="../lib"
 
 #-- Dependencias
 DEPS="$LIB/signals.v $LIB/buttons.v  $LIB/disp7seg.v \
-     $LIB/timming.v"
+     $LIB/timming.v $LIB/vga.v"
 
 #-- Path del nextpnr-xilinx
 NEXTPNR_XILINX_DIR="/snap/openxc7/current/opt/nextpnr-xilinx"
