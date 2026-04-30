@@ -15,6 +15,8 @@ module vga_sync (
 
     output wire [9:0] col_, 
     output wire [8:0] row_,
+    output wire draw,
+    output wire refresh,
 
     //-- Señales de la VGA
     output wire vga_hsync,
@@ -103,6 +105,34 @@ always @(posedge vga_clk) begin
         vsync <= 1;
     end
 end
+
+//───────────────────────────────────────
+//── ASIGNACION DE SEÑALES A LA VGA
+//───────────────────────────────────────
+//-- Intensidad del verde (0-15)
+localparam INTENSIDAD = 4'h7;
+localparam APAGADO = 4'h0;
+
+//-- Solo hay que asignar color si estamos en la zona visible
+//-- De lo contrario NO se vera nada en la VGA
+//-- draw=1 cuando estamos en la zona visible y 0 en caso contrario
+//wire draw;
+assign draw = (col < LINE_WIDTH) && (row < FRAME_HEIGHT);
+
+//-- Fin del frame
+wire end_frame;
+assign end_frame = (row > FRAME_HEIGHT);
+
+//-- Señal de refresco: se ha salido de la zona visible, por tanto
+//-- se puede colocar un nuevo valor en la señal de video para
+//-- el siguiente frame
+wire refresh;
+posedge_detector u_posedge0 (
+    .clk(clk),
+    .value(end_frame),
+    .tic(refresh)
+);
+
 
 //-- Enviar las señales de sincronizacion a la VGA
 assign vga_hsync = hsync;
