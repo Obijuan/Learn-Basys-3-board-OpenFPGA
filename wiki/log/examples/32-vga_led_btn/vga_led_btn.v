@@ -69,7 +69,10 @@ vga_sync u_vga_sync (
 //-- NOTA: Lo suyo sería meter esto dentro del modulo
 //-- vga_sync... pero si se mete, se produce un error extraño
 //-- en el rutado. Yo creo que es un BUG
-//-- 
+//-- ➡️  Rutando...
+//-- terminate called after throwing an instance of 'std::out_of_range'
+//--  what():  vector::_M_range_check: __n (which is 86) >= this->size() (which is 0)
+//--b./build.sh: line 61: 106403 Aborted (core dumped) openxc7.nextpnr-xilinx
 
 //-- Intensidad del verde (0-15)
 localparam [3:0] INTENSIDAD = 4'h7;
