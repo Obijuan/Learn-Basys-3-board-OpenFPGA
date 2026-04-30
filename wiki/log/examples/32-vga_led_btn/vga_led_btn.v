@@ -47,9 +47,15 @@ normal_button u_btn0 (
 wire vga_clk;
 vga_sync u_vga_sync (
     .clk(clk),
-    .vga_clk(vga_clk)
+    .vga_clk(vga_clk),
+
+    .col_(col),
+    .row_(row)
 );
 
+//-- TEMPORAL!!
+wire [9:0] col;
+wire [8:0] row;
 
 //──────────────────────────────────
 //── PARAMETROS DE LA VGA
@@ -64,33 +70,7 @@ localparam FRAME_FRONT_PORCH = 10;
 localparam FRAME_SYNC_PULSE = 2;
 localparam FRAME_BACK_PORCH = 29; //33
 
-//───────────────────────────────────────
-//── SINCRONIZACION
-//───────────────────────────────────────
-//-- Hay 800 pixeles horizontales en total. De todos ellos solo hay 
-//-- 680 visibles. 800 --> necesitamos 10 bits para representarlo
-//--  --> Las columnas se representan con 10 bits
-reg [9:0] col;  //-- Desde la 0 hasta la 799 (800 en total)
 
-//-- Hay 521 lineas verticales en total, de las cuales solo 480 son visibles
-//-- Necesitamos 9 bits para su representacion
-reg [8:0] row;  //-- Desde 0 hasta 520 (521 en total)
-always @(posedge vga_clk) begin
-    if (col < 799) begin
-        col <= col + 1;
-    end
-    else begin
-        col <= 0;
-
-        //-- Incrementar las filas
-        if (row < 520) begin
-            row <= row + 1;
-        end
-        else begin
-            row <= 0;
-        end
-    end
-end
 
 //── Contador de sincronizacion horizontal
 reg hsync;
