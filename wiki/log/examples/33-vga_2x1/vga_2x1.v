@@ -95,7 +95,7 @@ end
 //-- Señal que se envía. El objeto o su negado en funcion
 //-- del estado del pulsador
 wire video;
-assign video = (stable) ? object : ~object;
+assign video = (stable) ? ~object : object;
 
 endmodule
 
