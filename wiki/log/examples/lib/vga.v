@@ -144,8 +144,6 @@ assign vga_blue  = 4'h0;  //-- Deshabilitado
 assign vga_hsync = hsync;
 assign vga_vsync = vsync;
 
-
-//-- TEMPORAL!!
 assign px = col;
 assign py = row;
 
