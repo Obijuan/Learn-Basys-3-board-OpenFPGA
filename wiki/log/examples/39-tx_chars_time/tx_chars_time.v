@@ -2,7 +2,8 @@
 `include "buttons.vh" 
 
 
-//-- Transmitir el carácter 'A' al apretar el pulsador up
+//-- Transmitir automaticamente y a velocidad lenta las letras
+//-- de la 'A' a la 'Z'
 module tx_chars_time (
     input wire clk, 
 
@@ -89,6 +90,5 @@ assign transmit = next | btn_up_press;
 //-- TEST
 assign leds[15] = btn_up;
 assign leds[7:0] = char;
-
 
 endmodule
