@@ -144,7 +144,8 @@ assign vga_blue  = 4'h0;  //-- Deshabilitado
 assign vga_hsync = hsync;
 assign vga_vsync = vsync;
 
-assign px = col;
-assign py = row;
+//-- Coordenadas del pixel. Solo tienen sentido en la zona visible
+assign px = draw ? col : 0;
+assign py = draw ? row : 0;
 
 endmodule
