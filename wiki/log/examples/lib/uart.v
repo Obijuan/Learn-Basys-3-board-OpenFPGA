@@ -1,4 +1,10 @@
-//-- Transmisor serie
+//══════════════════════════════════════════════════════════
+//─ MODULOS DE ACCESO A LA UART
+//══════════════════════════════════════════════════════════
+
+//──────────────────────────────
+//──  TRANSMISOR SERIE
+//──────────────────────────────
 module uart_tx_module (
     input wire clk,
     input wire start_in,        //-- Comienzo de la transmision
@@ -15,9 +21,9 @@ module uart_tx_module (
 //CLK_PER_BIT = CLK_FREQUENCY_MHZ*1_000_000.0/BAUD_RATE
 localparam CLK_PER_BIT = 868; //-- 115200 Baudios
 
-//----- Temporizador de transmision de bits
-//-- Señal bit: Ha transcurrido el tiempo de un bit
-//-- Hay que enviar el siguiente
+//──────────── Temporizador de transmisión de bits
+//── Señal bit: Ha transcurrido el tiempo de un bit
+//── Hay que enviar el siguiente
 wire bit;
 reg [9:0] count;
 always @(posedge clk) begin
@@ -48,13 +54,16 @@ always @(posedge clk) begin
         data_reg = {1'b1, data_reg[9:1]};
 end
 
-//-------------- AUTOMATA
-//-- 
+//────────────────────────────────
+//──    AUTOMATA
+//────────────────────────────────
+//-- Se usa una máquina de estados con codificacion 1-HOT
+
 //--       transmit         bit        bit     bit        bit        bit
-//--  E_IDLE -----> E_START --> E_BIT0 --> ... --> E_BIT7 --> E_STOP ---> +
+//--  E_IDLE ──────> E_START ─> E_BIT0 ──> ... ──> E_BIT7 ──> E_STOP ───> +
 //--     ^                                                                |
 //--     |                                                                |
-//--     +----------------------------<-----------------------------------+
+//--     +-──────────────────────────────<────────────────────────────────+
 
 //-- Estados
 reg E_IDLE  = 1;  //-- Reposo. Esperando
