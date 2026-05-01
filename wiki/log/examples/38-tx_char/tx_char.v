@@ -2,7 +2,7 @@
 `include "buttons.vh" 
 
 
-//-- Transmitir el carácter 'A' al apretar el pulsador
+//-- Transmitir el carácter 'A' al apretar el pulsador up
 module tx_char (
     input wire clk, 
 
