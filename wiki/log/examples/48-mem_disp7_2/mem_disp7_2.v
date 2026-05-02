@@ -74,6 +74,16 @@ normal_button u_btn3 (
     .tic_release(),
 );
 
+wire btn_center;
+wire btn_center_press;
+normal_button u_btn4 (
+    .clk(clk),
+    .btn_pin(buttons[BTN_CENTER]),  
+    .btn_state(btn_center),
+    .tic_press(btn_center_press),
+    .tic_release(),
+);
+
 //─────────────────────────────────
 //──   DISPLAY DE 7 SEGMENTOS
 //─────────────────────────────────
@@ -131,13 +141,21 @@ memory3 u_mem0 (
 //-- Acceso a la memoria
 //-- Con el pulsador se incrementa la direccion
 always @(posedge clk) begin
+
+    //-- Incrementar direccion actual
     if (btn_up_press)
         addr <= addr + 1;  
+
+    //-- Decrementar direccion actual
     else if (btn_down_press)
         addr <= addr - 1;  
+
+    //-- Leer nueva direccion de los switches
+    else if (btn_center_press)
+        addr <= {16'h0, switches};
 end
 
-//-- Biestable para mostrar la parte alto obaja del dato de memoria
+//-- Biestable para mostrar la parte alta o baja del dato de memoria
 //-- en los LEDs
 reg show_hi = 0;
 always @(posedge clk) begin
@@ -160,8 +178,7 @@ assign leds = data_show2;
 //-- Seleccionar display
 assign disp_sel = gen;
 
-//-- Multiplexar los digitos BCD que vienen
-//-- de los switches
+//-- Multiplexar los digitos BCD
 assign num = gen==2'b00 ? data_show1[3:0] : 
              gen==2'b01 ? data_show1[7:4] : 
              gen==2'b10 ? data_show1[11:8] :
