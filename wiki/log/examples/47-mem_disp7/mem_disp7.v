@@ -167,8 +167,6 @@ assign num = gen==2'b00 ? data_show[3:0] :
              8'h0;
 
 
-
-
 //────────────────────────────────────────────
 //──  ELIMINAR WARNINGS
 //────────────────────────────────────────────
@@ -182,6 +180,5 @@ assign vga_blue = 4'h0;
 assign vga_green = 4'h0;
 assign vga_hsync = 0;
 assign vga_vsync = 0;
-
 
 endmodule
