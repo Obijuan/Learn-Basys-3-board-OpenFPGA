@@ -116,13 +116,18 @@ assign T21 = E2 && done;
 assign next = (T01 | T12 | T10 | T21);
 
 //-- Comienzo de la transmicion
-assign start = btn_up_press;
+assign start = btn_up_press | timer;
 
 //-- Lectura de los caracteres
 always @* begin
     case (adr)
         3'h0: car <= "H";
         3'h1: car <= "O";
+        3'h2: car <= "L";
+        3'h3: car <= "A";
+        3'h4: car <= ".";
+        3'h5: car <= ".";
+        3'h6: car <= ".";
         default: car <= 8'h0;
     endcase
 end 
@@ -141,9 +146,8 @@ assign transmit = T12;
 
 //-- TEST
 assign leds[15] = E0;
-assign leds[14] = E1;
 assign leds[13] = E2;
 assign leds[8] = btn_up;
-assign leds[2:0] = adr;
+assign leds[7:0] = car;
 
 endmodule
