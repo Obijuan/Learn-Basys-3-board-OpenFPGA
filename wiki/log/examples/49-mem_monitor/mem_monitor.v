@@ -127,7 +127,9 @@ prescaler2 #(.N(20)
 //─────────────────────────
 reg [9:0] addr = 0;
 wire [31:0] data;
-memory4 u_mem0 (
+memory4  #(
+    .MEMFILE("test-01.mem")
+) u_mem0(
     .clk(clk),
     .addr(addr),
     .data_in(31'h0),

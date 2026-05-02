@@ -161,6 +161,9 @@ module memory4 (
     output wire [31:0] data_out
 );
 
+//-- Nombre del fichero
+parameter MEMFILE = "test-01.mem";
+
 //-- Address with
 localparam ADDR_WIDTH = 10;
 //-- Data with
@@ -193,7 +196,7 @@ end
 initial begin
 
     //-- Leer memoria de un fichero
-    $readmemh("test-01.mem", mem, 0, SIZE-1);
+    $readmemh(MEMFILE, mem, 0, SIZE-1);
   
 end
 
