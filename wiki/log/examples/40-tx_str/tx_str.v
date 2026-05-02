@@ -2,7 +2,7 @@
 `include "buttons.vh" 
 
 
-//-- Imprimir la cadena HOLA
+//-- Imprimir la cadena HOLA...
 module tx_str (
     input wire clk, 
 
