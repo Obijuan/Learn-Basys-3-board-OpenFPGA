@@ -135,13 +135,76 @@ module uart_rx_module (
     output wire done_out,       //-- Tic de caracter recibido
 );
 
+//-- Tiempo de bit, en ciclos
+localparam CLK_PER_BIT = 868; //-- 115200 Baudios
+localparam CLK_PER_BIT_DIV2 = CLK_PER_BIT >> 1;
+
+//-- Sincronizador
+wire rx_sync;
+synchronizer u_sync0 (
+    .clk(clk),
+    .async_in(rx_pin_in),  //-- Entrada asíncrona
+    .sync_out(rx_sync)     //-- Salida sincronizada
+);
+
+//-- Detectar llegada caracter nuevo
+//-- Sabes que llega un caracter nuevo cuando llega un flanco
+//-- de bajada por rx. Esto activa la señal start!
+wire start;
+negedge_detector u_neg_edge0 (
+    .clk(clk),
+    .value(rx_sync),
+    .tic(start)
+);
+
+//──────────── Temporizador de recepcion serie
+reg [9:0] cnt;
+wire bit;
+always @(posedge clk) begin
+    if (E_IDLE)
+        cnt <= CLK_PER_BIT_DIV2;  //-- Valor inicial: medio periodo de bit
+    else if (bit)
+        cnt <= CLK_PER_BIT;  //-- Reiniciar. Siguiente bit
+    else
+        cnt <= cnt - 1;  //-- Un ciclo menos 
+end
+
+//-- La cuenta ha finalizado!
+assign bit = (cnt == 10'h0);
+
+//────────────────────────────────
+//──    AUTOMATA
+//────────────────────────────────
+//-- Se usa una máquina de estados con codificacion 1-HOT
+
+//--       transmit         bit        bit     bit        bit        bit
+//--  E_IDLE ──────> E_START ─> E_BIT0 ──> ... ──> E_BIT7 ──> E_STOP ───> +
+//--     ^                                                                |
+//--     |                                                                |
+//--     +-──────────────────────────────<────────────────────────────────+
+
+//-- Estados
+reg E_IDLE  = 1;  //-- Reposo. Esperando
+reg E_START = 0;  //-- Recepcion bit de start
+reg E_BIT0  = 0;  //-- Recepcion bit0
+reg E_BIT1  = 0;  //-- Recepcion bit1
+reg E_BIT2  = 0;  //-- Recepcion bit2
+reg E_BIT3  = 0;  //-- Recepcion bit3
+reg E_BIT4  = 0;  //-- Recepcion bit4
+reg E_BIT5  = 0;  //-- Recepcion bit5
+reg E_BIT6  = 0;  //-- Recepcion bit6
+reg E_BIT7  = 0;  //-- Recepcion bit7
+reg E_STOP  = 0;  //-- Recepcion del bit de stop
+
+
+
 
 
 
 
 //-- TEMPORAL!!
 assign data_out = 8'hFF;
-assign done_out = 0;
+assign done_out = start;
 
 endmodule
 

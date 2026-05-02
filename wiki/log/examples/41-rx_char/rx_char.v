@@ -28,7 +28,7 @@ module rx_char (
     output wire       vga_vsync,
 
     //-- UART
-    output wire uart_rx_async,
+    input wire uart_rx_async,
     output wire uart_tx
 );
     
@@ -46,8 +46,16 @@ uart_rx_module u_uart_rx0 (
     .done_out(done)
 );
 
+reg toggle = 0;
+always @(posedge clk) begin
+   if (done)
+     toggle <= ~toggle;  
+end
+
+
+
 //-- Conectar la salida del receptor a los LEDs
-assign leds[15] = 1;
+assign leds[15] = toggle;
 assign leds[7:0] = car;
 
 //---------- No warnings
