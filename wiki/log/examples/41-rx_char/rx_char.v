@@ -46,17 +46,17 @@ uart_rx_module u_uart_rx0 (
     .done_out(done)
 );
 
-reg toggle = 0;
+//-- Capturar dato recibido
+reg [7:0] data = 0;
 always @(posedge clk) begin
    if (done)
-     toggle <= ~toggle;  
+     data <= car;  
 end
 
 
 
 //-- Conectar la salida del receptor a los LEDs
-assign leds[15] = toggle;
-assign leds[7:0] = car;
+assign leds[7:0] = data;
 
 //---------- No warnings
 assign uart_tx = 1;

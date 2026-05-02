@@ -172,6 +172,22 @@ end
 //-- La cuenta ha finalizado!
 assign bit = (cnt == 10'h0);
 
+//-- Bits de START y STOP
+localparam START = 1'b0;
+localparam STOP = 1'b1;
+
+//-- Registro de recepcion
+//-- Contiene bit de start, 8 bits de datos y uno de stop
+reg [9:0] data_reg = 10'b0;
+always @(posedge clk) begin
+    //-- Leer el bit recibido
+    if (bit)
+        data_reg = {rx_sync, data_reg[9:1]};
+end
+
+
+
+
 //────────────────────────────────
 //──    AUTOMATA
 //────────────────────────────────
@@ -197,14 +213,43 @@ reg E_BIT7  = 0;  //-- Recepcion bit7
 reg E_STOP  = 0;  //-- Recepcion del bit de stop
 
 
+//-- Cambio de estado
+wire next;
+always @(posedge clk) begin
+    if (next) begin
+        E_START <= E_IDLE;
+        E_BIT0 <= E_START;
+        E_BIT1 <= E_BIT0;
+        E_BIT2 <= E_BIT1; 
+        E_BIT3 <= E_BIT2;
+        E_BIT4 <= E_BIT3;
+        E_BIT5 <= E_BIT4;
+        E_BIT6 <= E_BIT5;
+        E_BIT7 <= E_BIT6;
+        E_STOP <= E_BIT7;
+        E_IDLE <= E_STOP;
+    end 
+end
 
+//----- Transiciones
+wire Tstart;  //-- E_IDLE --> E_START
+assign Tstart = E_IDLE & start;
 
+//-- Transiciones de bit
+wire Tbit;
+assign Tbit = (E_START || E_BIT0 || E_BIT1 || E_BIT2 ||
+               E_BIT3  || E_BIT4 || E_BIT5 || E_BIT6 ||
+               E_BIT7  || E_STOP) & bit;
 
+//-- Siguiente estado
+assign next = Tstart || Tbit;
 
+//-- Señal de done
+assign done_out = E_STOP & bit;
 
-//-- TEMPORAL!!
-assign data_out = 8'hFF;
-assign done_out = start;
+//-- Datos recibidos
+assign data_out = data_reg[8:1];
+
 
 endmodule
 
