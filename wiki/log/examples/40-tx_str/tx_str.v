@@ -72,7 +72,9 @@ uart_tx_module u_uart_tx0 (
 );
 
 
-//--------------------- Automata
+//────────────────────────────────────────────
+//──   AUTOMATA
+//────────────────────────────────────────────
 reg E0 = 1;  //-- Idle
 reg E1 = 0;  //-- Obtener caracter
 reg E2 = 0;  //-- Transmitir caracter
@@ -90,7 +92,7 @@ wire transmit;
 wire is_car0;
 assign is_car0 = (car==0);
 
-//--- Evolucion del estado
+//──── Evolucion del estado
 wire next;
 
 always @(posedge clk) begin
@@ -101,7 +103,7 @@ always @(posedge clk) begin
     end
 end
 
-//-- Transiciones
+//── Transiciones
 wire T01;
 wire T12;
 wire T10;
@@ -112,13 +114,13 @@ assign T12 = E1 && !is_car0;
 assign T10 = E1 && is_car0;
 assign T21 = E2 && done;
 
-//-- Siguiente estado
+//── Siguiente estado
 assign next = (T01 | T12 | T10 | T21);
 
-//-- Comienzo de la transmicion
+//── Comienzo de la transmicion
 assign start = btn_up_press | timer;
 
-//-- Lectura de los caracteres
+//── Lectura de los caracteres
 always @* begin
     case (adr)
         3'h0: car <= "H";
@@ -132,7 +134,7 @@ always @* begin
     endcase
 end 
 
-//-- Direccion del caracter
+//── Direccion del caracter
 always @(posedge clk) begin
     if (E0)
       adr <= 0;
@@ -140,7 +142,7 @@ always @(posedge clk) begin
       adr <= adr + 1; 
 end
 
-//-- Tranmision del caaracter
+//── Tranmision del cararacter
 assign transmit = T12;
 
 
