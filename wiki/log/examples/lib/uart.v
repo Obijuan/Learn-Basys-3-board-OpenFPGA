@@ -124,3 +124,24 @@ assign tx_pin_out = data_reg[0];
 
 endmodule
 
+
+//──────────────────────────────
+//──  RECEPTOR SERIE
+//──────────────────────────────
+module uart_rx_module (
+    input wire clk,
+    input wire rx_pin_in,       //-- Pin RX
+    output wire [7:0] data_out, //-- Caracter recibido
+    output wire done_out,       //-- Tic de caracter recibido
+);
+
+
+
+
+
+//-- TEMPORAL!!
+assign data_out = 8'hFF;
+assign done_out = 0;
+
+endmodule
+
