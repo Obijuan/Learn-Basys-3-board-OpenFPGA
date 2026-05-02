@@ -201,7 +201,7 @@ end
 //--  E_IDLE ──────> E_START ─> E_BIT0 ──> ... ──> E_BIT7 ──> E_STOP ───> +
 //--     ^                                                                |
 //--     |                                                                |
-//--     +-──────────────────────────────<────────────────────────────────+
+//--     +-──────────────────────────────<──────────────────── E_DONE <───+
 
 //-- Estados
 reg E_IDLE  = 1;  //-- Reposo. Esperando
@@ -215,6 +215,7 @@ reg E_BIT5  = 0;  //-- Recepcion bit5
 reg E_BIT6  = 0;  //-- Recepcion bit6
 reg E_BIT7  = 0;  //-- Recepcion bit7
 reg E_STOP  = 0;  //-- Recepcion del bit de stop
+reg E_DONE  = 0;  //-- Recepcion completada
 
 
 //-- Cambio de estado
@@ -231,7 +232,8 @@ always @(posedge clk) begin
         E_BIT6 <= E_BIT5;
         E_BIT7 <= E_BIT6;
         E_STOP <= E_BIT7;
-        E_IDLE <= E_STOP;
+        E_DONE <= E_STOP;
+        E_IDLE <= E_DONE;
     end 
 end
 
@@ -246,10 +248,10 @@ assign Tbit = (E_START || E_BIT0 || E_BIT1 || E_BIT2 ||
                E_BIT7  || E_STOP) & bit;
 
 //-- Siguiente estado
-assign next = Tstart || Tbit;
+assign next = Tstart || Tbit || E_DONE;
 
 //-- Señal de done
-assign done_out = E_STOP & bit;
+assign done_out = E_DONE;
 
 //-- Datos recibidos
 assign data_out = data_reg[8:1];
