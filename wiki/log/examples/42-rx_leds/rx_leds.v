@@ -50,17 +50,28 @@ uart_rx_module u_uart_rx0 (
 //──  MAIN
 //────────────────────────────────────────────
 
-//-- Capturar dato recibido
-reg [7:0] data = 0;
+//─── Control del LED0 con '0'
+reg led0 = 0;
+wire is_0;
 always @(posedge clk) begin
-   if (done)
-     data <= car;  
+    if (done && is_0)
+        led0 <= ~led0; 
 end
 
-//assign leds[0] = (data == 8'h30);
+assign is_0 = (car == "0");
+assign leds[0] = led0;
 
-//-- Conectar la salida del receptor a los LEDs
-assign leds[7:0] = data;
+//─── Control del LED1 con '1'
+reg led1 = 0;
+wire is_1;
+always @(posedge clk) begin
+    if (done && is_1)
+        led1 <= ~led1; 
+end
+
+assign is_1 = (car == "1");
+assign leds[1] = led1;
+
 
 
 
