@@ -139,7 +139,7 @@ module uart_rx_module (
 localparam CLK_PER_BIT = 868; //-- 115200 Baudios
 localparam CLK_PER_BIT_DIV2 = CLK_PER_BIT >> 1;
 
-//-- Sincronizador
+//────────────  Sincronizador
 wire rx_sync;
 synchronizer u_sync0 (
     .clk(clk),
@@ -147,7 +147,7 @@ synchronizer u_sync0 (
     .sync_out(rx_sync)     //-- Salida sincronizada
 );
 
-//-- Detectar llegada caracter nuevo
+//────────────  Detectar llegada caracter nuevo
 //-- Sabes que llega un caracter nuevo cuando llega un flanco
 //-- de bajada por rx. Esto activa la señal start!
 wire start;
@@ -176,16 +176,20 @@ assign bit = (cnt == 10'h0);
 localparam START = 1'b0;
 localparam STOP = 1'b1;
 
-//-- Registro de recepcion
+////────────────  Registro de recepcion
 //-- Contiene bit de start, 8 bits de datos y uno de stop
+//-- Una vez recibido el caracter, contiene:
+//--   9  | 8 7 6 5 4 3 2 1 | 0
+//-- STOP |    DATA         | START
 reg [9:0] data_reg = 10'b0;
 always @(posedge clk) begin
     //-- Leer el bit recibido
+    //-- Se reciben de izquierda a derecha. Con cada bit
+    //-- el receptor se desplaza hacia la derecha y el bit
+    //-- recibido se mete como el de mayor peso
     if (bit)
         data_reg = {rx_sync, data_reg[9:1]};
 end
-
-
 
 
 //────────────────────────────────

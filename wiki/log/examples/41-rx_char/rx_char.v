@@ -46,6 +46,11 @@ uart_rx_module u_uart_rx0 (
     .done_out(done)
 );
 
+
+//────────────────────────────────────────────
+//──  MAIN
+//────────────────────────────────────────────
+
 //-- Capturar dato recibido
 reg [7:0] data = 0;
 always @(posedge clk) begin
@@ -53,20 +58,27 @@ always @(posedge clk) begin
      data <= car;  
 end
 
-
-
 //-- Conectar la salida del receptor a los LEDs
 assign leds[7:0] = data;
 
-//---------- No warnings
+//────────────────────────────────────────────
+//──  ELIMINAR WARNINGS
+//────────────────────────────────────────────
+//-- Conexion de las señales de salida NO USADAS
+//-- para eliminar los warnings
+
+//-- Puerto serie
 assign uart_tx = 1;
 
+//-- VGA
 assign vga_red = 4'h0;
 assign vga_blue = 4'h0;
 assign vga_green = 4'h0;
 assign vga_hsync = 0;
 assign vga_vsync = 0;
 
+//-- DISPLAY 7seg
 assign segments = 8'hF;
 assign display_sel = 4'hF;
+
 endmodule
