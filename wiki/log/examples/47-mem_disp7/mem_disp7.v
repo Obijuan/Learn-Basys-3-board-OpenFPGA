@@ -148,18 +148,22 @@ always @(posedge clk) begin
 end
 
 
+//-- Obtener los 16-bits a visualizar
+wire [15:0] data_show;
+assign data_show = (show_hi) ? data[31:16] : data[15:0];
+
 //-- Ver el contenido actual en los LEDs
-assign leds = (show_hi) ? data[31:16] : data[15:0];
+assign leds = data_show;
 
 //-- Seleccionar display
 assign disp_sel = gen;
 
 //-- Multiplexar los digitos BCD que vienen
 //-- de los switches
-assign num = gen==2'b00 ? switches[3:0] : 
-             gen==2'b01 ? switches[7:4] : 
-             gen==2'b10 ? switches[11:8] :
-             gen==2'b11 ? switches[15:12] : 
+assign num = gen==2'b00 ? data_show[3:0] : 
+             gen==2'b01 ? data_show[7:4] : 
+             gen==2'b10 ? data_show[11:8] :
+             gen==2'b11 ? data_show[15:12] : 
              8'h0;
 
 
