@@ -88,37 +88,16 @@ wishbone_buttons #(
 //───────────────────────────────────────────────────────────
 //──         SINCRONIZACION DE PULSADORES 
 //───────────────────────────────────────────────────────────
+localparam BOTONES = 5;
+for (genvar btn_i = 0; btn_i < BOTONES; btn_i++) begin : gen_0
 
-//-- TODO: convertirlo en generico
-synchronizer u_sync0 (
-    .clk(clk),
-    .async_in(buttons[0]),
-    .sync_out(buttons_sync[0])
-);
-
-synchronizer u_sync1 (
-    .clk(clk),
-    .async_in(buttons[1]),
-    .sync_out(buttons_sync[1])
-);
-
-synchronizer u_sync2 (
-    .clk(clk),
-    .async_in(buttons[2]),
-    .sync_out(buttons_sync[2])
-);
-
-synchronizer u_sync3 (
-    .clk(clk),
-    .async_in(buttons[3]),
-    .sync_out(buttons_sync[3])
-);
-
-synchronizer u_sync4 (
-    .clk(clk),
-    .async_in(buttons[4]),
-    .sync_out(buttons_sync[4])
-);
+    //-- Instanciar sincronizador para el boton i
+    synchronizer u_sync (
+        .clk(clk),
+        .async_in(buttons[btn_i]),
+        .sync_out(buttons_sync[btn_i])
+    );
+end
 
 
 //───────────────────────────────────────────────────────────

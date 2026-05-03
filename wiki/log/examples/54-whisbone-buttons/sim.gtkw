@@ -1,21 +1,21 @@
 [*]
 [*] GTKWave Analyzer v3.3.116 (w)1999-2023 BSI
-[*] Sun May  3 07:59:26 2026
+[*] Sun May  3 09:21:32 2026
 [*]
 [dumpfile] "/home/obijuan/Develop/Learn-Basys-3-board-OpenFPGA/wiki/log/examples/54-whisbone-buttons/sim.fst"
-[dumpfile_mtime] "Sun May  3 07:58:20 2026"
+[dumpfile_mtime] "Sun May  3 09:21:23 2026"
 [dumpfile_size] 1572
 [savefile] "/home/obijuan/Develop/Learn-Basys-3-board-OpenFPGA/wiki/log/examples/54-whisbone-buttons/sim.gtkw"
 [timestart] 0
 [size] 1866 1001
 [pos] -1 -1
-*-16.780987 0 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-13.722131 0 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] TOP.
 [treeopen] TOP.TB.
 [sst_width] 278
 [signals_width] 230
 [sst_expanded] 1
-[sst_vpaned_height] 219
+[sst_vpaned_height] 206
 @28
 TOP.TB.clk
 TOP.TB.rst
