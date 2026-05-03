@@ -15,9 +15,10 @@ LIB="../lib"
 #-- Dependencias
 DEPS="$LIB/wishbone_interface.sv \
       $LIB/wishbone_leds.sv \
-      wishbone_interconnect.sv \
-      wishbone_buttons.sv \
-      synchronizer.sv "
+      $LIB/synchronizer.sv \
+      $LIB/wishbone_interconnect.sv \
+      $LIB/wishbone_buttons.sv \
+     "
 
 #-- Path del nextpnr-xilinx
 NEXTPNR_XILINX_DIR="/snap/openxc7/current/opt/nextpnr-xilinx"
