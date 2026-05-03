@@ -13,7 +13,8 @@ NAME=top
 LIB="../lib"
 
 #-- Dependencias
-DEPS=""
+DEPS="$LIB/wishbone_interface.sv \
+      $LIB/wishbone_leds.sv "
 
 #-- Path del nextpnr-xilinx
 NEXTPNR_XILINX_DIR="/snap/openxc7/current/opt/nextpnr-xilinx"
@@ -36,7 +37,7 @@ echo -e "$YELLOW─────────────────────�
 echo -e $BLUE"➡️  Sintetizando..."$RESET
 apio raw -- yosys -m slang \
     -p "read_slang --ignore-unknown-modules \
-       -I../lib wishbone_interface.sv wishbone_leds.sv top.sv" \
+       -I../lib $DEPS top.sv" \
     -p "synth_xilinx -arch xc7 -top top; \
         write_json top.json" \
     -q

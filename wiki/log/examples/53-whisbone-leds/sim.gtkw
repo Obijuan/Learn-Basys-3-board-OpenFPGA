@@ -1,9 +1,9 @@
 [*]
 [*] GTKWave Analyzer v3.3.116 (w)1999-2023 BSI
-[*] Sun May  3 06:43:39 2026
+[*] Sun May  3 06:56:30 2026
 [*]
 [dumpfile] "/home/obijuan/Develop/Learn-Basys-3-board-OpenFPGA/wiki/log/examples/53-whisbone-leds/sim.fst"
-[dumpfile_mtime] "Sun May  3 06:43:15 2026"
+[dumpfile_mtime] "Sun May  3 06:56:18 2026"
 [dumpfile_size] 1000
 [savefile] "/home/obijuan/Develop/Learn-Basys-3-board-OpenFPGA/wiki/log/examples/53-whisbone-leds/sim.gtkw"
 [timestart] 0
