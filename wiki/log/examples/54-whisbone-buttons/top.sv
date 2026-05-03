@@ -39,6 +39,9 @@ localparam bit [31:0] LEDS_SIZE  = 32'h0000_0001;
 localparam bit [31:0] BUTTONS_START = 32'h0008_1000;
 localparam bit [31:0] BUTTONS_SIZE = 32'h0000_0001;
 
+//───────────────────────────────────────────────────────────
+//──              BUS WISHBONE 
+//───────────────────────────────────────────────────────────
 wishbone_interconnect #(
         .NUM_SLAVES(2),
         .SLAVE_ADDRESS({
@@ -56,68 +59,90 @@ wishbone_interconnect #(
         .slaves(mem_bus_slaves)
     );
 
-//-- Instanciar modulo de LEDs
+//──────────────────────────────────────
+//──   PERIFERICO WISHBONE: LEDS 
+//──────────────────────────────────────
 wishbone_leds #(
     .ADDRESS(LEDS_START),
     .SIZE(LEDS_SIZE)
 ) u_wishbone_leds (
     .clk(clk),
     .rst(rst),
-
     .leds(leds),
-
     .wishbone(mem_bus_slaves[0])
 );
 
-//-- Instanciar modulo de pulsadores
+//──────────────────────────────────────
+//──   PERIFERICO WISHBONE: BOTONES
+//──────────────────────────────────────
 wishbone_buttons #(
     .ADDRESS(BUTTONS_START),
     .SIZE(BUTTONS_SIZE)
 ) u_wishbone_buttons (
     .clk(clk),
     .rst(rst),
-
     .buttons(buttons),
-
     .wishbone(mem_bus_slaves[1])
 );
 
+//───────────────────────────────────────────────────────────
+//──         SINCRONIZACION DE PULSADORES 
+//───────────────────────────────────────────────────────────
 
-//-- Instanciar el sincronizador para los pulsadores
-synchronizer u_sync1 (
+//-- TODO: convertirlo en generico
+synchronizer u_sync0 (
     .clk(clk),
     .async_in(buttons[0]),
     .sync_out(buttons_sync[0])
 );
 
-synchronizer u_sync2 (
+synchronizer u_sync1 (
     .clk(clk),
     .async_in(buttons[1]),
     .sync_out(buttons_sync[1])
 );
 
+synchronizer u_sync2 (
+    .clk(clk),
+    .async_in(buttons[2]),
+    .sync_out(buttons_sync[2])
+);
+
+synchronizer u_sync3 (
+    .clk(clk),
+    .async_in(buttons[3]),
+    .sync_out(buttons_sync[3])
+);
+
+synchronizer u_sync4 (
+    .clk(clk),
+    .async_in(buttons[4]),
+    .sync_out(buttons_sync[4])
+);
 
 
-//----------------------------------------------------------------------
-//------- AUTOMATA para leer pulsadores y mostrar su valor en los LEDs
-//----------------------------------------------------------------------
-//-- ESTADOS
+//───────────────────────────────────────────────────────────
+//──         AUTOMATA 
+//───────────────────────────────────────────────────────────
+//──  Leer pulsadores y mostrar su valor en los LEDs
+
+//── ESTADOS
 logic E0 = 1;  //-- Estado inicial: Lectura botones
 logic E1 = 0;  //-- Escritura en LEDs
 
-//-- TRANSICIONES
+//── TRANSICIONES
 logic T01;
 assign T01 = E0 && mem_bus.ack;
 
 logic T12;
 assign T12 = E1 && mem_bus.ack;
 
-//-- Logica para pasar al siguiente estado
+//── Logica para pasar al siguiente estado
 logic next;
 assign next = T01 || T12;
 
 
-//-- Registro intermedio con el valor de los botones
+//── Registro intermedio con el valor de los botones
 logic [4:0] btn_reg;
 logic capture;
 always_ff @( posedge clk ) begin 
@@ -125,7 +150,7 @@ always_ff @( posedge clk ) begin
         btn_reg <= mem_bus.dat_miso[4:0];
 end
 
-//-- BIESTABLES DE ESTADO
+//── BIESTABLES DE ESTADO
 always_ff @( posedge clk ) begin 
     if (next) begin
         E0 <= E1;
@@ -134,7 +159,7 @@ always_ff @( posedge clk ) begin
 end
 
 
-//-- SALIDAS: Valor de las señales en cada estado
+//── SALIDAS: Valor de las señales en cada estado
 always_comb begin
 
     //-- Valor por defecto de las señales

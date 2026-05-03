@@ -72,9 +72,7 @@ wishbone_leds #(
 ) u_wishbone_leds (
     .clk(clk),
     .rst(rst),
-
     .leds(leds),
-
     .wishbone(mem_bus_slaves[0])
 );
 
@@ -85,9 +83,7 @@ wishbone_buttons #(
 ) u_wishbone_buttons (
     .clk(clk),
     .rst(rst),
-
     .buttons(buttons),
-
     .wishbone(mem_bus_slaves[1])
 );
 
@@ -138,7 +134,7 @@ initial begin
     mem_bus.adr = LEDS_START;
     mem_bus.we = 1;
     mem_bus.sel = 4'b0011;
-    mem_bus.dat_mosi = {16'b0, 7'b0, read_buttons, 4'b0}; //{27'b0, read_buttons};
+    mem_bus.dat_mosi = {16'b0, read_buttons, 11'b0};
 
     @(posedge clk);
 
