@@ -182,11 +182,18 @@ logic next;
 assign next = T01 || T12 || T20;
 
 
-//-- Registro intermedio con el valor de los botones
+//-- Registros intermedio con el valor de los botones
 logic [4:0] btn_reg;
+logic [4:0] btn_reg_old;
 always_ff @( posedge clk ) begin 
-    if (T01)
+    if (T01) begin
+        //-- Estado actual del pulsador
         btn_reg <= mem_bus.dat_miso[4:0];
+
+        //-- Estado anterior pulsador
+        btn_reg_old <= btn_reg;
+
+    end
 end
 
 //-- Registro intermedio con el valor de los switches
@@ -256,7 +263,15 @@ always_comb begin
     end
 end
 
-//------------ Instanciar el transmisor de la UART
+//-------- Detectar cambios en el estado de los botones
+//-- Pulsador central apretado
+logic btn_press;
+assign btn_press = btn_reg[0] & !btn_reg_old[0]; 
+
+
+//───────────────────────────────────────────────────────────
+//──      UART: TRANSMISOR 
+//───────────────────────────────────────────────────────────
 logic tx_start;
 logic [7:0] tx_byte;
 logic tx_serial_out;
@@ -280,13 +295,13 @@ uart_tx_module #(
 );
 
 
-//-- Pruebas de transmisión
+//---- Pruebas de transmisión
+//-- Envio de un caracter al apretar el pulsador central
 assign tx_byte = "A";
-assign tx_start = btn_reg[0];
+assign tx_start = btn_press;
 
-//-- Drive the serial tx pin
+//---- Conectar el pin TX
 assign uart_tx = tx_serial_out;
-
 
 endmodule
 
