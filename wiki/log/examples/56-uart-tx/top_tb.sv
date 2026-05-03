@@ -1,7 +1,7 @@
 module TB;
 
 //-- Parametros del reloj
-localparam real SYS_CLK_FREQ_MHZ = 12;
+localparam real SYS_CLK_FREQ_MHZ = 100;
 localparam real SYS_CLK_PERIOD_PS = (1 / SYS_CLK_FREQ_MHZ)*1000*1000;
 localparam int  SIM_CLK_PERIOD = int'(SYS_CLK_PERIOD_PS);
 localparam real CLK_FREQUENCY_MHZ = SYS_CLK_FREQ_MHZ;
@@ -72,9 +72,9 @@ wishbone_interconnect #(
 );
 
 //-- Instanciar los perifericos de LEDs
-logic [7:0] leds;
+logic [15:0] leds;
 logic [4:0] buttons;
-logic [7:0] switches;
+logic [15:0] switches;
 
 
 //-- Instanciar modulo de LEDs
@@ -84,9 +84,7 @@ wishbone_leds #(
 ) u_wishbone_leds (
     .clk(clk),
     .rst(rst),
-
     .leds(leds),
-
     .wishbone(mem_bus_slaves[0])
 );
 
@@ -97,9 +95,7 @@ wishbone_buttons #(
 ) u_wishbone_buttons (
     .clk(clk),
     .rst(rst),
-
     .buttons(buttons),
-
     .wishbone(mem_bus_slaves[1])
 );
 
@@ -110,9 +106,7 @@ wishbone_switches #(
 ) u_wishbone_switches (
     .clk(clk),
     .rst(rst),
-
     .switches(switches),
-
     .wishbone(mem_bus_slaves[2])
 );
 
@@ -124,9 +118,9 @@ logic tx_serial_out;
 logic tx_done;
 logic tx_active;
 
-uart_tx #(
+uart_tx_module #(
    .CLKS_PER_BIT(CLKS_PER_BIT)
-) u_tx (
+) u_uart_tx (
     .clk(clk),
     .rst(rst),
 
@@ -156,10 +150,10 @@ initial begin
     $display("Inicio: %t", $time);
 
     buttons = 5'b00001;
-    switches = 8'h1;
+    switches = 16'h1;
 
     //-- Esperar muchos ciclos...
-    repeat (1100) @(posedge clk);
+    repeat (20000) @(posedge clk);
 
     //-- Indicar fin simulacion
     $display("Fin: %t", $time);

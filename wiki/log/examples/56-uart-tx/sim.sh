@@ -11,6 +11,7 @@ DEPS="wishbone_interface.sv \
       wishbone_interconnect.sv \
       wishbone_buttons.sv \
       wishbone_switches.sv \
+      uart_tx.sv \
       "
 
 #-- Simulacion con verilator
