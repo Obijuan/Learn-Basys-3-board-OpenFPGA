@@ -3,3 +3,5 @@
 *.frames
 *.json
 chipdb/
+obj_dir/
+sim.fst
