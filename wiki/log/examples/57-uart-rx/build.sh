@@ -20,7 +20,7 @@ DEPS="$LIB/wishbone_interface.sv \
       $LIB/wishbone_buttons.sv \
       $LIB/wishbone_switches.sv \
       $LIB/uart_tx.sv \
-      uart_rx.sv \
+      $LIB/uart_rx.sv \
      "
 
 #-- Path del nextpnr-xilinx
