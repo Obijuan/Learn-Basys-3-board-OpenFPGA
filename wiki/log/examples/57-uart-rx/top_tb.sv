@@ -1,7 +1,7 @@
 module TB;
 
 //-- Parametros del reloj
-localparam real SYS_CLK_FREQ_MHZ = 12;
+localparam real SYS_CLK_FREQ_MHZ = 100;
 localparam real SYS_CLK_PERIOD_PS = (1 / SYS_CLK_FREQ_MHZ)*1000*1000;
 localparam int  SIM_CLK_PERIOD = int'(SYS_CLK_PERIOD_PS);
 localparam real CLK_FREQUENCY_MHZ = SYS_CLK_FREQ_MHZ;
@@ -72,9 +72,9 @@ wishbone_interconnect #(
 );
 
 //-- Instanciar los perifericos de LEDs
-logic [7:0] leds;
+logic [15:0] leds;
 logic [4:0] buttons;
-logic [7:0] switches;
+logic [15:0] switches;
 
 
 //-- Instanciar modulo de LEDs
@@ -124,7 +124,7 @@ logic tx_serial_out;
 logic tx_done;
 logic tx_active;
 
-uart_tx #(
+uart_tx_module #(
    .CLKS_PER_BIT(CLKS_PER_BIT)
 ) u_tx (
     .clk(clk),
@@ -178,7 +178,7 @@ initial begin
     $display("Inicio: %t", $time);
 
     buttons = 5'b00001;
-    switches = 8'h1;
+    switches = 16'h1;
     rx_serial_in = 0;  //-- START BIT
 
     //-- Esperar al bit de START
