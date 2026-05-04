@@ -1,16 +1,20 @@
 module top(
     input logic clk,
 
-    //-- LEDs
-    output logic [15:0] leds,
-
     //-- BOTONES
     input logic [4:0] buttons,
 
     //-- Switches
     input  logic [15:0] switches,
+
+    //-- LEDs
+    output logic [15:0] leds,
+
+    //-- Display 7 segmentos
+    output logic [7:0] segments,
+    output logic [3:0] display_sel,
     
-    //-- SERIAL PORT
+    //-- Puerto serie
     input  logic uart_rx_async,
     output logic uart_tx
 );
@@ -41,7 +45,11 @@ mcu #(
     .buttons_async(buttons),
 
     //-- Switches
-    .switches_async(switches)
+    .switches_async(switches),
+
+    //-- Display 7 segmentos
+    .segments(segments),
+    .segments_select(display_sel)
 );
 
 //-- ELIMINAR LOS WARNINGS

@@ -28,6 +28,7 @@ DEPS="$LIB/wishbone_interface.sv \
       pipeline_status.sv \
       mcu.sv \
       fetch_stage.sv \
+      $LIB/disp7seg.sv \
      "
 
 #-- Path del nextpnr-xilinx

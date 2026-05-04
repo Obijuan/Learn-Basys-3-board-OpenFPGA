@@ -9,14 +9,18 @@ module mcu #(
     //-- Memory clock
     input logic clk_mem,
 
-    //-- LEDs
-    output logic [15:0] leds,
-
     //-- Buttons 0:center, 1: up, 2:left, 3:right, 4: down
     input  logic [4:0] buttons_async,
 
     //-- Switches
-    input logic [15:0] switches_async
+    input logic [15:0] switches_async,
+
+    //-- LEDs
+    output logic [15:0] leds,
+
+    //-- Display 7 segmentos
+    output logic [7:0] segments,
+    output logic [3:0] segments_select
 );
 
 //-----------------------------------------------------------------------
@@ -186,6 +190,39 @@ assign data_upper = (switches_sync[15])?
 
 //-- El switch 0 seleccion si vemos los 16-bits menores (0) o los mayores (1)
 assign leds = (switches_sync[0])? data_upper : data_lower; 
+
+//─────────────────────────────────
+//──   DISPLAY DE 7 SEGMENTOS
+//─────────────────────────────────
+//-- Señales para el usuario, con logica positiva
+logic [7:0] seg;      //-- Segmentos a encender
+logic [1:0] disp_sel; //-- Seleccion del display (0-3)
+
+display7seg u_disp7 (
+    .seg_in(seg),
+    .sel_in(disp_sel),
+
+    //-- Conexion al display físico
+    .segments_out(segments),
+    .display_sel_out(segments_select)
+);
+
+//──────────────────────────────────
+//── CONVERSORES BCD-7SEG
+//──────────────────────────────────
+logic [3:0] num;
+bcd_to_7seg u_conv_bcd2seg (
+    .bcd_in(num),
+    .disp_out(seg)
+);
+
+//-- Sacar en el display de 7 segmentos la informadion contenida
+//-- en data_lower o data_upper (que tiene el pc o la instrucción)
+assign num = 4'h7;
+assign disp_sel = 0;
+
+
+
 
 //---------------------------
 //-- Pruebas de pulsadores
