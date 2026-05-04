@@ -1,0 +1,1462 @@
+Warning: Wire top.\u_mcu.ram.portb_data_in [31] is used but has no driver.
+Warning: Wire top.\u_mcu.ram.portb_data_in [30] is used but has no driver.
+Warning: Wire top.\u_mcu.ram.portb_data_in [29] is used but has no driver.
+Warning: Wire top.\u_mcu.ram.portb_data_in [28] is used but has no driver.
+Warning: Wire top.\u_mcu.ram.portb_data_in [27] is used but has no driver.
+Warning: Wire top.\u_mcu.ram.portb_data_in [26] is used but has no driver.
+Warning: Wire top.\u_mcu.ram.portb_data_in [25] is used but has no driver.
+Warning: Wire top.\u_mcu.ram.portb_data_in [24] is used but has no driver.
+Warning: Wire top.\u_mcu.ram.portb_data_in [23] is used but has no driver.
+Warning: Wire top.\u_mcu.ram.portb_data_in [22] is used but has no driver.
+Warning: Wire top.\u_mcu.ram.portb_data_in [21] is used but has no driver.
+Warning: Wire top.\u_mcu.ram.portb_data_in [20] is used but has no driver.
+Warning: Wire top.\u_mcu.ram.portb_data_in [19] is used but has no driver.
+Warning: Wire top.\u_mcu.ram.portb_data_in [18] is used but has no driver.
+Warning: Wire top.\u_mcu.ram.portb_data_in [17] is used but has no driver.
+Warning: Wire top.\u_mcu.ram.portb_data_in [16] is used but has no driver.
+Warning: Wire top.\u_mcu.ram.portb_data_in [15] is used but has no driver.
+Warning: Wire top.\u_mcu.ram.portb_data_in [14] is used but has no driver.
+Warning: Wire top.\u_mcu.ram.portb_data_in [13] is used but has no driver.
+Warning: Wire top.\u_mcu.ram.portb_data_in [12] is used but has no driver.
+Warning: Wire top.\u_mcu.ram.portb_data_in [11] is used but has no driver.
+Warning: Wire top.\u_mcu.ram.portb_data_in [10] is used but has no driver.
+Warning: Wire top.\u_mcu.ram.portb_data_in [9] is used but has no driver.
+Warning: Wire top.\u_mcu.ram.portb_data_in [8] is used but has no driver.
+Warning: Wire top.\u_mcu.ram.portb_data_in [7] is used but has no driver.
+Warning: Wire top.\u_mcu.ram.portb_data_in [6] is used but has no driver.
+Warning: Wire top.\u_mcu.ram.portb_data_in [5] is used but has no driver.
+Warning: Wire top.\u_mcu.ram.portb_data_in [4] is used but has no driver.
+Warning: Wire top.\u_mcu.ram.portb_data_in [3] is used but has no driver.
+Warning: Wire top.\u_mcu.ram.portb_data_in [2] is used but has no driver.
+Warning: Wire top.\u_mcu.ram.portb_data_in [1] is used but has no driver.
+Warning: Wire top.\u_mcu.ram.portb_data_in [0] is used but has no driver.
+Warning: Resizing cell port memory.mem.0.0.DIADI from 64 bits to 32 bits.
+Warning: Resizing cell port memory.mem.0.0.DOADO from 64 bits to 32 bits.
+Warning: Resizing cell port memory.mem.0.0.DOBDO from 64 bits to 32 bits.
+Warning: Resizing cell port memory.mem.0.0.DOPADOP from 8 bits to 4 bits.
+Warning: Resizing cell port memory.mem.0.0.DOPBDOP from 8 bits to 4 bits.
+Warning: Resizing cell port memory.mem.0.1.DIADI from 64 bits to 32 bits.
+Warning: Resizing cell port memory.mem.0.1.DOADO from 64 bits to 32 bits.
+Warning: Resizing cell port memory.mem.0.1.DOBDO from 64 bits to 32 bits.
+Warning: Resizing cell port memory.mem.0.1.DOPADOP from 8 bits to 4 bits.
+Warning: Resizing cell port memory.mem.0.1.DOPBDOP from 8 bits to 4 bits.
+Warning: Resizing cell port memory.mem.0.2.DIADI from 64 bits to 32 bits.
+Warning: Resizing cell port memory.mem.0.2.DOADO from 64 bits to 32 bits.
+Warning: Resizing cell port memory.mem.0.2.DOBDO from 64 bits to 32 bits.
+Warning: Resizing cell port memory.mem.0.2.DOPADOP from 8 bits to 4 bits.
+Warning: Resizing cell port memory.mem.0.2.DOPBDOP from 8 bits to 4 bits.
+Warning: Resizing cell port memory.mem.0.3.DIADI from 64 bits to 32 bits.
+Warning: Resizing cell port memory.mem.0.3.DOADO from 64 bits to 32 bits.
+Warning: Resizing cell port memory.mem.0.3.DOBDO from 64 bits to 32 bits.
+Warning: Resizing cell port memory.mem.0.3.DOPADOP from 8 bits to 4 bits.
+Warning: Resizing cell port memory.mem.0.3.DOPBDOP from 8 bits to 4 bits.
+Info: Packing constants..
+Info: Inserting IO buffers..
+Info:     IO port 'clk' driven by IBUF '$iopadmap$top.clk'
+Info:     IO port 'uart_rx_async' driven by IBUF '$iopadmap$top.uart_rx_async'
+Info:     IO port 'uart_tx' driven by OBUF '$iopadmap$top.uart_tx'
+Info:     IO port 'buttons[0]' driven by IBUF '$iopadmap$top.buttons'
+Info:     IO port 'buttons[1]' driven by IBUF '$iopadmap$top.buttons_1'
+Info:     IO port 'buttons[2]' driven by IBUF '$iopadmap$top.buttons_2'
+Info:     IO port 'buttons[3]' driven by IBUF '$iopadmap$top.buttons_3'
+Info:     IO port 'buttons[4]' driven by IBUF '$iopadmap$top.buttons_4'
+Info:     IO port 'display_sel[0]' driven by OBUF '$iopadmap$top.display_sel'
+Info:     IO port 'display_sel[1]' driven by OBUF '$iopadmap$top.display_sel_1'
+Info:     IO port 'display_sel[2]' driven by OBUF '$iopadmap$top.display_sel_2'
+Info:     IO port 'display_sel[3]' driven by OBUF '$iopadmap$top.display_sel_3'
+Info:     IO port 'leds[0]' driven by OBUF '$iopadmap$top.leds'
+Info:     IO port 'leds[1]' driven by OBUF '$iopadmap$top.leds_1'
+Info:     IO port 'leds[10]' driven by OBUF '$iopadmap$top.leds_10'
+Info:     IO port 'leds[11]' driven by OBUF '$iopadmap$top.leds_11'
+Info:     IO port 'leds[12]' driven by OBUF '$iopadmap$top.leds_12'
+Info:     IO port 'leds[13]' driven by OBUF '$iopadmap$top.leds_13'
+Info:     IO port 'leds[14]' driven by OBUF '$iopadmap$top.leds_14'
+Info:     IO port 'leds[15]' driven by OBUF '$iopadmap$top.leds_15'
+Info:     IO port 'leds[2]' driven by OBUF '$iopadmap$top.leds_2'
+Info:     IO port 'leds[3]' driven by OBUF '$iopadmap$top.leds_3'
+Info:     IO port 'leds[4]' driven by OBUF '$iopadmap$top.leds_4'
+Info:     IO port 'leds[5]' driven by OBUF '$iopadmap$top.leds_5'
+Info:     IO port 'leds[6]' driven by OBUF '$iopadmap$top.leds_6'
+Info:     IO port 'leds[7]' driven by OBUF '$iopadmap$top.leds_7'
+Info:     IO port 'leds[8]' driven by OBUF '$iopadmap$top.leds_8'
+Info:     IO port 'leds[9]' driven by OBUF '$iopadmap$top.leds_9'
+Info:     IO port 'segments[0]' driven by OBUF '$iopadmap$top.segments'
+Info:     IO port 'segments[1]' driven by OBUF '$iopadmap$top.segments_1'
+Info:     IO port 'segments[2]' driven by OBUF '$iopadmap$top.segments_2'
+Info:     IO port 'segments[3]' driven by OBUF '$iopadmap$top.segments_3'
+Info:     IO port 'segments[4]' driven by OBUF '$iopadmap$top.segments_4'
+Info:     IO port 'segments[5]' driven by OBUF '$iopadmap$top.segments_5'
+Info:     IO port 'segments[6]' driven by OBUF '$iopadmap$top.segments_6'
+Info:     IO port 'segments[7]' driven by OBUF '$iopadmap$top.segments_7'
+Info:     IO port 'switches[0]' driven by IBUF '$iopadmap$top.switches'
+Info:     IO port 'switches[1]' driven by IBUF '$iopadmap$top.switches_1'
+Info:     IO port 'switches[10]' driven by IBUF '$iopadmap$top.switches_10'
+Info:     IO port 'switches[11]' driven by IBUF '$iopadmap$top.switches_11'
+Info:     IO port 'switches[12]' driven by IBUF '$iopadmap$top.switches_12'
+Info:     IO port 'switches[13]' driven by IBUF '$iopadmap$top.switches_13'
+Info:     IO port 'switches[14]' driven by IBUF '$iopadmap$top.switches_14'
+Info:     IO port 'switches[15]' driven by IBUF '$iopadmap$top.switches_15'
+Info:     IO port 'switches[2]' driven by IBUF '$iopadmap$top.switches_2'
+Info:     IO port 'switches[3]' driven by IBUF '$iopadmap$top.switches_3'
+Info:     IO port 'switches[4]' driven by IBUF '$iopadmap$top.switches_4'
+Info:     IO port 'switches[5]' driven by IBUF '$iopadmap$top.switches_5'
+Info:     IO port 'switches[6]' driven by IBUF '$iopadmap$top.switches_6'
+Info:     IO port 'switches[7]' driven by IBUF '$iopadmap$top.switches_7'
+Info:     IO port 'switches[8]' driven by IBUF '$iopadmap$top.switches_8'
+Info:     IO port 'switches[9]' driven by IBUF '$iopadmap$top.switches_9'
+Info:     Constraining 'clk' to site 'IOB_X1Y26'
+Info:     Tile 'RIOB33_X43Y25'
+Info:     Constraining 'uart_rx_async' to site 'IOB_X0Y112'
+Info:     Tile 'LIOB33_X0Y111'
+Info:     Constraining 'uart_tx' to site 'IOB_X0Y111'
+Info:     Tile 'LIOB33_X0Y111'
+Info:     Constraining 'buttons[0]' to site 'IOB_X0Y13'
+Info:     Tile 'LIOB33_X0Y13'
+Info:     Constraining 'buttons[1]' to site 'IOB_X0Y15'
+Info:     Tile 'LIOB33_X0Y15'
+Info:     Constraining 'buttons[2]' to site 'IOB_X0Y17'
+Info:     Tile 'LIOB33_X0Y17'
+Info:     Constraining 'buttons[3]' to site 'IOB_X0Y16'
+Info:     Tile 'LIOB33_X0Y15'
+Info:     Constraining 'buttons[4]' to site 'IOB_X0Y14'
+Info:     Tile 'LIOB33_X0Y13'
+Info:     Constraining 'display_sel[0]' to site 'IOB_X1Y31'
+Info:     Tile 'RIOB33_X43Y31'
+Info:     Constraining 'display_sel[1]' to site 'IOB_X1Y28'
+Info:     Tile 'RIOB33_X43Y27'
+Info:     Constraining 'display_sel[2]' to site 'IOB_X1Y27'
+Info:     Tile 'RIOB33_X43Y27'
+Info:     Constraining 'display_sel[3]' to site 'IOB_X1Y25'
+Info:     Tile 'RIOB33_X43Y25'
+Info:     Constraining 'leds[0]' to site 'IOB_X0Y3'
+Info:     Tile 'LIOB33_X0Y3'
+Info:     Constraining 'leds[1]' to site 'IOB_X0Y43'
+Info:     Tile 'LIOB33_X0Y43'
+Info:     Constraining 'leds[10]' to site 'IOB_X1Y37'
+Info:     Tile 'RIOB33_X43Y37'
+Info:     Constraining 'leds[11]' to site 'IOB_X1Y32'
+Info:     Tile 'RIOB33_X43Y31'
+Info:     Constraining 'leds[12]' to site 'IOB_X1Y75'
+Info:     Tile 'RIOB33_X43Y75'
+Info:     Constraining 'leds[13]' to site 'IOB_X1Y76'
+Info:     Tile 'RIOB33_X43Y75'
+Info:     Constraining 'leds[14]' to site 'IOB_X1Y61'
+Info:     Tile 'RIOB33_X43Y61'
+Info:     Constraining 'leds[15]' to site 'IOB_X1Y87'
+Info:     Tile 'RIOB33_X43Y87'
+Info:     Constraining 'leds[2]' to site 'IOB_X0Y20'
+Info:     Tile 'LIOB33_X0Y19'
+Info:     Constraining 'leds[3]' to site 'IOB_X0Y19'
+Info:     Tile 'LIOB33_X0Y19'
+Info:     Constraining 'leds[4]' to site 'IOB_X0Y18'
+Info:     Tile 'LIOB33_X0Y17'
+Info:     Constraining 'leds[5]' to site 'IOB_X0Y4'
+Info:     Tile 'LIOB33_X0Y3'
+Info:     Constraining 'leds[6]' to site 'IOB_X0Y0'
+Info:     Tile 'LIOB33_SING_X0Y0'
+Info:     Constraining 'leds[7]' to site 'IOB_X0Y1'
+Info:     Tile 'LIOB33_X0Y1'
+Info:     Constraining 'leds[8]' to site 'IOB_X0Y2'
+Info:     Tile 'LIOB33_X0Y1'
+Info:     Constraining 'leds[9]' to site 'IOB_X1Y38'
+Info:     Tile 'RIOB33_X43Y37'
+Info:     Constraining 'segments[0]' to site 'IOB_X1Y24'
+Info:     Tile 'RIOB33_X43Y23'
+Info:     Constraining 'segments[1]' to site 'IOB_X1Y23'
+Info:     Tile 'RIOB33_X43Y23'
+Info:     Constraining 'segments[2]' to site 'IOB_X1Y22'
+Info:     Tile 'RIOB33_X43Y21'
+Info:     Constraining 'segments[3]' to site 'IOB_X1Y21'
+Info:     Tile 'RIOB33_X43Y21'
+Info:     Constraining 'segments[4]' to site 'IOB_X1Y18'
+Info:     Tile 'RIOB33_X43Y17'
+Info:     Constraining 'segments[5]' to site 'IOB_X1Y17'
+Info:     Tile 'RIOB33_X43Y17'
+Info:     Constraining 'segments[6]' to site 'IOB_X1Y12'
+Info:     Tile 'RIOB33_X43Y11'
+Info:     Constraining 'segments[7]' to site 'IOB_X1Y11'
+Info:     Tile 'RIOB33_X43Y11'
+Info:     Constraining 'switches[0]' to site 'IOB_X0Y11'
+Info:     Tile 'LIOB33_X0Y11'
+Info:     Constraining 'switches[1]' to site 'IOB_X0Y12'
+Info:     Tile 'LIOB33_X0Y11'
+Info:     Constraining 'switches[10]' to site 'IOB_X1Y47'
+Info:     Tile 'RIOB33_X43Y47'
+Info:     Constraining 'switches[11]' to site 'IOB_X1Y46'
+Info:     Tile 'RIOB33_X43Y45'
+Info:     Constraining 'switches[12]' to site 'IOB_X1Y39'
+Info:     Tile 'RIOB33_X43Y39'
+Info:     Constraining 'switches[13]' to site 'IOB_X1Y43'
+Info:     Tile 'RIOB33_X43Y43'
+Info:     Constraining 'switches[14]' to site 'IOB_X1Y44'
+Info:     Tile 'RIOB33_X43Y43'
+Info:     Constraining 'switches[15]' to site 'IOB_X1Y48'
+Info:     Tile 'RIOB33_X43Y47'
+Info:     Constraining 'switches[2]' to site 'IOB_X0Y9'
+Info:     Tile 'LIOB33_X0Y9'
+Info:     Constraining 'switches[3]' to site 'IOB_X0Y10'
+Info:     Tile 'LIOB33_X0Y9'
+Info:     Constraining 'switches[4]' to site 'IOB_X0Y7'
+Info:     Tile 'LIOB33_X0Y7'
+Info:     Constraining 'switches[5]' to site 'IOB_X0Y8'
+Info:     Tile 'LIOB33_X0Y7'
+Info:     Constraining 'switches[6]' to site 'IOB_X0Y5'
+Info:     Tile 'LIOB33_X0Y5'
+Info:     Constraining 'switches[7]' to site 'IOB_X0Y6'
+Info:     Tile 'LIOB33_X0Y5'
+Info:     Constraining 'switches[8]' to site 'IOB_X1Y40'
+Info:     Tile 'RIOB33_X43Y39'
+Info:     Constraining 'switches[9]' to site 'IOB_X1Y45'
+Info:     Tile 'RIOB33_X43Y45'
+Info: Generating input buffer for '$iopadmap$top.clk'
+Info: Generating input buffer for '$iopadmap$top.uart_rx_async'
+Info: Generating output buffer for '$iopadmap$top.uart_tx'
+Info: Generating input buffer for '$iopadmap$top.buttons'
+Info: Generating input buffer for '$iopadmap$top.buttons_1'
+Info: Generating input buffer for '$iopadmap$top.buttons_2'
+Info: Generating input buffer for '$iopadmap$top.buttons_3'
+Info: Generating input buffer for '$iopadmap$top.buttons_4'
+Info: Generating output buffer for '$iopadmap$top.display_sel'
+Info: Generating output buffer for '$iopadmap$top.display_sel_1'
+Info: Generating output buffer for '$iopadmap$top.display_sel_2'
+Info: Generating output buffer for '$iopadmap$top.display_sel_3'
+Info: Generating output buffer for '$iopadmap$top.leds'
+Info: Generating output buffer for '$iopadmap$top.leds_1'
+Info: Generating output buffer for '$iopadmap$top.leds_10'
+Info: Generating output buffer for '$iopadmap$top.leds_11'
+Info: Generating output buffer for '$iopadmap$top.leds_12'
+Info: Generating output buffer for '$iopadmap$top.leds_13'
+Info: Generating output buffer for '$iopadmap$top.leds_14'
+Info: Generating output buffer for '$iopadmap$top.leds_15'
+Info: Generating output buffer for '$iopadmap$top.leds_2'
+Info: Generating output buffer for '$iopadmap$top.leds_3'
+Info: Generating output buffer for '$iopadmap$top.leds_4'
+Info: Generating output buffer for '$iopadmap$top.leds_5'
+Info: Generating output buffer for '$iopadmap$top.leds_6'
+Info: Generating output buffer for '$iopadmap$top.leds_7'
+Info: Generating output buffer for '$iopadmap$top.leds_8'
+Info: Generating output buffer for '$iopadmap$top.leds_9'
+Info: Generating output buffer for '$iopadmap$top.segments'
+Info: Generating output buffer for '$iopadmap$top.segments_1'
+Info: Generating output buffer for '$iopadmap$top.segments_2'
+Info: Generating output buffer for '$iopadmap$top.segments_3'
+Info: Generating output buffer for '$iopadmap$top.segments_4'
+Info: Generating output buffer for '$iopadmap$top.segments_5'
+Info: Generating output buffer for '$iopadmap$top.segments_6'
+Info: Generating output buffer for '$iopadmap$top.segments_7'
+Info: Generating input buffer for '$iopadmap$top.switches'
+Info: Generating input buffer for '$iopadmap$top.switches_1'
+Info: Generating input buffer for '$iopadmap$top.switches_10'
+Info: Generating input buffer for '$iopadmap$top.switches_11'
+Info: Generating input buffer for '$iopadmap$top.switches_12'
+Info: Generating input buffer for '$iopadmap$top.switches_13'
+Info: Generating input buffer for '$iopadmap$top.switches_14'
+Info: Generating input buffer for '$iopadmap$top.switches_15'
+Info: Generating input buffer for '$iopadmap$top.switches_2'
+Info: Generating input buffer for '$iopadmap$top.switches_3'
+Info: Generating input buffer for '$iopadmap$top.switches_4'
+Info: Generating input buffer for '$iopadmap$top.switches_5'
+Info: Generating input buffer for '$iopadmap$top.switches_6'
+Info: Generating input buffer for '$iopadmap$top.switches_7'
+Info: Generating input buffer for '$iopadmap$top.switches_8'
+Info: Generating input buffer for '$iopadmap$top.switches_9'
+Info:     Created 52 PAD cells from:
+Info:             52x PAD
+Info: Preparing clocking...
+Info: Packing constants..
+Info: Packing cfg...
+Info: Packing PLLs...
+Info: Packing GTP Transceivers..
+Info: Packing global buffers...
+Info:     Constrained BUFGCTRL '$auto$clkbufmap.cc:261:execute$29085' to bel 'BUFGCTRL_X0Y0/BUFGCTRL' based on dedicated routing
+Info: Packing MUX[789]s..
+Info: Packing carries..
+Info:    Grouped 328 MUXCYs and 328 XORCYs into 25 chains.
+Info:    Blasted 0 non-chain MUXCYs and 3 non-chain XORCYs to soft logic
+Info: Packing LUTs..
+Info:     Created 2320 SLICE_LUTX cells from:
+Info:            882x LUT1
+Info:            334x LUT2
+Info:            327x LUT3
+Info:            104x LUT4
+Info:            183x LUT5
+Info:            490x LUT6
+Info: Packing DRAM..
+Info:    Transformed 0 tied-low DRAM address inputs to be tied-high
+Info: Packing BRAM..
+Info: Packing DSPs..
+Info: Packing flipflops..
+Info:     Created 364 SLICE_FFX cells from:
+Info:            354x FDRE
+Info:              2x FDRE_1
+Info:              8x FDSE
+Info:     Created 47 SELMUX2_1 cells from:
+Info:             40x MUXF7
+Info:              7x MUXF8
+Info: Constrained 213 LUTFF pairs.
+
+Info: Annotating ports with timing budgets for target frequency 12.00 MHz
+Info: Checksum: 0x7b144c15
+
+Info: Device utilisation:
+Info: 	          SLICE_LUTX:  2320/65200     3%
+Info: 	           SLICE_FFX:   364/65200     0%
+Info: 	              CARRY4:    90/ 8150     1%
+Info: 	          PSEUDO_GND:     1/18055     0%
+Info: 	          PSEUDO_VCC:     1/18055     0%
+Info: 	            RAMB36E1:     4/   75     5%
+Info: 	                 PAD:    52/  512    10%
+Info: 	        IOB33_OUTBUF:    29/  250    11%
+Info: 	      IOB33_INBUF_EN:    23/  250     9%
+Info: 	            BUFGCTRL:     1/   32     3%
+Info: 	           SELMUX2_1:    47/25450     0%
+
+Info: Placed 105 cells based on constraints.
+Info: Creating initial analytic placement for 1789 cells, random placement wirelen = 398195.
+Info:     at initial placer iter 0, wirelen = 5922
+Info:     at initial placer iter 1, wirelen = 5771
+Info:     at initial placer iter 2, wirelen = 5612
+Info:     at initial placer iter 3, wirelen = 5697
+Info: Running main analytical placer.
+Info:     at iteration #1, type ALL: wirelen solved = 5553, spread = 61417, legal = 61250; time = 0.08s
+Info:     at iteration #2, type ALL: wirelen solved = 6893, spread = 44989, legal = 45818; time = 0.10s
+Info:     at iteration #3, type ALL: wirelen solved = 8200, spread = 38660, legal = 40018; time = 0.06s
+Info:     at iteration #4, type ALL: wirelen solved = 9253, spread = 35131, legal = 35786; time = 0.05s
+Info:     at iteration #5, type ALL: wirelen solved = 10823, spread = 35712, legal = 37176; time = 0.05s
+Info:     at iteration #6, type ALL: wirelen solved = 12785, spread = 35911, legal = 36770; time = 0.07s
+Info:     at iteration #7, type ALL: wirelen solved = 14796, spread = 35977, legal = 36896; time = 0.05s
+Info:     at iteration #8, type ALL: wirelen solved = 15510, spread = 40633, legal = 42385; time = 0.05s
+Info:     at iteration #9, type ALL: wirelen solved = 20858, spread = 36560, legal = 36322; time = 0.05s
+Info: HeAP Placer Time: 0.89s
+Info:   of which solving equations: 0.55s
+Info:   of which spreading cells: 0.09s
+Info:   of which strict legalisation: 0.06s
+
+Info: Running simulated annealing placer for refinement.
+Info:   at iteration #1: temp = 0.000000, timing cost = 471, wirelen = 35786
+Info:   at iteration #5: temp = 0.000000, timing cost = 470, wirelen = 31739
+Info:   at iteration #10: temp = 0.000000, timing cost = 450, wirelen = 30855
+Info:   at iteration #15: temp = 0.000000, timing cost = 476, wirelen = 30701
+Info:   at iteration #18: temp = 0.000000, timing cost = 487, wirelen = 30681 
+Info: SA placement time 1.01s
+
+Info: Max frequency for clock 'u_mcu.clk': 80.50 MHz (PASS at 12.00 MHz)
+
+Info: Slack histogram:
+Info:  legend: * represents 2 endpoint(s)
+Info:          + represents [1,2) endpoint(s)
+Info: [ 70910,  71522) |*******+
+Info: [ 71522,  72134) |****************************+
+Info: [ 72134,  72746) |****************+
+Info: [ 72746,  73358) |********+
+Info: [ 73358,  73970) |*****+
+Info: [ 73970,  74582) |******+
+Info: [ 74582,  75194) |****+
+Info: [ 75194,  75806) |******+
+Info: [ 75806,  76418) |****+
+Info: [ 76418,  77030) |*+
+Info: [ 77030,  77642) |+
+Info: [ 77642,  78254) |+
+Info: [ 78254,  78866) |****+
+Info: [ 78866,  79478) |*****+
+Info: [ 79478,  80090) |*************+
+Info: [ 80090,  80702) |*************+
+Info: [ 80702,  81314) |***********************************************+
+Info: [ 81314,  81926) |************************************************************ 
+Info: [ 81926,  82538) |****************************************+
+Info: [ 82538,  83150) |********+
+Info: Checksum: 0x78b7cbaf
+Info: Running post-placement legalisation...
+Info: Routing global clocks...
+Info:     routing clock 'u_mcu.clk'
+Info: Running router2...
+Info: Setting up routing resources...
+Info: Running main router loop...
+Info:     iter=1 wires=49869 overused=1375 overuse=1400 archfail=NA
+Info:     iter=2 wires=50821 overused=10 overuse=10 archfail=NA
+Info:     iter=3 wires=50846 overused=1 overuse=1 archfail=NA
+Info:     iter=4 wires=50849 overused=0 overuse=0 archfail=0
+Info: 1000 slowest nets by runtime:
+                                                        u_mcu.decode_instruction_reg[60]     94 172.0ms
+                                                                   u_mcu.rs2_data_reg[1]     73 155.5ms
+                                                                              u_mcu.INIT     71 152.6ms
+                                                                        u_mcu.rst_cnt[5]    297 149.6ms
+                                                                   u_mcu.rs2_data_reg[0]     70 147.6ms
+                                                        u_mcu.decode_instruction_reg[59]    127 143.4ms
+                     $techmap27157$abc$24881$auto$blifparse.cc:557:parse_blif$24883.A[4]    120 143.2ms
+                                                                                u_mcu.E0     71 126.1ms
+                                                     u_mcu.u_decode.is_instruction_valid     41 116.5ms
+                                                         u_mcu.decode_instruction_reg[3]     62 115.5ms
+                                                         u_mcu.decode_instruction_reg[1]     74 109.5ms
+                                                                   u_mcu.rs2_data_reg[3]     79 109.4ms
+                                                   u_mcu.u_decode.status_forwards_out[1]     41 107.8ms
+                                                                  u_mcu.rs1_data_reg[31]     51 106.6ms
+                     $techmap27436$abc$24881$auto$blifparse.cc:557:parse_blif$25285.A[1]     47 105.6ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$26152.A[3]     52 104.1ms
+                                                         u_mcu.decode_instruction_reg[0]     71 101.7ms
+                     $techmap27498$abc$24881$auto$blifparse.cc:557:parse_blif$25346.A[0]     45 99.2ms
+                                                        u_mcu.decode_instruction_reg[61]     52 97.6ms
+                                                                   u_mcu.rs2_data_reg[2]     84 89.4ms
+                                                                   u_mcu.rs2_data_reg[4]     52 75.3ms
+                                                         u_mcu.decode_instruction_reg[2]     83 72.5ms
+                                                         u_mcu.decode_instruction_reg[4]     68 66.9ms
+                     $techmap27342$abc$24881$auto$blifparse.cc:557:parse_blif$25181.A[2]     96 63.7ms
+                     $techmap27500$abc$24881$auto$blifparse.cc:557:parse_blif$25348.A[0]     47 58.6ms
+                                                                     u_mcu.fetch_bus.ack     64 54.5ms
+                                                                           u_mcu.leds[3]      2 44.1ms
+                                                                          u_mcu.leds[11]      2 42.7ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$25182.A[6]     33 41.6ms
+                                                        u_mcu.decode_instruction_reg[64]     38 32.7ms
+                                                                         $PACKER_GND_NET    674 26.5ms
+                                                                           u_mcu.leds[8]      1 25.9ms
+                     $techmap27946$abc$24881$auto$blifparse.cc:557:parse_blif$25793.A[4]     16 25.7ms
+                                                                  u_mcu.fetch_bus.adr[0]     12 25.6ms
+                                                                  u_mcu.rs1_data_reg[23]     22 25.6ms
+                                                                          u_mcu.leds[12]      2 25.2ms
+                                                                          u_mcu.leds[10]      1 23.8ms
+                                                                           u_mcu.leds[1]      2 23.7ms
+                     $techmap27155$abc$24881$auto$blifparse.cc:557:parse_blif$24991.A[5]     33 23.4ms
+                                                                  u_mcu.fetch_bus.adr[4]     12 23.0ms
+                                                                   u_mcu.rs1_data_reg[8]     22 22.1ms
+                                                                           u_mcu.leds[0]      2 22.0ms
+                                                                  u_mcu.fetch_bus.adr[2]     12 21.8ms
+                                                                  u_mcu.rs1_data_reg[13]     21 21.7ms
+                                                                 u_mcu.fetch_bus.adr[11]     12 21.7ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$26152.A[2]     40 21.6ms
+                                                                  u_mcu.rs1_data_reg[20]     21 21.4ms
+                                                                         $PACKER_VCC_NET    793 21.1ms
+                                                                           u_mcu.clk_mem     16 21.1ms
+                                                                          u_mcu.leds[14]      2 20.7ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$25354.A[6]     33 18.8ms
+                                                                   u_mcu.rs1_data_reg[9]     22 18.7ms
+                                                         u_mcu.fetch_instruction_reg[14]     26 18.5ms
+                                 $abc$24881$auto$opt_dff.cc:251:make_patterns_logic$3786     19 18.3ms
+                     $techmap28304$abc$24881$auto$blifparse.cc:557:parse_blif$26163.A[1]     32 18.1ms
+                                                                  u_mcu.rs1_data_reg[29]     25 18.0ms
+                                                                  u_mcu.rs1_data_reg[17]     22 17.8ms
+                                                                  u_mcu.fetch_bus.adr[6]     12 17.7ms
+                                                                          u_mcu.leds[15]      2 17.4ms
+                                                                  u_mcu.rs1_data_reg[27]     20 17.0ms
+                                                                           u_mcu.leds[9]      2 16.6ms
+                     $techmap27445$abc$24881$auto$blifparse.cc:557:parse_blif$25294.A[5]     32 16.4ms
+                                                                  u_mcu.fetch_bus.adr[9]     12 15.9ms
+                                                                           u_mcu.leds[5]      2 15.8ms
+                                                                           u_mcu.leds[7]      2 15.7ms
+                                                                   u_mcu.rs1_data_reg[5]     24 15.6ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24461      1 15.0ms
+                                                                           u_mcu.leds[2]      2 14.8ms
+                                                         u_mcu.fetch_instruction_reg[13]     23 14.6ms
+                     $techmap27449$abc$24881$auto$blifparse.cc:557:parse_blif$25288.A[2]     32 14.4ms
+                     $techmap27438$abc$24881$auto$blifparse.cc:557:parse_blif$25268.A[3]     31 14.3ms
+                                                                  u_mcu.rs1_data_reg[30]     24 14.3ms
+                                                                   u_mcu.rs1_data_reg[3]     24 14.0ms
+                                                                  u_mcu.fetch_bus.adr[1]     12 13.9ms
+                                                                  u_mcu.rs1_data_reg[12]     21 13.6ms
+                                                                  u_mcu.rs1_data_reg[16]     22 13.5ms
+                                                                  u_mcu.rs1_data_reg[21]     22 13.4ms
+                                                                   u_mcu.rs1_data_reg[0]     19 13.2ms
+                                                                  u_mcu.rs1_data_reg[14]     22 13.2ms
+                                                                       u_mcu.segments[0]      1 12.9ms
+                                                                  u_mcu.rs1_data_reg[28]     22 12.9ms
+                     $techmap27342$abc$24881$auto$blifparse.cc:557:parse_blif$25181.A[1]     37 12.8ms
+                                                                  u_mcu.rs1_data_reg[10]     22 12.5ms
+                                                                  u_mcu.rs1_data_reg[24]     22 12.5ms
+                                                                u_mcu.segments_select[0]      3 12.4ms
+                                                                   u_mcu.rs1_data_reg[1]     22 12.1ms
+                                                         u_mcu.fetch_instruction_reg[31]     16 12.1ms
+                                                                  u_mcu.fetch_bus.adr[3]     12 11.6ms
+                                                                u_mcu.segments_select[2]      1 11.6ms
+                                                                   u_mcu.rs1_data_reg[2]     23 11.4ms
+                                                                       u_mcu.segments[6]      1 11.2ms
+                                                                  u_mcu.rs1_data_reg[22]     21 11.2ms
+                                                                   u_mcu.rs1_data_reg[6]     23 11.2ms
+                                                                           u_mcu.leds[6]      2 11.2ms
+                                                         u_mcu.fetch_instruction_reg[12]     22 11.1ms
+                                                                u_mcu.segments_select[1]      3 11.1ms
+                                                                       u_mcu.segments[1]      1 10.9ms
+                                                                  u_mcu.rs1_data_reg[19]     21 10.8ms
+                     $techmap27478$abc$24881$auto$blifparse.cc:557:parse_blif$25317.A[5]     16 10.7ms
+                                                                   u_mcu.rs1_data_reg[4]     24 10.5ms
+                                                                  u_mcu.fetch_bus.adr[8]     12 10.4ms
+                                                                  u_mcu.rs1_data_reg[11]     21 10.3ms
+                                                                  u_mcu.fetch_bus.adr[7]     12 10.1ms
+                                                                          u_mcu.leds[13]      2 10.1ms
+                                                                u_mcu.segments_select[3]      1 10.1ms
+                                                                  u_mcu.rs1_data_reg[25]     21 10.1ms
+                                                                  u_mcu.rs1_data_reg[15]     22 10.0ms
+                                                                           u_mcu.leds[4]      2 10.0ms
+                                                                  u_mcu.rs1_data_reg[18]     22 10.0ms
+                                                                       u_mcu.segments[5]      1 9.7ms
+                     $techmap27449$abc$24881$auto$blifparse.cc:557:parse_blif$25288.A[0]     24 9.7ms
+                                                                  u_mcu.fetch_bus.adr[5]     12 9.6ms
+                                                                  u_mcu.switches_sync[0]     18 9.5ms
+                     $techmap27443$abc$24881$auto$blifparse.cc:557:parse_blif$25292.A[1]     14 9.4ms
+                                                                  u_mcu.rs1_data_reg[26]     21 9.3ms
+                     $techmap27431$abc$24881$auto$blifparse.cc:557:parse_blif$25269.A[2]     14 9.1ms
+                     $techmap28360$abc$24881$auto$blifparse.cc:557:parse_blif$26221.A[1]     12 8.6ms
+                                                                       u_mcu.segments[4]      1 8.6ms
+                                                                   u_mcu.rs1_data_reg[7]     22 8.6ms
+                                                         u_mcu.fetch_instruction_reg[23]      9 8.4ms
+                                                                 u_mcu.switches_sync[15]     18 8.3ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24439      1 8.1ms
+                                                        u_mcu.decode_instruction_reg[62]     11 8.0ms
+                                                          u_mcu.fetch_instruction_reg[6]     26 7.8ms
+                                                         u_mcu.fetch_instruction_reg[30]     10 7.3ms
+                                                                 u_mcu.fetch_bus.adr[10]     12 7.3ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$25354.A[1]     15 7.2ms
+                                                         u_mcu.fetch_instruction_reg[22]     10 7.1ms
+                                                        u_mcu.decode_instruction_reg[16]      5 7.1ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$24955.A[5]     22 7.0ms
+                                                         u_mcu.fetch_instruction_reg[21]     12 6.8ms
+                     $techmap27951$abc$24881$auto$blifparse.cc:557:parse_blif$25801.A[4]     16 6.6ms
+                     $techmap27438$abc$24881$auto$blifparse.cc:557:parse_blif$25268.A[1]     19 6.6ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$24955.A[2]     21 6.5ms
+                                                                       u_mcu.segments[2]      1 6.4ms
+                                                         u_mcu.decode_instruction_reg[6]      6 6.4ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24843      1 6.3ms
+                     $techmap28370$abc$24881$auto$blifparse.cc:557:parse_blif$26230.A[3]     11 6.3ms
+                                                         u_mcu.fetch_instruction_reg[25]     10 6.2ms
+                                                          u_mcu.fetch_instruction_reg[4]     28 6.1ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$24955.A[3]     18 6.0ms
+                     $techmap28358$abc$24881$auto$blifparse.cc:557:parse_blif$26219.A[1]     13 6.0ms
+                                              $auto$alumacc.cc:512:replace_alu$5438.Y[6]      1 5.9ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24821      1 5.9ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24323      1 5.7ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$24955.A[0]     19 5.7ms
+                                                         u_mcu.fetch_instruction_reg[15]      7 5.6ms
+                                                          u_mcu.fetch_instruction_reg[5]     23 5.6ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$24918.A[0]     14 5.5ms
+                                                u_mcu.u_execute.rs1_greather_eq_than_rs2      2 5.4ms
+                                                                  u_mcu.rs2_data_reg[12]      5 5.3ms
+                                                                       u_mcu.segments[3]      1 5.2ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24291      1 5.2ms
+                                                         u_mcu.fetch_instruction_reg[20]     11 5.1ms
+                                                                 u_mcu.switches_async[0]      1 4.9ms
+                     $techmap27991$abc$24881$auto$blifparse.cc:557:parse_blif$25842.A[2]      4 4.9ms
+                     $techmap27463$abc$24881$auto$blifparse.cc:557:parse_blif$25299.A[5]      7 4.9ms
+                                                         u_mcu.fetch_instruction_reg[28]     11 4.9ms
+                                                                       u_mcu.disp_sel[1]      9 4.8ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$24943.A[0]      5 4.7ms
+                                                    u_mcu.decode_program_counter_reg[17]      4 4.6ms
+                                                         u_mcu.fetch_instruction_reg[24]     10 4.6ms
+                                              $auto$alumacc.cc:512:replace_alu$5438.Y[3]      1 4.6ms
+                     $techmap28337$abc$24881$auto$blifparse.cc:557:parse_blif$26199.A[0]      8 4.6ms
+                                                        u_mcu.u_execute.rs1_plus_imm[19]      3 4.6ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$24918.A[6]      7 4.5ms
+                                                                  u_mcu.rs2_data_reg[16]      6 4.5ms
+                                                         u_mcu.fetch_instruction_reg[27]     10 4.5ms
+                                                     u_mcu.u_debouncer1.bounce_cnt_state     18 4.5ms
+                     $techmap28361$abc$24881$auto$blifparse.cc:557:parse_blif$26218.A[0]      8 4.4ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24717      1 4.4ms
+                                                         u_mcu.fetch_instruction_reg[26]     11 4.4ms
+                                                        u_mcu.decode_instruction_reg[18]      5 4.3ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$24929.A[2]      1 4.3ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24787      1 4.3ms
+                                                                 u_mcu.fetch_bus.adr[29]      4 4.3ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$24955.A[4]      9 4.2ms
+                     $techmap27781$abc$24881$auto$blifparse.cc:557:parse_blif$25633.A[1]      8 4.1ms
+                                                         u_mcu.fetch_instruction_reg[17]      5 4.1ms
+                                             $auto$alumacc.cc:512:replace_alu$5461.Y[11]      1 4.1ms
+                                                                  u_mcu.rs2_data_reg[11]      5 4.0ms
+                                                        u_mcu.decode_instruction_reg[28]      5 3.9ms
+                     $techmap27157$abc$24881$auto$blifparse.cc:557:parse_blif$24883.A[2]      4 3.9ms
+                                                           u_mcu.u_execute.pc_plus_4[13]      3 3.9ms
+                                                                 u_mcu.fetch_bus.adr[22]      4 3.9ms
+                                                                u_mcu.u_debouncer1.edges      1 3.9ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24309      1 3.8ms
+                                                         u_mcu.fetch_instruction_reg[29]     10 3.8ms
+                                                          u_mcu.fetch_instruction_reg[0]      3 3.7ms
+                                                                  u_mcu.rs2_data_reg[29]      8 3.7ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$24898.A[4]      4 3.7ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$24955.A[1]      8 3.7ms
+                                              $auto$alumacc.cc:512:replace_alu$5461.Y[7]      1 3.7ms
+                                                         u_mcu.fetch_instruction_reg[18]      5 3.7ms
+                                       u_mcu.u_execute.rs1_unsigned_greather_eq_than_rs2      2 3.6ms
+                     $techmap27997$abc$24881$auto$blifparse.cc:557:parse_blif$25848.A[0]      2 3.6ms
+                                                                 u_mcu.fetch_bus.adr[15]      4 3.6ms
+                     $techmap27655$abc$24881$auto$blifparse.cc:557:parse_blif$25501.A[1]      3 3.6ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24339      1 3.6ms
+                     $techmap27766$abc$24881$auto$blifparse.cc:557:parse_blif$25610.A[0]      2 3.6ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24351      1 3.6ms
+                     $techmap28095$abc$24881$auto$blifparse.cc:557:parse_blif$25926.A[3]      3 3.6ms
+                                                        u_mcu.decode_instruction_reg[21]      5 3.5ms
+                     $techmap27567$abc$24881$auto$blifparse.cc:557:parse_blif$25387.A[0]      2 3.5ms
+                                                    u_mcu.decode_program_counter_reg[11]      4 3.5ms
+                                                    u_mcu.decode_program_counter_reg[14]      4 3.5ms
+                     $techmap27948$abc$24881$auto$blifparse.cc:557:parse_blif$25792.A[3]      1 3.5ms
+                                                    u_mcu.decode_program_counter_reg[19]      4 3.4ms
+                                                        u_mcu.decode_instruction_reg[19]      5 3.4ms
+                                                                       $422.genblk1.S[9]      5 3.4ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24383      1 3.4ms
+                                                     u_mcu.decode_program_counter_reg[3]      4 3.4ms
+                     $techmap27710$abc$24881$auto$blifparse.cc:557:parse_blif$25561.A[2]      2 3.4ms
+                     $techmap27566$abc$24881$auto$blifparse.cc:557:parse_blif$25415.A[0]      3 3.4ms
+                                                    u_mcu.decode_program_counter_reg[23]      4 3.4ms
+                                                     u_mcu.decode_program_counter_reg[5]      4 3.4ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$26159.A[1]      2 3.3ms
+                                                                  u_mcu.rs2_data_reg[23]      6 3.3ms
+                                                        u_mcu.decode_instruction_reg[31]      6 3.3ms
+                                                                       $422.genblk1.S[3]      5 3.3ms
+                                                        u_mcu.decode_instruction_reg[30]      6 3.3ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24313      1 3.3ms
+                                                                       $422.genblk1.S[0]      7 3.3ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$24987.A[5]      6 3.3ms
+                                                                  u_mcu.rs2_data_reg[22]      5 3.3ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24785      1 3.3ms
+                                                                  u_mcu.rs2_data_reg[27]      5 3.3ms
+                                                                 u_mcu.fetch_bus.adr[24]      4 3.3ms
+                                                          u_mcu.fetch_instruction_reg[2]     11 3.3ms
+                                                        u_mcu.decode_instruction_reg[22]      5 3.3ms
+                     $techmap27778$abc$24881$auto$blifparse.cc:557:parse_blif$25627.A[3]     10 3.2ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24431      1 3.2ms
+                     $techmap27070$abc$24881$auto$blifparse.cc:557:parse_blif$24903.A[3]      3 3.2ms
+                                                                 u_mcu.fetch_bus.adr[14]      4 3.2ms
+                                                    u_mcu.decode_program_counter_reg[15]      4 3.2ms
+                                                         u_mcu.fetch_instruction_reg[16]      5 3.2ms
+                                                                   u_mcu.rs2_data_reg[5]      6 3.2ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$24923.A[5]      4 3.2ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$24907.A[4]     10 3.1ms
+                                                    u_mcu.decode_program_counter_reg[16]      4 3.1ms
+                                                                  u_mcu.rs2_data_reg[17]      6 3.1ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24701      1 3.1ms
+                                                                 u_mcu.fetch_bus.adr[12]      6 3.1ms
+                     $techmap27488$abc$24881$auto$blifparse.cc:557:parse_blif$25338.A[0]      2 3.1ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24377      1 3.1ms
+                                                    u_mcu.decode_program_counter_reg[27]      4 3.1ms
+                     $techmap27972$abc$24881$auto$blifparse.cc:557:parse_blif$25826.A[0]      2 3.1ms
+                     $techmap28091$abc$24881$auto$blifparse.cc:557:parse_blif$25938.A[2]      8 3.1ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24771      1 3.1ms
+                                                    u_mcu.decode_program_counter_reg[22]      4 3.1ms
+                     $techmap27883$abc$24881$auto$blifparse.cc:557:parse_blif$25733.A[0]      2 3.1ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$24939.A[6]      4 3.1ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24829      1 3.1ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$24898.A[6]      5 3.0ms
+                     $techmap28435$abc$24881$auto$blifparse.cc:557:parse_blif$26290.A[3]      7 3.0ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$24967.A[4]      5 3.0ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$24992.A[6]      5 3.0ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24847      1 3.0ms
+                     $techmap28435$abc$24881$auto$blifparse.cc:557:parse_blif$26290.A[1]      7 3.0ms
+                                                        u_mcu.decode_instruction_reg[26]      5 3.0ms
+                                                         u_mcu.u_execute.pc_plus_imm[23]      1 3.0ms
+                                                    u_mcu.decode_program_counter_reg[26]      4 3.0ms
+                                                         u_mcu.fetch_instruction_reg[19]      5 2.9ms
+                                                                       $422.genblk1.S[5]      5 2.9ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24469      1 2.9ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24523      1 2.9ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24575      1 2.9ms
+                     $techmap27100$abc$24881$auto$blifparse.cc:557:parse_blif$24935.A[4]     10 2.9ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24491      1 2.9ms
+                                                        u_mcu.decode_instruction_reg[12]      5 2.9ms
+                                                                 u_mcu.fetch_bus.adr[19]      4 2.9ms
+                     $techmap27633$abc$24881$auto$blifparse.cc:557:parse_blif$25481.A[0]      2 2.9ms
+                                                        u_mcu.decode_instruction_reg[25]      5 2.9ms
+                                                     u_mcu.decode_program_counter_reg[9]      4 2.9ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24487      1 2.9ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24645      1 2.8ms
+                                                        u_mcu.decode_instruction_reg[63]      7 2.8ms
+                     $techmap27984$abc$24881$auto$blifparse.cc:557:parse_blif$25813.A[0]      3 2.8ms
+                                                      u_mcu.fetch_program_counter_reg[4]      1 2.8ms
+                                                                  u_mcu.rs2_data_reg[13]      5 2.8ms
+                     $techmap27916$abc$24881$auto$blifparse.cc:557:parse_blif$25744.A[3]      3 2.8ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24759      1 2.8ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24653      1 2.8ms
+                     $techmap27667$abc$24881$auto$blifparse.cc:557:parse_blif$25517.A[2]      2 2.8ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$24920.A[6]      2 2.8ms
+                     $techmap27902$abc$24881$auto$blifparse.cc:557:parse_blif$25746.A[2]      2 2.8ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$26152.A[6]      2 2.8ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24709      1 2.8ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24775      1 2.7ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24609      1 2.7ms
+                                                    u_mcu.decode_program_counter_reg[24]      4 2.7ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24795      1 2.7ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24327      1 2.7ms
+                                                     u_mcu.decode_program_counter_reg[4]      4 2.7ms
+                     $techmap27747$abc$24881$auto$blifparse.cc:557:parse_blif$25567.A[0]      3 2.7ms
+                     $techmap27925$abc$24881$auto$blifparse.cc:557:parse_blif$25768.A[2]      2 2.7ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24861      1 2.7ms
+                     $techmap27348$abc$24881$auto$blifparse.cc:557:parse_blif$25194.A[1]      6 2.7ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$24992.A[5]      2 2.7ms
+                                                        u_mcu.u_execute.rs1_plus_imm[25]      3 2.7ms
+                                                                 u_mcu.fetch_bus.adr[28]      4 2.7ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24745      1 2.6ms
+                     $techmap27865$abc$24881$auto$blifparse.cc:557:parse_blif$25714.A[2]      2 2.6ms
+                                                                               $69.CO[4]      2 2.6ms
+                                                                  u_mcu.rs2_data_reg[26]      5 2.6ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24385      1 2.6ms
+                     $techmap27594$abc$24881$auto$blifparse.cc:557:parse_blif$25435.A[5]      1 2.6ms
+                                                                       u_mcu.disp_sel[0]      9 2.6ms
+                                                       u_mcu.exe_program_counter_reg[27]      1 2.6ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$24907.A[6]      3 2.6ms
+                     $techmap27627$abc$24881$auto$blifparse.cc:557:parse_blif$25471.A[1]      2 2.6ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24783      1 2.6ms
+                                             $auto$alumacc.cc:512:replace_alu$5461.Y[16]      1 2.6ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24777      1 2.6ms
+                     $techmap28114$abc$24881$auto$blifparse.cc:557:parse_blif$25946.A[0]      3 2.6ms
+                     $techmap27563$abc$24881$auto$blifparse.cc:557:parse_blif$25403.A[1]      4 2.6ms
+                                                    u_mcu.decode_program_counter_reg[21]      4 2.6ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24539      1 2.6ms
+                                                     u_mcu.decode_program_counter_reg[7]      4 2.6ms
+                                                                  u_mcu.rs2_data_reg[24]      6 2.6ms
+                     $techmap28037$abc$24881$auto$blifparse.cc:557:parse_blif$25871.A[2]      3 2.6ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24457      1 2.5ms
+                     $techmap27763$abc$24881$auto$blifparse.cc:557:parse_blif$25614.A[2]      2 2.5ms
+                                                       u_mcu.u_execute.rs1_less_than_rs2      3 2.5ms
+                                                               u_mcu.exe_rd_data_reg[31]      2 2.5ms
+                                                                   u_mcu.buttons_sync[0]      3 2.5ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24395      1 2.5ms
+                     $techmap27567$abc$24881$auto$blifparse.cc:557:parse_blif$25387.A[1]      2 2.5ms
+                                             $auto$alumacc.cc:512:replace_alu$5461.Y[15]      1 2.5ms
+                                                        u_mcu.decode_instruction_reg[23]      5 2.5ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24751      1 2.5ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24417      1 2.5ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24551      1 2.5ms
+                                                                  u_mcu.rs2_data_reg[30]      8 2.5ms
+                     $techmap27659$abc$24881$auto$blifparse.cc:557:parse_blif$25490.A[1]      1 2.5ms
+                                             $auto$alumacc.cc:512:replace_alu$5467.Y[14]      1 2.5ms
+                     $techmap27845$abc$24881$auto$blifparse.cc:557:parse_blif$25691.A[0]      2 2.5ms
+                                                                    u_mcu.buttons_rdy[0]      2 2.5ms
+                     $techmap27352$abc$24881$auto$blifparse.cc:557:parse_blif$25196.A[2]      2 2.5ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24591      1 2.5ms
+                                                                  u_mcu.rs2_data_reg[14]      6 2.4ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24521      1 2.4ms
+                                                        u_mcu.decode_instruction_reg[27]      5 2.4ms
+                     $techmap27837$abc$24881$auto$blifparse.cc:557:parse_blif$25686.A[0]      3 2.4ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$24907.A[2]      4 2.4ms
+                                              $auto$alumacc.cc:512:replace_alu$5438.Y[1]      1 2.4ms
+                     $techmap27466$abc$24881$auto$blifparse.cc:557:parse_blif$25267.A[4]      4 2.4ms
+                                                        u_mcu.decode_instruction_reg[13]      5 2.4ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24749      1 2.4ms
+                                       u_mcu.ram.u_mem.$techmap6414\mem.0.2.PORT_A_WR_EN      8 2.4ms
+                     $techmap27063$abc$24881$auto$blifparse.cc:557:parse_blif$24895.A[3]      5 2.4ms
+                                              $auto$alumacc.cc:512:replace_alu$5461.Y[3]      1 2.4ms
+                                                          u_mcu.fetch_instruction_reg[3]     10 2.4ms
+                     $techmap27870$abc$24881$auto$blifparse.cc:557:parse_blif$25698.A[2]      3 2.4ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24773      1 2.4ms
+                                                                 u_mcu.fetch_bus.adr[20]      4 2.4ms
+                                              u_mcu.u_execute.rs1_unsigned_less_than_imm      2 2.4ms
+                                              $auto$alumacc.cc:512:replace_alu$5441.Y[6]      1 2.4ms
+                                                    u_mcu.decode_program_counter_reg[20]      4 2.4ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24793      1 2.4ms
+                     $techmap28175$abc$24881$auto$blifparse.cc:557:parse_blif$26023.A[3]      1 2.4ms
+                                                                      $422.genblk1.S[10]      5 2.4ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24305      1 2.4ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24733      1 2.4ms
+                     $techmap27708$abc$24881$auto$blifparse.cc:557:parse_blif$25557.A[1]      2 2.3ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24685      1 2.3ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24713      1 2.3ms
+                                                                 u_mcu.fetch_bus.adr[25]      4 2.3ms
+                                             $auto$alumacc.cc:512:replace_alu$5461.Y[13]      1 2.3ms
+                                                        u_mcu.decode_instruction_reg[14]      5 2.3ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24799      1 2.3ms
+                                                        u_mcu.decode_instruction_reg[24]      5 2.3ms
+                                                                u_mcu.switches_async[15]      1 2.3ms
+                                             $auto$alumacc.cc:512:replace_alu$5461.Y[12]      1 2.3ms
+                     $techmap28348$abc$24881$auto$blifparse.cc:557:parse_blif$26206.A[0]      6 2.3ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24797      1 2.3ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24325      1 2.3ms
+                                                     u_mcu.decode_program_counter_reg[2]      4 2.3ms
+                                                                  u_mcu.rs2_data_reg[15]      6 2.3ms
+                                                    u_mcu.decode_program_counter_reg[13]      4 2.3ms
+                                                     u_mcu.decode_program_counter_reg[8]      4 2.3ms
+                     $techmap27153$abc$24881$auto$blifparse.cc:557:parse_blif$26111.A[0]      6 2.3ms
+                     $techmap27563$abc$24881$auto$blifparse.cc:557:parse_blif$25403.A[2]      4 2.3ms
+                     $techmap27875$abc$24881$auto$blifparse.cc:557:parse_blif$25723.A[5]      2 2.3ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24761      1 2.3ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24741      1 2.2ms
+                                                    u_mcu.decode_program_counter_reg[31]      4 2.2ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24529      1 2.2ms
+                                                         u_mcu.u_execute.rs1_xor_imm[28]      2 2.2ms
+                                             $auto$alumacc.cc:512:replace_alu$5461.Y[14]      1 2.2ms
+                                                     u_mcu.decode_program_counter_reg[6]      4 2.2ms
+                                                      u_mcu.fetch_program_counter_reg[8]      1 2.2ms
+                     $techmap27646$abc$24881$auto$blifparse.cc:557:parse_blif$25496.A[1]      3 2.2ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24343      1 2.2ms
+                                       u_mcu.ram.u_mem.$techmap6563\mem.0.1.PORT_A_WR_EN      8 2.2ms
+                                             $auto$alumacc.cc:512:replace_alu$5467.Y[26]      1 2.2ms
+                                                                 u_mcu.fetch_bus.adr[13]      6 2.2ms
+                     $techmap27157$abc$24881$auto$blifparse.cc:557:parse_blif$24883.A[0]      4 2.2ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24657      1 2.2ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24593      1 2.2ms
+                                                        u_mcu.decode_instruction_reg[15]      5 2.2ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24755      1 2.2ms
+                                                        u_mcu.decode_instruction_reg[29]      6 2.2ms
+                                                         u_mcu.decode_instruction_reg[7]      6 2.2ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24433      1 2.2ms
+                     $techmap27194$abc$24881$auto$blifparse.cc:557:parse_blif$25037.A[0]      3 2.2ms
+                                       u_mcu.ram.u_mem.$techmap6712\mem.0.0.PORT_A_WR_EN      8 2.2ms
+                                                         u_mcu.decode_instruction_reg[5]      6 2.2ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24769      1 2.1ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24531      1 2.1ms
+                                             $auto$alumacc.cc:512:replace_alu$5467.Y[11]      1 2.1ms
+                     $techmap28361$abc$24881$auto$blifparse.cc:557:parse_blif$26218.A[2]      8 2.1ms
+                     $techmap27587$abc$24881$auto$blifparse.cc:557:parse_blif$25437.A[1]      2 2.1ms
+                                                          u_mcu.u_execute.rs1_xor_rs2[7]      3 2.1ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24525      1 2.1ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$24929.A[1]      4 2.1ms
+                                                    u_mcu.decode_program_counter_reg[10]      4 2.1ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24295      1 2.1ms
+                                                       u_mcu.u_execute.rs1_less_than_imm      2 2.1ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24779      1 2.1ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24443      1 2.1ms
+                                              u_mcu.u_execute.rs1_unsigned_less_than_rs2      3 2.1ms
+                                                                       $422.genblk1.S[1]      5 2.1ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24665      1 2.1ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24825      1 2.1ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$24884.A[4]      4 2.1ms
+                     $techmap28213$abc$24881$auto$blifparse.cc:557:parse_blif$26061.A[5]      1 2.1ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24767      1 2.1ms
+                                                                  u_mcu.rs2_data_reg[10]      6 2.1ms
+                                                                 u_mcu.fetch_bus.adr[17]      5 2.1ms
+                     $techmap27598$abc$24881$auto$blifparse.cc:557:parse_blif$25446.A[1]      4 2.1ms
+                     $techmap27593$abc$24881$auto$blifparse.cc:557:parse_blif$25442.A[0]      2 2.1ms
+                                                    u_mcu.decode_program_counter_reg[30]      4 2.0ms
+                                                         u_mcu.u_execute.rs1_xor_rs2[19]      3 2.0ms
+                     $techmap27691$abc$24881$auto$blifparse.cc:557:parse_blif$25542.A[2]      2 2.0ms
+                     $techmap27452$abc$24881$auto$blifparse.cc:557:parse_blif$25301.A[0]      2 2.0ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24345      1 2.0ms
+                                                        u_mcu.decode_instruction_reg[20]      5 2.0ms
+                     $techmap27625$abc$24881$auto$blifparse.cc:557:parse_blif$25476.A[1]      4 2.0ms
+                     $techmap27607$abc$24881$auto$blifparse.cc:557:parse_blif$25451.A[5]      2 2.0ms
+                                                                       $422.genblk1.S[8]      5 2.0ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24297      1 2.0ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24757      1 2.0ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24789      1 2.0ms
+                     $techmap27923$abc$24881$auto$blifparse.cc:557:parse_blif$25774.A[0]      2 2.0ms
+                     $techmap27921$abc$24881$auto$blifparse.cc:557:parse_blif$25769.A[5]      2 2.0ms
+                                                    u_mcu.decode_program_counter_reg[18]      4 2.0ms
+                     $techmap28058$abc$24881$auto$blifparse.cc:557:parse_blif$25888.A[2]      3 2.0ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$25354.A[4]      1 2.0ms
+                                                     u_mcu.fetch_program_counter_reg[21]      1 2.0ms
+                                                      u_mcu.fetch_program_counter_reg[0]      1 2.0ms
+                                                                               $422.G[1]      2 2.0ms
+                     $techmap27789$abc$24881$auto$blifparse.cc:557:parse_blif$25637.A[2]      2 2.0ms
+                     $techmap27855$abc$24881$auto$blifparse.cc:557:parse_blif$25701.A[3]      2 2.0ms
+                                                                  u_mcu.rs2_data_reg[31]      7 2.0ms
+                                                    u_mcu.decode_program_counter_reg[29]      4 2.0ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24293      1 2.0ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$26159.A[5]      2 1.9ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24393      1 1.9ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24347      1 1.9ms
+                     $techmap27570$abc$24881$auto$blifparse.cc:557:parse_blif$25419.A[2]      4 1.9ms
+                     $techmap27563$abc$24881$auto$blifparse.cc:557:parse_blif$25403.A[0]      3 1.9ms
+                     $techmap27940$abc$24881$auto$blifparse.cc:557:parse_blif$25766.A[0]      3 1.9ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24677      1 1.9ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$25836.A[5]      1 1.9ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24495      1 1.9ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$24923.A[3]      4 1.9ms
+                                                                               $435.G[4]      2 1.9ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$26152.A[5]      2 1.9ms
+                                                     u_mcu.fetch_program_counter_reg[14]      1 1.9ms
+                                                                  u_mcu.rs2_data_reg[25]      5 1.9ms
+                     $techmap27133$abc$24881$auto$blifparse.cc:557:parse_blif$25010.A[2]      4 1.9ms
+                                                                       $422.genblk1.S[2]      5 1.9ms
+                                                                   u_mcu.rs2_data_reg[9]      6 1.9ms
+                     $techmap27359$abc$24881$auto$blifparse.cc:557:parse_blif$25200.A[1]      3 1.9ms
+                                                         u_mcu.u_execute.rs1_xor_imm[24]      2 1.9ms
+                                                          u_mcu.u_execute.pc_plus_imm[8]      1 1.9ms
+                     $techmap27776$abc$24881$auto$blifparse.cc:557:parse_blif$25628.A[0]      2 1.9ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24329      1 1.9ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24403      1 1.9ms
+                                                                              u_mcu.next      3 1.9ms
+                                                                u_mcu.u_press0.value[13]      1 1.9ms
+                     $techmap27639$abc$24881$auto$blifparse.cc:557:parse_blif$25486.A[2]      3 1.9ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24399      1 1.9ms
+                     $techmap28033$abc$24881$auto$blifparse.cc:557:parse_blif$25881.A[3]      1 1.9ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24729      1 1.8ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24515      1 1.8ms
+                                                                       $422.genblk1.S[7]      5 1.8ms
+                                                          u_mcu.fetch_instruction_reg[9]      2 1.8ms
+                                                         u_mcu.u_execute.pc_plus_imm[31]      1 1.8ms
+                     $techmap27925$abc$24881$auto$blifparse.cc:557:parse_blif$25768.A[4]      1 1.8ms
+                                                                  u_mcu.rs2_data_reg[18]      6 1.8ms
+                     $techmap27578$abc$24881$auto$blifparse.cc:557:parse_blif$25428.A[0]      2 1.8ms
+                     $techmap27904$abc$24881$auto$blifparse.cc:557:parse_blif$25755.A[0]      2 1.8ms
+                                                         u_mcu.u_execute.rs1_xor_rs2[23]      3 1.8ms
+                                                         u_mcu.u_execute.rs1_xor_imm[10]      2 1.8ms
+                                                    u_mcu.decode_program_counter_reg[28]      4 1.8ms
+                     $techmap28079$abc$24881$auto$blifparse.cc:557:parse_blif$25930.A[0]      2 1.8ms
+                                             $auto$alumacc.cc:512:replace_alu$5461.Y[19]      1 1.8ms
+                     $techmap27539$abc$24881$auto$blifparse.cc:557:parse_blif$25390.A[1]      2 1.8ms
+                                                           u_mcu.u_execute.pc_plus_4[18]      2 1.8ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$25836.A[6]      1 1.8ms
+                                                                 u_mcu.fetch_bus.adr[23]      4 1.8ms
+                                                                        $68.genblk1.S[1]      3 1.8ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24867      1 1.8ms
+                     $techmap28007$abc$24881$auto$blifparse.cc:557:parse_blif$25857.A[0]      2 1.8ms
+                     $techmap27772$abc$24881$auto$blifparse.cc:557:parse_blif$25598.A[4]      1 1.8ms
+                     $techmap27135$abc$24881$auto$blifparse.cc:557:parse_blif$25011.A[4]      4 1.8ms
+                     $techmap27510$abc$24881$auto$blifparse.cc:557:parse_blif$25360.A[1]      2 1.8ms
+                                                          u_mcu.u_execute.rs1_xor_rs2[5]      3 1.8ms
+                                                                  u_mcu.buttons_async[0]      1 1.8ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24705      1 1.8ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24451      1 1.8ms
+                     $techmap27599$abc$24881$auto$blifparse.cc:557:parse_blif$25445.A[5]      1 1.8ms
+                     $techmap27873$abc$24881$auto$blifparse.cc:557:parse_blif$25725.A[0]      2 1.8ms
+                                              $auto$alumacc.cc:512:replace_alu$5441.Y[4]      1 1.7ms
+                                                    u_mcu.decode_program_counter_reg[12]      4 1.7ms
+                                              $auto$alumacc.cc:512:replace_alu$5461.Y[2]      1 1.7ms
+                                             $auto$alumacc.cc:512:replace_alu$5467.Y[10]      1 1.7ms
+                                              $auto$alumacc.cc:512:replace_alu$5438.Y[0]      1 1.7ms
+                     $techmap27874$abc$24881$auto$blifparse.cc:557:parse_blif$25724.A[0]      2 1.7ms
+                     $techmap27937$abc$24881$auto$blifparse.cc:557:parse_blif$25783.A[0]      2 1.7ms
+                     $techmap27429$abc$24881$auto$blifparse.cc:557:parse_blif$25277.A[1]      2 1.7ms
+                                                                 u_mcu.fetch_bus.adr[18]      4 1.7ms
+                     $techmap28336$abc$24881$auto$blifparse.cc:557:parse_blif$26197.A[0]      2 1.7ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24823      1 1.7ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24629      1 1.7ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24391      1 1.7ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24853      1 1.7ms
+                                                          u_mcu.fetch_instruction_reg[7]      3 1.7ms
+                                                   u_mcu.u_decode.status_forwards_out[4]      2 1.7ms
+                     $techmap27492$abc$24881$auto$blifparse.cc:557:parse_blif$25337.A[0]      2 1.7ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$24943.A[1]      4 1.7ms
+                                                        u_mcu.decode_instruction_reg[10]      6 1.7ms
+                                             $auto$alumacc.cc:512:replace_alu$5441.Y[12]      1 1.7ms
+                     $techmap27770$abc$24881$auto$blifparse.cc:557:parse_blif$25618.A[5]      1 1.7ms
+                     $techmap27574$abc$24881$auto$blifparse.cc:557:parse_blif$25353.A[3]      1 1.7ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24615      1 1.7ms
+                     $techmap27636$abc$24881$auto$blifparse.cc:557:parse_blif$25480.A[2]      2 1.7ms
+                                                                 u_mcu.fetch_bus.adr[21]      4 1.7ms
+                     $techmap27761$abc$24881$auto$blifparse.cc:557:parse_blif$25611.A[2]      2 1.7ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24753      1 1.7ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24595      1 1.7ms
+                                                         u_mcu.u_execute.rs1_xor_rs2[17]      3 1.7ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24781      1 1.7ms
+                                                     u_mcu.fetch_program_counter_reg[30]      1 1.7ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$25528.A[1]      2 1.7ms
+                                                                   u_mcu.rs2_data_reg[8]      6 1.7ms
+                     $techmap27761$abc$24881$auto$blifparse.cc:557:parse_blif$25611.A[1]      2 1.7ms
+                                                                               $68.CO[4]      2 1.7ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24471      1 1.7ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24311      1 1.7ms
+                                                       u_mcu.exe_program_counter_reg[13]      1 1.7ms
+                     $techmap27855$abc$24881$auto$blifparse.cc:557:parse_blif$25701.A[4]      2 1.7ms
+                                                                               $435.G[5]      2 1.7ms
+                                                                   u_mcu.rs2_data_reg[7]      6 1.7ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24479      1 1.7ms
+                     $techmap28077$abc$24881$auto$blifparse.cc:557:parse_blif$25932.A[0]      2 1.6ms
+                                                         u_mcu.u_execute.rs1_xor_imm[29]      2 1.6ms
+                                                       u_mcu.exe_program_counter_reg[24]      1 1.6ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24689      1 1.6ms
+                                                                               $435.G[3]      2 1.6ms
+                     $techmap27721$abc$24881$auto$blifparse.cc:557:parse_blif$25571.A[1]      2 1.6ms
+                                             $auto$alumacc.cc:512:replace_alu$5441.Y[10]      1 1.6ms
+                                                         u_mcu.u_execute.rs1_plus_rs2[8]      1 1.6ms
+                     $techmap27456$abc$24881$auto$blifparse.cc:557:parse_blif$25300.A[0]      2 1.6ms
+                                                    u_mcu.decode_program_counter_reg[25]      4 1.6ms
+                     $techmap27359$abc$24881$auto$blifparse.cc:557:parse_blif$25200.A[4]      4 1.6ms
+                     $techmap28151$abc$24881$auto$blifparse.cc:557:parse_blif$25985.A[2]      3 1.6ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24553      1 1.6ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24765      1 1.6ms
+                     $techmap27438$abc$24881$auto$blifparse.cc:557:parse_blif$25268.A[0]      3 1.6ms
+                                                          u_mcu.u_execute.rs1_xor_imm[8]      2 1.6ms
+                                                     u_mcu.fetch_program_counter_reg[20]      1 1.6ms
+                                                         u_mcu.u_execute.pc_plus_imm[27]      1 1.6ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24447      1 1.6ms
+                                                                 u_mcu.u_press0.value[1]      1 1.6ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24673      1 1.6ms
+                     $techmap27983$abc$24881$auto$blifparse.cc:557:parse_blif$25814.A[5]      1 1.6ms
+                     $techmap27155$abc$24881$auto$blifparse.cc:557:parse_blif$24991.A[1]      2 1.6ms
+                     $techmap27944$abc$24881$auto$blifparse.cc:557:parse_blif$25796.A[1]      3 1.6ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24857      1 1.6ms
+                                       u_mcu.ram.u_mem.$techmap6265\mem.0.3.PORT_A_WR_EN      8 1.6ms
+                     $techmap27488$abc$24881$auto$blifparse.cc:557:parse_blif$25338.A[1]      2 1.6ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$24923.A[0]      5 1.6ms
+                     $techmap27425$abc$24881$auto$blifparse.cc:557:parse_blif$25270.A[0]      2 1.6ms
+                                                        u_mcu.decode_instruction_reg[11]      6 1.6ms
+                                                                  u_mcu.rs2_data_reg[20]      5 1.6ms
+                                                                 u_mcu.fetch_bus.adr[27]      4 1.6ms
+                                                         u_mcu.decode_instruction_reg[8]      6 1.6ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24833      1 1.6ms
+                                                     u_mcu.fetch_program_counter_reg[17]      1 1.6ms
+                     $techmap27614$abc$24881$auto$blifparse.cc:557:parse_blif$25459.A[0]      4 1.6ms
+                     $techmap27732$abc$24881$auto$blifparse.cc:557:parse_blif$25579.A[2]      2 1.6ms
+                                                         u_mcu.u_execute.rs1_xor_imm[25]      2 1.6ms
+                                                         u_mcu.fetch_instruction_reg[10]      2 1.6ms
+                     $techmap27959$abc$24881$auto$blifparse.cc:557:parse_blif$25808.A[2]      2 1.6ms
+                                                      u_mcu.fetch_program_counter_reg[3]      1 1.6ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24865      1 1.6ms
+                                                          u_mcu.u_execute.rs1_xor_rs2[3]      3 1.6ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24669      1 1.6ms
+                     $techmap28254$abc$24881$auto$blifparse.cc:557:parse_blif$26098.A[0]      1 1.6ms
+                     $techmap27659$abc$24881$auto$blifparse.cc:557:parse_blif$25490.A[0]      1 1.6ms
+                     $techmap27821$abc$24881$auto$blifparse.cc:557:parse_blif$25665.A[0]      2 1.6ms
+                                                                       $422.genblk1.S[6]      5 1.5ms
+                                                               u_mcu.exe_rd_data_reg[18]      1 1.5ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24803      1 1.5ms
+                     $techmap27528$abc$24881$auto$blifparse.cc:557:parse_blif$25373.A[0]      2 1.5ms
+                     $techmap27920$abc$24881$auto$blifparse.cc:557:parse_blif$25770.A[0]      2 1.5ms
+                     $techmap27517$abc$24881$auto$blifparse.cc:557:parse_blif$25355.A[2]      3 1.5ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24335      1 1.5ms
+                     $techmap27070$abc$24881$auto$blifparse.cc:557:parse_blif$24903.A[5]      3 1.5ms
+                     $techmap27851$abc$24881$auto$blifparse.cc:557:parse_blif$25703.A[2]      2 1.5ms
+                     $techmap27677$abc$24881$auto$blifparse.cc:557:parse_blif$25523.A[5]      1 1.5ms
+                                                        u_mcu.decode_instruction_reg[17]      5 1.5ms
+                                                                       $435.genblk1.S[4]      2 1.5ms
+                     $techmap28080$abc$24881$auto$blifparse.cc:557:parse_blif$25929.A[5]      1 1.5ms
+                     $techmap27630$abc$24881$auto$blifparse.cc:557:parse_blif$25470.A[4]      2 1.5ms
+                     $techmap27157$abc$24881$auto$blifparse.cc:557:parse_blif$24883.A[3]      3 1.5ms
+                     $techmap27554$abc$24881$auto$blifparse.cc:557:parse_blif$25404.A[0]      2 1.5ms
+                                                    u_mcu.u_fetch.status_forwards_out[2]      4 1.5ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$24923.A[1]      4 1.5ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24737      1 1.5ms
+                     $techmap28189$abc$24881$auto$blifparse.cc:557:parse_blif$26020.A[3]      3 1.5ms
+                     $techmap28022$abc$24881$auto$blifparse.cc:557:parse_blif$25875.A[0]      2 1.5ms
+                     $techmap27543$abc$24881$auto$blifparse.cc:557:parse_blif$25389.A[0]      3 1.5ms
+                                              $auto$alumacc.cc:512:replace_alu$5461.Y[6]      1 1.5ms
+                     $techmap27850$abc$24881$auto$blifparse.cc:557:parse_blif$25704.A[0]      3 1.5ms
+                     $techmap27704$abc$24881$auto$blifparse.cc:557:parse_blif$25540.A[3]      1 1.5ms
+                     $techmap27140$abc$24881$auto$blifparse.cc:557:parse_blif$25006.A[0]      5 1.5ms
+                                                         u_mcu.u_execute.rs1_plus_imm[7]      2 1.5ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24375      1 1.5ms
+                     $techmap27438$abc$24881$auto$blifparse.cc:557:parse_blif$25268.A[4]      2 1.5ms
+                                                         u_mcu.u_execute.rs1_xor_rs2[29]      3 1.5ms
+                     $techmap27124$abc$24881$auto$blifparse.cc:557:parse_blif$24968.A[5]      1 1.5ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$24907.A[7]      2 1.5ms
+                     $techmap27510$abc$24881$auto$blifparse.cc:557:parse_blif$25360.A[0]      2 1.5ms
+                                                         u_mcu.u_execute.rs1_xor_rs2[27]      3 1.5ms
+                     $techmap28435$abc$24881$auto$blifparse.cc:557:parse_blif$26290.A[2]      7 1.5ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24561      1 1.5ms
+                     $techmap27797$abc$24881$auto$blifparse.cc:557:parse_blif$25642.A[5]      1 1.5ms
+                                                     u_mcu.decode_program_counter_reg[0]      6 1.5ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$24898.A[2]      5 1.5ms
+                     $techmap27965$abc$24881$auto$blifparse.cc:557:parse_blif$25818.A[0]      2 1.5ms
+                     $techmap27532$abc$24881$auto$blifparse.cc:557:parse_blif$25372.A[0]      1 1.5ms
+                                                     u_mcu.gen_1[0].u_btn_sync.stages[0]      1 1.5ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24641      1 1.5ms
+                     $techmap27472$abc$24881$auto$blifparse.cc:557:parse_blif$25322.A[1]      2 1.5ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$26161.A[1]      2 1.5ms
+                     $techmap27527$abc$24881$auto$blifparse.cc:557:parse_blif$25377.A[0]      2 1.5ms
+                                                         u_mcu.u_execute.rs1_xor_imm[16]      2 1.5ms
+                                             $auto$alumacc.cc:512:replace_alu$5467.Y[25]      1 1.5ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24437      1 1.5ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24815      1 1.5ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24481      1 1.5ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24791      1 1.5ms
+                     $techmap27894$abc$24881$auto$blifparse.cc:557:parse_blif$25720.A[2]      3 1.5ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24579      1 1.5ms
+                                                                 u_mcu.fetch_bus.adr[26]      4 1.4ms
+                     $techmap27543$abc$24881$auto$blifparse.cc:557:parse_blif$25389.A[1]      3 1.4ms
+                     $techmap27575$abc$24881$auto$blifparse.cc:557:parse_blif$25352.A[3]      2 1.4ms
+                                                               u_mcu.exe_rd_data_reg[23]      2 1.4ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24477      1 1.4ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24839      1 1.4ms
+                     $techmap27694$abc$24881$auto$blifparse.cc:557:parse_blif$25541.A[1]      3 1.4ms
+                                             $auto$alumacc.cc:512:replace_alu$5467.Y[29]      1 1.4ms
+                     $techmap28120$abc$24881$auto$blifparse.cc:557:parse_blif$25967.A[4]      1 1.4ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24841      1 1.4ms
+                                                                               $435.G[7]      2 1.4ms
+                                                         u_mcu.u_execute.pc_plus_imm[30]      1 1.4ms
+                     $techmap27560$abc$24881$auto$blifparse.cc:557:parse_blif$25410.A[1]      2 1.4ms
+                                                         u_mcu.u_execute.rs1_xor_rs2[10]      3 1.4ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24603      1 1.4ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24661      1 1.4ms
+                                                               u_mcu.exe_rd_data_reg[14]      2 1.4ms
+                                                        u_mcu.u_execute.rs1_plus_imm[18]      2 1.4ms
+                                                        u_mcu.u_execute.rs1_plus_imm[22]      3 1.4ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24473      1 1.4ms
+                     $techmap27816$abc$24881$auto$blifparse.cc:557:parse_blif$25666.A[4]      3 1.4ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24763      1 1.4ms
+                     $techmap27495$abc$24881$auto$blifparse.cc:557:parse_blif$25316.A[2]      2 1.4ms
+                                                                       $422.genblk1.S[4]      5 1.4ms
+                     $techmap27590$abc$24881$auto$blifparse.cc:557:parse_blif$25436.A[2]      2 1.4ms
+                                             $auto$alumacc.cc:512:replace_alu$5441.Y[14]      1 1.4ms
+                                              $auto$alumacc.cc:512:replace_alu$5438.Y[2]      1 1.4ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24873      1 1.4ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24441      1 1.4ms
+                     $techmap28215$abc$24881$auto$blifparse.cc:557:parse_blif$26067.A[2]      1 1.4ms
+                                                          u_mcu.fetch_instruction_reg[1]      3 1.4ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24859      1 1.4ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24549      1 1.4ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$26157.A[2]      2 1.4ms
+                                             $auto$alumacc.cc:512:replace_alu$5467.Y[12]      1 1.4ms
+                     $techmap28012$abc$24881$auto$blifparse.cc:557:parse_blif$25862.A[0]      2 1.4ms
+                     $techmap27910$abc$24881$auto$blifparse.cc:557:parse_blif$25761.A[0]      2 1.4ms
+                     $techmap27058$abc$24881$auto$blifparse.cc:557:parse_blif$24887.A[2]      6 1.4ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24543      1 1.4ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24589      1 1.4ms
+                     $techmap28300$abc$24881$auto$blifparse.cc:557:parse_blif$26158.A[0]      2 1.4ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24527      1 1.4ms
+                     $techmap27708$abc$24881$auto$blifparse.cc:557:parse_blif$25557.A[0]      2 1.4ms
+                                                                  u_mcu.rs2_data_reg[28]      6 1.4ms
+                                             $auto$alumacc.cc:512:replace_alu$5461.Y[17]      1 1.4ms
+                     $techmap27379$abc$24881$auto$blifparse.cc:557:parse_blif$25224.A[0]      2 1.4ms
+                     $techmap27118$abc$24881$auto$blifparse.cc:557:parse_blif$24969.A[5]      1 1.4ms
+                     $techmap27810$abc$24881$auto$blifparse.cc:557:parse_blif$25663.A[0]      2 1.4ms
+                                                                               $424.G[6]      2 1.4ms
+                     $techmap28098$abc$24881$auto$blifparse.cc:557:parse_blif$25950.A[0]      2 1.4ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24319      1 1.4ms
+                     $techmap27863$abc$24881$auto$blifparse.cc:557:parse_blif$25716.A[0]      2 1.4ms
+                     $techmap28183$abc$24881$auto$blifparse.cc:557:parse_blif$26036.A[2]      2 1.4ms
+                     $techmap27715$abc$24881$auto$blifparse.cc:557:parse_blif$25555.A[3]      1 1.4ms
+                                                                   u_mcu.rs2_data_reg[6]      5 1.4ms
+                     $techmap28093$abc$24881$auto$blifparse.cc:557:parse_blif$25927.A[2]      1 1.4ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$24936.A[6]      1 1.4ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$24923.A[6]      2 1.4ms
+                     $techmap27563$abc$24881$auto$blifparse.cc:557:parse_blif$25403.A[3]      4 1.4ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24545      1 1.4ms
+                                                                               $424.G[4]      2 1.4ms
+                                             $auto$alumacc.cc:512:replace_alu$5467.Y[27]      1 1.4ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$26152.A[4]      2 1.4ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24301      1 1.3ms
+                     $techmap28262$abc$24881$auto$blifparse.cc:557:parse_blif$26117.A[0]      2 1.3ms
+                     $techmap28124$abc$24881$auto$blifparse.cc:557:parse_blif$25973.A[0]      1 1.3ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24617      1 1.3ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$26152.A[0]      2 1.3ms
+                     $techmap27622$abc$24881$auto$blifparse.cc:557:parse_blif$25472.A[0]      3 1.3ms
+                     $techmap27702$abc$24881$auto$blifparse.cc:557:parse_blif$25550.A[2]      2 1.3ms
+                     $techmap28081$abc$24881$auto$blifparse.cc:557:parse_blif$25928.A[2]      1 1.3ms
+                                                                     u_mcu.fetch_bus.err      3 1.3ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24855      1 1.3ms
+                     $techmap27879$abc$24881$auto$blifparse.cc:557:parse_blif$25722.A[2]      2 1.3ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24633      1 1.3ms
+                                                                 u_mcu.fetch_bus.adr[16]      5 1.3ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24809      1 1.3ms
+                     $techmap28245$abc$24881$auto$blifparse.cc:557:parse_blif$26095.A[4]      1 1.3ms
+                     $techmap27989$abc$24881$auto$blifparse.cc:557:parse_blif$25839.A[0]      2 1.3ms
+                     $techmap27701$abc$24881$auto$blifparse.cc:557:parse_blif$25551.A[0]      2 1.3ms
+                     $techmap27665$abc$24881$auto$blifparse.cc:557:parse_blif$25513.A[1]      2 1.3ms
+                     $techmap27434$abc$24881$auto$blifparse.cc:557:parse_blif$25282.A[1]      2 1.3ms
+                                                     u_mcu.fetch_program_counter_reg[22]      1 1.3ms
+                                                         u_mcu.u_execute.rs1_xor_imm[20]      2 1.3ms
+                                              $auto$alumacc.cc:512:replace_alu$5441.Y[2]      1 1.3ms
+                                                         u_mcu.u_execute.rs1_xor_imm[30]      2 1.3ms
+                     $techmap27670$abc$24881$auto$blifparse.cc:557:parse_blif$25520.A[0]      2 1.3ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24465      1 1.3ms
+                                                                u_mcu.exe_rd_data_reg[6]      2 1.3ms
+                     $techmap27582$abc$24881$auto$blifparse.cc:557:parse_blif$25431.A[3]      4 1.3ms
+                     $techmap28044$abc$24881$auto$blifparse.cc:557:parse_blif$25891.A[5]      1 1.3ms
+                     $techmap27359$abc$24881$auto$blifparse.cc:557:parse_blif$25200.A[0]      3 1.3ms
+                     $techmap27868$abc$24881$auto$blifparse.cc:557:parse_blif$25699.A[1]      1 1.3ms
+                                                           u_mcu.u_execute.pc_plus_4[27]      3 1.3ms
+                                             $auto$alumacc.cc:512:replace_alu$5441.Y[16]      1 1.3ms
+                     $techmap27900$abc$24881$auto$blifparse.cc:557:parse_blif$25749.A[5]      2 1.3ms
+                     $techmap27070$abc$24881$auto$blifparse.cc:557:parse_blif$24903.A[2]      4 1.3ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24697      1 1.3ms
+                                                        u_mcu.u_execute.rs1_minus_rs2[5]      1 1.3ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24827      1 1.3ms
+                                                                               $435.G[8]      2 1.3ms
+                     $techmap27521$abc$24881$auto$blifparse.cc:557:parse_blif$25368.A[0]      2 1.3ms
+                                                         u_mcu.u_execute.rs1_xor_imm[18]      2 1.3ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24681      1 1.3ms
+                     $techmap28435$abc$24881$auto$blifparse.cc:557:parse_blif$26290.A[0]      7 1.3ms
+                     $techmap28342$abc$24881$auto$blifparse.cc:557:parse_blif$26202.A[0]      1 1.3ms
+                     $techmap28054$abc$24881$auto$blifparse.cc:557:parse_blif$25901.A[3]      1 1.3ms
+                                                                       $435.genblk1.S[6]      2 1.3ms
+                                                         u_mcu.u_execute.rs1_xor_rs2[18]      3 1.3ms
+                     $techmap27730$abc$24881$auto$blifparse.cc:557:parse_blif$25580.A[0]      2 1.3ms
+                                                         u_mcu.u_execute.rs1_plus_imm[4]      1 1.3ms
+                     $techmap27574$abc$24881$auto$blifparse.cc:557:parse_blif$25353.A[1]      1 1.2ms
+                     $techmap28037$abc$24881$auto$blifparse.cc:557:parse_blif$25871.A[3]      3 1.2ms
+                                                         u_mcu.u_execute.rs1_plus_rs2[0]      1 1.2ms
+                                                         u_mcu.u_execute.rs1_xor_rs2[21]      3 1.2ms
+                     $techmap28181$abc$24881$auto$blifparse.cc:557:parse_blif$26029.A[0]      1 1.2ms
+                     $techmap28089$abc$24881$auto$blifparse.cc:557:parse_blif$25939.A[0]      2 1.2ms
+                                                         u_mcu.u_execute.rs1_xor_rs2[22]      3 1.2ms
+                     $techmap27933$abc$24881$auto$blifparse.cc:557:parse_blif$25784.A[4]      1 1.2ms
+                     $techmap28257$abc$24881$auto$blifparse.cc:557:parse_blif$26094.A[3]      1 1.2ms
+                                                         u_mcu.u_execute.rs1_xor_rs2[28]      3 1.2ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$24884.A[6]      2 1.2ms
+                     $techmap27946$abc$24881$auto$blifparse.cc:557:parse_blif$25793.A[1]      2 1.2ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$25836.A[4]      1 1.2ms
+                     $techmap27958$abc$24881$auto$blifparse.cc:557:parse_blif$25809.A[0]      2 1.2ms
+                     $techmap27963$abc$24881$auto$blifparse.cc:557:parse_blif$25790.A[0]      3 1.2ms
+                                              $auto$alumacc.cc:512:replace_alu$5438.Y[4]      1 1.2ms
+                     $techmap28295$abc$24881$auto$blifparse.cc:557:parse_blif$26151.A[0]      2 1.2ms
+                     $techmap28356$abc$24881$auto$blifparse.cc:557:parse_blif$26215.A[0]      2 1.2ms
+                     $techmap27728$abc$24881$auto$blifparse.cc:557:parse_blif$25582.A[0]      2 1.2ms
+                     $techmap28193$abc$24881$auto$blifparse.cc:557:parse_blif$26043.A[0]      1 1.2ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$26161.A[6]      2 1.2ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$24884.A[3]      2 1.2ms
+                     $techmap28108$abc$24881$auto$blifparse.cc:557:parse_blif$25961.A[0]      2 1.2ms
+                     $techmap27484$abc$24881$auto$blifparse.cc:557:parse_blif$25334.A[0]      2 1.2ms
+                     $techmap28058$abc$24881$auto$blifparse.cc:557:parse_blif$25888.A[3]      3 1.2ms
+                                                        u_mcu.u_execute.rs1_plus_imm[20]      3 1.2ms
+                     $techmap27858$abc$24881$auto$blifparse.cc:557:parse_blif$25709.A[0]      2 1.2ms
+                     $techmap27872$abc$24881$auto$blifparse.cc:557:parse_blif$25726.A[0]      2 1.2ms
+                                                         u_mcu.decode_instruction_reg[9]      6 1.2ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24625      1 1.2ms
+                                                                               $424.G[3]      2 1.2ms
+                                                     u_mcu.gen_0[0].u_btn_sync.stages[0]      1 1.2ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$26152.A[1]      2 1.2ms
+                     $techmap27749$abc$24881$auto$blifparse.cc:557:parse_blif$25600.A[2]      2 1.2ms
+                                                     u_mcu.fetch_program_counter_reg[25]      1 1.2ms
+                                                               u_mcu.exe_rd_data_reg[21]      2 1.2ms
+                     $techmap27655$abc$24881$auto$blifparse.cc:557:parse_blif$25501.A[0]      3 1.2ms
+                     $techmap27662$abc$24881$auto$blifparse.cc:557:parse_blif$25468.A[5]      2 1.2ms
+                     $techmap28010$abc$24881$auto$blifparse.cc:557:parse_blif$25864.A[0]      2 1.2ms
+                     $techmap27682$abc$24881$auto$blifparse.cc:557:parse_blif$25529.A[2]      2 1.2ms
+                     $techmap28035$abc$24881$auto$blifparse.cc:557:parse_blif$25872.A[3]      1 1.2ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$24947.A[3]      1 1.2ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24849      1 1.2ms
+                                             $auto$alumacc.cc:512:replace_alu$5441.Y[13]      1 1.2ms
+                                                        u_mcu.u_execute.rs1_plus_imm[17]      2 1.2ms
+                     $techmap27899$abc$24881$auto$blifparse.cc:557:parse_blif$25750.A[2]      2 1.2ms
+                     $techmap27549$abc$24881$auto$blifparse.cc:557:parse_blif$25396.A[2]      2 1.2ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24601      1 1.2ms
+                     $techmap28031$abc$24881$auto$blifparse.cc:557:parse_blif$25882.A[0]      2 1.2ms
+                                                          u_mcu.fetch_instruction_reg[8]      2 1.2ms
+                     $techmap28109$abc$24881$auto$blifparse.cc:557:parse_blif$25960.A[0]      2 1.2ms
+                     $techmap27524$abc$24881$auto$blifparse.cc:557:parse_blif$25374.A[0]      2 1.2ms
+                     $techmap28382$abc$24881$auto$blifparse.cc:557:parse_blif$26244.A[4]      1 1.2ms
+                     $techmap27517$abc$24881$auto$blifparse.cc:557:parse_blif$25355.A[1]      4 1.2ms
+                                                       u_mcu.exe_program_counter_reg[17]      1 1.2ms
+                     $techmap27680$abc$24881$auto$blifparse.cc:557:parse_blif$25530.A[2]      3 1.2ms
+                     $techmap27485$abc$24881$auto$blifparse.cc:557:parse_blif$25330.A[0]      2 1.2ms
+                                                        u_mcu.u_execute.rs1_plus_imm[16]      1 1.2ms
+                                                                               $435.G[0]      2 1.2ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24801      1 1.2ms
+                                                         u_mcu.u_execute.rs1_xor_imm[26]      2 1.2ms
+                     $techmap27782$abc$24881$auto$blifparse.cc:557:parse_blif$25632.A[0]      2 1.2ms
+                     $techmap27927$abc$24881$auto$blifparse.cc:557:parse_blif$25781.A[0]      2 1.2ms
+                                                          u_mcu.u_execute.rs1_xor_rs2[6]      3 1.2ms
+                     $techmap27930$abc$24881$auto$blifparse.cc:557:parse_blif$25778.A[2]      2 1.1ms
+                                                                               $424.G[2]      2 1.1ms
+                     $techmap27766$abc$24881$auto$blifparse.cc:557:parse_blif$25610.A[3]      1 1.1ms
+                                                         u_mcu.u_execute.rs1_xor_rs2[24]      3 1.1ms
+                     $techmap27542$abc$24881$auto$blifparse.cc:557:parse_blif$25393.A[1]      2 1.1ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24387      1 1.1ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24373      1 1.1ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$24907.A[3]      3 1.1ms
+                     $techmap27625$abc$24881$auto$blifparse.cc:557:parse_blif$25476.A[0]      3 1.1ms
+                     $techmap27507$abc$24881$auto$blifparse.cc:557:parse_blif$25357.A[1]      2 1.1ms
+                     $techmap27689$abc$24881$auto$blifparse.cc:557:parse_blif$25510.A[5]      2 1.1ms
+                     $techmap27099$abc$24881$auto$blifparse.cc:557:parse_blif$24952.A[5]      1 1.1ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24449      1 1.1ms
+                     $techmap27773$abc$24881$auto$blifparse.cc:557:parse_blif$25597.A[4]      2 1.1ms
+                                              $auto$alumacc.cc:512:replace_alu$5438.Y[5]      1 1.1ms
+                     $techmap27823$abc$24881$auto$blifparse.cc:557:parse_blif$25651.A[3]      1 1.1ms
+                                                         u_mcu.u_execute.pc_plus_imm[29]      1 1.1ms
+                     $techmap27797$abc$24881$auto$blifparse.cc:557:parse_blif$25642.A[1]      1 1.1ms
+                     $techmap28075$abc$24881$auto$blifparse.cc:557:parse_blif$25909.A[1]      2 1.1ms
+                     $techmap27894$abc$24881$auto$blifparse.cc:557:parse_blif$25720.A[3]      3 1.1ms
+                     $techmap27618$abc$24881$auto$blifparse.cc:557:parse_blif$25425.A[2]      1 1.1ms
+                                                         u_mcu.u_execute.rs1_xor_rs2[20]      3 1.1ms
+                     $techmap27967$abc$24881$auto$blifparse.cc:557:parse_blif$25816.A[0]      2 1.1ms
+                     $techmap28095$abc$24881$auto$blifparse.cc:557:parse_blif$25926.A[2]      3 1.1ms
+                     $techmap27881$abc$24881$auto$blifparse.cc:557:parse_blif$25735.A[0]      2 1.1ms
+                                                          u_mcu.u_execute.rs1_xor_imm[3]      2 1.1ms
+                     $techmap28073$abc$24881$auto$blifparse.cc:557:parse_blif$25910.A[1]      1 1.1ms
+                                             $auto$alumacc.cc:512:replace_alu$5467.Y[17]      1 1.1ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24835      1 1.1ms
+                     $techmap27799$abc$24881$auto$blifparse.cc:557:parse_blif$25624.A[0]      1 1.1ms
+                                                           u_mcu.u_execute.pc_plus_4[12]      3 1.1ms
+                     $techmap28006$abc$24881$auto$blifparse.cc:557:parse_blif$25858.A[0]      2 1.1ms
+                                                                                u_mcu.E1      2 1.1ms
+                     $techmap28231$abc$24881$auto$blifparse.cc:557:parse_blif$26078.A[4]      1 1.1ms
+                                                         u_mcu.u_execute.rs1_plus_imm[3]      1 1.1ms
+                     $techmap28229$abc$24881$auto$blifparse.cc:557:parse_blif$26079.A[0]      1 1.1ms
+                     $techmap28065$abc$24881$auto$blifparse.cc:557:parse_blif$25918.A[0]      2 1.1ms
+                                                          u_mcu.u_execute.rs1_xor_imm[7]      2 1.1ms
+                     $techmap27884$abc$24881$auto$blifparse.cc:557:parse_blif$25732.A[2]      2 1.1ms
+                                              $auto$alumacc.cc:512:replace_alu$5467.Y[7]      1 1.1ms
+                     $techmap27861$abc$24881$auto$blifparse.cc:557:parse_blif$25708.A[3]      1 1.1ms
+                     $techmap27911$abc$24881$auto$blifparse.cc:557:parse_blif$25760.A[2]      2 1.1ms
+                     $techmap28347$abc$24881$auto$blifparse.cc:557:parse_blif$26207.A[0]      5 1.1ms
+                     $techmap28347$abc$24881$auto$blifparse.cc:557:parse_blif$26207.A[2]      4 1.1ms
+                     $techmap28187$abc$24881$auto$blifparse.cc:557:parse_blif$26021.A[1]      1 1.1ms
+                     $techmap27882$abc$24881$auto$blifparse.cc:557:parse_blif$25734.A[0]      2 1.1ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24845      1 1.1ms
+                     $techmap28276$abc$24881$auto$blifparse.cc:557:parse_blif$26131.A[0]      2 1.1ms
+                     $techmap28169$abc$24881$auto$blifparse.cc:557:parse_blif$26002.A[0]      3 1.1ms
+                     $techmap28430$abc$24881$auto$blifparse.cc:557:parse_blif$26291.A[4]      1 1.1ms
+                     $techmap27602$abc$24881$auto$blifparse.cc:557:parse_blif$25452.A[1]      4 1.1ms
+                                                                  u_mcu.rs2_data_reg[21]      6 1.1ms
+                                                                               $422.G[7]      2 1.1ms
+                                                          u_mcu.u_execute.rs1_xor_imm[6]      2 1.1ms
+                                              $auto$alumacc.cc:512:replace_alu$5467.Y[2]      1 1.1ms
+                                                            u_mcu.u_execute.pc_plus_4[2]      2 1.1ms
+                     $techmap28383$abc$24881$auto$blifparse.cc:557:parse_blif$26243.A[1]      5 1.1ms
+                                                               u_mcu.exe_rd_data_reg[12]      1 1.1ms
+                     $techmap28301$abc$24881$auto$blifparse.cc:557:parse_blif$26160.A[0]      2 1.1ms
+                     $techmap27937$abc$24881$auto$blifparse.cc:557:parse_blif$25783.A[3]      1 1.1ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$24884.A[0]      2 1.1ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$25528.A[3]      2 1.1ms
+                     $techmap27734$abc$24881$auto$blifparse.cc:557:parse_blif$25585.A[2]      2 1.1ms
+                                                          u_mcu.u_execute.rs1_xor_imm[5]      2 1.1ms
+                     $techmap27980$abc$24881$auto$blifparse.cc:557:parse_blif$25828.A[4]      1 1.1ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24331      1 1.1ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24349      1 1.1ms
+                     $techmap27429$abc$24881$auto$blifparse.cc:557:parse_blif$25277.A[0]      2 1.0ms
+                     $techmap28025$abc$24881$auto$blifparse.cc:557:parse_blif$25873.A[5]      1 1.0ms
+                     $techmap27955$abc$24881$auto$blifparse.cc:557:parse_blif$25800.A[2]      2 1.0ms
+                                                   u_mcu.u_decode.status_forwards_out[5]      2 1.0ms
+                                                         u_mcu.u_execute.rs1_xor_imm[22]      2 1.0ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24411      1 1.0ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$26159.A[2]      2 1.0ms
+                     $techmap27847$abc$24881$auto$blifparse.cc:557:parse_blif$25675.A[0]      1 1.0ms
+                                                     u_mcu.fetch_program_counter_reg[19]      1 1.0ms
+                     $techmap28155$abc$24881$auto$blifparse.cc:557:parse_blif$26005.A[1]      1 1.0ms
+                     $techmap27337$abc$24881$auto$blifparse.cc:557:parse_blif$25183.A[2]      1 1.0ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24389      1 1.0ms
+                     $techmap28149$abc$24881$auto$blifparse.cc:557:parse_blif$25986.A[1]      1 1.0ms
+                     $techmap27787$abc$24881$auto$blifparse.cc:557:parse_blif$25639.A[0]      2 1.0ms
+                                                      u_mcu.fetch_program_counter_reg[9]      1 1.0ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24511      1 1.0ms
+                     $techmap27484$abc$24881$auto$blifparse.cc:557:parse_blif$25334.A[1]      2 1.0ms
+                                             $auto$alumacc.cc:512:replace_alu$5467.Y[15]      1 1.0ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24453      1 1.0ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$24884.A[2]      2 1.0ms
+                     $techmap27836$abc$24881$auto$blifparse.cc:557:parse_blif$25687.A[0]      2 1.0ms
+                     $techmap27826$abc$24881$auto$blifparse.cc:557:parse_blif$25679.A[0]      2 1.0ms
+                     $techmap27766$abc$24881$auto$blifparse.cc:557:parse_blif$25610.A[2]      1 1.0ms
+                                                       u_mcu.u_execute.rs1_minus_rs2[14]      1 1.0ms
+                                                               u_mcu.exe_rd_data_reg[29]      2 1.0ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24537      1 1.0ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24407      1 1.0ms
+                                                         u_mcu.u_execute.rs1_plus_imm[2]      2 1.0ms
+                     $techmap27355$abc$24881$auto$blifparse.cc:557:parse_blif$25202.A[3]      1 1.0ms
+                     $techmap27155$abc$24881$auto$blifparse.cc:557:parse_blif$24991.A[4]      2 1.0ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$24939.A[2]      1 1.0ms
+                     $techmap27469$abc$24881$auto$blifparse.cc:557:parse_blif$25319.A[0]      2 1.0ms
+                     $techmap27746$abc$24881$auto$blifparse.cc:557:parse_blif$25568.A[5]      1 1.0ms
+                     $techmap28143$abc$24881$auto$blifparse.cc:557:parse_blif$25992.A[4]      1 1.0ms
+                     $techmap27976$abc$24881$auto$blifparse.cc:557:parse_blif$25822.A[0]      1 1.0ms
+                                                                               $422.G[6]      2 1.0ms
+                     $techmap27800$abc$24881$auto$blifparse.cc:557:parse_blif$25623.A[0]      3 1.0ms
+                     $techmap27689$abc$24881$auto$blifparse.cc:557:parse_blif$25510.A[1]      2 1.0ms
+                     $techmap27676$abc$24881$auto$blifparse.cc:557:parse_blif$25524.A[0]      3 1.0ms
+                     $techmap27845$abc$24881$auto$blifparse.cc:557:parse_blif$25691.A[3]      1 1.0ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24381      1 1.0ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$24931.A[3]      5 1.0ms
+                     $techmap27694$abc$24881$auto$blifparse.cc:557:parse_blif$25541.A[5]      1 1.0ms
+                                                                u_mcu.exe_rd_data_reg[7]      1 1.0ms
+                                                         u_mcu.u_execute.rs1_xor_rs2[12]      3 1.0ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$25836.A[2]      1 1.0ms
+                     $techmap28054$abc$24881$auto$blifparse.cc:557:parse_blif$25901.A[4]      1 1.0ms
+                                                         u_mcu.u_execute.rs1_xor_imm[17]      2 1.0ms
+                     $techmap28187$abc$24881$auto$blifparse.cc:557:parse_blif$26021.A[4]      1 1.0ms
+                                                                                $69.G[2]      2 1.0ms
+                     $techmap27855$abc$24881$auto$blifparse.cc:557:parse_blif$25701.A[0]      1 1.0ms
+                                                         u_mcu.u_execute.pc_plus_imm[13]      1 1.0ms
+                     $techmap27122$abc$24881$auto$blifparse.cc:557:parse_blif$24977.A[0]      1 1.0ms
+                                                       u_mcu.u_execute.rs1_minus_rs2[15]      1 1.0ms
+                     $techmap27122$abc$24881$auto$blifparse.cc:557:parse_blif$24977.A[3]      1 1.0ms
+                     $techmap28273$abc$24881$auto$blifparse.cc:557:parse_blif$26128.A[0]      2 1.0ms
+                                                         u_mcu.u_execute.rs1_xor_imm[11]      2 1.0ms
+                                  $abc$24881$auto$blifparse.cc:557:parse_blif$25354.A[2]      2 1.0ms
+                                                     u_mcu.fetch_program_counter_reg[11]      1 1.0ms
+                                              $auto$alumacc.cc:512:replace_alu$5467.Y[1]      1 1.0ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24459      1 1.0ms
+                     $techmap28185$abc$24881$auto$blifparse.cc:557:parse_blif$26034.A[4]      1 1.0ms
+                                                         u_mcu.u_execute.pc_plus_imm[19]      1 1.0ms
+                                                                               $424.G[8]      2 1.0ms
+                                                         u_mcu.u_execute.pc_plus_imm[28]      1 1.0ms
+                     $techmap28288$abc$24881$auto$blifparse.cc:557:parse_blif$26143.A[0]      2 1.0ms
+                                                        u_mcu.u_execute.rs1_plus_imm[23]      1 1.0ms
+                     $techmap27665$abc$24881$auto$blifparse.cc:557:parse_blif$25513.A[3]      3 1.0ms
+                     $techmap27852$abc$24881$auto$blifparse.cc:557:parse_blif$25702.A[5]      2 1.0ms
+                     $techmap27890$abc$24881$auto$blifparse.cc:557:parse_blif$25737.A[3]      2 1.0ms
+                     $techmap27501$abc$24881$auto$blifparse.cc:557:parse_blif$25345.A[0]      3 1.0ms
+                                                         u_mcu.fetch_instruction_reg[11]      2 1.0ms
+                                                                               $424.G[0]      2 1.0ms
+                                                         u_mcu.u_execute.pc_plus_imm[22]      1 1.0ms
+                                                     u_mcu.fetch_program_counter_reg[13]      1 1.0ms
+                     $techmap28151$abc$24881$auto$blifparse.cc:557:parse_blif$25985.A[3]      3 1.0ms
+                     $techmap28078$abc$24881$auto$blifparse.cc:557:parse_blif$25931.A[0]      2 1.0ms
+                     $techmap27698$abc$24881$auto$blifparse.cc:557:parse_blif$25546.A[2]      2 1.0ms
+                                                   u_mcu.u_decode.status_forwards_out[0]      2 1.0ms
+                                                                        u_mcu.rst_cnt[3]      1 1.0ms
+                     $techmap27425$abc$24881$auto$blifparse.cc:557:parse_blif$25270.A[1]      2 1.0ms
+                     $techmap28336$abc$24881$auto$blifparse.cc:557:parse_blif$26197.A[4]      1 1.0ms
+                                                                 u_mcu.ram.porta_data[3]      1 1.0ms
+                     $techmap27379$abc$24881$auto$blifparse.cc:557:parse_blif$25224.A[1]      2 1.0ms
+                                                          u_mcu.u_execute.rs1_xor_imm[4]      2 0.9ms
+                     $techmap27557$abc$24881$auto$blifparse.cc:557:parse_blif$25407.A[1]      2 0.9ms
+                                                               u_mcu.exe_rd_data_reg[16]      2 0.9ms
+                     $techmap28005$abc$24881$auto$blifparse.cc:557:parse_blif$25859.A[0]      2 0.9ms
+                     $techmap27671$abc$24881$auto$blifparse.cc:557:parse_blif$25519.A[0]      3 0.9ms
+                                                                               $422.G[2]      2 0.9ms
+                     $techmap28299$abc$24881$auto$blifparse.cc:557:parse_blif$26156.A[0]      2 0.9ms
+                     $techmap28174$abc$24881$auto$blifparse.cc:557:parse_blif$26026.A[1]      2 0.9ms
+                                             $abc$24881$auto$rtlil.cc:3574:NotGate$24721      1 0.9ms
+                     $techmap27455$abc$24881$auto$blifparse.cc:557:parse_blif$25304.A[0]      2 0.9ms
+                                                                 u_mcu.u_press0.value[2]      1 0.9ms
+                     $techmap28160$abc$24881$auto$blifparse.cc:557:parse_blif$26014.A[0]      2 0.9ms
+                     $techmap27996$abc$24881$auto$blifparse.cc:557:parse_blif$25849.A[0]      2 0.9ms
+                     $techmap27542$abc$24881$auto$blifparse.cc:557:parse_blif$25393.A[0]      2 0.9ms
+                                                               u_mcu.exe_rd_data_reg[26]      2 0.9ms
+                                                                        $68.genblk1.S[3]      3 0.9ms
+Info: Router2 time 6.68s
+Info: Running router1 to check that route is legal...
+
+Info: Routing..
+Info: Setting up routing queue.
+Info: Routing 0 arcs.
+Info:            |   (re-)routed arcs  |   delta    | remaining|       time spent     |
+Info:    IterCnt |  w/ripup   wo/ripup |  w/r  wo/r |      arcs| batch(sec) total(sec)|
+Info:          0 |        0          0 |    0     0 |         0|       0.06       0.06|
+Info: Routing complete.
+Info: Router1 time 0.06s
+Info: Checksum: 0x14b19c2f
+
+Info: Critical path report for clock 'u_mcu.clk' (posedge -> posedge):
+Info: curr total
+Info:  0.1  0.1  Source $auto$ff.cc:337:slice$9158.Q
+Info:  1.4  1.5    Net u_mcu.fetch_instruction_reg[21] budget 8.543000 ns (65,98) -> (65,110)
+Info:                Sink $abc$24881$auto$blifparse.cc:557:parse_blif$24912.A5
+Info:  0.1  1.6  Source $abc$24881$auto$blifparse.cc:557:parse_blif$24912.O5
+Info:  0.9  2.4    Net $abc$24881$auto$blifparse.cc:557:parse_blif$24923.A[5] budget 8.521000 ns (65,110) -> (70,113)
+Info:                Sink $abc$24881$auto$blifparse.cc:557:parse_blif$24931.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.lut1.A2
+Info:  0.1  2.6  Source $abc$24881$auto$blifparse.cc:557:parse_blif$24931.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.lut1.O6
+Info:  0.0  2.6    Net $abc$24881$auto$blifparse.cc:557:parse_blif$24931.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.f1 budget 5.050000 ns (70,113) -> (70,113)
+Info:                Sink $abc$24881$auto$blifparse.cc:557:parse_blif$24931.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.mux7.1
+Info:  0.2  2.7  Source $abc$24881$auto$blifparse.cc:557:parse_blif$24931.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.mux7.OUT
+Info:  0.8  3.6    Net $abc$24881$auto$blifparse.cc:557:parse_blif$24920.A[6] budget 5.695000 ns (70,113) -> (71,110)
+Info:                Sink $abc$24881$auto$blifparse.cc:557:parse_blif$24929.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.lut1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.lut0.A1
+Info:  0.1  3.7  Source $abc$24881$auto$blifparse.cc:557:parse_blif$24929.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.lut1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.lut0.O6
+Info:  0.0  3.7    Net $abc$24881$auto$blifparse.cc:557:parse_blif$24929.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.lut1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.f0 budget 5.200000 ns (71,110) -> (71,110)
+Info:                Sink $abc$24881$auto$blifparse.cc:557:parse_blif$24929.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.lut1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.mux7.0
+Info:  0.2  3.9  Source $abc$24881$auto$blifparse.cc:557:parse_blif$24929.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.lut1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.mux7.OUT
+Info:  0.0  3.9    Net $abc$24881$auto$blifparse.cc:557:parse_blif$24929.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.f1 budget 5.050000 ns (71,110) -> (71,110)
+Info:                Sink $abc$24881$auto$blifparse.cc:557:parse_blif$24929.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.mux8.1
+Info:  0.1  4.0  Source $abc$24881$auto$blifparse.cc:557:parse_blif$24929.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.mux8.OUT
+Info:  1.0  5.0    Net $abc$24881$auto$blifparse.cc:557:parse_blif$24955.A[3] budget 5.694000 ns (71,110) -> (65,107)
+Info:                Sink $abc$24881$auto$blifparse.cc:557:parse_blif$24959.A4
+Info:  0.1  5.1  Source $abc$24881$auto$blifparse.cc:557:parse_blif$24959.O6
+Info:  0.3  5.4    Net $techmap27108$abc$24881$auto$blifparse.cc:557:parse_blif$24957.A[0] budget 4.639000 ns (65,107) -> (65,107)
+Info:                Sink $abc$24881$auto$blifparse.cc:557:parse_blif$24957.A1
+Info:  0.2  5.6  Source $abc$24881$auto$blifparse.cc:557:parse_blif$24957.O5
+Info:  0.6  6.2    Net $abc$24881$auto$blifparse.cc:557:parse_blif$24884.A[3] budget 5.062000 ns (65,107) -> (71,111)
+Info:                Sink $abc$24881$auto$blifparse.cc:557:parse_blif$24987.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.lut1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.lut0.A4
+Info:  0.1  6.3  Source $abc$24881$auto$blifparse.cc:557:parse_blif$24987.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.lut1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.lut0.O6
+Info:  0.0  6.3    Net $abc$24881$auto$blifparse.cc:557:parse_blif$24987.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.lut1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.f0 budget 4.639000 ns (71,111) -> (71,111)
+Info:                Sink $abc$24881$auto$blifparse.cc:557:parse_blif$24987.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.lut1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.mux7.0
+Info:  0.2  6.5  Source $abc$24881$auto$blifparse.cc:557:parse_blif$24987.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.lut1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.mux7.OUT
+Info:  0.0  6.5    Net $abc$24881$auto$blifparse.cc:557:parse_blif$24987.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.f1 budget 4.489000 ns (71,111) -> (71,111)
+Info:                Sink $abc$24881$auto$blifparse.cc:557:parse_blif$24987.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.mux8.1
+Info:  0.1  6.6  Source $abc$24881$auto$blifparse.cc:557:parse_blif$24987.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.mux8.OUT
+Info:  0.8  7.4    Net $techmap27157$abc$24881$auto$blifparse.cc:557:parse_blif$24883.A[0] budget 5.062000 ns (71,111) -> (67,100)
+Info:                Sink $abc$24881$auto$blifparse.cc:557:parse_blif$24883.A1
+Info:  0.1  7.5  Source $abc$24881$auto$blifparse.cc:557:parse_blif$24883.O6
+Info:  2.0  9.5    Net $techmap27342$abc$24881$auto$blifparse.cc:557:parse_blif$25181.A[2] budget 5.409000 ns (67,100) -> (62,124)
+Info:                Sink $auto$ff.cc:337:slice$9195.CE
+Info:  0.1  9.6  Setup $auto$ff.cc:337:slice$9195.CE
+Info: 1.9 ns logic, 7.8 ns routing
+
+Info: Max frequency for clock 'u_mcu.clk': 103.94 MHz (PASS at 12.00 MHz)
+
+Info: Slack histogram:
+Info:  legend: * represents 1 endpoint(s)
+Info:          + represents [1,1) endpoint(s)
+Info: [ 73712,  74159) |***************+
+Info: [ 74159,  74606) |*****************+
+Info: [ 74606,  75053) |**********************+
+Info: [ 75053,  75500) |**************************+
+Info: [ 75500,  75947) |***********************+
+Info: [ 75947,  76394) |**********+
+Info: [ 76394,  76841) |***********+
+Info: [ 76841,  77288) |**+
+Info: [ 77288,  77735) |**+
+Info: [ 77735,  78182) |*+
+Info: [ 78182,  78629) |*+
+Info: [ 78629,  79076) |+
+Info: [ 79076,  79523) |***** 
+Info: [ 79523,  79970) |*************+
+Info: [ 79970,  80417) |*********************************+
+Info: [ 80417,  80864) |************************************************************ 
+Info: [ 80864,  81311) |******************************************************* 
+Info: [ 81311,  81758) |*********************************************+
+Info: [ 81758,  82205) |****************************************+
+Info: [ 82205,  82652) |***********************************+
+Info: Running post-routing legalisation...
