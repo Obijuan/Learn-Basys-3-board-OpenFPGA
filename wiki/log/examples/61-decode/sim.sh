@@ -18,6 +18,13 @@ DEPS="wishbone_interface.sv \
       wishbone_ram.sv \
       constants.sv \
       pipeline_status.sv \
+      op.sv \
+      csr.sv \
+      forwarding.sv \
+      instruction.sv \
+      instruction_decoder.sv \
+      fetch_stage.sv \
+      decode_stage.sv \
       utils.sv \
       disp7seg.sv \
       timming.sv \
