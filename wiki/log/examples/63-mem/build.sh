@@ -34,7 +34,7 @@ DEPS="$LIB/wishbone_interface.sv \
       $LIB/register_file.sv \
       $LIB/instruction_decoder.sv \
       $LIB/execute_stage.sv \
-      memory_stage.sv \
+      $LIB/memory_stage.sv \
       mcu.sv \
       $LIB/utils.sv \
       $LIB/disp7seg.sv \

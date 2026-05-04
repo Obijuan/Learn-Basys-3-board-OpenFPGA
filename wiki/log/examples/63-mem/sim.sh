@@ -25,6 +25,8 @@ DEPS="wishbone_interface.sv \
       instruction_decoder.sv \
       fetch_stage.sv \
       decode_stage.sv \
+      execute_stage.sv \
+      memory_stage.sv \
       utils.sv \
       disp7seg.sv \
       timming.sv \
