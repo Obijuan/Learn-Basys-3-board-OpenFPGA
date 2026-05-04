@@ -5,3 +5,6 @@
 chipdb/
 obj_dir/
 sim.fst
+*.dis
+*.bin
+*.elf
