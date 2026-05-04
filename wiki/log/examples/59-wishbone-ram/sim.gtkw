@@ -1,22 +1,22 @@
 [*]
 [*] GTKWave Analyzer v3.3.116 (w)1999-2023 BSI
-[*] Sun Apr 12 18:31:41 2026
+[*] Mon May  4 06:54:58 2026
 [*]
-[dumpfile] "/home/obijuan/Develop/Learn-System-Verilog/wiki/log/examples/21-wishbone-ram6/sim.fst"
-[dumpfile_mtime] "Sun Apr 12 18:29:51 2026"
-[dumpfile_size] 12371
-[savefile] "/home/obijuan/Develop/Learn-System-Verilog/wiki/log/examples/21-wishbone-ram6/sim.gtkw"
-[timestart] 174457000
+[dumpfile] "/home/obijuan/Develop/Learn-Basys-3-board-OpenFPGA/wiki/log/examples/59-wishbone-ram/sim.fst"
+[dumpfile_mtime] "Mon May  4 06:54:42 2026"
+[dumpfile_size] 72865
+[savefile] "/home/obijuan/Develop/Learn-Basys-3-board-OpenFPGA/wiki/log/examples/59-wishbone-ram/sim.gtkw"
+[timestart] 0
 [size] 1866 1001
 [pos] -1 -1
-*-17.633429 175122198 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-25.991568 175122198 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] TOP.
 [treeopen] TOP.TB.
 [treeopen] TOP.TB.u_whisbone_ram.
 [sst_width] 278
 [signals_width] 258
 [sst_expanded] 1
-[sst_vpaned_height] 482
+[sst_vpaned_height] 169
 @28
 TOP.TB.clk
 TOP.TB.clk_mem
@@ -32,7 +32,6 @@ TOP.TB.mem_bus.sel[3:0]
 TOP.TB.mem_bus.adr[31:0]
 TOP.TB.mem_bus.dat_miso[31:0]
 TOP.TB.read_mem[31:0]
-@23
 TOP.TB.read_mem_fetch[31:0]
 @28
 TOP.TB.u_whisbone_ram.port_a.ack
@@ -65,5 +64,7 @@ TOP.TB.read_switches[7:0]
 TOP.TB.rx_byte[7:0]
 @28
 TOP.TB.tx
+@23
+TOP.TB.leds_o[15:0]
 [pattern_trace] 1
 [pattern_trace] 0

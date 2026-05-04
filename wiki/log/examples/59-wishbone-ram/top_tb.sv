@@ -1,7 +1,7 @@
 module TB;
 
 //-- Parametros del reloj
-localparam real SYS_CLK_FREQ_MHZ = 12;
+localparam real SYS_CLK_FREQ_MHZ = 100;
 localparam real SYS_CLK_PERIOD_PS = (1 / SYS_CLK_FREQ_MHZ)*1000*1000;
 localparam int  SIM_CLK_PERIOD = int'(SYS_CLK_PERIOD_PS);
 localparam real CLK_FREQUENCY_MHZ = SYS_CLK_FREQ_MHZ;
@@ -23,6 +23,11 @@ initial begin
         clk = ~clk;
     end
 end
+
+logic [4:0] buttons;
+logic [15:0] switches;
+logic uart_rx_async;
+
 //------------------------------------------------
 
 
@@ -31,9 +36,12 @@ end
 //-----------------------------------------------------------
 
 //-- Cables para los perifericos
-logic [7:0] leds;
-logic [4:0] buttons;
-logic [7:0] switches;
+logic [15:0] leds_o;
+logic [4:0] buttons_sync;
+logic [15:0] switches_sync;
+
+//-- Lectura de memoria a traves del puerto fetch
+logic [31:0] read_mem_fetch;
 
 //-- PINES
 logic sw1;
@@ -101,39 +109,49 @@ localparam bit [31:0] UART_START = 32'h0008_4000;
 localparam bit [31:0] UART_SIZE  = 32'h0000_0001;
 
 
-//-- Instanciar los sincronizadores
-synchronizer u_sync1 (
-    .clk(clk),
-    .async_in(sw1),
-    .sync_out(buttons[0])
-);
+//───────────────────────────────────────────────────────────
+//──         SINCRONIZACION DE PULSADORES 
+//───────────────────────────────────────────────────────────
+localparam BOTONES = 5;
+for (genvar btn_i = 0; btn_i < BOTONES; btn_i++) begin : gen_0
 
-synchronizer u_sync2 (
-    .clk(clk),
-    .async_in(sw2),
-    .sync_out(buttons[1])
-);
+    //-- Instanciar sincronizador para el boton i
+    synchronizer u_btn_sync (
+        .clk(clk),
+        .async_in(buttons[btn_i]),
+        .sync_out(buttons_sync[btn_i])
+    );
+end
 
-synchronizer u_sync3 (
-    .clk(clk),
-    .async_in(d13),
-    .sync_out(switches[0])
-);
 
-synchronizer u_sync4 (
-    .clk(clk),
-    .async_in(d12),
-    .sync_out(switches[1])
-);
+//───────────────────────────────────────────────────────────
+//──         SINCRONIZACION DE SWITCHES 
+//───────────────────────────────────────────────────────────
+localparam SWITCHES = 16;
+for (genvar sw_i = 0; sw_i < SWITCHES; sw_i++) begin : gen_1
 
-synchronizer u_sync5 (
+    //-- Instanciar sincronizador para el boton i
+    synchronizer u_btn_sync (
+        .clk(clk),
+        .async_in(switches[sw_i]),
+        .sync_out(switches_sync[sw_i])
+    );
+end
+
+//───────────────────────────────────────────────────────────
+//──         SINCRONIZACION DE RX
+//───────────────────────────────────────────────────────────
+synchronizer u_rx_sync (
     .clk(clk),
-    .async_in(rx),
+    .async_in(uart_rx_async),
     .sync_out(rx_sync)
 );
 
 
 
+//───────────────────────────────────────────────────────────
+//──              BUS WISHBONE 
+//───────────────────────────────────────────────────────────
 wishbone_interconnect #(
         .NUM_SLAVES(5),
         .SLAVE_ADDRESS({
@@ -158,18 +176,22 @@ wishbone_interconnect #(
 );
 
 
-//-- Instanciar modulo de LEDs
+//──────────────────────────────────────
+//──   PERIFERICO WISHBONE: LEDS 
+//──────────────────────────────────────
 wishbone_leds #(
     .ADDRESS(LEDS_START),
     .SIZE(LEDS_SIZE)
 ) u_wishbone_leds (
     .clk(clk),
     .rst(rst),
-    .leds(leds),
+    .leds(leds_o),
     .wishbone(mem_bus_slaves[0])
 );
 
-//-- Instanciar modulo de pulsadores
+//──────────────────────────────────────
+//──   PERIFERICO WISHBONE: BOTONES
+//──────────────────────────────────────
 wishbone_buttons #(
     .ADDRESS(BUTTONS_START),
     .SIZE(BUTTONS_SIZE)
@@ -180,7 +202,9 @@ wishbone_buttons #(
     .wishbone(mem_bus_slaves[1])
 );
 
-//-- Instanciar modulo de switches
+//──────────────────────────────────────
+//──   PERIFERICO WISHBONE: SWITCHES
+//──────────────────────────────────────
 wishbone_switches #(
     .ADDRESS(SWITCHES_START),
     .SIZE(SWITCHES_SIZE)
@@ -191,7 +215,10 @@ wishbone_switches #(
     .wishbone(mem_bus_slaves[2])
 );
 
-//-- Modulo de la UART
+//──────────────────────────────────────
+//──   PERIFERICO WISHBONE: UART
+//──────────────────────────────────────
+logic tx_serial_out;
 wishbone_uart #(
     .ADDRESS(UART_START),
     .SIZE(UART_SIZE),
@@ -201,12 +228,14 @@ wishbone_uart #(
     .clk(clk),
     .rst(rst),
     .rx_serial_in(rx_sync),
-    .tx_serial_out(tx),
+    .tx_serial_out(tx_serial_out),
     .interrupt(uart_interrupt),
     .wishbone(mem_bus_slaves[3])
 );
 
-//-- MEMORIA RAM
+//──────────────────────────────────────
+//──   PERIFERICO WISHBONE: RAM
+//──────────────────────────────────────
 wishbone_ram #(
     .ADDRESS(MEMORY_START),
     .SIZE(MEMORY_SIZE)
@@ -218,10 +247,9 @@ wishbone_ram #(
 );
 
 
-
-//----------------------------------------------
-//-- AUTOMATA DE CONTROL
-//----------------------------------------------
+//───────────────────────────────────────────────────────────
+//──         AUTOMATA 
+//───────────────────────────────────────────────────────────
 logic E0 = 1;  //-- READ RX_STATUS
 logic E1 = 0;  //-- Check RX_FULL (¿Caracter recibido?)
 logic E2 = 0;  //-- Write leds
@@ -232,7 +260,6 @@ logic E6 = 0;  //-- Read buttons
 logic E7 = 0;  //-- Read switches
 logic E8 = 0;  //-- Leer memoria
 logic E9 = 0;  //-- Escritura en memoria
-
 
 logic next;
 
@@ -424,7 +451,10 @@ always_comb begin
         mem_bus.stb = 1;
         mem_bus.we = 1;
         mem_bus.adr = LEDS_START;
-        mem_bus.dat_mosi = {24'b0, rx_byte};
+
+        //-- Escribir el valor leido de memoria (fetch)
+        //-- junto con el caracter recibido
+        mem_bus.dat_mosi = {16'b0, read_mem_fetch[7:0],rx_byte};
     end
 
     //-- Transmit! (eco)
@@ -493,7 +523,7 @@ always_comb begin
     fetch_bus.adr = adr_cnt;
 end
 
-logic [31:0] read_mem_fetch;
+
 assign read_mem_fetch = fetch_bus.dat_miso;
 
 
@@ -510,19 +540,16 @@ initial begin
     //-- Indicar comienzo simmulacion
     $display("Inicio: %t", $time);
 
-    repeat (3) begin
-        sw1 = 1;
-        sw2 = 0;
-        d13 = 1;
-        d12 = 0;
+    repeat (5) begin
+        buttons = 5'b00001;
 
-        rx = 0;  //-- START BIT
+        uart_rx_async = 0;  //-- START BIT
         
         //-- Esperar al bit de START
         repeat (CLKS_PER_BIT) @(posedge clk);
 
         //-- BIT 0
-        rx = 1;
+        uart_rx_async = 1;
 
         repeat (CLKS_PER_BIT*9) @(posedge clk);
 
