@@ -2,3 +2,4 @@
 
 rm *.dis
 rm *.elf
+rm *.bin
