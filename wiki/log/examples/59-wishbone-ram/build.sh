@@ -22,7 +22,7 @@ DEPS="$LIB/wishbone_interface.sv \
       $LIB/uart_tx.sv \
       $LIB/uart_rx.sv \
       $LIB/wishbone_uart.sv \
-      wishbone_ram.sv \
+      $LIB/wishbone_ram.sv \
      "
 
 #-- Path del nextpnr-xilinx
