@@ -235,19 +235,19 @@ assign disp_sel = gen;
 
 //-- Multiplexar los digitos BCD que vienen
 //-- de los switches
-wire [3:0] num_lower;
-wire [3:0] num_upper;
+logic [3:0] num_lower;
+logic [3:0] num_upper;
 assign num_lower = gen==2'b00 ? data_lower[3:0] : 
                    gen==2'b01 ? data_lower[7:4] : 
                    gen==2'b10 ? data_lower[11:8] :
                    gen==2'b11 ? data_lower[15:12] : 
-                   8'h0;
+                   4'h0;
 
 assign num_upper = gen==2'b00 ? data_upper[3:0] : 
                    gen==2'b01 ? data_upper[7:4] : 
                    gen==2'b10 ? data_upper[11:8] :
                    gen==2'b11 ? data_upper[15:12] : 
-                   8'h0;
+                   4'h0;
 
 assign num = (switches_sync[0])? num_upper : num_lower; 
 

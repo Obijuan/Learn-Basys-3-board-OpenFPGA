@@ -25,9 +25,13 @@ logic [15:0] leds;
 logic [7:0] leds0;
 logic [7:0] leds1;
 logic [4:0] buttons;
+logic [15:0] switches;
+logic [7:0] segments;
+logic [3:0] display_sel;
 
 assign leds0 = leds[7:0];
 assign leds1 = leds[15:8];
+
 
 mcu #(
     .CLK_FREQUENCY_MHZ(SYS_CLK_FREQ_MHZ),
@@ -44,15 +48,15 @@ mcu #(
     .leds(leds),
 
     //-- Buttons 
-    .buttons_async(buttons)
+    .buttons_async(buttons),
+
+    //-- Switches
+    .switches_async(switches),
+
+    //-- Display 7 segmentos
+    .segments(segments),
+    .segments_select(display_sel)
 );
-
-//-- Valor de los pulsadores
-logic sw1;
-logic sw2;
-
-//-- Asignar valor a los pulsadores
-assign buttons = {3'b0, sw1, sw2};
 
 
 //-- Proceso de simulacion
@@ -65,27 +69,26 @@ initial begin
     $display("Inicio: %t", $time);
 
     //-- Valor inicial de los pulsadores
-    sw1 = 0;
-    sw2 = 0;
+    buttons = 5'h0;
 
     //-- Esperar a que finalice el reset
     repeat (32) @(posedge clk);
 
     @(posedge clk);
 
-    sw1 = 1;
+    buttons = 5'h1;
 
     repeat (7) @(posedge clk);
 
-    sw1 = 0;
+    buttons = 5'h0;
 
     repeat (7) @(posedge clk);
 
-    sw1 = 1;
+    buttons = 5'h1;
 
     repeat (7) @(posedge clk);
 
-    sw1 = 0;
+    buttons = 5'h0;
 
     //-- Ciclos de ejecucion
     repeat (10) @(posedge clk);

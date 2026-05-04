@@ -14,8 +14,13 @@ DEPS="wishbone_interface.sv \
       uart_tx.sv \
       uart_rx.sv \
       wishbone_uart.sv \
-      memory.sv
-      wishbone_ram.sv
+      memory.sv \
+      wishbone_ram.sv \
+      constants.sv \
+      pipeline_status.sv \
+      utils.sv \
+      disp7seg.sv \
+      timming.sv \
       "
 
 #-- Simulacion con verilator
