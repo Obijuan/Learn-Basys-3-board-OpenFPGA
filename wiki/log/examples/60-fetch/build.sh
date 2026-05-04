@@ -23,11 +23,11 @@ DEPS="$LIB/wishbone_interface.sv \
       $LIB/uart_rx.sv \
       $LIB/wishbone_uart.sv \
       $LIB/wishbone_ram.sv \
-      utils.sv \
-      constants.sv \
-      pipeline_status.sv \
+      $LIB/pipeline_status.sv \
+      $LIB/constants.sv \
+      $LIB/fetch_stage.sv \
       mcu.sv \
-      fetch_stage.sv \
+      $LIB/utils.sv \
       $LIB/disp7seg.sv \
       $LIB/timming.sv \
      "
