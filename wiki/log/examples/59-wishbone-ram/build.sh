@@ -45,7 +45,7 @@ echo -e "$YELLOW─────────────────────�
 #------------------------------
 echo -e $BLUE"➡️  Sintetizando..."$RESET
 apio raw -- yosys -m slang \
-    -p "read -sv memory.sv" \
+    -p "read -sv $LIB/memory.sv" \
     -p "read_slang --ignore-unknown-modules \
        -I../lib $DEPS top.sv" \
     -p "synth_xilinx -arch xc7 -top top; \
