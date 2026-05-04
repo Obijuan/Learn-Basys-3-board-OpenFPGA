@@ -29,6 +29,7 @@ DEPS="$LIB/wishbone_interface.sv \
       mcu.sv \
       fetch_stage.sv \
       $LIB/disp7seg.sv \
+      $LIB/timming.sv \
      "
 
 #-- Path del nextpnr-xilinx
