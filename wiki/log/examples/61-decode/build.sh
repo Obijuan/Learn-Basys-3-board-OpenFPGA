@@ -26,13 +26,13 @@ DEPS="$LIB/wishbone_interface.sv \
       $LIB/pipeline_status.sv \
       $LIB/constants.sv \
       $LIB/fetch_stage.sv \
-      forwarding.sv \
-      instruction.sv \
-      op.sv \
-      csr.sv \
-      decode_stage.sv \
-      register_file.sv \
-      instruction_decoder.sv \
+      $LIB/forwarding.sv \
+      $LIB/instruction.sv \
+      $LIB/op.sv \
+      $LIB/csr.sv \
+      $LIB/decode_stage.sv \
+      $LIB/register_file.sv \
+      $LIB/instruction_decoder.sv \
       mcu.sv \
       $LIB/utils.sv \
       $LIB/disp7seg.sv \
