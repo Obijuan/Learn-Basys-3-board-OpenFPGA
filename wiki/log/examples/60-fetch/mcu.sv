@@ -12,8 +12,11 @@ module mcu #(
     //-- LEDs
     output logic [15:0] leds,
 
-    //-- Buttons (order: 4 - drluc- 0)
-    input  logic [4:0] buttons_async
+    //-- Buttons 0:center, 1: up, 2:left, 3:right, 4: down
+    input  logic [4:0] buttons_async,
+
+    //-- Switches
+    input logic [15:0] switches_async
 );
 
 //-----------------------------------------------------------------------
@@ -46,6 +49,20 @@ for (genvar btn_i = 0; btn_i < BOTONES; btn_i++) begin : gen_0
     );
 end
 
+//───────────────────────────────────────────────────────────
+//──         SINCRONIZACION DE SWITCHES 
+//───────────────────────────────────────────────────────────
+localparam SWITCHES = 16;
+logic [15:0] switches_sync;
+for (genvar sw_i = 0; sw_i < SWITCHES; sw_i++) begin : gen_1
+
+    //-- Instanciar sincronizador para el boton i
+    synchronizer u_btn_sync (
+        .clk(clk),
+        .async_in(switches_async[sw_i]),
+        .sync_out(switches_sync[sw_i])
+    );
+end
 
 //--------------------------------------------------
 //-- ANTIRREBOTES
@@ -152,13 +169,23 @@ logic start;
 assign start = rst_cnt[5];
 
 
-logic [7:0] leds0;
-logic [7:0] leds1;
+//-- Mostrar informacion en los LEDs según el estado
+//-- de los switches
+logic [15:0] data_lower;
+logic [15:0] data_upper;
 
-assign leds0 = fetch_program_counter_reg[7:0];
-assign leds1 = fetch_instruction_reg[7:0];
-assign leds = {leds1, leds0};
+//-- El switch 15 selecciona si queremos ver el contador
+//-- de programa (1) o la instruccion (0)
+assign data_lower = (switches_sync[15])? 
+           fetch_program_counter_reg[15:0] :
+           fetch_instruction_reg[15:0];
 
+assign data_upper = (switches_sync[15])? 
+           fetch_program_counter_reg[31:16] :
+           fetch_instruction_reg[31:16];
+
+//-- El switch 0 seleccion si vemos los 16-bits menores (0) o los mayores (1)
+assign leds = (switches_sync[0])? data_upper : data_lower; 
 
 //---------------------------
 //-- Pruebas de pulsadores

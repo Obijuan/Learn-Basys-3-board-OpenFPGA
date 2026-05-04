@@ -38,7 +38,10 @@ mcu #(
     .leds(leds),
 
     //-- Buttons 
-    .buttons_async(buttons)
+    .buttons_async(buttons),
+
+    //-- Switches
+    .switches_async(switches)
 );
 
 //-- ELIMINAR LOS WARNINGS
