@@ -174,7 +174,7 @@ cpu cpu(
 
 //-- Conexion de interrupciones
 assign timer_interrupt = 0;
-assign external_interrupt_in = uart_interrupt;
+assign external_interrupt = uart_interrupt;
 
 
 endmodule

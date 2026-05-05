@@ -35,13 +35,13 @@ DEPS="$LIB/wishbone_interface.sv \
       $LIB/instruction_decoder.sv \
       $LIB/execute_stage.sv \
       $LIB/memory_stage.sv \
-      mcu.sv \
-      cpu.sv \
+      $LIB/cpu.sv \
       $LIB/writeback_stage.sv \
       $LIB/csr_file.sv \
       $LIB/utils.sv \
       $LIB/disp7seg.sv \
       $LIB/timming.sv \
+      mcu.sv \
      "
 
 #-- Path del nextpnr-xilinx
