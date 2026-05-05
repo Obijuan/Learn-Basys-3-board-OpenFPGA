@@ -42,17 +42,18 @@ module wishbone_ram #(
     logic [3:0] portb_sel;
     logic portb_wen;
     logic porta_read_ok;
+    logic portb_cycle;
     logic portb_access;
 
     memory u_mem (
         .clk(clk),
 
         //-- Puerto A
-        .porta_adr(porta_adr[11:0]),
+        .porta_adr(porta_adr[10:0]),
         .porta_data_out(porta_data),
 
         //-- Puerto B
-        .portb_adr(portb_adr[11:0]),
+        .portb_adr(portb_adr[10:0]),
         .portb_data_in(portb_data_in),
         .portb_wen(portb_wen),
         .portb_sel(portb_sel),
@@ -62,7 +63,7 @@ module wishbone_ram #(
     assign port_a.dat_miso = porta_read_ok ? porta_data : 32'h0;
 
     //-- Conexion al puerto B
-    assign portb_wen = port_b.we & portb_access;
+    assign portb_wen = port_b.we && portb_access;
     assign port_b.dat_miso = portb_data_out;
     assign portb_data_in = port_b.dat_mosi;
     assign portb_adr = port_b.adr;
@@ -103,24 +104,38 @@ module wishbone_ram #(
     // --------------------------------------------------------------------------------------------
     // |                                          Port B                                          |
     // --------------------------------------------------------------------------------------------
+
+    //-- Hay un ciclo wishbone
+    assign portb_cycle = port_b.cyc && port_b.stb;
+
+    always_comb begin
+
+        //-- Valor por defecto: No hay acceso al puerto b
+        portb_access = 0;
+
+        if (portb_cycle) begin
+            if (port_b.adr >= ADDRESS && port_b.adr < ADDRESS + SIZE) begin
+                portb_access = 1;
+            end
+        end
+        
+    end
+
     always_ff @(posedge clk) begin
         if (rst) begin
             port_b.ack      <= 0;
             port_b.err      <= 0;
-            portb_access <= 0;
         end
         else begin
             // default output
             port_b.ack      <= 0;
             port_b.err      <= 0;
-            portb_access <= 0;
             // wishbone access
-            if (port_b.cyc && port_b.stb) begin
+            if (portb_cycle) begin
                 // check address space
-                if (port_b.adr >= ADDRESS && port_b.adr < ADDRESS + SIZE) begin
+                if (portb_access) begin
                     port_b.ack <= 1;
                     port_b.err <= 0;
-                    portb_access <= 1;
                 end
                 else begin
                     port_b.ack <= 0;
