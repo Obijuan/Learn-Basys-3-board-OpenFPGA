@@ -9,7 +9,7 @@ __reset:
     li s0, LEDS
 
     #-- Encender led
-    li t0, 1
+    li t0, 0xAAAA
     sw t0, (s0)
 
     #-- STOP
