@@ -36,8 +36,8 @@ DEPS="$LIB/wishbone_interface.sv \
       $LIB/execute_stage.sv \
       $LIB/memory_stage.sv \
       mcu.sv \
-      writeback_stage.sv \
-      csr_file.sv \
+      $LIB/writeback_stage.sv \
+      $LIB/csr_file.sv \
       $LIB/utils.sv \
       $LIB/disp7seg.sv \
       $LIB/timming.sv \
