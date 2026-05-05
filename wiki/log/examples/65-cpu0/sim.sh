@@ -39,7 +39,7 @@ DEPS="wishbone_interface.sv \
       "
 
 #-- Simulacion con verilator
-verilator --binary  --trace-fst -sv --top-module TB -I$LIB \
+verilator --binary  --trace-fst --trace-structs -sv --top-module TB -I$LIB \
   $DEPS $SRC/top_tb.sv && \
   ./obj_dir/VTB
 

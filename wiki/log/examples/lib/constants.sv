@@ -2,7 +2,7 @@ package constants;
 
 
 //-- Parametros del reloj
-localparam real SYS_CLK_FREQ_MHZ = 12;
+localparam real SYS_CLK_FREQ_MHZ = 100;
 localparam real SYS_CLK_PERIOD_PS = (1 / SYS_CLK_FREQ_MHZ)*1000*1000;
 localparam int  SIM_CLK_PERIOD = int'(SYS_CLK_PERIOD_PS);
 localparam real CLK_FREQUENCY_MHZ = SYS_CLK_FREQ_MHZ;

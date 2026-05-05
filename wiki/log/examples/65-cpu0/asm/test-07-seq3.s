@@ -14,27 +14,57 @@
 .equ _1s, _250ms * 4
 
 #-- Pausa a realizar
-.equ PAUSA, _1s
+.equ PAUSA, _250ms
 
 
 .global __reset
 __reset:
 
    #-- Inicializar la pila
-   li sp, 0x40800
+   li sp, 0x40400
 
    #-- s0 -> Direccion de los leds
    li s0, LEDS
 
  main:
    #-- a0: Valor inicial
-   li s1, 0x03
+   li a0, 0x03
 
    #-- a1: Bits a desplazar a la izquierda
-   li s2, 0x02
+   li a1, 0x02
 
    #-- a2: Numero de pasos a dar
-   li s3, 0x8
+   li a2, 0x8
+
+   jal play1
+
+   li t0, 0xAAAA
+   sw t0, 0(s0)
+
+   #-- Repetir
+   j main
+
+ #-------------------------------------------
+ #-- play1: Dar una pasada a la secuencia
+ #--
+ #--  a0: Valor inicial de la secuencia
+ #--  a1: Bits a desplazar a la izquierda
+ #--  a2: Pasos de la secuencia
+ #--
+ #------------------------------------------
+ play1:
+   addi sp, sp, -16
+   sw ra, 12(sp)
+
+   #-- Guardar registros estaticos usados
+   sw s1, 0(sp)
+   sw s2, 4(sp)
+   sw s3, 8(sp)
+
+   #-- Leer parametros
+   mv s1, a0
+   mv s2, a1
+   mv s3, a2
 
  loop:
    
@@ -42,7 +72,7 @@ __reset:
    sw s1, (s0)
 
    #-- Esperar
-   li a0, _250ms
+   li a0, PAUSA
    jal delay
 
    #-- Desplazar a la izquierda
@@ -55,11 +85,18 @@ __reset:
    bgt s3, zero, loop
 
    #-- Secuencia terminada
-   #-- Repetir
-   j main
+   #-- Recuperar registros estaticos
+   lw s1, 0(sp)
+   lw s2, 4(sp)
+   lw s3, 8(sp)
 
-   #-- STOP
-   halt
+   li t0, 0xFFFF
+   sw t0, 0(s0)
+
+   #-- Recuperar direccion de retorno
+   lw ra, 12(sp)
+   addi sp, sp, 16
+   ret
 
 
 #--------------------------
