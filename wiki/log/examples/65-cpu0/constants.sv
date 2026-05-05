@@ -52,11 +52,5 @@ localparam bit [31:0] TIMER_SIZE  = 32'h0000_0005;
 //-- Valor por defecto: 0x0004_0000
 localparam bit [31:0] RESET_ADDRESS = MEMORY_START << 2;
 
-//-- ANTIRREBOTES
-//-- Tamaño del antirrebotes para sintesis
-localparam int DEBOUNCER_SIZE = 18;
-
-//-- Tamñao antirrebotes para la simulacion
-localparam int DEBOUNCER_SIZE_SIM = 3;
 
 endpackage

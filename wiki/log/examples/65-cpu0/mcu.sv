@@ -3,35 +3,37 @@ module mcu #(
     parameter int  UART_BAUD_RATE,
     parameter int DEBOUNCER_SIZE
 ) (
-    //-- Main system clk
+    //── Reloj del sistema
     input logic clk,
 
-    //-- Memory clock
+    //── Reloj de acceso a memoria
     input logic clk_mem,
 
-    //-- Buttons (order: 4 - drluc- 0)
+    //── Entrada: Pulsadores
+    //-- Centro: 0, Arriba: 1, Izq: 2, Der: 3, Abajo 4
     input  logic [4:0] buttons_async,
 
-    //-- Switches
+    //── Entrada: Switches
     input logic [15:0] switches_async,
 
-    //-- LEDs
+    //── Salida: LEDs
     output logic [15:0] leds,
 
-    //-- Display 7 segmentos
+    //── Salida: Display 7 segmentos
     output logic [7:0] segments,
     output logic [3:0] segments_select,
 
-    //-- SERIAL PORT
+    //── Consola de texto: Puerto serie
     output logic uart_tx,
     input logic uart_rx_async
 );
 
-//-----------------------------------------------------------------------
-//-- RESET: El reset se realiza tras 32 ciclos
-//-- En las FPGAs ICE40 la memoria tarda 32 ciclos en inicializarse tras
-//-- la carga del bitstream
-//-----------------------------------------------------------------------
+//───────────────────────────────────────────────────────────────────────────
+//── RESET: El reset se realiza tras 32 ciclos
+//── En las FPGAs ICE40 la memoria tarda 32 ciclos en inicializarse tras
+//── la carga del bitstream
+//── En la tarjeta Basys3 No es necesario. Pero se deja por compatiblidad
+//───────────────────────────────────────────────────────────────────────────
 logic rst;
 logic [6:0] rst_cnt = 7'b0;
 
@@ -82,39 +84,91 @@ synchronizer u_rx_sync (
     .sync_out(rx_serial_in)
 );
 
-
-//------------------------------------------
-//-- PERIFERICOS
-//------------------------------------------
-import constants::MEMORY_START;
-import constants::MEMORY_SIZE;
-import constants::LEDS_START;
-import constants::LEDS_SIZE;
-import constants::UART_START;
-import constants::UART_SIZE;
-
-
-//--- Interrupciones
-logic external_interrupt;
-logic timer_interrupt;
-logic uart_interrupt;
-
+//───────────────────────────────────────────────────────────
+//──          CPU
+//───────────────────────────────────────────────────────────
 //-- Acceso a la memoria
 wishbone_interface fetch_bus();
 wishbone_interface mem_bus();
 
-wishbone_interface mem_bus_slaves[3]();
+//-- Interrupciones    
+logic uart_interrupt;
+logic timer_interrupt;
+logic external_interrupt;
+
+assign external_interrupt = uart_interrupt;
+assign timer_interrupt = 0;
+
+
+cpu cpu(
+    .clk(clk),
+    .rst(rst),
+
+    //-- Memoria de instrucciones
+    .memory_fetch_port(fetch_bus.master),
+
+    //-- Memoria de Datos
+    .memory_mem_port(mem_bus.master),
+
+    //-- Interrupcion externa
+    .external_interrupt_in(external_interrupt),
+
+    //-- Interrupcion del periferico contador
+    .timer_interrupt_in(timer_interrupt)
+);
+
+
+//───────────────────────────────────────────────────────────
+//──          PERIFERICOS
+//───────────────────────────────────────────────────────────
+import constants::MEMORY_START;
+import constants::MEMORY_SIZE;
+import constants::LEDS_START;
+import constants::LEDS_SIZE;
+import constants::BUTTONS_START;
+import constants::BUTTONS_SIZE;
+import constants::SWITCHES_START;
+import constants::SWITCHES_SIZE;
+import constants::SEGMENTS_START;
+import constants::SEGMENTS_SIZE;
+import constants::UART_START;
+import constants::UART_SIZE;
+import constants::TIMER_START;
+import constants::TIMER_SIZE;
+
+
+//──────────────────────────────────────────────
+//──    BUS WISHBONE
+//──────────────────────────────────────────────
+
+//-- Numero total de perifericos en el wishbone
+localparam NP = 7;
+
+//-- Esclavos
+wishbone_interface mem_bus_slaves[NP]();
+
+//───────────────────────────────
+//──   INTERCONEXION
+//───────────────────────────────
 wishbone_interconnect #(
-    .NUM_SLAVES(3),
+    .NUM_SLAVES(NP),
     .SLAVE_ADDRESS({
-        MEMORY_START,
-        LEDS_START,
-        UART_START
+        MEMORY_START,   //-- 0
+        LEDS_START,     //-- 1
+        BUTTONS_START,  //-- 2
+        SWITCHES_START, //-- 3
+        SEGMENTS_START, //-- 4
+        UART_START,     //-- 5
+        TIMER_START     //-- 6
     }),
     .SLAVE_SIZE({
         MEMORY_SIZE,
         LEDS_SIZE,
-        UART_SIZE
+        BUTTONS_SIZE,
+        SWITCHES_SIZE,
+        SEGMENTS_SIZE,
+        UART_SIZE,
+        TIMER_SIZE
     })
 ) peripheral_bus_interconnect (
     .clk(clk),
@@ -123,7 +177,9 @@ wishbone_interconnect #(
     .slaves(mem_bus_slaves)
 );
 
-//-- MEMORIA RAM
+//───────────────────────────────
+//──   MEMORIA RAM
+//───────────────────────────────
 wishbone_ram #(
     .ADDRESS(MEMORY_START),
     .SIZE(MEMORY_SIZE)
@@ -134,7 +190,9 @@ wishbone_ram #(
     .port_b(mem_bus_slaves[0])
 );
 
-//-- PUERTO DE SALIDA CON LEDS
+//───────────────────────────────
+//──   LEDS
+//───────────────────────────────
 wishbone_leds #(
     .ADDRESS(LEDS_START),
     .SIZE(LEDS_SIZE)
@@ -145,7 +203,49 @@ wishbone_leds #(
     .wishbone(mem_bus_slaves[1])
 );
 
-//-- PUERTO SERIE (UART)
+//───────────────────────────────
+//──   BOTONES
+//───────────────────────────────
+wishbone_buttons #(
+    .ADDRESS(BUTTONS_START),
+    .SIZE(BUTTONS_SIZE)
+) u_wishbone_buttons(
+    .clk(clk),
+    .rst(rst),
+    .buttons(buttons_sync),
+    .wishbone(mem_bus_slaves[2])
+);
+
+//───────────────────────────────
+//──   SWITCHES
+//───────────────────────────────
+wishbone_switches #(
+    .ADDRESS(SWITCHES_START),
+    .SIZE(SWITCHES_SIZE)
+) u_wishbone_switches(
+    .clk(clk),
+    .rst(rst),
+    .switches(switches_sync),
+    .wishbone(mem_bus_slaves[3])
+);
+
+//───────────────────────────────
+//──   DISPLAY 7 SEGMENTOS
+//───────────────────────────────
+wishbone_segments #(
+    .ADDRESS(SEGMENTS_START),
+    .SIZE(SEGMENTS_SIZE)
+) wb_segments (
+    .clk(clk),
+    .rst(rst),
+    .segments(segments),
+    .segments_select(segments_select),
+    .wishbone(mem_bus_slaves[4])
+);
+
+//───────────────────────────────
+//──   CONSOLA: PUERTO SERIE
+//───────────────────────────────
 wishbone_uart #(
     .ADDRESS(UART_START),
     .SIZE(UART_SIZE),
@@ -157,24 +257,21 @@ wishbone_uart #(
     .rx_serial_in(rx_serial_in),
     .tx_serial_out(uart_tx),
     .interrupt(uart_interrupt),
-    .wishbone(mem_bus_slaves[2])
+    .wishbone(mem_bus_slaves[5])
 );
 
-
-//-- CPU
-cpu cpu(
+//───────────────────────────────
+//──   TEMPORIZADOR
+//───────────────────────────────
+wishbone_timer #(
+    .ADDRESS(TIMER_START),
+    .SIZE(TIMER_SIZE),
+    .CLK_FREQUENCY_MHZ(CLK_FREQUENCY_MHZ)
+) wb_timer (
     .clk(clk),
     .rst(rst),
-    .memory_fetch_port(fetch_bus.master),
-    .memory_mem_port(mem_bus.master),
-    .external_interrupt_in(external_interrupt),
-    .timer_interrupt_in(timer_interrupt)
+    .interrupt(timer_interrupt),
+    .wishbone(mem_bus_slaves[6])
 );
-
-
-//-- Conexion de interrupciones
-assign timer_interrupt = 0;
-assign external_interrupt = uart_interrupt;
-
 
 endmodule

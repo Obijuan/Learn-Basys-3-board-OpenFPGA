@@ -11,6 +11,8 @@ DEPS="wishbone_interface.sv \
       wishbone_interconnect.sv \
       wishbone_buttons.sv \
       wishbone_switches.sv \
+      wishbone_timer.sv \
+      wishbone_segments.sv \
       uart_tx.sv \
       uart_rx.sv \
       wishbone_uart.sv \

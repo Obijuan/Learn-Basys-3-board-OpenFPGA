@@ -19,6 +19,8 @@ DEPS="$LIB/wishbone_interface.sv \
       $LIB/wishbone_interconnect.sv \
       $LIB/wishbone_buttons.sv \
       $LIB/wishbone_switches.sv \
+      $LIB/wishbone_timer.sv \
+      $LIB/wishbone_segments.sv \
       $LIB/uart_tx.sv \
       $LIB/uart_rx.sv \
       $LIB/wishbone_uart.sv \
