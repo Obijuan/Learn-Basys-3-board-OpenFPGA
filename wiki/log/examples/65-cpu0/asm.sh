@@ -12,6 +12,18 @@ GCC=$BIN"/riscv32-unknown-elf-gcc"
 OBJDUMP=$BIN"/riscv32-unknown-elf-objdump"
 OBJCOPY=$BIN"/riscv32-unknown-elf-objcopy"
 
+#-- Directorio de construccion
+BUILD="./_build"
+
+#-- Directorio fuente
+ASM="asm"
+
+#-- Crear directorio de construccion, si no lo está ya
+mkdir -p $BUILD
+
+#-- Crear directorio de construccion, si no lo está ya
+mkdir -p $BUILD/$ASM
+
 if [ -z "$1" ]; then
     echo "Uso: $0 fichero"
     echo "Ejemplo: $0 test-synth-01-decode"
@@ -25,7 +37,7 @@ NAME="${NAME%.*}" #-- Quitar extension
 
 #-- Ensamblado
 echo -e $BLUE"\n• Ensamblando:"$RESET
-$GCC -nostdlib -nostartfiles  -T hades-v.ld -o $NAME.elf $NAME.s
+$GCC -nostdlib -nostartfiles  -T $ASM/hades-v.ld -o $BUILD/$NAME.elf $NAME.s
 
 if [ $? -ne 0 ]; then
     echo -e $RED"> Abortando...\n"$RESET
@@ -34,21 +46,21 @@ fi
 
 #-- Desensamblado
 echo ""
-echo -e $BLUE"• Desensamblado: ${RESET}"$NAME.dis
-$OBJDUMP -d -r -t -S $NAME.elf > $NAME.dis
+echo -e $BLUE"• Desensamblado: ${RESET}"$BUILD/$NAME.dis
+$OBJDUMP -d -r -t -S $BUILD/$NAME.elf > $BUILD/$NAME.dis
 
 #-- Fichero ejecutable en binario
-echo -e $BLUE"• Ejecutable binario: ${RESET}"$NAME.bin
-$OBJCOPY -O binary $NAME.elf $NAME.bin
+echo -e $BLUE"• Ejecutable binario: ${RESET}"$BUILD/$NAME.bin
+$OBJCOPY -O binary $BUILD/$NAME.elf $BUILD/$NAME.bin
 
 #-- Fichero ejecutable para integrar en la memoria
 #-- del diseño en verilog
-echo -e $BLUE"• Ejecutable verilog: ${RESET}"$NAME.mem
+echo -e $BLUE"• Ejecutable verilog: ${RESET}"$BUILD/$NAME.mem
 $OBJCOPY -I binary -O verilog --verilog-data-width 4 \
-  --reverse-bytes=4 $NAME.bin $NAME.mem
+  --reverse-bytes=4 $BUILD/$NAME.bin $BUILD/$NAME.mem
 
 #-- Es el nuevo init.mem
-mv $NAME.mem init.mem
+mv $BUILD/$NAME.mem init.mem
 echo -e $BLUE"• Generado: ${RESET}init.mem"
 echo ""
 
