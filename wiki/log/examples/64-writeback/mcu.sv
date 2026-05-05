@@ -72,6 +72,16 @@ for (genvar sw_i = 0; sw_i < SWITCHES; sw_i++) begin : gen_1
     );
 end
 
+//───────────────────────────────────────────────────────────
+//──         SINCRONIZACION DE RX
+//───────────────────────────────────────────────────────────
+logic rx_serial_in;
+synchronizer u_rx_sync (
+    .clk(clk),
+    .async_in(uart_rx_async),
+    .sync_out(rx_serial_in)
+);
+
 
 //------------------------------------------
 //-- PERIFERICOS

@@ -21,19 +21,15 @@ import constants::UART_BAUD_RATE;
 import constants::DEBOUNCER_SIZE_SIM;
 import constants::CLKS_PER_BIT;
 
-//-- Leds
+//-- Señales
 logic [15:0] leds;
-logic [7:0] leds0;
-logic [7:0] leds1;
 logic [4:0] buttons;
+logic [15:0] switches;
+logic [7:0] segments;
+logic [3:0] display_sel;
+logic uart_tx;
+logic uart_rx_async;
 
-assign leds0 = leds[7:0];
-assign leds1 = leds[15:8];
-
-logic TX;
-assign TX = 0;
-
-logic RX;
 
 mcu #(
     .CLK_FREQUENCY_MHZ(SYS_CLK_FREQ_MHZ),
@@ -52,17 +48,18 @@ mcu #(
     //-- Buttons 
     .buttons_async(buttons),
 
+    //-- Switches
+    .switches_async(switches),
+
+    //-- Display 7 segmentos
+    .segments(segments),
+    .segments_select(display_sel),
+
     //-- SERIAL PORT
-    .TX(TX),
-    .RX(RX)
+    .uart_tx(uart_tx),
+    .uart_rx_async(uart_rx_async)
 );
 
-//-- Valor de los pulsadores
-logic sw1;
-logic sw2;
-
-//-- Asignar valor a los pulsadores
-assign buttons = {3'b0, sw1, sw2};
 
 localparam RED = "\033[31m";
 localparam GREEN = "\033[32m";
@@ -75,7 +72,7 @@ localparam RESET = "\033[0m";
 //-- Comprobar errores
 always @(posedge clk) begin
     if (u_mcu.u_wishbone_leds.leds_stb) begin
-        if (u_mcu.u_wishbone_leds.leds_reg < 8'h40) begin
+        if (u_mcu.u_wishbone_leds.leds_reg < 16'h40) begin
             $display("%s* Error! Falla Test %2d%s", 
                       RED, u_mcu.u_wishbone_leds.leds_reg, RESET);
         end
@@ -100,18 +97,17 @@ initial begin
     $display("\n");
 
     //-- Valor inicial de los pulsadores
-    sw1 = 0;
-    sw2 = 0;
+    buttons = 5'b00000;
 
     //-- Esperar a que finalice el reset
     repeat (32) @(posedge clk);
 
     //-- Comienzo de la transmisión de un dato por el puerto serie
-    RX = 0; // Start bit
+    uart_rx_async = 0;  //-- Start bit
 
     //-- Esperar a que llegue el bit de START
     repeat (CLKS_PER_BIT) @(posedge clk);
-    RX = 1; // Bit 0
+    uart_rx_async = 1; // Bit 0
 
     //-- Ciclos de simulacion
     repeat (10000) @(posedge clk);

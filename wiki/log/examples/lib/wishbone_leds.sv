@@ -6,6 +6,7 @@
  */
 
 
+
 module wishbone_leds #(
     parameter bit [31:0] ADDRESS,
     parameter bit [31:0] SIZE = 1
@@ -37,16 +38,25 @@ module wishbone_leds #(
     /*verilator lint_on UNUSED*/
 
     logic [15:0] leds_reg;
+    logic leds_stb;
 
     always_ff @(posedge clk) begin
         if (rst) begin
-            leds_reg <= 0;
+
+            //-- Valor inicial de los leds
+            leds_reg <= 16'h0000;
         end
         else begin
-            if (wb_write_sel[0] == 1) begin leds_reg[ 7:0] <= wb_dat_mosi[ 7:0]; end
-            if (wb_write_sel[1] == 1) begin leds_reg[15:8] <= wb_dat_mosi[15:8]; end
-            if (wb_write_sel[2] == 1) begin end
-            if (wb_write_sel[3] == 1) begin end
+            if (wb_write_sel[0] == 1) begin 
+                leds_reg <= wb_dat_mosi[15:0];
+                leds_stb <= 1; 
+            end
+            else begin
+                leds_stb <= 0;
+            end
+            //if (wb_write_sel[1] == 1) begin leds_reg[15:8] <= wb_dat_mosi[15:8]; end
+            //if (wb_write_sel[2] == 1) begin end
+            //if (wb_write_sel[3] == 1) begin end
         end
     end
 
