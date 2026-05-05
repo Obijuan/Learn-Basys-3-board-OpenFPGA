@@ -12,6 +12,15 @@ NAME=top
 #-- Directorio donde esta la librearia
 LIB="../lib"
 
+#-- Directorio donde estan los diseños
+SRC="./rtl"
+
+#-- Directorio de construccion
+BUILD="./_build"
+
+#-- Crear directorio de construccion, si no lo está ya
+mkdir -p $BUILD
+
 #-- Dependencias
 DEPS="$LIB/wishbone_interface.sv \
       $LIB/wishbone_leds.sv \
@@ -43,7 +52,7 @@ DEPS="$LIB/wishbone_interface.sv \
       $LIB/utils.sv \
       $LIB/disp7seg.sv \
       $LIB/timming.sv \
-      mcu.sv \
+      $SRC/mcu.sv \
      "
 
 #-- Path del nextpnr-xilinx
@@ -68,9 +77,9 @@ echo -e $BLUE"➡️  Sintetizando..."$RESET
 apio raw -- yosys -m slang \
     -p "read -sv $LIB/memory.sv" \
     -p "read_slang --ignore-unknown-modules \
-       -I../lib $DEPS top.sv" \
+       -I../lib $DEPS $SRC/top.sv" \
     -p "synth_xilinx -arch xc7 -top top; \
-        write_json top.json" \
+        write_json $BUILD/top.json" \
     -q
 
 if [ $? -ne 0 ]; then
@@ -84,7 +93,8 @@ fi
 #--------------------------------------
 echo -e $BLUE"➡️  Rutando..."$RESET
 openxc7.nextpnr-xilinx --chipdb ../chipdb/$PART.bin \
-       --xdc basys3.xdc --json top.json --fasm top.fasm #-q
+       --xdc $SRC/basys3.xdc --json $BUILD/top.json  \
+       --fasm $BUILD/top.fasm #-q
 
 if [ $? -ne 0 ]; then
     echo -e $RED"> Abortando...\n"$RESET
@@ -99,7 +109,7 @@ fi
 echo -e $BLUE"➡️  Generando bitstream..."$RESET
 openxc7.fasm2frames --part $PART1 \
   --db-root $PRJXRAY_DB_DIR \
-  top.fasm > top.frames 2> /dev/null
+  $BUILD/top.fasm > $BUILD/top.frames 2> /dev/null
 
 if [ $? -ne 0 ]; then
     echo -e $RED"> Abortando...\n"$RESET
@@ -111,8 +121,8 @@ fi
 #------------------------------
 echo -e $BLUE"➡️  Comprimiendo..."
 openxc7.xc7frames2bit --part_file $PRJXRAY_DB_DIR/$PART1/part.yaml \
-  --part_name $PART1 --frm_file top.frames \
-  --output_file top.bit
+  --part_name $PART1 --frm_file $BUILD/top.frames \
+  --output_file $BUILD/top.bit
 
 if [ $? -ne 0 ]; then
     echo -e $RED"> Abortando...\n"$RESET

@@ -49,5 +49,7 @@ $OBJCOPY -I binary -O verilog --verilog-data-width 4 \
 
 #-- Es el nuevo init.mem
 mv $NAME.mem init.mem
+echo -e $BLUE"• Generado: ${RESET}init.mem"
 echo ""
+
 

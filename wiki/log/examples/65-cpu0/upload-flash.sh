@@ -1,4 +1,9 @@
 #!/usr/bin/env bash
 
-apio raw -- openFPGALoader --board basys3 --write-flash top.bit
+#-- Directorio de construccion
+BUILD=_build
+
+NAME=$BUILD/top
+
+apio raw -- openFPGALoader --board basys3 --write-flash $NAME.bit
 

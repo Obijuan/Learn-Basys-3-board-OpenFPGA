@@ -4,6 +4,9 @@
 #-- Directorio donde esta la librearia
 LIB="../lib"
 
+#-- Directorio donde estan los diseños
+SRC="./rtl"
+
 #-- Dependencias
 DEPS="wishbone_interface.sv \
       wishbone_leds.sv \
@@ -32,10 +35,11 @@ DEPS="wishbone_interface.sv \
       utils.sv \
       disp7seg.sv \
       timming.sv \
+      $SRC/mcu.sv \
       "
 
 #-- Simulacion con verilator
 verilator --binary  --trace-fst -sv --top-module TB -I$LIB \
-  $DEPS top_tb.sv && \
+  $DEPS $SRC/top_tb.sv && \
   ./obj_dir/VTB
 

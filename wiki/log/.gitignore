@@ -8,3 +8,4 @@ sim.fst
 *.dis
 *.bin
 *.elf
+_build/
