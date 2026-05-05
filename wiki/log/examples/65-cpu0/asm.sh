@@ -48,6 +48,6 @@ $OBJCOPY -I binary -O verilog --verilog-data-width 4 \
   --reverse-bytes=4 $NAME.bin $NAME.mem
 
 #-- Es el nuevo init.mem
-cp $NAME.mem init.mem
+mv $NAME.mem init.mem
 echo ""
 
