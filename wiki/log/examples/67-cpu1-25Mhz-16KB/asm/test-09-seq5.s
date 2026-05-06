@@ -7,12 +7,12 @@
 .equ LEDS, 0x200000
 
 #-- Calculo python:
-#--- hex(int(0.250 * 50_000_000 / 3))
+#--- hex(int(0.250 * 25_000_000 / 3))
 #-- Valores para las pausas
-.equ _50ms,  0xcb735
-.equ _100ms, 0x196e6a
+.equ _50ms,  0x65b9a
+.equ _100ms, 0xcb735
 .equ _200ms, _100ms * 2
-.equ _250ms, 0x3f940a
+.equ _250ms, 0x1fca05
 .equ _500ms, _250ms * 2
 .equ _1s, _250ms * 4
 
