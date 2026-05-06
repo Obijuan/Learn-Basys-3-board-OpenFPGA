@@ -17,7 +17,7 @@
 .equ _1s, _250ms * 4
 
 #-- Pausa a realizar
-.equ PAUSA, _100ms
+.equ PAUSA, _50ms
 
 
 .global __reset
