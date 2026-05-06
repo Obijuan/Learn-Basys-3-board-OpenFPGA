@@ -49,11 +49,11 @@ module wishbone_ram #(
         .clk(clk),
 
         //-- Puerto A
-        .porta_adr(porta_adr[10:0]),
+        .porta_adr(porta_adr),
         .porta_data_out(porta_data),
 
         //-- Puerto B
-        .portb_adr(portb_adr[10:0]),
+        .portb_adr(portb_adr),
         .portb_data_in(portb_data_in),
         .portb_wen(portb_wen),
         .portb_sel(portb_sel),
@@ -146,43 +146,3 @@ module wishbone_ram #(
     end
 
 endmodule
-
-// --------------------------------------------------------------------------------------------
-    // |                                          Port B                                          |
-    // --------------------------------------------------------------------------------------------
-    // always_ff @(posedge clk) begin
-    //     if (rst) begin
-    //         port_b.ack      <= 0;
-    //         port_b.err      <= 0;
-    //         port_b.dat_miso <= 0;
-    //     end
-    //     else begin
-    //         // default output
-    //         port_b.ack      <= 0;
-    //         port_b.err      <= 0;
-    //         port_b.dat_miso <= 0;
-    //         // wishbone access
-    //         if (port_b.cyc && port_b.stb) begin
-    //             // check address space
-    //             if (port_b.adr >= ADDRESS && port_b.adr < ADDRESS + SIZE) begin
-    //                 port_b.ack <= 1;
-    //                 port_b.err <= 0;
-    //                 if (port_b.we == 0) begin
-    //                     // read
-    //                     port_b.dat_miso <= memory[port_b.adr - ADDRESS];
-    //                 end
-    //                 else begin
-    //                     // write
-    //                     if (port_b.sel[0] == 1) begin memory[port_b.adr - ADDRESS][ 7: 0] <= port_b.dat_mosi[ 7: 0]; end
-    //                     if (port_b.sel[1] == 1) begin memory[port_b.adr - ADDRESS][15: 8] <= port_b.dat_mosi[15: 8]; end
-    //                     if (port_b.sel[2] == 1) begin memory[port_b.adr - ADDRESS][23:16] <= port_b.dat_mosi[23:16]; end
-    //                     if (port_b.sel[3] == 1) begin memory[port_b.adr - ADDRESS][31:24] <= port_b.dat_mosi[31:24]; end
-    //                 end
-    //             end
-    //             else begin
-    //                 port_b.ack <= 0;
-    //                 port_b.err <= 1;
-    //             end
-    //         end
-    //     end
-    // end
