@@ -570,6 +570,19 @@ test_irq:
     mret
 
 test_verify_interrupt:
+    addi t2, zero, 55
+    flush_pipeline
+    assert_value t6, 9  # check if test_interrupt executed
+    assert_value s5, 54 # check if test_irq executed
+
+test_ebreak:
+    addi t2, zero, 56
+    flush_pipeline
+    lui  t6, %hi(test_finish)
+    addi t6, t6, %lo(test_finish)
+    csrw mtvec, t6
+    ebreak
+    fail
 
 # ------------------------------------------------------------------------------------------------
 # |                                          Test done!                                          |
