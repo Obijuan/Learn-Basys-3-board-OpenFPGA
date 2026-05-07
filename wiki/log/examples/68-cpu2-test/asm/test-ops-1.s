@@ -55,6 +55,14 @@
     sub  t0, \r1, \r2
     sltu t0, zero, t0
     sw   t0, 0(t3)
+
+    #-- Actualizar contador de errores
+    #-- t0 = 0 --> test ok
+    #-- t0 = 1 --> Test fallado
+    add s11, s11, t0
+
+    #-- Hay más de 1 error...
+    bgt s11, t1, error
 .endm
 
 .macro assert_value reg:req, value: req
@@ -102,15 +110,6 @@ test_init:
 test_fail:
     addi t2, zero, 1
     assert_value zero, 1
-
-    #-- Actualizar contador de errores
-    #-- t0 = 0 --> test ok
-    #-- t0 = 1 --> Test fallado
-    add s11, s11, t0
-
-    #-- Hay más de 1 error...
-    bgt s11, t1, error
-   
 
 # ------------------------------------------------------------------------------------------------
 # |                                          Test done!                                          |
