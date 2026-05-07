@@ -17,6 +17,7 @@
 #define PAUSA _500ms
 
 void test(uint32_t val);
+void delay(uint32_t wait);
 
 
 __attribute__((naked))
@@ -29,15 +30,12 @@ void __reset() {
     while (1) {
 
         //-- Mostrar valor en LEDs
-        test(0xAAAA);
+        test(0xFF00);
 
-        //-- Pausa
-        for (uint32_t i=0; i<PAUSA; i++) {
-            asm("nop");
-        }
+        delay(PAUSA);
 
         //-- Valor 2 LEDs
-        LEDS = 0x5555;
+        LEDS = 0x00FF;
 
         //-- Pausa
         for (uint32_t i=0; i<PAUSA; i++) {
@@ -49,4 +47,11 @@ void __reset() {
 void test(uint32_t val)
 {
     LEDS = val;
+}
+
+void delay(uint32_t wait)
+{
+    for (uint32_t i=0; i < wait; i++) {
+        asm("nop");
+    }
 }
