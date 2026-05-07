@@ -427,6 +427,110 @@ test_and:
     and s6, t6, t5
     assert_value s6,  (-0x123 & 6)
 
+# -----------------------------------------------
+# MISC-MEM
+test_fence_i:
+    addi t2, zero, 39
+    flush_pipeline
+    fence.i
+
+# -----------------------------------------------
+# SYSTEM
+test_csrrw:
+    addi t2, zero, 40
+    flush_pipeline
+    lui  t6, %hi(0xcafebabe)
+    addi t6, t6, %lo(0xcafebabe)
+    csrrw t6, mscratch, t6
+    assert_value t6, 0
+
+test_csrrs:
+    addi t2, zero, 41
+    flush_pipeline
+    addi  t6, zero, 0xF0
+    csrrs t6, mscratch, t6
+    assert_value t6, 0xcafebabe
+
+test_csrrc:
+    addi t2, zero, 42
+    flush_pipeline
+    addi  t6, zero, 0x0F
+    csrrc t6, mscratch, t6
+    assert_value t6, 0xcafebafe
+
+test_csrrwi:
+    addi t2, zero, 43
+    flush_pipeline
+    csrrwi t6, mscratch, 0x0f
+    assert_value t6, 0xcafebaf0
+
+test_csrrsi:
+    addi t2, zero, 44
+    flush_pipeline
+    csrrsi t6, mscratch, 0x10
+    assert_value t6, 0x0f
+
+test_csrrci:
+    addi t2, zero, 45
+    flush_pipeline
+    csrrci t6, mscratch, 0x01
+    assert_value t6, 0x1f
+
+test_csrr:
+    addi t2, zero, 46
+    flush_pipeline
+    csrrs t6, mscratch, zero
+    csrrc t6, mscratch, zero
+    csrrs t6, mscratch, zero
+    assert_value t6, 0x1e
+
+test_csrri:
+    addi t2, zero, 47
+    flush_pipeline
+    csrrsi t6, mscratch, 0
+    csrrci t6, mscratch, 0
+    csrrsi t6, mscratch, 0
+    assert_value t6, 0x1e
+
+test_mtvec:
+    addi t2, zero, 48
+    flush_pipeline
+    lui   t6, %hi(test_mepc)
+    addi  t6, t6, %lo(test_mepc)
+    csrrw t6, mtvec, t6
+    csrrs t6, mtvec, zero
+    assert_value t6, test_mepc
+
+test_ecall:
+    addi t2, zero, 49
+    flush_pipeline
+    ecall
+    fail
+
+test_mepc:
+    addi t2, zero, 50
+    flush_pipeline
+    lui   t6, %hi(test_interrupt)
+    addi  t6, t6, %lo(test_interrupt)
+    csrrw t6, mepc, t6
+    assert_value t6, test_ecall + (6*4) # 6 instructions
+
+test_mcause:
+    addi t2, zero, 51
+    flush_pipeline
+    csrrs t6, mcause, zero
+    assert_value t6, 11 # because of previous ecall
+
+test_mret:
+    addi t2, zero, 52
+    flush_pipeline
+    mret
+    fail
+
+# -----------------------------------------------
+# INTERRUPT
+test_interrupt:
+
 # ------------------------------------------------------------------------------------------------
 # |                                          Test done!                                          |
 # ------------------------------------------------------------------------------------------------
