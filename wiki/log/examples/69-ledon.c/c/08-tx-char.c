@@ -25,23 +25,30 @@ void __reset() {
     while (1) {
 
         //-- Mostrar valor en LEDs
-        LEDS = 0xAAAA;
+        LEDS = 0xAA55;
         __transmit_char('A');
 
         delay(PAUSA);
 
         //-- Valor 2 LEDs
-        LEDS = 0x5555;
+        LEDS = 0x55AA;
         __transmit_char('B');
 
         delay(PAUSA);
     }
 }
 
+//---------------------------------------------------
+//-- Transmitir un caracter por el puerto serie 
+//---------------------------------------------------
 void __transmit_char(char c) {
-    while (! (*UART_TX_STATUS_ADDRESS & (1 << UART_TX_STATUS_IDX_EMPTY)));
 
-    *UART_BUFFER_ADDRESS = c;
+    //-- Esperar mientras el bit esté a 0
+    while (! (UART_TX_STATUS & UART_TX_STATUS_EMPTY_MASK));
+
+    //-- Bit se pone a 1: Listo para transmitir
+    //-- Transmitir!
+    UART_BUFFER = c;
 }
 
 //-- Dependencias

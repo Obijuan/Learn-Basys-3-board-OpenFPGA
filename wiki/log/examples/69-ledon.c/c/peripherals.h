@@ -13,7 +13,6 @@
 #define UART_TX_STATUS  *UART_TX_STATUS_ADDRESS
 
 
-
 //-- Indices de acceso a los bits de la UART
 #define UART_RX_STATUS_IDX_ER     0
 #define UART_RX_STATUS_IDX_IE     1
@@ -21,3 +20,6 @@
 #define UART_TX_STATUS_IDX_ER     0
 #define UART_TX_STATUS_IDX_IE     1
 #define UART_TX_STATUS_IDX_EMPTY  2
+
+//-- Mascaras
+#define UART_TX_STATUS_EMPTY_MASK (1 << UART_TX_STATUS_IDX_EMPTY)
