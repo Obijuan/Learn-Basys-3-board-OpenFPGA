@@ -158,6 +158,63 @@ test_jalr:
     sub t6, t5, t6
     assert_value t6, 12
 
+# -----------------------------------------------
+# BRANCH 
+test_beq: # ✅
+    addi t2, zero, 6
+    flush_pipeline
+    beq  zero, t1,   beq_target_fail
+    beq  zero, zero, beq_target
+    beq_target_fail:
+    fail
+    beq_target:
+
+test_bne: # ✅
+    addi t2, zero, 7
+    flush_pipeline
+    bne  zero, zero, bne_target_fail
+    bne  zero, t1,   bne_target
+    bne_target_fail:
+    fail
+    bne_target:
+
+test_blt: # ✅
+    addi t2, zero, 8
+    flush_pipeline
+    blt  t1, zero, blt_target_fail
+    blt  zero, t1, blt_target
+    blt_target_fail:
+    fail
+    blt_target:
+
+test_bge: # ✅
+    addi t2, zero, 9
+    bge  zero, t1, bge_target_fail
+    bge  t1, zero, bge_target
+    bge_target_fail:
+    fail
+    bge_target:
+
+test_bltu: # ✅
+    addi t2, zero, 10
+    flush_pipeline
+    addi t6, zero, -1
+    bltu t6, zero, bltu_target_fail
+    bltu zero, t6, bltu_target
+    bltu_target_fail:
+    fail
+    bltu_target:
+
+test_bgeu: # ✅ 
+    addi t2, zero, 11
+    flush_pipeline
+    addi t6, zero, -1
+    bgeu zero, t6, bgeu_target_fail
+    bgeu t6, zero, bgeu_target
+    bgeu_target_fail:
+    fail
+    bgeu_target:
+
 # ------------------------------------------------------------------------------------------------
 # |                                          Test done!                                          |
 # ------------------------------------------------------------------------------------------------
