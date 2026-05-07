@@ -11,7 +11,7 @@ ENTRY(__reset)
 /*
  */
 MEMORY {
-    RAM (rwx) : ORIGIN = 0x40000, LENGTH = 32k
+    RAM (rwx) : ORIGIN = 0x40000, LENGTH = 16k
 }
 
 /*
