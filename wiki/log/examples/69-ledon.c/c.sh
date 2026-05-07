@@ -41,7 +41,7 @@ NAME="${NAME%.*}" #-- Quitar extension
 
 #-- Ensamblado
 echo -e $BLUE"\n• Ensamblando:"$RESET
-$GCC -nostdlib -nostartfiles -mno-relax \
+$GCC -nostdlib -nostartfiles -mno-relax -march=rv32i \
      -T $ASM/hades-v.ld \
      -I$ASM -I$C\
      -o $BUILD/$NAME.elf $NAME.c

@@ -24,3 +24,19 @@ void __transmit_string(char *val) {
     }
 }
 
+//------------------------------------------
+//-- Recibir un caracter por el puerto serie
+//-- Se devuelve -1 en caso de error
+//--------------------------------------------
+int __receive_byte() {
+    while (1) {
+        if (UART_RX_STATUS & UART_RX_STATUS_FULL_MASK) {
+            return UART_BUFFER;
+        }
+
+        if (UART_RX_STATUS & UART_RX_STATUS_ER_MASK ) {
+            __transmit_string("ERROR: Error while receiving UART byte\n");
+            return -1;
+        }
+    }
+}
