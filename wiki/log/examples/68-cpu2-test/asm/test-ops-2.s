@@ -119,6 +119,44 @@ test_lui:
     lui  t6, %hi(0x12345678)
     assert_value t6, 0x12345000
 
+# -----------------------------------------------
+# AUIPC ✅
+test_auipc:
+    addi  t2, zero, 3
+    flush_pipeline
+    auipc t6, %hi(0x12345678)
+    auipc t5, %hi(0x12345678)
+    sub   t6, t5, t6
+    assert_value t6, 4
+
+# -----------------------------------------------
+# JAL ✅  
+test_jal:
+    addi  t2, zero, 4
+    flush_pipeline
+    auipc t6, 0
+    jal   t5, jal_target
+    fail
+
+    jal_target:
+    sub t6, t5, t6
+    addi x0, t6, 0
+
+    assert_value t6, 8
+
+# -----------------------------------------------
+# JALR  ✅
+test_jalr:
+    addi  t2, zero, 5
+    flush_pipeline
+    auipc t6, 0
+    lui   t5, %hi(jalr_target)
+    jalr  t5, %lo(jalr_target)(t5)
+    fail
+
+    jalr_target:
+    sub t6, t5, t6
+    assert_value t6, 12
 
 # ------------------------------------------------------------------------------------------------
 # |                                          Test done!                                          |
