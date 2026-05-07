@@ -38,13 +38,18 @@ __reset:
     li tp, UART
 
 
-    #------- Envio del primer caracter
+    #----- Enviar caracteres individuales
+	li a0, 'H'
+	jal putchar
+	
+	li a0, 'O'
+	jal putchar
+	
+	li a0, 'L'
+	jal putchar
+	
 	li a0, 'A'
-    jal putchar
-
-    #-- Envio del segundo caracter
-    li a0, 'B'
-    jal putchar
+	jal putchar
 
 #------------------------------------
 #-- TESTs pasado con exito
@@ -60,6 +65,7 @@ __reset:
 
 
 #----- Dependencias
+.include "io-uart.s"
 .include "delay.s"
 .include "seq.s"
 
