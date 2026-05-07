@@ -530,6 +530,46 @@ test_mret:
 # -----------------------------------------------
 # INTERRUPT
 test_interrupt:
+    addi t2, zero, 53
+    flush_pipeline
+    # set interrupt address
+    lui  t6, %hi(test_irq)
+    addi t6, t6, %lo(test_irq)
+    csrw mtvec, t6
+    # enable external interrupts
+    slli t6, t1, 11
+    csrs mie, t6
+    # enable global interrupts
+    slli t6, t1, 3
+    csrs mstatus, t6
+    # trigger interrupt and wait
+    addi t6, zero, 1
+    addi t6, t6, 1
+    interrupt 2
+    addi t6, t6, 1
+    addi t6, t6, 1
+    addi t6, t6, 1
+    addi t6, t6, 1
+    addi t6, t6, 1
+    addi t6, t6, 1
+    addi t6, t6, 1
+    j test_verify_interrupt
+
+test_irq:
+    addi t2, zero, 54
+    flush_pipeline
+    addi s5, zero, 5
+    beq  s5, t6, check_mcause
+    fail # signal fail if interrupt not handled correctly
+    check_mcause:
+    csrr s5, mcause
+    assert_value s5, ((1<<31) + 11) # external interrupt
+    interrupt 0 # clear test interrupt
+    # signal that an interrupt was triggered
+    addi s5, zero, 54
+    mret
+
+test_verify_interrupt:
 
 # ------------------------------------------------------------------------------------------------
 # |                                          Test done!                                          |
