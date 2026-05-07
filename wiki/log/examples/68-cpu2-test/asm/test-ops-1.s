@@ -25,6 +25,13 @@
 # |                                                                                              |
 # ------------------------------------------------------------------------------------------------
 
+.include "stack.h"
+.include "delay.h"
+
+#-- Pausa a realizar en secuencia leds
+.equ PAUSA, _50ms
+
+
 .macro pass
     sw zero, 0(t3)
 .endm
@@ -73,8 +80,15 @@
 .global __reset
 __reset:
 
+    #-- Inicializar la pila
+    la sp, __ram_end
+
+    #-- gp -> Direccion de los leds
+    li gp, LEDS
+
     #-- Contador de errores
     li s11, 0
+
 
 test_init:
     addi t1, zero, 1              # t1 = 1 (x6=1)
@@ -93,6 +107,9 @@ test_fail:
     #-- t0 = 0 --> test ok
     #-- t0 = 1 --> Test fallado
     add s11, s11, t0
+
+    #-- Hay más de 1 error...
+    bgt s11, t1, error
    
 
 # ------------------------------------------------------------------------------------------------
@@ -103,15 +120,25 @@ test_finish:
     halt
     fail
 
-    #-- gp -> Direccion de los leds
-    li gp, LEDS
+ 1:
+    li a0, 0x01  #-- Valor inicial seq
+    li a1, 0x01  #-- Bits a desplazar a la izq
+    li a2, 16    #-- Numero de pasos
+    jal play1
+    j 1b
 
-    #-- Mostrar contador de errores en los leds
-    sw s11, (gp)
+# --- Error en algun test
+error:
+
+    #-- Mostrar numero de test en los leds
+    sw t2, (gp)
     j .
-    #li t0, -1
-    #sw t0, (gp)
+
 
     .align 4
 var:
     .word 0xcafebabe
+
+#----- Dependencias
+.include "delay.s"
+.include "seq.s"
