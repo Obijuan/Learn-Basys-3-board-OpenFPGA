@@ -355,7 +355,77 @@ test_srai:
     srai t6, t6,   4
     assert_value t6, 0xffffffff
 
+# -----------------------------------------------
+# ALU
+init_alu_regs:
+    flush_pipeline
+    addi t5, zero, 6
+    addi t6, zero, -0x123
+    flush_pipeline
 
+test_add:
+    addi t2, zero, 29
+    flush_pipeline
+    add  s6, t6, t5
+    assert_value s6, (-0x123 + 6)
+
+test_sub:
+    addi t2, zero, 30
+    flush_pipeline
+    sub s6, t6, t5
+    assert_value s6, (-0x123 - 6)
+
+test_sll:
+    addi t2, zero, 31
+    flush_pipeline
+    sll s6, t6, t5
+    assert_value s6, 0xffffb740 # -0x123 <<< 6
+
+test_slt:
+    addi t2, zero, 32
+    flush_pipeline
+    slt s6, t5, t6
+    assert_value s6, 0
+    slt s6, t6, t5
+    assert_value s6, 1
+
+test_sltu:
+    addi t2, zero, 33
+    flush_pipeline
+    sltu s6, t6, t5
+    assert_value s6, 0
+    sltu s6, t5, t6
+    assert_value s6, 1
+
+test_xor:
+    addi t2, zero, 34
+    flush_pipeline
+    xor s6, t6, t5
+    assert_value s6, (-0x123 ^ 6)
+
+test_srl:
+    addi t2, zero, 35
+    flush_pipeline
+    srl s6, t6, t5
+    assert_value s6, 0x03fffffb # -0x123 >>> 6
+
+test_sra:
+    addi t2, zero, 36
+    flush_pipeline
+    sra s6, t6, t5
+    assert_value s6, 0xfffffffb # -0x123 >> 6
+
+test_or:
+    addi t2, zero, 37
+    flush_pipeline
+    or s6, t6, t5
+    assert_value s6,  (-0x123 | 6)
+
+test_and:
+    addi t2, zero, 38
+    flush_pipeline
+    and s6, t6, t5
+    assert_value s6,  (-0x123 & 6)
 
 # ------------------------------------------------------------------------------------------------
 # |                                          Test done!                                          |
