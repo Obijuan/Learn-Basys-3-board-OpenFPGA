@@ -1,0 +1,51 @@
+.include "so.h"
+.include "stack.h"
+.include "delay.h"
+.include "io-uart.h"
+
+#-- Direccion de los LEDs
+.equ LEDS, 0x200000
+
+
+.global __reset
+__reset:
+
+    #-- Inicializar la pila
+    la sp, __ram_end
+
+    #-- gp -> Direccion de los leds
+    li gp, LEDS
+
+    #-- tp -> Direccion de la UART
+    li tp, UART_BASE
+
+
+    #-- Imprimir mensaje
+    li a0, 'O'
+    jal putchar
+
+    li a0, 'K'
+    jal putchar
+
+    li a0, '\n'
+    jal putchar
+
+loop:
+
+    #-- Esperar a que se reciba un caracter
+    jal getchar
+
+    #-- Mostrar caracter recibido en los leds
+    sb a0, (gp)
+
+    #-- Hacer eco!
+    jal putchar
+
+    j loop
+
+
+#--- Dependencias
+.include "io-uart.s"
+
+
+
