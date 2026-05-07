@@ -1,22 +1,14 @@
-
 //-- Acceso a los tipos estandares: uint8_t, uint16_t...
 #include <stdint.h>
 
 //-- Acceso a perifericos
 #include <peripherals.h>
 
-//-- Constantes para el delay
-//-- hex(int(0.250 * 25_000_000 / 7))
-#define _50ms 0x2b98b
-#define _100ms _50ms * 2
-#define _200ms _100ms * 2
-#define _250ms _200ms + _50ms
-#define _500ms _250ms * 2
-#define _1s _500ms * 2
+//-- Otras bibliotecas
+#include <delay.h>
 
+//-- Pausa para la secuencia
 #define PAUSA _500ms
-
-void delay(uint32_t wait);
 
 
 __attribute__((naked))
@@ -29,21 +21,17 @@ void __reset() {
     while (1) {
 
         //-- Mostrar valor en LEDs
-        LEDS = 0xF0F0;
+        LEDS = 0xAAAA;
 
         delay(PAUSA);
 
         //-- Valor 2 LEDs
-        LEDS = 0x0F0F;
+        LEDS = 0x5555;
 
         delay(PAUSA);
     }
 }
 
+//-- Dependencias
+#include <delay.c>
 
-void delay(uint32_t wait)
-{
-    for (uint32_t i=0; i < wait; i++) {
-        asm("nop");
-    }
-}
