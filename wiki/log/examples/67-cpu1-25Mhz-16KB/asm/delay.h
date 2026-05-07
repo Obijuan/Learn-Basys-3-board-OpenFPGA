@@ -8,9 +8,6 @@
 .equ _500ms, _250ms * 2
 .equ _1s, _250ms * 4
 
-#-- Pausa a realizar
-.equ PAUSA, _1s
-
 .macro DELAY1S
     li a0, _1s
     jal delay

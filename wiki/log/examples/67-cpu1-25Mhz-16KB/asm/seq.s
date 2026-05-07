@@ -1,64 +1,50 @@
-#-------------------------------------------------
-#-- Subrutina para reproduccion de secuencias
-#-- Entradas:
-#--   a0: Secuencia de 4 bytes a mostrar
-#--   a1: Pausa entre bytes de la secuencia
-#--   a2: Numero de iteraciones a realizar
-#-------------------------------------------------
-play_seq:
-    STACK16
+#-------------------------------------------
+ #-- play1: Dar una pasada a la secuencia
+ #--
+ #--  a0: Valor inicial de la secuencia
+ #--  a1: Bits a desplazar a la izquierda
+ #--  a2: Pasos de la secuencia
+ #--
+ #------------------------------------------
+ play1:
+   addi sp, sp, -16
+   sw ra, 12(sp)
 
-    #-- Almacenar secuencia en la pila
-    sw a0, 0(sp)
+   #-- Guardar registros estaticos usados
+   sw s1, 0(sp)
+   sw s2, 4(sp)
+   sw s3, 8(sp)
 
-    #-- Almacenar tiempo en la pila
-    sw a1, 4(sp)
+   #-- Leer parametros
+   mv s1, a0
+   mv s2, a1
+   mv s3, a2
 
-    #-- Almacenar num iteraciones en la pila
-    sw a2, 8(sp)
+ 1:
+   
+   #-- Mostrar secuencia actual
+   sw s1, (gp)
 
- next:
-    #-- Mostrar byte 0 en los leds
-    lw t0, (sp)
-    sw t0, (gp)
-    lw a0, 4(sp)
-    jal delay
+   #-- Esperar
+   li a0, PAUSA
+   jal delay
 
-    #-- Mostrar byte 1 en los leds
-    lw t0, (sp)
-    srli t0, t0, 8
-    sw t0, (gp)
-    lw a0, 4(sp)
-    jal delay
+   #-- Desplazar a la izquierda
+   sll s1, s1, s2
 
-    #-- Mostrar byte 2 en los leds
-    lw t0, (sp)
-    srli t0, t0, 16
-    sw t0, (gp)
-    lw a0, 4(sp)
-    jal delay
+   #-- Queda un paso menos
+   addi s3, s3, -1
+   
+   #-- Si quedan pasos, repetir
+   bgt s3, zero, 1b
 
-    #-- Mostrar byte 3 en los leds
-    lw t0, (sp)
-    srli t0, t0, 24
-    sw t0, (gp)
-    lw a0, 4(sp)
-    jal delay
+   #-- Secuencia terminada
+   #-- Recuperar registros estaticos
+   lw s1, 0(sp)
+   lw s2, 4(sp)
+   lw s3, 8(sp)
 
-    #-- Recuperar las iteracciones
-    lw t0, 8(sp)
-
-    #-- Una menos
-    addi t0, t0, -1
-    sw t0, 8(sp)
-
-    #-- Comprobar terminacion
-    bgt t0, zero, next
-
-    #--- Fin!
-
-    #-- Recuperar direccion de retorno
-    lw ra, 12(sp)
-
-    UNSTACK16
-    
+   #-- Recuperar direccion de retorno
+   lw ra, 12(sp)
+   addi sp, sp, 16
+   ret

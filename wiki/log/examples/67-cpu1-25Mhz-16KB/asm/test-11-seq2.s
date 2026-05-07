@@ -5,6 +5,8 @@
 #-- Direccion de los LEDs
 .equ LEDS, 0x200000
 
+#-- Pausa a realizar
+.equ PAUSA, _50ms
 
 .global __reset
 __reset:
@@ -15,21 +17,20 @@ __reset:
     #-- s0 -> Direccion de los leds
     li gp, LEDS
 
-    li t0, 0xAAAA
-    sw t0, (gp)
-    j .
+loop:
+    #-- a0: Valor inicial
+   li a0, 0x01
 
-    li a0, 0x5555AAAA  #-- Secuencia
-    li a1, _100ms      #-- Pausa
-    li a2, 3           #-- Repeticiones
-    jal play_seq
+   #-- a1: Bits a desplazar a la izquierda
+   li a1, 0x01
 
-    li t0, 0xFF
-    sw gp, (s0)
+   #-- a2: Numero de pasos a dar
+   li a2, 16
 
-    #-- STOP
-    halt
+   jal play1
 
+   #-- Repetir
+   j loop
 
 #----- Dependencias
 .include "delay.s"
