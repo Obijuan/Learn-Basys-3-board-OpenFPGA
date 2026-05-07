@@ -47,6 +47,9 @@ localparam bit [31:0] TIMER_START = 32'h0008_5000;
 localparam bit [31:0] TIMER_SIZE  = 32'h0000_0005;
 /* verilator lint_on UNUSEDPARAM */
 
+//-- Test
+localparam bit [31:0] TEST_START = 32'h0012_0000;
+localparam bit [31:0] TEST_SIZE  = 32'h0000_0005;
 
 //-- Direccion de ARRANQUE tras el RESET. Direccion de bytes
 //-- Valor por defecto: 0x0004_0000
