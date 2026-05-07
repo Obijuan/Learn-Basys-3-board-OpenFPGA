@@ -16,7 +16,6 @@
 
 #define PAUSA _500ms
 
-void test(uint32_t val);
 void delay(uint32_t wait);
 
 
@@ -30,12 +29,12 @@ void __reset() {
     while (1) {
 
         //-- Mostrar valor en LEDs
-        test(0xFF00);
+        LEDS = 0xF000;
 
         delay(PAUSA);
 
         //-- Valor 2 LEDs
-        LEDS = 0x00FF;
+        LEDS = 0x000F;
 
         //-- Pausa
         for (uint32_t i=0; i<PAUSA; i++) {
@@ -44,10 +43,6 @@ void __reset() {
     }
 }
 
-void test(uint32_t val)
-{
-    LEDS = val;
-}
 
 void delay(uint32_t wait)
 {
