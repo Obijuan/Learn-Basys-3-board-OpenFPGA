@@ -98,7 +98,6 @@ logic timer_interrupt;
 logic external_interrupt;
 
 assign external_interrupt = uart_interrupt | test_interrupt;
-assign timer_interrupt = 0;
 
 cpu cpu(
     .clk(clk),
