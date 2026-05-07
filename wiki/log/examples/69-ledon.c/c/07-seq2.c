@@ -29,17 +29,14 @@ void __reset() {
     while (1) {
 
         //-- Mostrar valor en LEDs
-        LEDS = 0xF000;
+        LEDS = 0xF0F0;
 
         delay(PAUSA);
 
         //-- Valor 2 LEDs
-        LEDS = 0x000F;
+        LEDS = 0x0F0F;
 
-        //-- Pausa
-        for (uint32_t i=0; i<PAUSA; i++) {
-            asm("nop");
-        }
+        delay(PAUSA);
     }
 }
 
