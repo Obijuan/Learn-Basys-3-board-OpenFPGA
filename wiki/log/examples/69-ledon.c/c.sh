@@ -43,7 +43,7 @@ NAME="${NAME%.*}" #-- Quitar extension
 echo -e $BLUE"\n• Ensamblando:"$RESET
 $GCC -nostdlib -nostartfiles -mno-relax \
      -T $ASM/hades-v.ld \
-     -I$ASM \
+     -I$ASM -I$C\
      -o $BUILD/$NAME.elf $NAME.c
 
 if [ $? -ne 0 ]; then
