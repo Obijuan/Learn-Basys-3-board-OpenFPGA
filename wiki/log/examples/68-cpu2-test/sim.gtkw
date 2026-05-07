@@ -1,10 +1,10 @@
 [*]
 [*] GTKWave Analyzer v3.3.116 (w)1999-2023 BSI
-[*] Thu May  7 07:05:30 2026
+[*] Thu May  7 09:50:36 2026
 [*]
 [dumpfile] "/home/obijuan/Develop/Learn-Basys-3-board-OpenFPGA/wiki/log/examples/68-cpu2-test/sim.fst"
-[dumpfile_mtime] "Thu May  7 07:04:44 2026"
-[dumpfile_size] 14844
+[dumpfile_mtime] "Thu May  7 09:49:47 2026"
+[dumpfile_size] 106405
 [savefile] "/home/obijuan/Develop/Learn-Basys-3-board-OpenFPGA/wiki/log/examples/68-cpu2-test/sim.gtkw"
 [timestart] 357000
 [size] 1866 1001
@@ -21,7 +21,7 @@
 [sst_width] 312
 [signals_width] 230
 [sst_expanded] 1
-[sst_vpaned_height] 539
+[sst_vpaned_height] 625
 @28
 TOP.TB.clk
 TOP.TB.u_mcu.rst
@@ -90,9 +90,8 @@ TOP.TB.u_mcu.leds[15:0]
 (15)TOP.TB.u_mcu.leds[15:0]
 @1401200
 -group_end
-@29
-TOP.TB.u_mcu.wb_test.test_stb
 @28
+TOP.TB.u_mcu.wb_test.test_stb
 TOP.TB.u_mcu.rx_serial_in
 @22
 +{ra(x1)} TOP.TB.u_mcu.cpu.u_decode.u_reg_file.mem[1][31:0]
@@ -105,5 +104,7 @@ TOP.TB.u_mcu.rx_serial_in
 +{a2(x12)} TOP.TB.u_mcu.cpu.u_decode.u_reg_file.mem[12][31:0]
 +{s2(x18)} TOP.TB.u_mcu.cpu.u_decode.u_reg_file.mem[18][31:0]
 +{s3(x19)} TOP.TB.u_mcu.cpu.u_decode.u_reg_file.mem[19][31:0]
+@420
+TOP.constants.CLKS_PER_BIT
 [pattern_trace] 1
 [pattern_trace] 0
