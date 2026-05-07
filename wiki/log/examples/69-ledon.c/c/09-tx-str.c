@@ -6,10 +6,7 @@
 
 //-- Otras bibliotecas
 #include <delay.h>
-
-//-- Prototipos
-void __transmit_char(char c);
-void __transmit_string(char *val);
+#include <uart.h>
 
 //-- Pausa para la secuencia
 #define PAUSA _500ms
@@ -29,43 +26,22 @@ void __reset() {
     while (1) {
 
         //-- Mostrar valor en LEDs
-        LEDS = 0xAA55;
+        LEDS = 0xF00F;
         __transmit_char('*');
 
         delay(PAUSA);
 
         //-- Valor 2 LEDs
-        LEDS = 0x55AA;
+        LEDS = 0x0FF0;
         __transmit_char('-');
 
         delay(PAUSA);
     }
 }
 
-//---------------------------------------------------
-//-- Transmitir un caracter por el puerto serie 
-//---------------------------------------------------
-void __transmit_char(char c) {
-
-    //-- Esperar mientras el bit esté a 0
-    while (! (UART_TX_STATUS & UART_TX_STATUS_EMPTY_MASK));
-
-    //-- Bit se pone a 1: Listo para transmitir
-    //-- Transmitir!
-    UART_BUFFER = c;
-}
-
-//----------------------------------------------
-//-- Transmitir una cadena por el puerto serie
-//----------------------------------------------
-void __transmit_string(char *val) {
-    while (*val) {
-        __transmit_char(*val);
-        val++;
-    }
-}
 
 
 //-- Dependencias
 #include <delay.c>
+#include <uart.c>
 

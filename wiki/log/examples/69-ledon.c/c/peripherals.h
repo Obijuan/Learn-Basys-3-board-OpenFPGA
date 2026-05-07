@@ -1,4 +1,9 @@
-//------ PERIFERICOS
+#include <stdint.h>
+
+#ifndef _PERIPHERALS_H
+#define _PERIPHERALS_H
+
+
 
 //-- DIRECCIONES
 #define LEDS_ADDR              ((volatile uint16_t*)0x00200000)
@@ -23,3 +28,8 @@
 
 //-- Mascaras
 #define UART_TX_STATUS_EMPTY_MASK (1 << UART_TX_STATUS_IDX_EMPTY)
+
+
+
+
+#endif //_PERIPHERALS_H
