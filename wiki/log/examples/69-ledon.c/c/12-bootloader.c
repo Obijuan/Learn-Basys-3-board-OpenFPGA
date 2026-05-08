@@ -26,7 +26,6 @@ void __reset() {
 void __copy_bootloader() {
 
     LEDS = 0x0001;
-    while(1);
 
     //-- El bootloader está situado al comienzo de la memoria
     //-- Lo primero que se hace es copiarlo a otra zona
