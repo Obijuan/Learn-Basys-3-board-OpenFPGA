@@ -1,4 +1,5 @@
     .include "peripherals.h"
+    .include "so.h"
 
 #-- El punto de entrada es: __reset
     .global __reset
@@ -12,5 +13,5 @@ __reset:
     sw t0, (s0)
 
     #-- STOP!
-    j .
+    halt
 
