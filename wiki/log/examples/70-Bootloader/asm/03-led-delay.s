@@ -25,51 +25,32 @@ __reset:
     li t0, VALOR1
     sw t0, (s0)
 
-    la a0, _500ms
- loop:
-     beq a0,zero, test
-     addi a0, a0, -1
-     j loop
+    #-- Pausa
+    li a0, _500ms
+    jal delay
 
-test:
+    #-- Sacar el valor 2 por los LEDS
     li t0, VALOR2
     sw t0, (s0)
 
+    #-- STOP!
     halt
 
-#     li a0, 0xffffff
-#  loop:
-#     beq a0,zero, 2f
-#     addi a0, a0, -1
-#     j loop
+#--------------------------
+#-- Subrutina de delay
+#-- Espera de 1seg
+#-- Entradas:
+#--   a0: Pausa
+#--------------------------
+delay:
 
+    #-- Loop
+ loop:
+    beq a0,zero, fin
+    addi a0, a0, -1
+    j loop
 
-#     li t0, VALOR2
-#     sw t0, (s0)
-
-
-#     #-- Pausa
-#     li a0, _1s
-#     jal delay
-
-#     #-- STOP!
-#     halt
-
-# #--------------------------
-# #-- Subrutina de delay
-# #-- Espera de 1seg
-# #-- Entradas:
-# #--   a0: Pausa
-# #--------------------------
-# delay:
-
-#     #-- Loop
-#  1:
-#     beq a0,zero, 2f
-#     addi a0, a0, -1
-#     j 1b
-
-#     #-- Condicion de salida
-#  2:
-#     ret
+    #-- Condicion de salida
+ fin:
+    ret
 
