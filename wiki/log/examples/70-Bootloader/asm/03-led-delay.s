@@ -38,19 +38,18 @@ __reset:
 
 #--------------------------
 #-- Subrutina de delay
-#-- Espera de 1seg
 #-- Entradas:
 #--   a0: Pausa
 #--------------------------
 delay:
 
     #-- Loop
- loop:
-    beq a0,zero, fin
+ 1:
+    beq a0,zero, 2f
     addi a0, a0, -1
-    j loop
+    j 1b
 
     #-- Condicion de salida
- fin:
+ 2:
     ret
 
