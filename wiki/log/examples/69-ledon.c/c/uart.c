@@ -40,3 +40,39 @@ int __receive_byte() {
         }
     }
 }
+
+//---------------------------------------------
+//-- Recibir un caracter hexadecimal 
+//-- '0'-'9' --> 'A' - 'F'
+//-- Se devuelve -1 en caso de error
+//---------------------------------------------
+char __receive_hex_char() {
+    char val = __receive_byte();
+
+    if (val >= '0' && val <= '9') {
+        return val - '0';
+    }
+    else if (val >= 'A' && val <= 'F') {
+        return val - 'A' + 10;
+    }
+    else {
+        __transmit_string("ERROR: Invalid hex character\n");
+        return -1;
+    }
+}
+
+//-----------------------------------------------------------
+//-- Recibir un byte formado por dos caracteres ascii hexa
+//-- Se devuelve -1 en caso de error
+//-----------------------------------------------------------
+int __receive_hex_byte() {
+    char upper = __receive_hex_char();
+    if (upper < 0) {
+        return -1;
+    }
+
+    char lower = __receive_hex_char();
+    if (lower < 0) return - 1;
+
+    return (upper << 4) | lower;
+}
