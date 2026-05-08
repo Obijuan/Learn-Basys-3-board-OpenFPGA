@@ -42,11 +42,19 @@ $GCC $NAME.s -I $ASM \
      -c \
      -o $BUILD/$NAME.o
 
+#-- Ensamblado de las dependencias: delay.s
+$GCC $ASM/delay.s -I $ASM \
+     -fdata-sections -ffunction-sections  \
+     -c \
+     -o $BUILD/delay.o
+
+
 #-- Linkado: generacion del elf
 $GCC -nostdlib -nostartfiles -mno-relax \
      -lgcc -Wl,--no-warn-rwx-segments -Wl,--gc-sections \
      -T $ASM/hades-v.ld \
      $BUILD/$NAME.o \
+     $BUILD/delay.o \
      -o $BUILD/$NAME.elf
 
 if [ $? -ne 0 ]; then
