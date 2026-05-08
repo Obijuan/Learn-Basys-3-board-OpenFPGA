@@ -1,0 +1,110 @@
+[*]
+[*] GTKWave Analyzer v3.3.116 (w)1999-2023 BSI
+[*] Thu May  7 09:50:36 2026
+[*]
+[dumpfile] "/home/obijuan/Develop/Learn-Basys-3-board-OpenFPGA/wiki/log/examples/68-cpu2-test/sim.fst"
+[dumpfile_mtime] "Thu May  7 09:49:47 2026"
+[dumpfile_size] 106405
+[savefile] "/home/obijuan/Develop/Learn-Basys-3-board-OpenFPGA/wiki/log/examples/68-cpu2-test/sim.gtkw"
+[timestart] 357000
+[size] 1866 1001
+[pos] 25 22
+*-14.928043 520000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] TOP.
+[treeopen] TOP.TB.
+[treeopen] TOP.TB.u_mcu.
+[treeopen] TOP.TB.u_mcu.cpu.
+[treeopen] TOP.TB.u_mcu.cpu.u_decode.
+[treeopen] TOP.TB.u_mcu.cpu.u_memory.
+[treeopen] TOP.TB.u_mcu.u_wishbone_leds.
+[treeopen] TOP.TB.u_mcu.wb_test.
+[sst_width] 312
+[signals_width] 230
+[sst_expanded] 1
+[sst_vpaned_height] 625
+@28
+TOP.TB.clk
+TOP.TB.u_mcu.rst
+@200
+-FETCH
+@22
++{pc} TOP.TB.u_mcu.cpu.u_fetch.program_counter_reg_out[31:0]
+@100000028
++{status_fw} TOP.TB.u_mcu.cpu.u_decode.status_forwards_in[3:0]
+@200
+-DECODE
+@22
++{pc} TOP.TB.u_mcu.cpu.u_decode.program_counter_reg_out[31:0]
+@100000028
+TOP.TB.u_mcu.cpu.decode_instruction_reg.op[5:0]
++{status_fw} TOP.TB.u_mcu.cpu.u_decode.status_forwards_out[3:0]
++{status_bw} TOP.TB.u_mcu.cpu.u_decode.status_backwards_out[1:0]
+@200
+-EXE
+@22
++{pc} TOP.TB.u_mcu.cpu.u_execute.program_counter_reg_out[31:0]
+@100000028
+TOP.TB.u_mcu.cpu.u_execute.instruction_reg_out.op[5:0]
++{status_fw} TOP.TB.u_mcu.cpu.u_execute.status_forwards_out[3:0]
+@22
++{jump_bw} TOP.TB.u_mcu.cpu.u_execute.jump_address_backwards_out[31:0]
+@100000028
++{status_bw} TOP.TB.u_mcu.cpu.u_execute.status_backwards_out[1:0]
+@200
+-MEM
+@22
++{pc} TOP.TB.u_mcu.cpu.u_memory.program_counter_reg_out[31:0]
+@100000028
+TOP.TB.u_mcu.cpu.u_memory.instruction_reg_out.op[5:0]
++{status_fw} TOP.TB.u_mcu.cpu.u_memory.status_forwards_out[3:0]
+@200
+-WRITEBACK
+@100000028
++{status_bw} TOP.TB.u_mcu.cpu.u_writeback.status_backwards_out[1:0]
+@24
+TOP.TB.u_mcu.cpu.u_writeback.u_csr.mcycles[63:0]
+@22
++{jump_bw} TOP.TB.u_mcu.cpu.u_writeback.jump_address_backwards_out[31:0]
+@200
+-USER
+@28
+TOP.TB.u_mcu.u_wishbone_leds.leds_stb
+@c00022
+TOP.TB.u_mcu.leds[15:0]
+@28
+(0)TOP.TB.u_mcu.leds[15:0]
+(1)TOP.TB.u_mcu.leds[15:0]
+(2)TOP.TB.u_mcu.leds[15:0]
+(3)TOP.TB.u_mcu.leds[15:0]
+(4)TOP.TB.u_mcu.leds[15:0]
+(5)TOP.TB.u_mcu.leds[15:0]
+(6)TOP.TB.u_mcu.leds[15:0]
+(7)TOP.TB.u_mcu.leds[15:0]
+(8)TOP.TB.u_mcu.leds[15:0]
+(9)TOP.TB.u_mcu.leds[15:0]
+(10)TOP.TB.u_mcu.leds[15:0]
+(11)TOP.TB.u_mcu.leds[15:0]
+(12)TOP.TB.u_mcu.leds[15:0]
+(13)TOP.TB.u_mcu.leds[15:0]
+(14)TOP.TB.u_mcu.leds[15:0]
+(15)TOP.TB.u_mcu.leds[15:0]
+@1401200
+-group_end
+@28
+TOP.TB.u_mcu.wb_test.test_stb
+TOP.TB.u_mcu.rx_serial_in
+@22
++{ra(x1)} TOP.TB.u_mcu.cpu.u_decode.u_reg_file.mem[1][31:0]
++{sp(x2)} TOP.TB.u_mcu.cpu.u_decode.u_reg_file.mem[2][31:0]
++{t0(x5)} TOP.TB.u_mcu.cpu.u_decode.u_reg_file.mem[5][31:0]
++{s0(x8)} TOP.TB.u_mcu.cpu.u_decode.u_reg_file.mem[8][31:0]
++{s1(x9)} TOP.TB.u_mcu.cpu.u_decode.u_reg_file.mem[9][31:0]
++{a0(x10)} TOP.TB.u_mcu.cpu.u_decode.u_reg_file.mem[10][31:0]
++{a1(x11)} TOP.TB.u_mcu.cpu.u_decode.u_reg_file.mem[11][31:0]
++{a2(x12)} TOP.TB.u_mcu.cpu.u_decode.u_reg_file.mem[12][31:0]
++{s2(x18)} TOP.TB.u_mcu.cpu.u_decode.u_reg_file.mem[18][31:0]
++{s3(x19)} TOP.TB.u_mcu.cpu.u_decode.u_reg_file.mem[19][31:0]
+@420
+TOP.constants.CLKS_PER_BIT
+[pattern_trace] 1
+[pattern_trace] 0

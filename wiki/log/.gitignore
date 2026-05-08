@@ -9,3 +9,4 @@ sim.fst
 *.bin
 *.elf
 _build/
+*.o 
