@@ -60,6 +60,11 @@ $OBJDUMP -d -r -t -S $BUILD/$NAME.elf > $BUILD/$NAME.dis
 echo -e $BLUE"• Ejecutable binario: ${RESET}"$BUILD/$NAME.bin
 $OBJCOPY -O binary $BUILD/$NAME.elf $BUILD/$NAME.bin
 
+#-- Fichero .hex
+echo -e $BLUE"• Ejecutable HEX: ${RESET}"$BUILD/$NAME.hex
+$OBJCOPY -O ihex $BUILD/$NAME.elf $BUILD/$NAME.hex
+
+
 #-- Fichero ejecutable para integrar en la memoria
 #-- del diseño en verilog
 echo -e $BLUE"• Ejecutable verilog: ${RESET}"$BUILD/$NAME.mem
@@ -67,7 +72,7 @@ $OBJCOPY -I binary -O verilog --verilog-data-width 4 \
   --reverse-bytes=4 $BUILD/$NAME.bin $BUILD/$NAME.mem
 
 #-- Es el nuevo init.mem
-mv $BUILD/$NAME.mem init.mem
+cp $BUILD/$NAME.mem init.mem
 echo -e $BLUE"• Generado: ${RESET}init.mem"
 echo ""
 

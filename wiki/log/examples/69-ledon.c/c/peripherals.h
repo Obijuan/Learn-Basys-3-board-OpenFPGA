@@ -6,10 +6,11 @@
 
 
 //-- DIRECCIONES
-#define LEDS_ADDR              ((volatile uint16_t*)0x00200000)
-#define UART_BUFFER_ADDRESS    ((volatile uint8_t*)0x00210000)
-#define UART_RX_STATUS_ADDRESS ((volatile uint8_t*)0x00210002)
-#define UART_TX_STATUS_ADDRESS ((volatile uint8_t*)0x00210003)
+#define LEDS_ADDR              ((volatile uint16_t*)  0x00200000)
+#define UART_BUFFER_ADDRESS    ((volatile uint8_t*)   0x00210000)
+#define UART_RX_STATUS_ADDRESS ((volatile uint8_t*)   0x00210002)
+#define UART_TX_STATUS_ADDRESS ((volatile uint8_t*)   0x00210003)
+#define TEST_ADDRESS           ((volatile uint32_t *) 0x00480000)
 
 //-- ACCESO A PERIFERICOS
 #define LEDS            *LEDS_ADDR
