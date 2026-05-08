@@ -7,9 +7,7 @@
     .include "delay.h"
 
 #-- LED que se quiere parpadear
-    .equ LED, LED0
-
-
+    .equ LED, LED15
 
     .global __reset
 __reset:
@@ -21,14 +19,15 @@ __reset:
     li s0, LEDS_ADDR
 
     #-- Meter en t1 el LED
-    li t0, LED0
+    li t0, LED
 
 loop:
     #-- Mostrar estado actual del LED
     sw t0, 0(s0)
 
     #-- Cambiar de estado
-    xori t0, t0, LED
+    li t1, LED
+    xor t0, t0, t1
     
     #-- Pausa
     li a0, _250ms
