@@ -2,6 +2,7 @@
     .include "so.h"
 
 #-- El punto de entrada es: __reset
+#-- Esta indicado en el linker script
     .global __reset
 __reset:
 
