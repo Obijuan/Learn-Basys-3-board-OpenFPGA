@@ -48,6 +48,14 @@ $GCC $ASM/delay.s -I $ASM \
      -c \
      -o $BUILD/delay.o
 
+#-- Ensamblado de las dependencias: buttons.s
+$GCC $ASM/buttons.s -I $ASM \
+     -fdata-sections -ffunction-sections  \
+     -c \
+     -o $BUILD/buttons.o
+
+
+
 
 #-- Linkado: generacion del elf
 $GCC -nostdlib -nostartfiles -mno-relax \
@@ -55,6 +63,7 @@ $GCC -nostdlib -nostartfiles -mno-relax \
      -T $ASM/hades-v.ld \
      $BUILD/$NAME.o \
      $BUILD/delay.o \
+     $BUILD/buttons.o \
      -o $BUILD/$NAME.elf
 
 if [ $? -ne 0 ]; then
