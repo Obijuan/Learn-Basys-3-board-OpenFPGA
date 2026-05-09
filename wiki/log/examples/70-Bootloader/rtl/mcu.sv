@@ -85,6 +85,23 @@ synchronizer u_rx_sync (
 );
 
 //───────────────────────────────────────────────────────────
+//──      ANTIRREBOTES PARA LOS PULSADORES
+//───────────────────────────────────────────────────────────
+logic [4:0] buttons_rdy;
+for (genvar btn_i = 0; btn_i < BOTONES; btn_i++) begin : gen_2
+
+    //-- Instanciar antirrebotes para el boton i
+    debounce #(
+        .SIZE(DEBOUNCER_SIZE)
+    ) u_debouncer1 (
+        .clk(clk),
+        .value_in(buttons_sync[btn_i]),
+        .value_out(buttons_rdy[btn_i])
+    );
+end
+
+
+//───────────────────────────────────────────────────────────
 //──          CPU
 //───────────────────────────────────────────────────────────
 //-- Acceso a la memoria
@@ -215,7 +232,7 @@ wishbone_buttons #(
 ) u_wishbone_buttons(
     .clk(clk),
     .rst(rst),
-    .buttons(buttons_sync),
+    .buttons(buttons_rdy),
     .wishbone(mem_bus_slaves[2])
 );
 
