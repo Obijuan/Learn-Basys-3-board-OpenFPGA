@@ -43,7 +43,13 @@ tabla:
     .byte 0x07  #-- Digito 7
     .byte 0x7F  #-- Digito 8
     .byte 0x6F  #-- Digito 9
-
+    .byte 0x77  #-- Digito A
+    .byte 0x7C  #-- Digito B
+    .byte 0x39  #-- Digito C
+    .byte 0x5E  #-- Digito D
+    .byte 0x79  #-- Digito E
+    .byte 0x71  #-- Digito F
+    
 
 #--------------------------------------------------------
 #-- Mostrar un numero de 1 digito bcd en el
@@ -66,4 +72,5 @@ disp_bcd:
     #-- Mostrar numero en los leds
     sw a0, 0(t0)
 
-    ret
+    UNSTACK16
+
