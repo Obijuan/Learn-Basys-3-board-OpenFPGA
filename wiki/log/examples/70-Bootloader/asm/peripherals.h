@@ -1,8 +1,8 @@
 
 #─────────  Direcciones de los perifericos
 .equ LEDS_ADDR,        0x00200000
-.equ BUTTONS_ADDRESS,  0x00204000
-
+.equ BUTTONS_ADDR,     0x00204000
+.equ SEGMENTS_ADDR,    0x0020C000
 
 #───── LEDS
 #── Máscaras de acceso individual a los LEDs

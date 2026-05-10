@@ -55,6 +55,14 @@ $GCC $ASM/buttons.s -I $ASM \
      -o $BUILD/buttons.o
 
 
+#-- Ensamblado de las dependencias: disp7.s
+$GCC $ASM/disp7.s -I $ASM \
+     -fdata-sections -ffunction-sections  \
+     -c \
+     -o $BUILD/disp7.o
+
+
+
 
 
 #-- Linkado: generacion del elf
@@ -64,6 +72,7 @@ $GCC -nostdlib -nostartfiles -mno-relax \
      $BUILD/$NAME.o \
      $BUILD/delay.o \
      $BUILD/buttons.o \
+     $BUILD/disp7.o \
      -o $BUILD/$NAME.elf
 
 if [ $? -ne 0 ]; then

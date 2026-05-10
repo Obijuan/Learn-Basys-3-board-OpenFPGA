@@ -11,7 +11,7 @@
 read_buttons:
 
     #-- t0: Direccion de los pulsadores
-    li t0, BUTTONS_ADDRESS
+    li t0, BUTTONS_ADDR
 
     #-- t1: Direccion de la variable: btn_state
     la t1, btn_state
