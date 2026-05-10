@@ -36,11 +36,24 @@ __reset:
 
     #-- ¿Boton up?
     andi t1, a0, BTN_UP
-    beq t1, zero, main_loop
+    bne t1, zero, button_up
 
-    #-- Boton apretado
-    #-- Incrementar el numero
+    #-- ¿Boton down?
+    andi t1, a0, BTN_DOWN
+    bne t1, zero, button_down
+
+    #-- Repetir
+    j main_loop
+
+    #-- Boton UP apretado
+button_up:
+    #-- Incrementar el contador
     addi s1, s1, 1
+    j main_loop
+
+button_down:
+    #-- Decrementar contador
+    addi s1, s1, -1
 
     #-- Repetir
     j main_loop
