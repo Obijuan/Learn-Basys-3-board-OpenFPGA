@@ -16,10 +16,10 @@
 #----------------------------------------
 #-- Se pasa como parametro la etiqueta
 #----------------------------------------
-# .macro PUTSL(%label)
-#   la a0, %label
-#   jal puts
-# .end_macro
+.macro PUTSL label:req
+  la a0, \label
+  jal puts
+.endm
 
 #-----------------------------------------------
 #-- Se pasa como paramtro una cadena LITERAL  

@@ -74,6 +74,12 @@ $GCC $ASM/stdio.s -I $ASM \
      -c \
      -o $BUILD/stdio.o
 
+#-- Ensamblado de las dependencias: ansi.s
+$GCC $ASM/ansi.s -I $ASM \
+     -fdata-sections -ffunction-sections  \
+     -c \
+     -o $BUILD/ansi.o
+
 
 #-- Linkado: generacion del elf
 $GCC -nostdlib -nostartfiles -mno-relax \
@@ -85,6 +91,7 @@ $GCC -nostdlib -nostartfiles -mno-relax \
      $BUILD/disp7.o \
      $BUILD/uart.o \
      $BUILD/stdio.o \
+     $BUILD/ansi.o \
      -o $BUILD/$NAME.elf
 
 if [ $? -ne 0 ]; then
