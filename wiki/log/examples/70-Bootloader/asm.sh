@@ -62,7 +62,11 @@ $GCC $ASM/disp7.s -I $ASM \
      -o $BUILD/disp7.o
 
 
-
+#-- Ensamblado de las dependencias: uart.s
+$GCC $ASM/uart.s -I $ASM \
+     -fdata-sections -ffunction-sections  \
+     -c \
+     -o $BUILD/uart.o
 
 
 #-- Linkado: generacion del elf
@@ -73,6 +77,7 @@ $GCC -nostdlib -nostartfiles -mno-relax \
      $BUILD/delay.o \
      $BUILD/buttons.o \
      $BUILD/disp7.o \
+     $BUILD/uart.o \
      -o $BUILD/$NAME.elf
 
 if [ $? -ne 0 ]; then

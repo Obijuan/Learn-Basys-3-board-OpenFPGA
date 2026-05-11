@@ -5,6 +5,8 @@
 .equ BUTTONS_ADDR,     0x00204000
 .equ SWITCHES_ADDR,    0x00208000
 .equ SEGMENTS_ADDR,    0x0020C000
+.equ UART_ADDR,        0x00210000
+
 
 
 #───── LEDS
@@ -52,3 +54,19 @@
 .equ SW13, 1 << 13
 .equ SW14, 1 << 14
 .equ SW15, 1 << 15
+
+#────────────── UART
+#── Registros de la UART
+#-- Offset de los registros de la UART
+.equ UART_DATA, 0x0
+.equ UART_RX_STATUS, 0x2
+.equ UART_TX_STATUS, 0x3
+
+#── Máscaras de acceso a los bits
+.equ UART_RX_STATUS_ER,     1 << 0
+.equ UART_RX_STATUS_IE,     1 << 1
+.equ UART_RX_STATUS_FULL,   1 << 2
+.equ UART_TX_STATUS_ER,     1 << 0
+.equ UART_TX_STATUS_IE,     1 << 1
+.equ UART_TX_STATUS_EMPTY,  1 << 2
+
