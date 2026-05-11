@@ -16,9 +16,6 @@ __reset:
     #-- s0: Acceso a los LEDs
     li s0, LEDS_ADDR
 
-    #-- tp -> Direccion de la UART
-    li tp, UART_ADDR
-
  main_loop:
 
     #-- Mostrar valor en leds

@@ -16,8 +16,12 @@
 #--------------------------------------------------------------
     .global uart_wait_tx_ready
 uart_wait_tx_ready:
+
+    #-- Leer la direccion base de la UART
+    li t1, UART_ADDR
+
     #-- Leer el registro de status de la UART
-    lb t0, UART_TX_STATUS(tp)
+    lb t0, UART_TX_STATUS(t1)
     
     #-- Aislar el bit TX_EMPTY
     andi t0, t0, UART_TX_STATUS_EMPTY
@@ -49,9 +53,12 @@ putchar:
 	#-- Esperar a que el transmisor esté listo
 	jal uart_wait_tx_ready
 	
+    #-- Leer la direccion base de la UART
+    li t1, UART_ADDR
+
 	#-- Escribir el caracter en el registro de datos
     lw a0, 0(sp) #-- Sacarlo de la pila
-	sb a0, 0(tp) #-- Transmitir!
+	sb a0, 0(t1) #-- Transmitir!
 	
 	#-- Recuperar la dirección de retorno y liberar la pila
 	UNSTACK16
