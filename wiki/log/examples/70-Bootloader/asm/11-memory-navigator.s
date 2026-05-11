@@ -1,12 +1,12 @@
 #──────────────────────────────────────────────────────
- #──  Memory-navigator
- #──    Observar el contenido de la memoria en los
- #──  displays de 7 segmentos
- #──  Con las teclas UP-DOWN se cambiar la direccion actual
- #── Con LEFT-RIGHT se cambia el peso de la visualizacion:
- #──   * Media palabra alta
- #──   * Media palabra baja 
- #──────────────────────────────────────────────────────
+#──  Memory-navigator
+#──    Observar el contenido de la memoria en los
+#──  displays de 7 segmentos
+#──  Con las teclas UP-DOWN se cambiar la direccion actual
+#── Con LEFT-RIGHT se cambia el peso de la visualizacion:
+#──   * Media palabra alta
+#──   * Media palabra baja 
+#──────────────────────────────────────────────────────
     .include "so.h"
     .include "peripherals.h"
 
