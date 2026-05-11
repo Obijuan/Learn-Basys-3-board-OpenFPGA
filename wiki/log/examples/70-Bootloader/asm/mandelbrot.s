@@ -9,15 +9,6 @@
 	.include "so.h"
 	.include "delay.h"
 
-# Base address of memory-mapped IO,
-# Loaded into gp at startup
-.equ IO_BASE, 0x400000  
-
-# IO-reg offsets. To read or write one of them,
-# use IO_XXX(gp)
-.equ IO_LEDS, 4
-.equ IO_UART_DAT, 8
-.equ IO_UART_CNTL, 16
 
 .equ mandel_shift, 10
 .equ mandel_mul,(1 << mandel_shift)	
