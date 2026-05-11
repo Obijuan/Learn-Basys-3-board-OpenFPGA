@@ -130,6 +130,8 @@ disp_hex2:
 #-- ENTRADA:
 #--   a0: Numero a mostrar
 #--
+#-- SALIDA:
+#--   a0: Valor para los displays de 7 segmentos
 #------------------------------------------------------
     .global disp_hex4
 disp_hex4:
@@ -185,6 +187,9 @@ disp_hex4:
 
     #-- Mostrar numero en el display
     sw s1, 0(t0)
+
+    #-- Devolver valor
+    mv a0, s1
 
     #-- Recuperar registros estaticos
     lw s0, 0(sp)

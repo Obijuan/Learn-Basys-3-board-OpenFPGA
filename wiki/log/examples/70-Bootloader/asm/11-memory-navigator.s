@@ -44,18 +44,25 @@ __reset:
     srli a0, a0, 16
     j show
 
-    #-- Para la parte baja
+    #-- Para la parte baja: no se hace nada
  parte_baja:
-
-    #-- Activar el punto
-    addi a0, a0, 0x80
 
  show:
     #-- Mostrar contenido de la direccion actual
     #-- en el display de 7 segmentos
     jal disp_hex4
 
-    #-- Lectura de los pulsadore
+    #-- Si estamos viendo la parte baja, 
+    #-- activar el punto!!
+    bne s2, zero, cont
+
+    #-- Mostrar el punto!
+    addi a0, a0, 0x80
+    li t0, SEGMENTS_ADDR
+    sw a0, 0(t0)
+
+ cont:
+    #-- Lectura de los pulsadores
     jal read_buttons
 
     #-- ¿Boton down?
