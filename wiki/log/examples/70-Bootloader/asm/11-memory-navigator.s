@@ -42,10 +42,15 @@ __reset:
 
     #-- Mostrar la parte alta: Hay que desplazar a0 >> 16
     srli a0, a0, 16
+    j show
 
-    #-- Para la parte baja: NO hay que hacer nada
+    #-- Para la parte baja
  parte_baja:
 
+    #-- Activar el punto
+    addi a0, a0, 0x80
+
+ show:
     #-- Mostrar contenido de la direccion actual
     #-- en el display de 7 segmentos
     jal disp_hex4

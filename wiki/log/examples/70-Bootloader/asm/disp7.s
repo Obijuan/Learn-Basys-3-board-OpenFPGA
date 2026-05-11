@@ -190,6 +190,6 @@ disp_hex4:
     lw s0, 0(sp)
     lw s1, 4(sp)
     lw s2, 8(sp)
-    
+
     UNSTACK16
 
