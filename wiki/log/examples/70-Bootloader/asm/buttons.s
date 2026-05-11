@@ -41,7 +41,7 @@ read_buttons:
     ret
 
 
-    .data
+    .section .sdata
 
 #-- Estado anterior de los pulsadores
 btn_state: .word 0x0000
@@ -89,7 +89,7 @@ toggle_btn:
 
 
 
-    .data
+    .section .sdata
 
 #-- Estado de los botones de cambio
 toggle_state: .word 0x0000

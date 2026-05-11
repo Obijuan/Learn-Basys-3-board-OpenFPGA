@@ -83,7 +83,7 @@ $GCC $ASM/ansi.s -I $ASM \
 
 #-- Linkado: generacion del elf
 $GCC -nostdlib -nostartfiles -mno-relax \
-     -lgcc -Wl,--no-warn-rwx-segments -Wl,--gc-sections \
+     -Wl,--no-warn-rwx-segments -Wl,--gc-sections \
      -T $ASM/hades-v.ld \
      $BUILD/$NAME.o \
      $BUILD/delay.o \
@@ -92,7 +92,8 @@ $GCC -nostdlib -nostartfiles -mno-relax \
      $BUILD/uart.o \
      $BUILD/stdio.o \
      $BUILD/ansi.o \
-     -o $BUILD/$NAME.elf
+     -o $BUILD/$NAME.elf \
+     -lgcc
 
 if [ $? -ne 0 ]; then
     echo -e $RED"> Abortando...\n"$RESET
