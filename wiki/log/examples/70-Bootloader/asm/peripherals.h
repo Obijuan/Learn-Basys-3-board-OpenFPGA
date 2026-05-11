@@ -1,5 +1,6 @@
 
 #─────────  Direcciones de los perifericos
+.equ MEMORY_ADDR,      0x00040000
 .equ LEDS_ADDR,        0x00200000
 .equ BUTTONS_ADDR,     0x00204000
 .equ SEGMENTS_ADDR,    0x0020C000
