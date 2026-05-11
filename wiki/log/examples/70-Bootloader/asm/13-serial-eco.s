@@ -30,16 +30,18 @@ __reset:
 
  main_loop:
 
-    #-- Transmitir una A
-    PUTCHARI('A')
+    #-- Esperar a que se reciba un caracter
+    jal getchar
 
-    halt
+    #-- Mostrar caracter recibido en los leds
+    sb a0, (s0)
 
+    #-- Hacer eco!
+    jal putchar
+
+    #-- Repetir
     j main_loop
 
-
-    .data
-msga: .string "\nPrograma de eco...\n"
 
 
 
