@@ -3,7 +3,8 @@
 #──────────────────────────────────────────────────────
     .include "so.h"
     .include "peripherals.h"
-    .include "stack.h"
+    .include "uart.h"
+    .include "stdio.h"
 
     .text
 
@@ -16,19 +17,21 @@ __reset:
     #-- s0: Acceso a los LEDs
     li s0, LEDS_ADDR
 
-    #-- Apagar los leds
-    sw zero, 0(s0)
+    #-- Poner patron inicial en los leds
+    li t0, 0xF00F
+    sw t0, 0(s0)
 
-    #-- Imprimir mensaje de bienvenida
-    la a0, msg1
-    jal puts
+    #-- Imprimir mensaje
+    PUTCHARI('\n')
+    PUTSI "----------------------------\n"
+    PUTSI "Activando programa de eco...\n"
+    PUTSI "----------------------------\n"
 
 
  main_loop:
 
     #-- Transmitir una A
-    li a0, 'A'
-    jal putchar
+    PUTCHARI('A')
 
     halt
 
@@ -36,7 +39,7 @@ __reset:
 
 
     .data
-msg1: .string "\nPrograma de eco...\n"
+msga: .string "\nPrograma de eco...\n"
 
 
 
