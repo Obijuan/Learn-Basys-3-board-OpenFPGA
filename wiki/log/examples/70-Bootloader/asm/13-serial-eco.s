@@ -16,11 +16,15 @@ __reset:
     #-- s0: Acceso a los LEDs
     li s0, LEDS_ADDR
 
- main_loop:
+    #-- Apagar los leds
+    sw zero, 0(s0)
 
-    #-- Mostrar valor en leds
-    li t0, 0xF00F
-    sw t0, 0(s0)
+    #-- Imprimir mensaje de bienvenida
+    la a0, msg1
+    jal puts
+
+
+ main_loop:
 
     #-- Transmitir una A
     li a0, 'A'
@@ -30,6 +34,9 @@ __reset:
 
     j main_loop
 
+
+    .data
+msg1: .string "\nPrograma de eco...\n"
 
 
 

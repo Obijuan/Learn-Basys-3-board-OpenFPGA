@@ -68,6 +68,12 @@ $GCC $ASM/uart.s -I $ASM \
      -c \
      -o $BUILD/uart.o
 
+#-- Ensamblado de las dependencias: stdio.s
+$GCC $ASM/stdio.s -I $ASM \
+     -fdata-sections -ffunction-sections  \
+     -c \
+     -o $BUILD/stdio.o
+
 
 #-- Linkado: generacion del elf
 $GCC -nostdlib -nostartfiles -mno-relax \
@@ -78,6 +84,7 @@ $GCC -nostdlib -nostartfiles -mno-relax \
      $BUILD/buttons.o \
      $BUILD/disp7.o \
      $BUILD/uart.o \
+     $BUILD/stdio.o \
      -o $BUILD/$NAME.elf
 
 if [ $? -ne 0 ]; then
