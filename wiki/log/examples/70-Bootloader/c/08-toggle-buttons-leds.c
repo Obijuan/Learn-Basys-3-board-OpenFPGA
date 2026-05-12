@@ -4,11 +4,7 @@
 //──  Con cada pulsacion se cambia el estado del LED
 //──────────────────────────────────────────────────────
 #include <peripherals.h>
-
-
-int toggle_btn();
-int read_buttons();
-void buttons_init();
+#include <buttons.h>
 
 void main()
 {
