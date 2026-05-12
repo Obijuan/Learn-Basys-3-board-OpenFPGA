@@ -14,22 +14,21 @@
 void main()
 {
 
-    uint16_t sec[] = {VALOR1, VALOR2};
+    //-- Valores de la secuencia a mostrar
+    uint16_t seq[] = {VALOR1, VALOR2};
+    uint8_t i = 0;
 
     //-- Bucle infinito
     while (1) {
 
-        //-- Establecer valor 1
-        LEDS = VALOR1;
+        //-- Establecer valor actual
+        LEDS = seq[i];
 
         //-- Esperar
         delay(PAUSA);
 
-        //-- Establecer valor 2
-        LEDS = VALOR2;
-
-        //-- Esperar
-        delay(PAUSA);
+        //-- Apuntar al siguiente valor
+        i = i ^ 1;
     }
 }
 
