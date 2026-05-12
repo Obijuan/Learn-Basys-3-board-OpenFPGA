@@ -23,6 +23,15 @@ __reset:
     #-- s0: Acceso a los LEDs
     li s0, LEDS_ADDR
 
+    #-- Deshabilitar las interrupciones
+    #li t0, MIE_MTIE_MASK
+    csrw mie, zero
+
+    #-- DesHabilitar las interrupciones a nivel global
+    li t0, MSTATUS_MIE_MASK
+    csrc mstatus, t0
+
+
     #-- Mostrar patron inicial en los leds
     li t0, 0x8001
     sw t0, 0(s0)
@@ -38,15 +47,18 @@ __reset:
     PUTSI "------------------------------\n"
     PUTSI "  Main: Probando excepciones  \n"
     PUTSI "------------------------------\n"
-    PUTSI "0. Fetch misaligned\n"
-    PUTSI "1. Fetch fault\n"
-    PUTSI "2. Ilegal instruction\n"
-    PUTSI "3. ebreak\n"
-    PUTSI "4. Load misaligned\n"
-    PUTSI "5. Load fault\n"
-    PUTSI "6. Store misaligned\n"
-    PUTSI "7. Store fault\n"
-    PUTSI "b. ecall\n"
+    PUTSI "EXCEPCIONES:\n"
+    PUTSI " 0. Fetch misaligned\n"
+    PUTSI " 1. Fetch fault\n"
+    PUTSI " 2. Ilegal instruction\n"
+    PUTSI " 3. ebreak\n"
+    PUTSI " 4. Load misaligned\n"
+    PUTSI " 5. Load fault\n"
+    PUTSI " 6. Store misaligned\n"
+    PUTSI " 7. Store fault\n"
+    PUTSI " b. ecall\n"
+    PUTSI "\nINTERRUPCIONES: \n"
+    PUTSI " c. Timer\n"
     PUTSI "Opcion: "
 
     #-- Leer opciones
@@ -79,6 +91,9 @@ __reset:
 
     li t0, 'b'
     beq a0, t0, generar_ecall
+
+    li t0, 'c'
+    beq a0, t0, generar_timer_int
 
     #-- Opcion no conocida: Ignorar
     j ask_user
@@ -153,6 +168,48 @@ __reset:
  generar_ecall:
     ecall
 
+ #-----------------------------------------------
+ #-- Generar una interrupcion del temporizador
+ #-----------------------------------------------
+ generar_timer_int:
+
+    #-- Direccion basel del timer
+    li s1, TIMER_ADDR
+
+    #-- Leer el temporizador
+    lw t0, MTIME(s1)
+
+    #-- Incrementarlo en 100ms
+    li t1, 25000000  #-- 25000000 ciclos -> 1s
+    add t0, t0, t1  #-- t0 = counter + 1s
+
+    #-- Escribir en el comparador
+    sw t0, MTIMECMP(s1)
+
+    #-- Activar las interrupciones
+    #-- En 1s debería producirse una!
+    #-- Habilitar la interrupcion del temporizador
+    li t0, MIE_MTIE_MASK
+    csrs mie, t0
+
+    #-- Habilitar las interrupciones a nivel global
+    li t0, MSTATUS_MIE_MASK
+    csrs mstatus, t0
+
+    #-- Mostrar temporizador en los LEDs    
+
+ loop:
+    #-- Leer temporizador
+    lw t0, MTIME(s1)
+
+    #-- Eliminar los 18 bits de menor peso
+    srli t0, t0, 18
+
+    #-- Observar los bits del 18 al 25
+    sw t0, (s0)
+
+    #-- Repetir
+    j loop
 
 #------------------------------------------
 #-- Rutina de atencion a la interrupcion
@@ -298,11 +355,49 @@ servicio_excepcion:
  #------------------------------------
  servicio_interrupt:
 
-    PUTSI "Es una interrupcion"
+    PUTSI "Es una interrupcion\n"
 
-    #--- Mostrar secuencia especifica en los leds
-    li t0, 0x7
-    sw t0, 0(s0)
+    #-- Leer causa de interrupcion y mostrarla en el display
+    csrr a0, mcause
+    jal disp_hex4
+
+    #-- Escribir un texto diciendo que tipo de excepcion es
+    ANSI_BLUE
+
+    csrr a0, mcause
+    andi a0, a0, 0xff
+    li t0, 7
+    beq a0, t0, msg_timer_int
+
+    ANSI_RED
+    PUTSI "Exepcion desconocida!\n"
+    j animation
+
+ msg_timer_int:
+    PUTSI "--> TIMER INT. Codigo 7\n"
+
+    #-- Modificar temporizador para que no se vuelva a 
+    #-- producir la interrupcion al terminar
+
+    #-- Direccion basel del timer
+    li s1, TIMER_ADDR
+
+    #-- Leer el temporizador
+    lw t0, MTIME(s1)
+
+    #-- Incrementarlo en 100ms
+    li t1, 25000000  #-- 25000000 ciclos -> 1s
+    add t0, t0, t1  #-- t0 = counter + 1s
+
+    #-- Escribir en el comparador
+    sw t0, MTIMECMP(s1)
+
+    #-- Deshabilitar las interrupciones
+    csrw mie, zero
+
+
+    j animation
+
 
     halt
 

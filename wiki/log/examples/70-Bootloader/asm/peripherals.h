@@ -6,7 +6,7 @@
 .equ SWITCHES_ADDR,    0x00208000
 .equ SEGMENTS_ADDR,    0x0020C000
 .equ UART_ADDR,        0x00210000
-
+.equ TIMER_ADDR,       0x00214000
 
 
 #───── LEDS
@@ -69,4 +69,13 @@
 .equ UART_TX_STATUS_ER,     1 << 0
 .equ UART_TX_STATUS_IE,     1 << 1
 .equ UART_TX_STATUS_EMPTY,  1 << 2
+
+
+#─────────── TIMER
+#──── Offsets del timer
+.equ MTIME_STATUS, 0x00
+.equ MTIME,        0x04
+.equ MTIMEH,       0x08
+.equ MTIMECMP,     0x0C
+.equ MTIMECMPH,    0x10
 
