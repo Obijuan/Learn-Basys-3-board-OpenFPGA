@@ -72,6 +72,24 @@ if [ $? -ne 0 ]; then
 fi
 
 
+#--------- Compilado de las dependencias: delay.c
+CMD="\
+$GCC $C/delay.c -I$C \
+     -fdata-sections -ffunction-sections  \
+     -c \
+     -o $BUILD/delay.o\
+"
+echo ""
+echo "➡️ $CMD"
+$CMD
+
+if [ $? -ne 0 ]; then
+    echo -e $RED"> Abortando...\n"$RESET
+    exit 1
+fi
+
+
+
 
 #---------- Linkado: generacion del elf
 CMD="\
@@ -80,6 +98,7 @@ $GCC -nostdlib -nostartfiles -mno-relax \
      -T $ASM/hades-v.ld \
      $BUILD/$NAME.o \
      $BUILD/crt.o \
+     $BUILD/delay.o \
      -o $BUILD/$NAME.elf \
      -lgcc \
 "
