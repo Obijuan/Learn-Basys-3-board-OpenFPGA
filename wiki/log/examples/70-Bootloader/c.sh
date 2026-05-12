@@ -39,12 +39,54 @@ fi
 NAME=$1
 NAME="${NAME%.*}" #-- Quitar extension
 
-#-- Ensamblado
-echo -e $BLUE"\n• Ensamblando:"$RESET
-$GCC -nostdlib -nostartfiles -mno-relax -march=rv32i \
+#-------------------------- Compilacion!
+CMD1="\
+$GCC $NAME.c -I$C \
+     -fdata-sections -ffunction-sections  \
+     -c \
+     -o $BUILD/$NAME.o \
+"
+echo -e $BLUE"\n• Compilando:"$RESET
+echo "➡️ $CMD1"
+$CMD1
+
+if [ $? -ne 0 ]; then
+    echo -e $RED"> Abortando...\n"$RESET
+    exit 1
+fi
+
+#--------- Compilado de las dependencias: crt.c
+CMD2="\
+$GCC $C/crt.c -I$C \
+     -fdata-sections -ffunction-sections  \
+     -c \
+     -o $BUILD/crt.o\
+"
+echo ""
+echo "➡️ $CMD2"
+$CMD2
+
+if [ $? -ne 0 ]; then
+    echo -e $RED"> Abortando...\n"$RESET
+    exit 1
+fi
+
+
+
+#---------- Linkado: generacion del elf
+CMD="\
+$GCC -nostdlib -nostartfiles -mno-relax \
+     -Wl,--no-warn-rwx-segments -Wl,--gc-sections \
      -T $ASM/hades-v.ld \
-     -I$ASM -I$C\
-     -o $BUILD/$NAME.elf $NAME.c
+     $BUILD/$NAME.o \
+     $BUILD/crt.o \
+     -o $BUILD/$NAME.elf \
+     -lgcc \
+"
+echo -e $BLUE"\n• Linkando:"$RESET
+echo "➡️ $CMD"
+$CMD
+
 
 if [ $? -ne 0 ]; then
     echo -e $RED"> Abortando...\n"$RESET
