@@ -8,6 +8,8 @@
 
 int main() {
     
+    asm(".word 0");
+
     //-- Mostrar valor en LEDs
     LEDS = VALOR;
 

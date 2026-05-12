@@ -10,7 +10,7 @@
 int main();
 
 //-- Prototipo rutina de atencion excepciones
-void interrupt();
+void __panic_interrupt();
 
 
 //───────────────────────────────────────────────────────────
@@ -41,7 +41,7 @@ void __start() {
 
     //-- Gestor de excepciones
     //-- Poner un gestor mínimo, en caso de ocurrir una excepcion
-    asm("csrw mtvec, %0": : "r"(interrupt));
+    asm("csrw mtvec, %0": : "r"(__panic_interrupt));
 
     //-- Realizar las inicializaciones necesarias
     //-- Llamar a main del usuario!! 
@@ -57,7 +57,7 @@ void __start() {
 //──  Si ocurre un error grave, parar la cpu!!!
 //───────────────────────────────────────────────────────────
 __attribute__((interrupt))
-void interrupt() {
+void __panic_interrupt() {
 
     //-- Encender los LEDs
     LEDS = 0xFFFF;
