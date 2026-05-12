@@ -20,7 +20,7 @@
 #define MEMORY          *MEMORY_ADDR
 #define LEDS            *LEDS_ADDR
 #define BUTTONS         *BUTTONS_ADDR
-#define SWITCHES        *SWITCHES
+#define SWITCHES        *SWITCHES_ADDR
 #define SEGMENTS        *SEGMENTS_ADDR
 #define UART_BUFFER     *UART_BUFFER_ADDRESS
 #define UART_RX_STATUS  *UART_RX_STATUS_ADDRESS
