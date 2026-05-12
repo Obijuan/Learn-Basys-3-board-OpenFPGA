@@ -120,7 +120,21 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+#--------- Compilado de las dependencias: uart.c
+CMD="\
+$GCC $C/uart.c -I$C \
+     -fdata-sections -ffunction-sections  \
+     -c \
+     -o $BUILD/uart.o\
+"
+echo ""
+echo "➡️ $CMD"
+$CMD
 
+if [ $? -ne 0 ]; then
+    echo -e $RED"> Abortando...\n"$RESET
+    exit 1
+fi
 
 
 
@@ -134,6 +148,7 @@ $GCC -nostdlib -nostartfiles -mno-relax \
      $BUILD/delay.o \
      $BUILD/buttons.o \
      $BUILD/disp7.o \
+     $BUILD/uart.o \
      -o $BUILD/$NAME.elf \
      -lgcc \
 "
