@@ -6,16 +6,22 @@
 #include <stdint.h>
 
 //-- DIRECCIONES
+#define MEMORY_ADDR            ((volatile uint16_t*)  0x00040000)
 #define LEDS_ADDR              ((volatile uint16_t*)  0x00200000)
 #define BUTTONS_ADDR           ((volatile uint8_t*)   0x00204000)
+#define SWITCHES_ADDR          ((volatile uint16_t*)   0x00208000)
+#define SEGMENTS_ADDR          ((volatile uint32_t*)   0x0020C000)
 #define UART_BUFFER_ADDRESS    ((volatile uint8_t*)   0x00210000)
 #define UART_RX_STATUS_ADDRESS ((volatile uint8_t*)   0x00210002)
 #define UART_TX_STATUS_ADDRESS ((volatile uint8_t*)   0x00210003)
 #define TEST_ADDRESS           ((volatile uint32_t *) 0x00480000)
 
 //-- ACCESO A PERIFERICOS
+#define MEMORY          *MEMORY_ADDR
 #define LEDS            *LEDS_ADDR
 #define BUTTONS         *BUTTONS_ADDR
+#define SWITCHES        *SWITCHES
+#define SEGMENTS        *SEGMENTS_ADDR
 #define UART_BUFFER     *UART_BUFFER_ADDRESS
 #define UART_RX_STATUS  *UART_RX_STATUS_ADDRESS
 #define UART_TX_STATUS  *UART_TX_STATUS_ADDRESS
