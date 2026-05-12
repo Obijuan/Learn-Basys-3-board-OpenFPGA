@@ -59,6 +59,7 @@ __reset:
     PUTSI " b. ecall\n"
     PUTSI "\nINTERRUPCIONES: \n"
     PUTSI " c. Timer\n"
+    PUTSI " d. UART RX\n"
     PUTSI "Opcion: "
 
     #-- Leer opciones
@@ -94,6 +95,9 @@ __reset:
 
     li t0, 'c'
     beq a0, t0, generar_timer_int
+
+    li t0, 'd'
+    beq a0, t0, generar_uart_rx_int
 
     #-- Opcion no conocida: Ignorar
     j ask_user
@@ -210,6 +214,34 @@ __reset:
 
     #-- Repetir
     j loop
+
+
+ #----------------------------------------
+ #-- Interrupcion de caracter recibido
+ #----------------------------------------
+ generar_uart_rx_int:
+    PUTSI "\nPulsa una tecla..."
+
+    #-- tp -> Direccion de la UART
+    li s1, UART_ADDR
+
+    #-- Habilitar las interrupciones del receptor de la UART
+    li t0, UART_RX_STATUS_IE
+    sb t0, UART_RX_STATUS(s1)
+
+    #-- Habilitar las interrupciones externas
+    li t0, MIE_MEIE_MASK
+    csrs mie, t0
+
+    #-- Habilitar las interrupciones a nivel global
+    li t0, MSTATUS_MIE_MASK
+    csrs mstatus, t0
+
+    halt
+
+
+
+
 
 #------------------------------------------
 #-- Rutina de atencion a la interrupcion
@@ -369,6 +401,9 @@ servicio_excepcion:
     li t0, 7
     beq a0, t0, msg_timer_int
 
+    li t0, 11
+    beq a0, t0, msg_external_int
+
     ANSI_RED
     PUTSI "Exepcion desconocida!\n"
     j animation
@@ -395,6 +430,26 @@ servicio_excepcion:
     #-- Deshabilitar las interrupciones
     csrw mie, zero
 
+    j animation
+
+ msg_external_int:
+    PUTSI "--> EXTERNAL INT\n"
+
+    #-- La unica interrupcion externa es debido a la UART,
+    #-- bien porque se ha recibido un carácter (RX)
+    #-- o bien porque está lista para transmitir (TX)
+
+    #-- Deshabilitar las interrupciones
+    csrw mie, zero
+
+    #-- Leer el dato recibido
+    #-- Esto borra el flag de interrupcion
+    #-- (por si hubiese sido el caso)
+    #-- Leer la direccion base de la UART
+    li t1, UART_ADDR
+
+    #-- Leer el caracter recibido
+    lb a0, UART_DATA(t1)
 
     j animation
 
