@@ -4,6 +4,7 @@
     .include "so.h"
     .include "peripherals.h"
     .include "delay.h"
+    .include "uart.h"
     .include "ansi.h"
 
     #-- Configuracion secuencia en los LEDs
@@ -60,6 +61,7 @@ __reset:
     PUTSI "\nINTERRUPCIONES: \n"
     PUTSI " c. Timer\n"
     PUTSI " d. UART RX\n"
+    PUTSI " e. UART TX\n"
     PUTSI "Opcion: "
 
     #-- Leer opciones
@@ -98,6 +100,9 @@ __reset:
 
     li t0, 'd'
     beq a0, t0, generar_uart_rx_int
+
+    li t0, 'e'
+    beq a0, t0, generar_uart_tx_int
 
     #-- Opcion no conocida: Ignorar
     j ask_user
@@ -222,7 +227,7 @@ __reset:
  generar_uart_rx_int:
     PUTSI "\nPulsa una tecla..."
 
-    #-- tp -> Direccion de la UART
+    #-- s1 -> Direccion de la UART
     li s1, UART_ADDR
 
     #-- Habilitar las interrupciones del receptor de la UART
@@ -239,8 +244,27 @@ __reset:
 
     halt
 
+ generar_uart_tx_int:
 
+    #-- s1 -> Direccion de la UART
+    li s1, UART_ADDR
 
+    #-- Habilitar las interrupciones del transmisor de la UART
+    li t0, UART_TX_STATUS_IE
+    sb t0, UART_TX_STATUS(s1)
+
+    #-- Habilitar las interrupciones externas
+    li t0, MIE_MEIE_MASK
+    csrs mie, t0
+
+    #-- Habilitar las interrupciones a nivel global
+    li t0, MSTATUS_MIE_MASK
+    csrs mstatus, t0
+
+    #-- Transmitir un caracter para generar la interrupcion
+    PUTCHARI 'A'
+
+    halt
 
 
 #------------------------------------------
