@@ -88,6 +88,25 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+#--------- Compilado de las dependencias: buttons.c
+CMD="\
+$GCC $C/buttons.c -I$C \
+     -fdata-sections -ffunction-sections  \
+     -c \
+     -o $BUILD/buttons.o\
+"
+echo ""
+echo "➡️ $CMD"
+$CMD
+
+if [ $? -ne 0 ]; then
+    echo -e $RED"> Abortando...\n"$RESET
+    exit 1
+fi
+
+
+
+
 
 
 
@@ -99,6 +118,7 @@ $GCC -nostdlib -nostartfiles -mno-relax \
      $BUILD/$NAME.o \
      $BUILD/crt.o \
      $BUILD/delay.o \
+     $BUILD/buttons.o \
      -o $BUILD/$NAME.elf \
      -lgcc \
 "
