@@ -18,6 +18,29 @@
 #define UART_RX_STATUS  *UART_RX_STATUS_ADDRESS
 #define UART_TX_STATUS  *UART_TX_STATUS_ADDRESS
 
+//───── LEDS
+//── Máscaras de acceso individual a los LEDs
+#define LED0 1
+#define LED1 1 << 1
+#define LED2 1 << 2
+#define LED3 1 << 3
+#define LED4 1 << 4
+#define LED5 1 << 5
+#define LED6 1 << 6
+#define LED7 1 << 7
+#define LED8 1 << 8
+#define LED9 1 << 9
+#define LED10 1 << 10
+#define LED11 1 << 11
+#define LED12 1 << 12
+#define LED13 1 << 13
+#define LED14 1 << 14
+#define LED15 1 << 15
+
+
+
+
+
 
 //-- Indices de acceso a los bits de la UART
 #define UART_RX_STATUS_IDX_ER     0

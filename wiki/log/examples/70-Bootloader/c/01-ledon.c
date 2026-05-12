@@ -3,13 +3,10 @@
 //──────────────────────────────────────────────────────
 #include <peripherals.h>
 
-//-- Valor a mostrar en los LEDs
-#define VALOR 0xF00F
-
 int main() {
     
-    //-- Mostrar valor en LEDs
-    LEDS = VALOR;
+    //-- Encender el LED 0
+    LEDS = LED0;
 
     //-- La biblioteca crt se encarga de "parar"
     //-- el procesador. No hay que poner aqui nada
