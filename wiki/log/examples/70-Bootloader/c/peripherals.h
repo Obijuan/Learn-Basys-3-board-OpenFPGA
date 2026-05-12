@@ -7,6 +7,7 @@
 
 //-- DIRECCIONES
 #define LEDS_ADDR              ((volatile uint16_t*)  0x00200000)
+#define BUTTONS_ADDR           ((volatile uint8_t*)   0x00204000)
 #define UART_BUFFER_ADDRESS    ((volatile uint8_t*)   0x00210000)
 #define UART_RX_STATUS_ADDRESS ((volatile uint8_t*)   0x00210002)
 #define UART_TX_STATUS_ADDRESS ((volatile uint8_t*)   0x00210003)
@@ -14,6 +15,7 @@
 
 //-- ACCESO A PERIFERICOS
 #define LEDS            *LEDS_ADDR
+#define BUTTONS         *BUTTONS_ADDR
 #define UART_BUFFER     *UART_BUFFER_ADDRESS
 #define UART_RX_STATUS  *UART_RX_STATUS_ADDRESS
 #define UART_TX_STATUS  *UART_TX_STATUS_ADDRESS
@@ -37,7 +39,13 @@
 #define LED14 1 << 14
 #define LED15 1 << 15
 
-
+//───── PULSADORES
+//── Máscaras de acceso individual a los pulsadores
+#define BTN_CENTER 1       //-- Bit 0
+#define BTN_UP     1 << 1  //-- Bit 1
+#define BTN_LEFT   1 << 2  //-- Bit 2
+#define BTN_RIGHT  1 << 3  //-- Bit 3
+#define BTN_DOWN   1 << 4  //-- Bit 4
 
 
 
