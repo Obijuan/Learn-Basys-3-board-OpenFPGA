@@ -41,6 +41,12 @@ __reset:
     PUTSI "0. Fetch misaligned\n"
     PUTSI "1. Fetch fault\n"
     PUTSI "2. Ilegal instruction\n"
+    PUTSI "3. ebreak\n"
+    PUTSI "4. Load misaligned\n"
+    PUTSI "5. Load fault\n"
+    PUTSI "6. Store misaligned\n"
+    PUTSI "7. Store fault\n"
+    PUTSI "b. ecall\n"
     PUTSI "Opcion: "
 
     #-- Leer opciones
@@ -56,6 +62,24 @@ __reset:
     li t0, '2'
     beq a0, t0, generar_ilegal_instruction
 
+    li t0, '3'
+    beq a0, t0, generar_ebreak
+
+    li t0, '4'
+    beq a0, t0, generar_load_misaligned
+
+    li t0, '5'
+    beq a0, t0, generar_load_fault
+
+    li t0, '6'
+    beq a0, t0, generar_store_misaligned
+
+    li t0, '7'
+    beq a0, t0, generar_store_fault
+
+    li t0, 'b'
+    beq a0, t0, generar_ecall
+
     #-- Opcion no conocida: Ignorar
     j ask_user
 
@@ -68,7 +92,7 @@ __reset:
     jalr zero, 0(t0)
 
   test_fetch_misaligned:
-     halt
+    halt
 
  #--------------------------------------------------
  #-- Generar la excepcion FETCH_FAULT. Codigo 1
@@ -83,16 +107,52 @@ __reset:
  generar_ilegal_instruction:
     .word 0
 
-    			
-	#-- Generamos una excepcion
-	#-- El programa salta a ejecutar servicio
-	lw zero, 1(zero)
-	
-    #-- Los leds NUNCA se encienden...
-	li t0, 0xF00F
-    sw t0, 0(s0)
+ #---------------------------------------------------
+ #-- Generar la excepcion LOAD_MISALIGNED. Codigo 4
+ #---------------------------------------------------
+ generar_load_misaligned:
+   la t0, load_misaligned
+   addi t0,t0,1
+   lw zero, 0(t0)
 
-    halt
+   load_misaligned:
+     nop
+
+ #-------------------------------------------------------
+ #-- Generar la excepcion LOAD FAULT. Codigo 5
+ #-------------------------------------------------------			
+ generar_load_fault:
+    lw zero, (zero)
+
+ #-------------------------------------------------------
+ #-- Generar la excepcion STORE MISALIGNED. Codigo 6
+ #-------------------------------------------------------
+ generar_store_misaligned:
+    la t0, store_misaligned
+    addi t0,t0,1
+    sw zero, 0(t0)
+
+    store_misaligned:
+        nop
+
+ #-----------------------------------------------
+ #-- Generar excepcion STORE FAULT. Codigo 7
+ #-----------------------------------------------
+ generar_store_fault:
+    sw zero, (zero)
+
+ #-----------------------------
+ #-- Generar llamada EBREAK
+ #-----------------------------
+ generar_ebreak:
+    ebreak
+
+ #-----------------------------
+ #-- Generar llamada ECALL
+ #-----------------------------
+ generar_ecall:
+    ecall
+
 
 #------------------------------------------
 #-- Rutina de atencion a la interrupcion
@@ -139,6 +199,24 @@ servicio_excepcion:
 
     li t0, 2
     beq a0, t0, msg_ilegal_instruction
+
+    li t0, 3
+    beq a0, t0, msg_ebreak
+
+    li t0, 4
+    beq a0, t0, msg_load_misaligned
+
+    li t0, 5
+    beq a0, t0, msg_load_fault
+
+    li t0, 6
+    beq a0, t0, msg_store_misaligned
+
+    li t0, 7
+    beq a0, t0, msg_store_fault
+
+    li t0, 11
+    beq a0, t0, msg_ecall
     
     ANSI_RED
     PUTSI "Exepcion desconocida!\n"
@@ -155,6 +233,31 @@ servicio_excepcion:
  msg_ilegal_instruction:
     PUTSI "--> ILEGAL INSTRUCTION. Codigo 2\n"
     j animation
+
+ msg_load_misaligned:
+    PUTSI "--> LOAD MISALIGNED. Codigo 4\n"
+    j animation
+
+ msg_load_fault:
+    PUTSI "--> LOAD FAULT. Codigo 5\n"
+    j animation
+
+ msg_ebreak:
+    PUTSI "--> EBREAK. Codigo 3\n"
+    j animation
+
+ msg_store_misaligned:
+    PUTSI "--> STORE MISALIGNED. Codigo 6\n"
+    j animation
+
+ msg_store_fault:
+    PUTSI "--> STORE FAULS. Codigo 7\n"
+    j animation
+
+ msg_ecall:
+    PUTSI "--> ECALL. Codigo 11\n"
+    j animation
+ 
 
  animation:
     #-- Establecer valor 1 de la secuencia
