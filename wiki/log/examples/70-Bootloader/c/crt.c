@@ -4,9 +4,13 @@
 //── Esta es una funcion del sistema, que se linka con
 //── TODOS los programas en C
 //──────────────────────────────────────────────────────
+#include <peripherals.h>
 
 //-- Prototipo de la funcion de usuario
 int main();
+
+//-- Prototipo rutina de atencion excepciones
+void interrupt();
 
 
 //───────────────────────────────────────────────────────────
@@ -23,6 +27,9 @@ void __reset() {
     //── en el linker script
     asm("la sp, __ram_end");
 
+    //-- Deshabilitar las interrupciones
+    asm("csrw mie, x0");
+
     //── Pasamos a funciones en C!!!
     asm("j __start");
 }
@@ -32,6 +39,10 @@ void __reset() {
 //───────────────────────────────────────────────────────────
 void __start() {
 
+    //-- Gestor de excepciones
+    //-- Poner un gestor mínimo, en caso de ocurrir una excepcion
+    asm("csrw mtvec, %0": : "r"(interrupt));
+
     //-- Realizar las inicializaciones necesarias
     //-- Llamar a main del usuario!! 
     main();
@@ -40,3 +51,17 @@ void __start() {
     while (1);
 }
 
+
+//───────────────────────────────────────────────────────────
+//──  RUTINA DE ATENCION A LAS EXCEPCIONES: PANIC!
+//──  Si ocurre un error grave, parar la cpu!!!
+//───────────────────────────────────────────────────────────
+__attribute__((interrupt))
+void interrupt() {
+
+    //-- Encender los LEDs
+    LEDS = 0xFFFF;
+
+    //-- STOP!!
+    while(1);
+}
