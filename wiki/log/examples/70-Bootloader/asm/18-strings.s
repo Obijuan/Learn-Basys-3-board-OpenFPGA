@@ -2,6 +2,7 @@
     .include "peripherals.h"
     .include "ansi.h"
     .include "uart.h"
+    .include "stack.h"
 
     .text
 
@@ -19,17 +20,13 @@ __reset:
     ANSI_HOME
     ANSI_CLS
 
-    #-- Convertir numero binario4 a bcd
-    la a0, buff
-    li a1, 0xC
-    jal bin4_to_bcd_array
 
-    #-- Convertir a cadena
+    #-- Imprimir numero en binario en el buffer
     la a0, buff
-    li a1, 4
-    jal bcd_array_to_string
+    li a1, 0x1
+    jal sprint_bin4
 
-    #-- Imprimir
+    #-- Imprimir el buffer
     la a0, buff
     jal puts
 
@@ -38,9 +35,36 @@ __reset:
     halt
 
 
+#-- a0: Direccion del buffer de la cadena
+#-- a1: Numero a "imprimir"
+sprint_bin4:
+    STACK16
+
+    #-- Guardar los parametros
+    sw a0, 0(sp)
+    sw a1, 4(sp)
+
+    #-- Convertir a array bcd
+    #-- Guardarlo en un buffer interno
+    la a0, __buff
+    jal bin4_to_bcd_array
+
+    #-- Convertir a cadena
+    la a0, __buff
+    li a1, 4  #-- Tamaño en bytes
+    jal bcd_array_to_string
+
+    #-- Copiar cadena al buffer de la cadena
+    la a0, __buff
+    la a1, buff
+    jal strcpy
+
+    UNSTACK16
+
 
 
     .data
+__buff: .space 33
 buff:   .space 255
 src:    .string "0000123456789\n"    
 dst:    .string "****************\n"
