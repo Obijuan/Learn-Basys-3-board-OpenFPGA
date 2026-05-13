@@ -65,3 +65,55 @@ bin_to_bcd_array:
     bne t0, zero, 1b
 
     ret
+
+
+
+#──────────────────────────────────────────────────────────────────────────
+#──  Convertir un bcd de 32 bits (8 digitos) en un
+#──  array de caracteres bcd
+#──
+#──  Ej. n=0xCAFEBACA:  --> 0xC, 0xA, 0xF, 0xE, 0xB, 0xA, 0xC, 0xA
+#── 
+#──  ENTRADAS:
+#──    a0: Direccion del comienzo del array
+#──    a1: Numero a convertir
+#──────────────────────────────────────────────────────────────────────────
+    .global bcd32_to_bcd_array
+bcd32_to_bcd_array:
+
+    #-- Mascara inicial para obtener el digito de mayor peso
+    #-- t0: Mascara para digito
+    li t0, 0xF0000000
+
+    #-- Numero del digito actual (7-0)
+    #-- t1: Digito actual (i)
+    li t1, 7
+
+1:
+    #-- Obtener el digito i
+    and t2, a1, t0  #-- Aplicar máscara
+    li t3, 2
+    sll t4, t1, t3  #-- (t4 = t1 << 2) t4 = 4 * i
+    srl t2, t2, t4 #-- Digito en posicion de menor peso
+
+    #-- Almacenar digito i
+    andi t2, t2, 0xF
+    sb t2, 0(a0)
+
+    #-- Siguiente digito
+    addi t1, t1, -1
+
+    #-- Apuntar al siguiente elemento del array
+    addi a0, a0, 1
+
+    #-- Actualizar mascara
+    srli t0, t0, 4
+
+    #-- Si mascara no es cero, repetir
+    bne t0, zero, 1b
+
+    #-- Terminar
+    #-- a0 apunta al final del array
+    ret
+
+

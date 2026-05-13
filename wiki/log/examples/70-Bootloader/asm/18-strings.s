@@ -20,29 +20,17 @@ __reset:
     ANSI_HOME
     ANSI_CLS
 
-
-    #-- Imprimir numero en binario en el buffer
+    #-- Convertir numero array bcd
     la a0, buff
-    li a1, 0x1
-    li a2, 8
-    li a3, 0     #-- sin Eliminar ceros iniciales
-    jal sprint_bin
-
-    #-- Imprimir el buffer
+    li a1, 0xCAFEBACA
+    jal bcd32_to_bcd_array
+    
+    #-- Convertir a cadena
     la a0, buff
-    jal puts
+    li a1, 8
+    jal bcd_array_to_string
 
-    PUTCHARI '\n'
-
-
-    #-- Imprimir numero en binario en el buffer
-    la a0, buff
-    li a1, 0x1
-    li a2, 8
-    li a3, 1     #-- Eliminar ceros iniciales
-    jal sprint_bin
-
-    #-- Imprimir el buffer
+    #-- Imprimir!
     la a0, buff
     jal puts
 
