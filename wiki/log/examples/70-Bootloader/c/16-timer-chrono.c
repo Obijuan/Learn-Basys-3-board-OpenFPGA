@@ -30,6 +30,7 @@ void main()
         //-- Mostrar los puntos
         SEGMENTS = segm | 0x80008000;
 
+        //-- Retraso de 1 decima
         delay(_100ms);
 
         //---- Incrementar el contador
