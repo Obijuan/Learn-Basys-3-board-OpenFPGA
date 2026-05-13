@@ -24,11 +24,15 @@ __reset:
     la a0, buff
     li a1, 0xCAFEBACA
     jal bcd32_to_bcd_array
+
+    li a1, 0x01020304
+    jal bcd32_to_bcd_array
     
     #-- Convertir a cadena
     la a0, buff
-    li a1, 8
+    li a1, 16
     jal bcd_array_to_string
+
 
     #-- Imprimir!
     la a0, buff
