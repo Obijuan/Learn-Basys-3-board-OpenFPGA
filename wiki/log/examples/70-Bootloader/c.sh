@@ -136,7 +136,21 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+#--------- Compilado de las dependencias: timer.c
+CMD="\
+$GCC $C/timer.c -I$C \
+     -fdata-sections -ffunction-sections  \
+     -c \
+     -o $BUILD/timer.o\
+"
+echo ""
+echo "➡️ $CMD"
+$CMD
 
+if [ $? -ne 0 ]; then
+    echo -e $RED"> Abortando...\n"$RESET
+    exit 1
+fi
 
 #---------- Linkado: generacion del elf
 CMD="\
@@ -149,6 +163,7 @@ $GCC -nostdlib -nostartfiles -mno-relax \
      $BUILD/buttons.o \
      $BUILD/disp7.o \
      $BUILD/uart.o \
+     $BUILD/timer.o \
      -o $BUILD/$NAME.elf \
      -lgcc \
 "

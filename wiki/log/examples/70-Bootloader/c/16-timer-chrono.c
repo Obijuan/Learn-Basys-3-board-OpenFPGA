@@ -5,7 +5,7 @@
 #include <stdint.h>
 #include "peripherals.h"
 #include "disp7.h"
-#include "delay.h"
+#include "timer.h"
 
 
 void main() 
@@ -31,7 +31,7 @@ void main()
         SEGMENTS = segm | 0x80008000;
 
         //-- Retraso de 1 decima
-        delay(_100ms);
+        timer_delay(TIMER_100ms);
 
         //---- Incrementar el contador
         //-- Decimas
@@ -46,25 +46,19 @@ void main()
             //-- Unidades de Segundos
             //--  seg_u = (seg_u + 1) % 10;
             seg_u++;
-            if (seg_u == 10)
+            if (seg_u == 10) {
                 seg_u = 0;
            
-
-            //-- Decenas de segundo
-            if (seg_u == 0) {
-                //seg_d = (seg_d + 1) % 6;
+                //-- Decenas de segundo
                 seg_d++;
-                if (seg_d == 6)
+                if (seg_d == 6) {
                     seg_d = 0;
 
-                //-- Minutos
-                if (seg_d == 0) {
-                    //min = (min + 1) % 10;
+                    //-- Minutos
                     min++;
                     if (min==10)
                         min = 0;
                 }
-
             }
         }
     }
