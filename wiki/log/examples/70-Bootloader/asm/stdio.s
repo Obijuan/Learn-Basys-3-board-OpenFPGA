@@ -45,3 +45,64 @@ puts:
 	#-- Recuperar direccion de retorno y liberar pila
     UNSTACK16
 
+
+#──────────────────────────────────────────────────────
+#──  Imprimir un numero en binario, de 4 bits
+#──
+#──  ENTRADAS:
+#──    a0: Buffer donde imprimir
+#──    a1: Numero a imprimir en binario
+#──    a2: Eliminar 0s iniciales (0=No, 1=si)
+#── 
+#──  SALIDAS:
+#──    a0: Direccion donde comienza la cadena sin 
+#──        los ceros
+#──────────────────────────────────────────────────────
+  .global sprint_bin4
+sprint_bin4:
+    STACK16
+
+    #-- Guardar los parametros
+    sw a0, 0(sp)
+    sw a2, 4(sp)
+
+    #-- Convertir a array bcd
+    #-- Guardarlo en un buffer interno
+    la a0, __buff
+    jal bin4_to_bcd_array
+
+    #-- Convertir a cadena
+    la a0, __buff
+    li a1, 4  #-- Tamaño en bytes
+    jal bcd_array_to_string
+
+    #-- Comprobar si hay que eliminar ceros iniciales o no
+    lw a2, 4(sp)
+    beq a2, zero, no_remove_ceros
+
+    #-- Hay que eliminar los 0s
+    la a0, __buff
+    jal str_remove_leading_zeros
+
+    #-- a0: cadena sin ceros
+    j cont
+    
+no_remove_ceros:
+    #-- Seleccionar cadena desde el principio
+    la a0, __buff
+
+cont:
+
+    #-- Copiar el numero-cadena en el buffer de la cadena
+    #-- La cadena origen a0 contiene bien el numero completo
+    #-- o bien apunta al numero sin 0s iniciales
+    lw a1, 0(sp)  #-- buffer destino
+    jal strcpy
+
+1:
+    UNSTACK16
+
+        .data
+
+#-- Buffer interno para la impresion de numeros
+__buff: .space 33
