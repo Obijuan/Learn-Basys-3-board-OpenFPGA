@@ -1,5 +1,5 @@
 #──────────────────────────────────────────────────────
-#──  Hacer ECO de todo lo recibido por el puerto serie
+#──  Imprimir mensajes en diferentes colores
 #──────────────────────────────────────────────────────
     .include "so.h"
     .include "peripherals.h"

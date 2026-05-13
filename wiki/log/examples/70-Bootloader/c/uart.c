@@ -31,4 +31,13 @@ char _getchar()
     return UART_BUFFER;
 }
 
-
+//──────────────────────────────────────────────────────
+//──  Enviar una cadena
+//──────────────────────────────────────────────────────
+void _puts(const char *s)
+{
+    while (*s) {
+        _putchar(*s);
+        s++;
+    }
+}
