@@ -16,7 +16,7 @@ strcpy:
     sb t0, 0(a1)
 
     #-- Si estamos al final, terminar
-    beq t0, zero, fin
+    beq t0, zero, 2f
 
     #-- Apuntar a los siguientes caracteres
     #-- en cadena fuente y destino
@@ -26,9 +26,10 @@ strcpy:
     #-- Repetir
     j 1b
 
-fin:
-
+    #-- Fin
+2:
     ret
+
 
 #──────────────────────────────────────────────────────
 #──  Eliminar los 0s iniciales de la cadena
@@ -63,5 +64,59 @@ str_remove_leading_zeros:
 
     #-- Fin
 2:  #-- Devolver el puntero
+    ret
+
+
+
+#──────────────────────────────────────────────────────
+#──  Convertir un array de numeros BCD a una cadena
+#──  Cada numero bcd se almacena en un byte de memoria
+#──
+#──  ENTRADAS:
+#──    a0: Direccion donde comienzan los digitos bcd
+#──    a1: Tamaño en bytes del array de digitos
+#── 
+#──  SALIDAS:
+#──    a0: Puntero al final de la cadena generada
+#──        (esto permite concatenarlas)
+#──────────────────────────────────────────────────────
+    .global bcd_array_to_string
+bcd_array_to_string:
+
+loop:
+    #-- Si el tamaño es 0, terminar
+    beq a1, zero, 1f
+
+    #-- Leer el numero bcd
+    #-- t0: numero bcd
+    lb t0, 0(a0)
+
+    #-- Convertir de bcd a caracter
+    li t1, 9
+    bgt t0, t1, hexa
+
+    #-- t0 <=9 --> Sumar '0'
+    addi t0, t0, '0'
+    j cont
+
+    #-- t0 > 10 --> Sumar 'A'-10
+hexa:
+    addi t0, t0, 'A'-10
+
+cont:
+    #-- Almacenar caracter en la posicion actual
+    sb t0, 0(a0)
+
+    #-- Queda un caracter menos
+    addi a1, a1, -1
+    
+    #-- Apuntar al siguiente
+    addi a0, a0, 1
+
+    #-- Repetir
+    j loop
+
+    #-- Fin
+1:  sb zero, 0(a0)
     ret
 

@@ -88,6 +88,21 @@ toggle_btn:
     UNSTACK16
 
 
+    .global wait_keypressed
+wait_keypressed:
+
+1:
+  #-- leer pulsadores
+  jal read_buttons
+
+  #-- Comprobar estado de los pulsadores
+  #-- Si no hay pulsaciones se repite
+  andi a0, a0, 0x1F
+  beq a0, zero, 1b
+
+  #--Tecla pulsada
+  ret
+
 
     .section .sdata
 
