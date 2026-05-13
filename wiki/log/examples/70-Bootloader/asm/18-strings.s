@@ -24,8 +24,9 @@ __reset:
     #-- Imprimir numero en binario en el buffer
     la a0, buff
     li a1, 0x1
-    li a2, 0     #-- sin Eliminar ceros iniciales
-    jal sprint_bin4
+    li a2, 8
+    li a3, 0     #-- sin Eliminar ceros iniciales
+    jal sprint_bin
 
     #-- Imprimir el buffer
     la a0, buff
@@ -37,8 +38,9 @@ __reset:
     #-- Imprimir numero en binario en el buffer
     la a0, buff
     li a1, 0x1
-    li a2, 1     #-- Eliminar ceros iniciales
-    jal sprint_bin4
+    li a2, 8
+    li a3, 1     #-- Eliminar ceros iniciales
+    jal sprint_bin
 
     #-- Imprimir el buffer
     la a0, buff

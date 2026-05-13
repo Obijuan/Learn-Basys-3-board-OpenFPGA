@@ -52,33 +52,35 @@ puts:
 #──  ENTRADAS:
 #──    a0: Buffer donde imprimir
 #──    a1: Numero a imprimir en binario
-#──    a2: Eliminar 0s iniciales (0=No, 1=si)
+#──    a2: Tamaño del numero binario (en bits)
+#──    a3: Eliminar 0s iniciales (0=No, 1=si)
 #── 
 #──  SALIDAS:
 #──    a0: Direccion donde comienza la cadena sin 
 #──        los ceros
 #──────────────────────────────────────────────────────
-  .global sprint_bin4
-sprint_bin4:
+  .global sprint_bin
+sprint_bin:
     STACK16
 
     #-- Guardar los parametros
-    sw a0, 0(sp)
-    sw a2, 4(sp)
+    sw a0, 0(sp)  #-- Buffer
+    sw a2, 4(sp)  #-- Tamaño del numero
+    sw a3, 8(sp)  #-- Espacios iniciales
 
     #-- Convertir a array bcd
     #-- Guardarlo en un buffer interno
     la a0, __buff
-    jal bin4_to_bcd_array
+    jal bin_to_bcd_array
 
     #-- Convertir a cadena
     la a0, __buff
-    li a1, 4  #-- Tamaño en bytes
+    lw a1, 4(sp)  #-- Tamaño
     jal bcd_array_to_string
 
     #-- Comprobar si hay que eliminar ceros iniciales o no
-    lw a2, 4(sp)
-    beq a2, zero, no_remove_ceros
+    lw a3, 8(sp)
+    beq a3, zero, no_remove_ceros
 
     #-- Hay que eliminar los 0s
     la a0, __buff
