@@ -88,6 +88,88 @@ void main()
                     : "t0"                // usamos t0
                 );
                 break;
+            //--------------------------------------------------
+            //-- Generar la excepcion FETCH_FAULT. Codigo 1
+            //--------------------------------------------------
+            case '1':
+                asm volatile (
+                    "mv t0, zero \n\t"
+                    "jalr t0 \n\t"
+                );
+                break;
+
+            //--------------------------------------------------
+            //-- Generar la excepcion ILEGAL_INSTRUCTION. Codigo 2
+            //--------------------------------------------------
+            case '2':
+                asm volatile (".word 0");
+                break;
+
+            //--------------------------------------------------
+            //-- Generar llamada EBREAK. Codigo 3
+            //--------------------------------------------------
+            case '3':
+                asm volatile ("ebreak");
+                break;
+            //--------------------------------------------------
+            //-- Generar la excepcion LOAD_MISALIGNED. Codigo 4
+            //--------------------------------------------------
+            case '4':
+                asm volatile (
+                    "la t0, 1f  \n\t"
+                    "addi t0, t0, 1  \n\t"
+                    "lw zero, 0(t0)  \n\t"
+                    "1:              \n\t"
+                );
+                break;
+            //--------------------------------------------------
+            //-- Generar la excepcion LOAD FAULT. Codigo 5
+            //--------------------------------------------------
+            case '5':
+                asm volatile ("lw zero, (zero)");
+                break;
+            //--------------------------------------------------
+            //-- Generar la excepcion STORE MISALIGNED. Codigo 6
+            //--------------------------------------------------
+            case '6':
+                asm volatile (
+                    "la t0, 1f      \n\t"
+                    "addi t0,t0,1   \n\t"
+                    "sw zero, 0(t0) \n\t"
+                    "1:             \n\t"
+                );
+                break;
+            //--------------------------------------------------
+            //-- Generar excepcion STORE FAULT. Codigo 7
+            //--------------------------------------------------
+            case '7':
+                asm volatile ("sw zero, (zero)");
+                break;
+            //--------------------------------------------------
+            //-- Generar llamada ECALL. Codigo 11
+            //--------------------------------------------------
+            case 'b':
+                asm volatile ("ecall");
+                break;
+            //--------------------------------------------------
+            //-- 
+            //--------------------------------------------------
+            case 'c':
+                asm volatile ("");
+                break;
+            //--------------------------------------------------
+            //-- 
+            //--------------------------------------------------
+            case 'd':
+                asm volatile ("");
+                break;
+            //--------------------------------------------------
+            //-- 
+            //--------------------------------------------------
+            case 'e':
+                asm volatile ("");
+                break;
+
         }
 
         //-- Ninguna opcion valida
@@ -149,6 +231,31 @@ void servicio_excepcion(uint32_t mcause)
     switch(mcause) {
         case 0: 
             _puts("--> FETCH MISALIGNED. Codigo 0\n");
+            break;
+        case 1:
+            _puts("--> FETCH FAULTS. Codigo 1\n");
+            break;
+        case 2:
+            _puts("--> ILEGAL INSTRUCTION. Codigo 2\n");
+            break;
+        case 3:
+            _puts("--> EBREAK. Codigo 3\n");
+            break;
+        case 4:
+            _puts("--> LOAD MISALIGNED. Codigo 4\n");
+            break;
+        case 5:
+            _puts("--> LOAD FAULT. Codigo 5\n");
+            break;
+        
+        case 6:
+            _puts("--> STORE MISALIGNED. Codigo 6\n");
+            break;
+        case 7:
+            _puts("--> STORE FAULS. Codigo 7\n");
+            break;
+        case 11:
+            _puts("--> ECALL. Codigo 11\n");
             break;
     }
 
