@@ -11,8 +11,9 @@
 
 //-- Rutina de atencion a la interrupcion
 void servicio();
-void servicio_int();
+void servicio_int(uint32_t);
 void servicio_excepcion(uint32_t); 
+void trap_end();
 
 //-- Configuracion secuencia en los LEDs
 #define VALOR1 0xAAAA
@@ -21,6 +22,10 @@ void servicio_excepcion(uint32_t);
 
 
 void opcion_timer();
+void opcion_uart_tx();
+void opcion_uart_rx();
+
+
 
 
 void menu() 
@@ -58,7 +63,11 @@ void main()
 
     //-- Deshabilitar las interrupciones
     asm volatile("csrw mie, zero");
-    asm volatile("csrw mstatus, %0": : "r"(MSTATUS_MIE_MASK));
+    asm volatile("csrc mstatus, %0": : "r"(MSTATUS_MIE_MASK));
+
+    //-- Deshabilitar las interrupciones de la UART
+    UART_TX_STATUS = 0;
+    UART_RX_STATUS = 0;
 
     //--- Configuracion de la rutina de atencion
 	//--- a la interrupcion
@@ -165,14 +174,14 @@ void main()
             //-- Caracter recibido por UART
             //--------------------------------------------------
             case 'd':
-                
+                opcion_uart_rx();
                 break;
             //--------------------------------------------------
             //-- Generar interrupcion externa. Codigo ?
             //-- Buffer vacio. Listo para enviar
             //--------------------------------------------------
             case 'e':
-                
+                opcion_uart_tx();
                 break;
 
         }
@@ -183,6 +192,9 @@ void main()
 
 }
 
+//------------------------------------------------
+//-- Generar una interrupcion del temporizador
+//------------------------------------------------
 void opcion_timer()
 {
 
@@ -198,9 +210,10 @@ void opcion_timer()
     asm volatile ("csrs mie, %0": : "r"(MIE_MTIE_MASK));
 
     //-- Habilitar las interrupciones a nivel global
-    asm volatile ("csrs mie, %0": : "r"(MIE_MTIE_MASK));
+    asm volatile ("csrs mstatus, %0": : "r"(MSTATUS_MIE_MASK));
 
     //-- Bucle infinito: Mostrar temporizador en los LEDs
+    //-- Hasta que salte la interrupcion
     for(;;) {
         timer_value = TIMER_MTIME;
 
@@ -208,8 +221,65 @@ void opcion_timer()
         //-- Solo se muestran los bits de 18 al 25
         LEDS = (timer_value >> 18);
     }
+}
+
+void opcion_uart_rx()
+{
+
+    _puts("\nPulsa una tecla...");
+
+    //-- Habilitar interrupciones del receptor de la UART
+    UART_RX_STATUS = UART_RX_STATUS_IE_MASK;
+
+    //-- Habilitar las interrupciones externas
+    asm volatile ("csrs mie, %0": : "r"(MIE_MEIE_MASK));
+
+    //-- Habilitar las interrupciones a nivel global
+    asm volatile ("csrs mstatus, %0": : "r"(MSTATUS_MIE_MASK));
+
+    //-- Aqui no llega porque se produce la interrupcion
+    for(;;);
+}
+
+
+void opcion_uart_tx()
+{
+    //-- Habilitar las interrupciones del transmisor de la UART
+    UART_TX_STATUS = UART_TX_STATUS_IE_MASK;
+
+    //-- Habilitar las interrupciones externas
+    asm volatile ("csrs mie, %0": :"r"(MIE_MEIE_MASK));
+
+    //-- Habilitar las interrupciones a nivel global
+    asm volatile ("csrs mstatus, %0": : "r"(MSTATUS_MIE_MASK));
+
+    //-- Transmitir un caracter para generar la interrupcion
+    _putchar('A');
+
+    //-- Aquí no llega
+    for(;;);
 
 }
+
+
+//  #-- s1 -> Direccion de la UART
+//     li s1, UART_ADDR
+
+//     
+//     li t0, UART_TX_STATUS_IE
+//     sb t0, UART_TX_STATUS(s1)
+
+//     #-- Habilitar las interrupciones externas
+//     li t0, MIE_MEIE_MASK
+//     csrs mie, t0
+
+//     #-- Habilitar las interrupciones a nivel global
+//     li t0, MSTATUS_MIE_MASK
+//     csrs mstatus, t0
+
+//     #-- Transmitir un caracter para generar la interrupcion
+//     PUTCHARI 'A'
+
 
 
 __attribute__((interrupt))
@@ -229,7 +299,7 @@ void servicio() {
     //-- Si bit 31 es 1, es una interrupcion. 
     //-- Si bit 31 es 0, es una excepcion
     if (mcause & 0x80000000) {
-        servicio_int();
+        servicio_int(mcause & ~0x80000000);
     }
     else {
         //-- Es una excepcion
@@ -241,17 +311,9 @@ void servicio() {
     while(1);
 }
 
-void servicio_int() {
-    //-- Encender los LEDs
-    LEDS = 0xFFEF;
-
-    //-- STOP!!
-    while(1);
-}
 
 void servicio_excepcion(uint32_t mcause) 
 {
-    int btns;
 
     _puts("* Es una excepcion\n");
 
@@ -291,6 +353,21 @@ void servicio_excepcion(uint32_t mcause)
             break;
     }
 
+    //-- Terminar
+    trap_end();
+}
+
+//----------------------------
+//-- Finalizacion de la TRAP
+//----------------------------
+//-- Se muestra animacion en los LEDs
+//-- Se espera a que usaurio apriete un pulsador
+//-- Se comienza el programa de nuevo
+//-------------------------------------------------
+void trap_end()
+{
+    int btns;
+
     //------ Animacion en los LEDs
     do {
         //-- Establecer valor 1 de la secuencia
@@ -321,5 +398,71 @@ void servicio_excepcion(uint32_t mcause)
 }
 
 
+void servicio_int(uint32_t mcause) {
+
+    _puts("* Es una interrupcion\n");
+
+    //-- Mostrar causa interrupcion en display
+    disp_hex4(mcause);
+
+    //-- Escribir un texto diciendo que tipo de interrupcion es
+    _puts(ANSI_BLUE);
+
+    switch(mcause) {
+
+        //-----------------------------------
+        //-- Interrupcion del temporizador
+        //-----------------------------------
+        case 7: 
+            _puts("--> TIMER INT. Codigo 7\n");
+
+            //-- Modificar temporizador para que no se
+            //-- vuelva a producir la interrupcion al terminar
+            TIMER_MTIMECMP = TIMER_MTIME + 25000000;
+
+            //-- Deshabilitar interrupciones
+            asm volatile("csrw mie, zero");
+            break;
+
+        //--------------------------------------------
+        //-- Interrupcion externa
+        //--------------------------------------------
+        case 11:
+            _puts("--> EXTERNAL INT\n");
+
+            //-- La unica interrupcion externa es debido a la UART,
+            //-- bien porque se ha recibido un carácter (RX)
+            //-- o bien porque está lista para transmitir (TX)
+
+            //-- Deshabilitar interrupciones
+            asm volatile("csrw mie, zero");
+
+            //-- Leer el dato recibido
+            //-- Esto borra el flag de interrupcion
+            //-- (por si hubiese sido el caso)
+            //-- Leer la direccion base de la UART
+            char volatile c = UART_BUFFER;
+            break;
+
+        //---------------------------------------
+        //-- Otra interrupcion.. no conocida
+        //-- NUNCA DEGERIA PASAR!!
+        //---------------------------------------
+        default:
+            _puts("Interrupcion desconocida!");
+
+    }
+
+    //-- Fin
+    trap_end();
+}
  
- 
+
+
+
+
+
+
+
+
+//     halt
