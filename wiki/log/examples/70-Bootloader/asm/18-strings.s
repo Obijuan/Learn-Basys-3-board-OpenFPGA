@@ -21,13 +21,12 @@ __reset:
 
     #-- Convertir numero binario4 a bcd
     la a0, buff
-    li a1, 0x1
-    li a2, 3
-    jal bin_to_bcd_array
+    li a1, 0xC
+    jal bin4_to_bcd_array
 
     #-- Convertir a cadena
     la a0, buff
-    li a1, 3
+    li a1, 4
     jal bcd_array_to_string
 
     #-- Imprimir
