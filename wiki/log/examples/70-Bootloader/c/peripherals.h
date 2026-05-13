@@ -9,12 +9,19 @@
 #define MEMORY_ADDR            ((volatile uint16_t*)  0x00040000)
 #define LEDS_ADDR              ((volatile uint16_t*)  0x00200000)
 #define BUTTONS_ADDR           ((volatile uint8_t*)   0x00204000)
-#define SWITCHES_ADDR          ((volatile uint16_t*)   0x00208000)
-#define SEGMENTS_ADDR          ((volatile uint32_t*)   0x0020C000)
+#define SWITCHES_ADDR          ((volatile uint16_t*)  0x00208000)
+#define SEGMENTS_ADDR          ((volatile uint32_t*)  0x0020C000)
 #define UART_BUFFER_ADDRESS    ((volatile uint8_t*)   0x00210000)
 #define UART_RX_STATUS_ADDRESS ((volatile uint8_t*)   0x00210002)
 #define UART_TX_STATUS_ADDRESS ((volatile uint8_t*)   0x00210003)
+#define TIMER_STATUS_ADDR      ((volatile uint32_t*)  0x00214000) 
+#define TIMER_MTIME_ADDR       ((volatile uint32_t*)  0x00214004)
+#define TIMER_MTIMEH_ADDR      ((volatile uint32_t*)  0x00214008)
+#define TIMER_MTIMECMP_ADDR    ((volatile uint32_t*)  0x0021400C)
+#define TIMER_MTIMECMPH_ADDR   ((volatile uint32_t*)  0x00214010)
 #define TEST_ADDRESS           ((volatile uint32_t *) 0x00480000)
+
+
 
 //-- ACCESO A PERIFERICOS
 #define MEMORY          *MEMORY_ADDR
@@ -22,6 +29,11 @@
 #define BUTTONS         *BUTTONS_ADDR
 #define SWITCHES        *SWITCHES_ADDR
 #define SEGMENTS        *SEGMENTS_ADDR
+#define TIMER_STATUS    *TIMER_STATUS_ADDR
+#define TIMER_MTIME     *TIMER_MTIME_ADDR
+#define TIMER_MTIMEH    *TIMER_MTIMEH_ADDR
+#define TIMER_MTIMECMP  *TIMER_MTIMECMP_ADDR
+#define TIMER_MTIMECMPH *TIMER_MTIMECMPH_ADDR
 #define UART_BUFFER     *UART_BUFFER_ADDRESS
 #define UART_RX_STATUS  *UART_RX_STATUS_ADDRESS
 #define UART_TX_STATUS  *UART_TX_STATUS_ADDRESS

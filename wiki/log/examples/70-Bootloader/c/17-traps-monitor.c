@@ -20,6 +20,9 @@ void servicio_excepcion(uint32_t);
 #define PAUSA _100ms
 
 
+void opcion_timer();
+
+
 void menu() 
 {
     //-- Borrar la pantalla
@@ -152,28 +155,58 @@ void main()
                 asm volatile ("ecall");
                 break;
             //--------------------------------------------------
-            //-- 
+            //-- Generar Interrupcion del timer. Codigo ?
             //--------------------------------------------------
             case 'c':
-                asm volatile ("");
+                opcion_timer();
                 break;
             //--------------------------------------------------
-            //-- 
+            //-- Generar interrupcion externa. Codigo ?
+            //-- Caracter recibido por UART
             //--------------------------------------------------
             case 'd':
-                asm volatile ("");
+                
                 break;
             //--------------------------------------------------
-            //-- 
+            //-- Generar interrupcion externa. Codigo ?
+            //-- Buffer vacio. Listo para enviar
             //--------------------------------------------------
             case 'e':
-                asm volatile ("");
+                
                 break;
 
         }
 
         //-- Ninguna opcion valida
         //-- Volver a pedir
+    }
+
+}
+
+void opcion_timer()
+{
+
+    uint32_t timer_value;
+
+    //-- Leer temporizador
+    timer_value = TIMER_MTIME;
+
+    //-- Añadir al comparador un tiempo de 1s
+    TIMER_MTIMECMP = timer_value + 25000000;
+
+    //-- Activar las interrupciones
+    asm volatile ("csrs mie, %0": : "r"(MIE_MTIE_MASK));
+
+    //-- Habilitar las interrupciones a nivel global
+    asm volatile ("csrs mie, %0": : "r"(MIE_MTIE_MASK));
+
+    //-- Bucle infinito: Mostrar temporizador en los LEDs
+    for(;;) {
+        timer_value = TIMER_MTIME;
+
+        //-- Eliminar los 18 bits de menor peso
+        //-- Solo se muestran los bits de 18 al 25
+        LEDS = (timer_value >> 18);
     }
 
 }
@@ -247,7 +280,6 @@ void servicio_excepcion(uint32_t mcause)
         case 5:
             _puts("--> LOAD FAULT. Codigo 5\n");
             break;
-        
         case 6:
             _puts("--> STORE MISALIGNED. Codigo 6\n");
             break;
@@ -286,7 +318,6 @@ void servicio_excepcion(uint32_t mcause)
 
     //-- Salir de la interrupcion
     asm volatile("mret");
-
 }
 
 
