@@ -80,6 +80,12 @@ $GCC $ASM/ansi.s -I $ASM \
      -c \
      -o $BUILD/ansi.o
 
+#-- Ensamblado de las dependencias: string.s
+$GCC $ASM/string.s -I $ASM \
+     -fdata-sections -ffunction-sections  \
+     -c \
+     -o $BUILD/string.o
+
 
 #-- Linkado: generacion del elf
 $GCC -nostdlib -nostartfiles -mno-relax \
@@ -92,6 +98,7 @@ $GCC -nostdlib -nostartfiles -mno-relax \
      $BUILD/uart.o \
      $BUILD/stdio.o \
      $BUILD/ansi.o \
+     $BUILD/string.o \
      -o $BUILD/$NAME.elf \
      -lgcc
 
