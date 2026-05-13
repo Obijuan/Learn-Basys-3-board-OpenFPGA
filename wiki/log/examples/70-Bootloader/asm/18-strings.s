@@ -24,6 +24,7 @@ __reset:
     #-- Imprimir numero en binario en el buffer
     la a0, buff
     li a1, 0x1
+    li a2, 0     #-- sin Eliminar ceros iniciales
     jal sprint_bin4
 
     #-- Imprimir el buffer
@@ -32,17 +33,32 @@ __reset:
 
     PUTCHARI '\n'
 
+
+    #-- Imprimir numero en binario en el buffer
+    la a0, buff
+    li a1, 0x1
+    li a2, 1     #-- Eliminar ceros iniciales
+    jal sprint_bin4
+
+    #-- Imprimir el buffer
+    la a0, buff
+    jal puts
+
+    PUTCHARI '\n'
+
+
     halt
 
 
 #-- a0: Direccion del buffer de la cadena
 #-- a1: Numero a "imprimir"
+#-- a2: Eliminar 0s iniciales (0=NO, 1=si)
 sprint_bin4:
     STACK16
 
     #-- Guardar los parametros
     sw a0, 0(sp)
-    sw a1, 4(sp)
+    sw a2, 4(sp)
 
     #-- Convertir a array bcd
     #-- Guardarlo en un buffer interno
@@ -54,11 +70,30 @@ sprint_bin4:
     li a1, 4  #-- Tamaño en bytes
     jal bcd_array_to_string
 
-    #-- Copiar cadena al buffer de la cadena
+    #-- Comprobar si hay que eliminar ceros iniciales o no
+    lw a2, 4(sp)
+    beq a2, zero, no_remove_ceros
+
+    #-- Hay que eliminar los 0s
     la a0, __buff
-    la a1, buff
+    jal str_remove_leading_zeros
+
+    #-- a0: cadena sin ceros
+    j cont
+    
+no_remove_ceros:
+    #-- Seleccionar cadena desde el principio
+    la a0, __buff
+
+cont:
+
+    #-- Copiar el numero-cadena en el buffer de la cadena
+    #-- La cadena origen a0 contiene bien el numero completo
+    #-- o bien apunta al numero sin 0s iniciales
+    lw a1, 0(sp)  #-- buffer destino
     jal strcpy
 
+1:
     UNSTACK16
 
 
