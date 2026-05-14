@@ -20,6 +20,12 @@ __reset:
     ANSI_HOME
     ANSI_CLS
 
+    PUTSI "* Bin8: "
+    PRINT_BIN8I 0x55
+    PUTCHARI '\n'
+
+    
+
     #-- Convertir numero decimal a digitos bcd
     la a0, buff
     li a1, 1123
@@ -52,6 +58,7 @@ __reset:
 
 
     .data
+buff1:  .space 255
 buff:   .space 255
 src:    .string "0000123456789\n"    
 dst:    .string "****************\n"

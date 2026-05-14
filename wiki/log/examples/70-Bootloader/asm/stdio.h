@@ -33,3 +33,23 @@ msg\@: .string "\str"
     jal puts
 .endm
 
+#--------------------------------------------
+#-- Imprimir un numero de 8 bits en binario
+#--------------------------------------------
+.macro SPRINT_BIN8 label:req, num:req
+    la a0, \label  #-- Buffer
+    li a1, \num    #-- Numero
+    li a2, 8      #-- Tamaño: 8 bits
+    li a3, 0      #-- Mostrar 0s iniciales
+    jal sprint_bin
+.endm
+
+#---------------------------------------------------
+#-- Imprimir numero binario de 8 bit en consola
+#---------------------------------------------------
+.macro PRINT_BIN8I num:req
+    li a0, \num
+    li a1, 8
+    li a2, 0  #-- Mostrar 0s iniciales
+    jal print_bin
+.endm

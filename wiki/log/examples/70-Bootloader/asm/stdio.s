@@ -48,6 +48,7 @@ puts:
 
 #──────────────────────────────────────────────────────
 #──  Imprimir un numero en binario, de 4 bits
+#──  En un buffer de memoria
 #──
 #──  ENTRADAS:
 #──    a0: Buffer donde imprimir
@@ -56,8 +57,7 @@ puts:
 #──    a3: Eliminar 0s iniciales (0=No, 1=si)
 #── 
 #──  SALIDAS:
-#──    a0: Direccion donde comienza la cadena sin 
-#──        los ceros
+#──    a0: Direccion donde comienza la cadena
 #──────────────────────────────────────────────────────
   .global sprint_bin
 sprint_bin:
@@ -104,7 +104,41 @@ cont:
 1:
     UNSTACK16
 
-        .data
+
+#──────────────────────────────────────────────────────
+#──  Imprimir un numero en binario, de 4 bits
+#──
+#──  ENTRADAS:
+#──    a0: Numero a imprimir en binario
+#──    a1: Tamaño del numero (en bits)
+#──    a2: Eliminar 0s iniciales (0=No, 1=si)
+#── 
+#──────────────────────────────────────────────────────
+  .global print_bin
+print_bin:
+
+    STACK16
+
+    #-- La impresion se hace en 2 fase:
+    #-- Fase 1: Imprimir el numero en un buffer interno
+    mv a3, a2
+    mv a2, a1
+    mv a1, a0
+    la a0, __sprint_buffer
+    jal sprint_bin
+
+    #-- Fase 2: Imprimir el buffer en la consola
+    la a0, __sprint_buffer
+    jal puts
+
+    UNSTACK16
+
+
+
+       .data
+
+#-- Buffer para instrucciones sprint
+__sprint_buffer: .space 255
 
 #-- Buffer interno para la impresion de numeros
 __buff: .space 33
