@@ -117,3 +117,100 @@ bcd32_to_bcd_array:
     ret
 
 
+#-- Convertir un numero entero (decimal) de 32 bits a digitos bcd
+#-- a0: Buffer
+#-- a1: Numero a convertir
+#--
+#-- Salidas: a1, a0: numeros bcd
+#--------------------------------------------------------------
+ #-- Algoritmo Doubble Dabble
+ #-- https://en.wikipedia.org/wiki/Double_dabble
+ #--------------------------------------------------------------
+ #-- Registro de calculo para hacer los desplazamientos:
+ #
+ #  -Parte alta
+ #    31                                              8 | 7    4 | 3       0
+ #  +------------------------------------------------------------------------+
+ #  |                                                   |   Dig9 |   Dig8    |
+ #  |                                                   | 0 0 0 0|  0 0 0 0  |
+ #  +------------------------------------------------------------------------+
+ #
+ #  -Parte media:
+ #   31   28| 27   24|23    20| 19  16 | 15   12 | 11    8| 7      4| 3     0
+ #  +------------------------------------------------------------------------+
+ #  |  Dig7 |  Dig6  |  Dig5  | Dig 4  |  Dig3   | Dig2   |  Dig1   |  Dig0  |
+ #  |0 0 0 0| 0 0 0 0| 0 0 0 0| 0 0 0 0| 0 0 0 0 | 0 0 0 0| 0 0 0 0 | 0 0 0 0|
+ #  +------------------------------------------------------------------------+
+ #
+ #  -Parte baja:
+ #   31                                                                     0
+ #  +------------------------------------------------------------------------+
+ #  |      n                                                                 |
+ #  |  d31 - d0                                                              |
+ #  +------------------------------------------------------------------------+
+ 
+    .text
+
+     .global uint32_to_bcd
+uint32_to_bcd:
+
+	STACK16
+	PUSH2 s0, s1
+
+	#-- Guardar los parametros
+	mv s0, a0
+
+	#-- Inicializar registro uint_buffer
+	mv a0, a1  #-- num
+	jal algorithm_dd_init
+
+    #-- DEBUG
+    #li s0, 0x00200000
+    #li t0, 6
+    #sw t0, 0(s0)
+    #j .
+
+
+
+
+	#-- Desplazar el uint_buffer 3 bits a la izquierda
+	jal algorithm_dd_shift1
+	jal algorithm_dd_shift1
+	jal algorithm_dd_shift1
+
+
+
+
+	#-- Bucle principal del algoritmo
+	#-- Hay que hacer un total de 32 desplazamiento
+	#-- Como ya se han hecho 3, quedan 29
+	#-- s1: Contador de repeticiones
+	li s1, 29
+
+ sputs_uint_loop:
+	
+	#-- Actualizar registro uint_buffer
+	#-- Hay que sumar 3 a cada digito BCD, si es > 4
+	jal algorithm_dd_step
+
+	#-- Desplazar 1 bit a la izquierda registro uint_buffer
+	#-- uint_buffer << 1
+	jal algorithm_dd_shift1
+
+	#-- Queda un paso menos por hacer del algoritmo
+	#-- Decrementar contador
+	addi s1, s1, -1
+
+	#-- Repetir si contador mayor a 0
+	bgt s1, zero, sputs_uint_loop
+
+	#-- La parte alta y media del registro uint_buffer contienen los digitos
+	#-- BCD del numero en decimal
+
+    #-- Devolverlos por a1 y a0
+    jal algorithm_dd_read_buffer
+
+	POP2 s0, s1
+	UNSTACK16
+
+

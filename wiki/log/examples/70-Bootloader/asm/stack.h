@@ -19,3 +19,90 @@
   ret
 .endm
 
+
+#-------------------------------------------------------
+#-- Crear una pila de 32 bytes
+#-- Espacio para 8 registros (offsets 0 - 24)
+#-- La direccion de retorno se guarda en el offset 28
+#-------------------------------------------------------
+.macro STACK32
+  addi sp, sp, -32
+  sw ra, 28(sp)
+.endm
+
+#----------------------------------------
+#-- Liberar la pila de 32 bytes
+#-- Recuperar la direccion de retorno
+#-- RETORNAR DE LA FUNCION!
+#----------------------------------------
+.macro UNSTACK32
+  lw ra, 28(sp)
+  addi sp, sp, 32
+  ret
+.endm
+
+
+
+
+#----------------------------------------
+#-- Meter en la pila 2 registros
+#--   Offsets 0 y 4
+#----------------------------------------
+.macro PUSH2 reg0:req, reg1:req
+  sw \reg0, 0(sp)
+  sw \reg1, 4(sp)
+.endm
+
+#-----------------------------------------
+#-- Sacar de la pila 2 registros
+#-- Offsets 0 y 4
+#-----------------------------------------
+.macro POP2 reg0:req, reg1:req
+  lw \reg0, 0(sp)
+  lw \reg1, 4(sp)
+.endm
+
+#----------------------------------------
+#-- Meter en la pila 3 registros
+#--   Offsets 0, 4 y 8
+#----------------------------------------
+.macro PUSH3 reg0:req, reg1:req, reg2:req
+  sw \reg0, 0(sp)
+  sw \reg1, 4(sp)
+  sw \reg2, 8(sp)
+.endm
+
+#-----------------------------------------
+#-- Sacar de la pila 3 registros
+#-- Offsets 0, 4 y 8
+#-----------------------------------------
+.macro POP3 reg0:req, reg1:req, reg2:req
+  lw \reg0, 0(sp)
+  lw \reg1, 4(sp)
+  lw \reg2, 8(sp)
+.endm
+
+#----------------------------------------
+#-- Meter en la pila 4 registros
+#--   Offsets 0, 4, 8 y 12
+#-- WARNING: Solo es compatible STACK32!
+#----------------------------------------
+.macro STACK32_PUSH4 reg0:req, reg1:req, reg2:req, reg3:req
+  sw \reg0, 0(sp)
+  sw \reg1, 4(sp)
+  sw \reg2, 8(sp)
+  sw \reg3, 12(sp)
+.endm
+
+#-----------------------------------------
+#-- Sacar de la pila 4 registros
+#-- Offsets 0, 4, 8 y 12
+#-- WARNING: Solo es compatible con STACK32!
+#-----------------------------------------
+.macro STACK32_POP4 reg0:req, reg1:req, reg2:req, reg3:req
+  lw \reg0, 0(sp)
+  lw \reg1, 4(sp)
+  lw \reg2, 8(sp)
+  lw \reg3, 12(sp)
+.endm
+

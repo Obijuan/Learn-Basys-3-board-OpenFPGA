@@ -20,22 +20,30 @@ __reset:
     ANSI_HOME
     ANSI_CLS
 
-    #-- Convertir numero array bcd
+    #-- Convertir numero decimal a digitos bcd
     la a0, buff
-    li a1, 0xCAFEBACA
-    jal bcd32_to_bcd_array
+    li a1, 1123
+    jal uint32_to_bcd
 
-    li a1, 0x01020304
+    #-- a1 y a0 tienen los digitos bcd
+    mv t0, a0
+    mv t1, a1
+
+    #-- Convertir a array de digitos bcd
+    la a0, buff
+    mv a1, t0
     jal bcd32_to_bcd_array
     
     #-- Convertir a cadena
     la a0, buff
-    li a1, 16
+    li a1, 8
     jal bcd_array_to_string
 
+    #-- Eliminar 0s iniciales
+    la a0, buff
+    jal str_remove_leading_zeros
 
     #-- Imprimir!
-    la a0, buff
     jal puts
 
     PUTCHARI '\n'

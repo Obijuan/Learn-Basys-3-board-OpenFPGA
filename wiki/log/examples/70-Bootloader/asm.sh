@@ -92,6 +92,12 @@ $GCC $ASM/bcd.s -I $ASM \
      -c \
      -o $BUILD/bcd.o
 
+#-- Ensamblado de las dependencias: algorithm_double_dabble.s
+$GCC $ASM/algorithm_double_dabble.s -I $ASM \
+     -fdata-sections -ffunction-sections  \
+     -c \
+     -o $BUILD/algorithm_double_dabble.o
+
 
 #-- Linkado: generacion del elf
 $GCC -nostdlib -nostartfiles -mno-relax \
@@ -106,6 +112,7 @@ $GCC -nostdlib -nostartfiles -mno-relax \
      $BUILD/ansi.o \
      $BUILD/string.o \
      $BUILD/bcd.o \
+     $BUILD/algorithm_double_dabble.o \
      -o $BUILD/$NAME.elf \
      -lgcc
 
