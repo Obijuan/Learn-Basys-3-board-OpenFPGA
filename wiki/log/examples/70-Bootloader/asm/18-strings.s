@@ -28,14 +28,14 @@ __reset:
     PRINT_HEX8I 0x55
     PUTCHARI '\n'
 
-    # PUTSI "* Dec8: "
-    # PRINT_UINT8I 0x55
-    # PUTCHARI '\n'
+    #PUTSI "* Dec8: "
+    #PRINT_UINT8I 0x85
+    #PUTCHARI '\n'
 
     la a0, buff
-    li a1, 0x55
+    li a1, 85
     li a2, 8
-    li a3, 0
+    li a3, 1
     jal sprint_uint
 
     la a0, buff
@@ -44,8 +44,9 @@ __reset:
 
 
     #-- Convertir numero decimal a digitos bcd
-    li a0, 0x55
+    li a0, 85
     jal uint32_to_bcd
+
 
     #-- a1 y a0 tienen los digitos bcd
     mv t0, a0

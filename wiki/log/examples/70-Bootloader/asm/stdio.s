@@ -241,8 +241,14 @@ sprint_uint:
     sw a3, 8(sp)  #-- Espacios iniciales
 
     #-- Convertir numero decimal a digitos bcd
+    mv a0, a1
     jal uint32_to_bcd
     
+    #-- DEBUG
+    # li t0, 0x00200000
+    # sw a0, 0(t0)
+    # j .
+
     #-- a1 y a0 tienen los digitos bcd
     mv t0, a0
     mv t1, a1
@@ -256,7 +262,7 @@ sprint_uint:
     #-- Convertir a cadena
     la a0, __buff
     lw a1, 4(sp)    #-- Tamaño en bits
-    srli a1, a1, 2  #-- Tamaño en digitos
+    #srli a1, a1, 2  #-- Tamaño en digitos
     jal bcd_array_to_string
 
     #-- Comprobar si hay que eliminar ceros iniciales o no
@@ -378,7 +384,7 @@ print_uint:
 
 
 
-       .data
+    .section   .sdata
 
 #-- Buffer para instrucciones sprint
 __sprint_buffer: .space 255
