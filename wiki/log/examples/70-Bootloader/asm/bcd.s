@@ -69,25 +69,37 @@ bin_to_bcd_array:
 
 
 #──────────────────────────────────────────────────────────────────────────
-#──  Convertir un bcd de 32 bits (8 digitos) en un
+#──  Convertir un bcd del tamaño indicado (4,8,16,32 bits) en un
 #──  array de caracteres bcd
 #──
 #──  Ej. n=0xCAFEBACA:  --> 0xC, 0xA, 0xF, 0xE, 0xB, 0xA, 0xC, 0xA
-#── 
+#──      (tamaño 32 bits)
+#──
+#──  Ej. n=0xCAFE (tam=16 bits) --> 0xC, 0xA, 0xF, 0xE 
+#──
+#──  Ej. 0x5A (tam=8 bits) --> 0x5, 0xA
+#──
 #──  ENTRADAS:
 #──    a0: Direccion del comienzo del array
 #──    a1: Numero a convertir
+#──    a2: Tamaño en bits (4, 8, 16, 32)
 #──────────────────────────────────────────────────────────────────────────
-    .global bcd32_to_bcd_array
-bcd32_to_bcd_array:
+    .global bcd_to_bcd_array
+bcd_to_bcd_array:
 
-    #-- Mascara inicial para obtener el digito de mayor peso
-    #-- t0: Mascara para digito
-    li t0, 0xF0000000
 
     #-- Numero del digito actual (7-0)
     #-- t1: Digito actual (i)
-    li t1, 7
+    srli t1, a2, 2  #-- Tamaño en digitos (Dividiendo entre 4)
+    addi t1, t1, -1 #-- Digito de mayor peso
+
+    #-- Mascara inicial para obtener el digito de mayor peso
+    #-- t0: Mascara para digito
+    #-- Se obtiene desplazando hacia la izquierda 0xF
+    #-- Hay que multiplicar t1 * 4 para obtener los bits a desplazar
+    slli t0, t1, 2   #-- Bits a desplazar 0xF para construir la mascara
+    li t2, 0xF       #-- Valor inicial
+    sll t0, t2, t0  #-- Obtener la mascara!
 
 1:
     #-- Obtener el digito i

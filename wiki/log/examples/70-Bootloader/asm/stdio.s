@@ -187,11 +187,12 @@ sprint_hex:
     #-- Convertir a array bcd
     #-- Guardarlo en un buffer interno
     la a0, __buff
-    jal bcd32_to_bcd_array
+    jal bcd_to_bcd_array
 
     #-- Convertir a cadena
     la a0, __buff
-    lw a1, 4(sp)  #-- Tamaño
+    lw a1, 4(sp)    #-- Tamaño en bits
+    srli a1, a1, 2  #-- Tamaño en digitos
     jal bcd_array_to_string
 
     #-- Comprobar si hay que eliminar ceros iniciales o no

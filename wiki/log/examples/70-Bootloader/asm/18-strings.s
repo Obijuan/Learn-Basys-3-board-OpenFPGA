@@ -24,19 +24,20 @@ __reset:
     PRINT_BIN8I 0x55
     PUTCHARI '\n'
 
-    # PUTSI "* Hex8: "
-    # PRINT_HEX8I 0x55
-    # PUTCHARI '\n'
+    PUTSI "* Hex8: "
+    PRINT_HEX8I 0x55
+    PUTCHARI '\n'
 
 
     #-- Convertir a array de digitos bcd
     la a0, buff
-    li a1, 0xCAFEBACA
-    jal bcd32_to_bcd_array
+    li a1, 0x7
+    li a2, 4
+    jal bcd_to_bcd_array
 
     #-- Convertir a cadena
     la a0, buff
-    li a1, 8
+    li a1, 1
     jal bcd_array_to_string
 
     #-- Imprimir!
