@@ -257,13 +257,21 @@ sprint_uint:
     la a0, __buff
     mv a1, t0
     lw a2, 4(sp)  #-- Tamaño en bits
+    #-- Caso especial: para los enteros hay que aumentar el tamaño:
+    #--  Un numero de 4 bits tiene 2 digitos
+    #--  un numero de 8 bits, 3 digitos
+    #--  un numero de 16 bits, 5 digitos
+    #--  Un numero de 32 bits, 10 digitos
+    #-- Duplicamos el tamaño para que entren todos los digitos:
+    slli a2, a2, 2
     #-- TODO: Falta convertir a1 para numeros grandes
     jal bcd_to_bcd_array
 
     #-- Convertir a cadena
     la a0, __buff
     lw a1, 4(sp)    #-- Tamaño en bits
-    srli a1, a1, 2  #-- Tamaño en digitos
+    #srli a1, a1, 2  #-- Tamaño en digitos
+    #-- Caso especial: duplicamos los digitos
     jal bcd_array_to_string
 
     #-- Comprobar si hay que eliminar ceros iniciales o no
