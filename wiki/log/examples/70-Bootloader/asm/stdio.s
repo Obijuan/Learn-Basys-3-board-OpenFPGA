@@ -245,9 +245,9 @@ sprint_uint:
     jal uint32_to_bcd
     
     #-- DEBUG
-    # li t0, 0x00200000
-    # sw a0, 0(t0)
-    # j .
+    #li t0, 0x00200000
+    #sw a0, 0(t0)
+    #j .
 
     #-- a1 y a0 tienen los digitos bcd
     mv t0, a0
@@ -256,12 +256,14 @@ sprint_uint:
     #-- Convertir a array de digitos bcd
     la a0, __buff
     mv a1, t0
+    lw a2, 4(sp)  #-- Tamaño en bits
     #-- TODO: Falta convertir a1 para numeros grandes
     jal bcd_to_bcd_array
 
     #-- Convertir a cadena
     la a0, __buff
     lw a1, 4(sp)    #-- Tamaño en bits
+    srli a1, a1, 2  #-- Tamaño en digitos
     jal bcd_array_to_string
 
     #-- Comprobar si hay que eliminar ceros iniciales o no
