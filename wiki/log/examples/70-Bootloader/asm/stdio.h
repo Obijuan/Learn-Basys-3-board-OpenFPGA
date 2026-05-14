@@ -55,6 +55,18 @@ msg\@: .string "\str"
 .endm
 
 #---------------------------------------------------
+#-- Imprimir numero binario de 4 bit en consola
+#---------------------------------------------------
+.macro PRINT_BIN4I num:req
+    li a0, \num
+    li a1, 4
+    li a2, 0  #-- Mostrar 0s iniciales
+    jal print_bin
+.endm
+
+
+
+#---------------------------------------------------
 #-- Imprimir numero hexadecimal de 8 bit en consola
 #---------------------------------------------------
 .macro PRINT_HEX8I num:req
@@ -65,11 +77,32 @@ msg\@: .string "\str"
 .endm
 
 #---------------------------------------------------
+#-- Imprimir numero hexadecimal de 4 bit en consola
+#---------------------------------------------------
+.macro PRINT_HEX4I num:req
+    li a0, \num
+    li a1, 4
+    li a2, 0  #-- Mostrar 0s iniciales
+    jal print_hex
+.endm
+
+
+#---------------------------------------------------
 #-- Imprimir numero decimal de 8 bit en consola
 #---------------------------------------------------
 .macro PRINT_UINT8I num:req
     li a0, \num
     li a1, 8
+    li a2, 1  #-- Eliminar 0s iniciales
+    jal print_uint
+.endm
+
+#---------------------------------------------------
+#-- Imprimir numero decimal de 4 bit en consola
+#---------------------------------------------------
+.macro PRINT_UINT4I num:req
+    li a0, \num
+    li a1, 4
     li a2, 1  #-- Eliminar 0s iniciales
     jal print_uint
 .endm

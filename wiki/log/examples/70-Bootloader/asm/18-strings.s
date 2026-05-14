@@ -20,6 +20,24 @@ __reset:
     ANSI_HOME
     ANSI_CLS
 
+    #---- Imprimir numeros de 4 bits
+    PUTSI "--> Numeros de 4 bits\n"
+    PUTSI "* Bin4: "
+    PRINT_BIN4I 0xC
+    PUTCHARI '\n'
+
+    PUTSI "* Hex4: "
+    PRINT_HEX4I 0xC
+    PUTCHARI '\n'
+
+    PUTSI "* Dec4: "
+    PRINT_UINT4I 0xC
+    PUTCHARI '\n'
+
+    PUTCHARI '\n'
+
+    #---- Imprimir numeros de 8 bits
+    PUTSI "--> Numeros de 8 bits\n"
     PUTSI "* Bin8: "
     PRINT_BIN8I 0x55
     PUTCHARI '\n'
@@ -28,48 +46,12 @@ __reset:
     PRINT_HEX8I 0x55
     PUTCHARI '\n'
 
-    #PUTSI "* Dec8: "
-    #PRINT_UINT8I 0x85
-    #PUTCHARI '\n'
-
-    la a0, buff
-    li a1, 85
-    li a2, 8
-    li a3, 1
-    jal sprint_uint
-
-    la a0, buff
-    jal puts
+    PUTSI "* Dec8: "
+    PRINT_UINT8I 0x55
     PUTCHARI '\n'
 
+    #----- Imprimir numeros de 16 bits
 
-    #-- Convertir numero decimal a digitos bcd
-    li a0, 85
-    jal uint32_to_bcd
-
-
-    #-- a1 y a0 tienen los digitos bcd
-    mv t0, a0
-    mv t1, a1
-
-    #-- Convertir a array de digitos bcd
-    la a0, buff
-    mv a1, t0
-    jal bcd_to_bcd_array
-    
-    #-- Convertir a cadena
-    la a0, buff
-    li a1, 8
-    jal bcd_array_to_string
-
-    #-- Eliminar 0s iniciales
-    la a0, buff
-    jal str_remove_leading_zeros
-
-    #-- Imprimir!
-    jal puts
-
-    PUTCHARI '\n'
 
     halt
 
