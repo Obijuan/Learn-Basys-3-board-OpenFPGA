@@ -53,3 +53,14 @@ msg\@: .string "\str"
     li a2, 0  #-- Mostrar 0s iniciales
     jal print_bin
 .endm
+
+#---------------------------------------------------
+#-- Imprimir numero hexadecimal de 8 bit en consola
+#---------------------------------------------------
+.macro PRINT_HEX8I num:req
+    li a0, \num
+    li a1, 8
+    li a2, 0  #-- Mostrar 0s iniciales
+    jal print_hex
+.endm
+

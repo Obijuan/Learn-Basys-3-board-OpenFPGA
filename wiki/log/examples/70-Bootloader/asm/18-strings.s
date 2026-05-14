@@ -24,7 +24,9 @@ __reset:
     PRINT_BIN8I 0x55
     PUTCHARI '\n'
 
-    
+    PUTSI "* Hex8: "
+    PRINT_HEX8I 0x55
+    PUTCHARI '\n'
 
     #-- Convertir numero decimal a digitos bcd
     la a0, buff
