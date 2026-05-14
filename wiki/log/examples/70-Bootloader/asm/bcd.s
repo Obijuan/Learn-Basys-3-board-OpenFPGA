@@ -130,8 +130,7 @@ bcd_to_bcd_array:
 
 
 #-- Convertir un numero entero (decimal) de 32 bits a digitos bcd
-#-- a0: Buffer
-#-- a1: Numero a convertir
+#-- a0: Numero a convertir
 #--
 #-- Salidas: a1, a0: numeros bcd
 #--------------------------------------------------------------
@@ -167,37 +166,23 @@ bcd_to_bcd_array:
 uint32_to_bcd:
 
 	STACK16
-	PUSH2 s0, s1
-
-	#-- Guardar los parametros
-	mv s0, a0
+	
+    #-- Guardar s0 en la pila
+    sw s0, 0(sp)
 
 	#-- Inicializar registro uint_buffer
-	mv a0, a1  #-- num
 	jal algorithm_dd_init
-
-    #-- DEBUG
-    #li s0, 0x00200000
-    #li t0, 6
-    #sw t0, 0(s0)
-    #j .
-
-
-
 
 	#-- Desplazar el uint_buffer 3 bits a la izquierda
 	jal algorithm_dd_shift1
 	jal algorithm_dd_shift1
 	jal algorithm_dd_shift1
 
-
-
-
 	#-- Bucle principal del algoritmo
 	#-- Hay que hacer un total de 32 desplazamiento
 	#-- Como ya se han hecho 3, quedan 29
-	#-- s1: Contador de repeticiones
-	li s1, 29
+	#-- s0: Contador de repeticiones
+	li s0, 29
 
  sputs_uint_loop:
 	
@@ -211,10 +196,10 @@ uint32_to_bcd:
 
 	#-- Queda un paso menos por hacer del algoritmo
 	#-- Decrementar contador
-	addi s1, s1, -1
+	addi s0, s0, -1
 
 	#-- Repetir si contador mayor a 0
-	bgt s1, zero, sputs_uint_loop
+	bgt s0, zero, sputs_uint_loop
 
 	#-- La parte alta y media del registro uint_buffer contienen los digitos
 	#-- BCD del numero en decimal
@@ -222,7 +207,9 @@ uint32_to_bcd:
     #-- Devolverlos por a1 y a0
     jal algorithm_dd_read_buffer
 
-	POP2 s0, s1
+    #-- Recuperar s0
+    lw s0, 0(sp)
+	
 	UNSTACK16
 
 

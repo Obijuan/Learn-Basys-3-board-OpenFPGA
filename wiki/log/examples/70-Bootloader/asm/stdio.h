@@ -64,3 +64,12 @@ msg\@: .string "\str"
     jal print_hex
 .endm
 
+#---------------------------------------------------
+#-- Imprimir numero decimal de 8 bit en consola
+#---------------------------------------------------
+.macro PRINT_UINT8I num:req
+    li a0, \num
+    li a1, 8
+    li a2, 1  #-- Eliminar 0s iniciales
+    jal print_uint
+.endm

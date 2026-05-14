@@ -175,9 +175,6 @@ cont:
 sprint_hex:
     STACK16
 
-    #-- Convertir el tamaño a digitos, 
-    #-- dividiendo entre 4
-    #slli a2, a2, 2   #-- (tam = tam << 2)
 
     #-- Guardar los parametros
     sw a0, 0(sp)  #-- Buffer
@@ -220,6 +217,75 @@ sprint_hex:
     jal strcpy
 
     UNSTACK16
+
+
+#──────────────────────────────────────────────────────
+#──  Imprimir un numero en decimal
+#──
+#──  ENTRADAS:
+#──    a0: Buffer donde imprimir
+#──    a1: Numero a imprimir
+#──    a2: Tamaño del numero (4,8,16,32)
+#──    a3: Eliminar 0s iniciales (0=No, 1=si)
+#── 
+#──  SALIDAS:
+#──    a0: Direccion donde comienza la cadena
+#──────────────────────────────────────────────────────
+  .global sprint_uint
+sprint_uint:
+    STACK16
+
+    #-- Guardar los parametros
+    sw a0, 0(sp)  #-- Buffer
+    sw a2, 4(sp)  #-- Tamaño del numero
+    sw a3, 8(sp)  #-- Espacios iniciales
+
+    #-- Convertir numero decimal a digitos bcd
+    jal uint32_to_bcd
+    
+    #-- a1 y a0 tienen los digitos bcd
+    mv t0, a0
+    mv t1, a1
+
+    #-- Convertir a array de digitos bcd
+    la a0, __buff
+    mv a1, t0
+    #-- TODO: Falta convertir a1 para numeros grandes
+    jal bcd_to_bcd_array
+
+    #-- Convertir a cadena
+    la a0, __buff
+    lw a1, 4(sp)    #-- Tamaño en bits
+    srli a1, a1, 2  #-- Tamaño en digitos
+    jal bcd_array_to_string
+
+    #-- Comprobar si hay que eliminar ceros iniciales o no
+    lw a3, 8(sp)
+    beq a3, zero, 1f
+
+    #-- Hay que eliminar los 0s
+    la a0, __buff
+    jal str_remove_leading_zeros
+
+    #-- a0: cadena sin ceros
+    j 2f
+    
+# no_remove_ceros:
+1:
+    #-- Seleccionar cadena desde el principio
+    la a0, __buff
+
+2:
+
+    #-- Copiar el numero-cadena en el buffer de la cadena
+    #-- La cadena origen a0 contiene bien el numero completo
+    #-- o bien apunta al numero sin 0s iniciales
+    lw a1, 0(sp)  #-- buffer destino
+    jal strcpy
+
+    UNSTACK16
+
+
 
 
 
@@ -275,6 +341,34 @@ print_hex:
     mv a1, a0
     la a0, __sprint_buffer
     jal sprint_hex
+
+    #-- Fase 2: Imprimir el buffer en la consola
+    la a0, __sprint_buffer
+    jal puts
+
+    UNSTACK16
+
+#──────────────────────────────────────────────────────
+#──  Imprimir un numero en decimal
+#──
+#──  ENTRADAS:
+#──    a0: Numero a imprimir en decimal
+#──    a1: Tamaño del numero en bits (4, 8, 16, 32)
+#──    a2: Eliminar 0s iniciales (0=No, 1=si)
+#── 
+#──────────────────────────────────────────────────────
+  .global print_uint
+print_uint:
+
+    STACK16
+
+    #-- La impresion se hace en 2 fase:
+    #-- Fase 1: Imprimir el numero en un buffer interno
+    mv a3, a2
+    mv a2, a1
+    mv a1, a0
+    la a0, __sprint_buffer
+    jal sprint_uint
 
     #-- Fase 2: Imprimir el buffer en la consola
     la a0, __sprint_buffer
