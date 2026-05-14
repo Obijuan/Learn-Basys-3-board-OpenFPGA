@@ -64,6 +64,25 @@ msg\@: .string "\str"
     jal print_bin
 .endm
 
+#---------------------------------------------------
+#-- Imprimir numero binario de 16 bit en consola
+#---------------------------------------------------
+.macro PRINT_BIN16I num:req
+    li a0, \num
+    li a1, 16
+    li a2, 0  #-- Mostrar 0s iniciales
+    jal print_bin
+.endm
+
+#---------------------------------------------------
+#-- Imprimir numero binario de 32 bit en consola
+#---------------------------------------------------
+.macro PRINT_BIN32I num:req
+    li a0, \num
+    li a1, 32
+    li a2, 0  #-- Mostrar 0s iniciales
+    jal print_bin
+.endm
 
 
 #---------------------------------------------------
@@ -77,11 +96,31 @@ msg\@: .string "\str"
 .endm
 
 #---------------------------------------------------
-#-- Imprimir numero hexadecimal de 4 bit en consola
+#-- Imprimir numero hexadecimal de 8 bit en consola
 #---------------------------------------------------
 .macro PRINT_HEX4I num:req
     li a0, \num
     li a1, 4
+    li a2, 0  #-- Mostrar 0s iniciales
+    jal print_hex
+.endm
+
+#---------------------------------------------------
+#-- Imprimir numero hexadecimal de 16 bit en consola
+#---------------------------------------------------
+.macro PRINT_HEX16I num:req
+    li a0, \num
+    li a1, 16
+    li a2, 0  #-- Mostrar 0s iniciales
+    jal print_hex
+.endm
+
+#---------------------------------------------------
+#-- Imprimir numero hexadecimal de 32 bit en consola
+#---------------------------------------------------
+.macro PRINT_HEX32I num:req
+    li a0, \num
+    li a1, 32
     li a2, 0  #-- Mostrar 0s iniciales
     jal print_hex
 .endm
@@ -103,6 +142,26 @@ msg\@: .string "\str"
 .macro PRINT_UINT4I num:req
     li a0, \num
     li a1, 4
+    li a2, 1  #-- Eliminar 0s iniciales
+    jal print_uint
+.endm
+
+#---------------------------------------------------
+#-- Imprimir numero decimal de 16 bit en consola
+#---------------------------------------------------
+.macro PRINT_UINT16I num:req
+    li a0, \num
+    li a1, 16
+    li a2, 1  #-- Eliminar 0s iniciales
+    jal print_uint
+.endm
+
+#---------------------------------------------------
+#-- Imprimir numero decimal de 32 bit en consola
+#---------------------------------------------------
+.macro PRINT_UINT32I num:req
+    li a0, \num
+    li a1, 32
     li a2, 1  #-- Eliminar 0s iniciales
     jal print_uint
 .endm
