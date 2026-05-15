@@ -361,8 +361,7 @@ print_hex:
 #──
 #──  ENTRADAS:
 #──    a0: Numero a imprimir en decimal
-#──    a1: Tamaño del numero en bits (4, 8, 16, 32)
-#──    a2: Eliminar 0s iniciales (0=No, 1=si)
+#──    a1: Eliminar 0s iniciales (0=No, 1=si)
 #── 
 #──────────────────────────────────────────────────────
   .global print_uint
@@ -372,7 +371,6 @@ print_uint:
 
     #-- La impresion se hace en 2 fase:
     #-- Fase 1: Imprimir el numero en un buffer interno
-    mv a3, a2
     mv a2, a1
     mv a1, a0
     la a0, __sprint_buffer

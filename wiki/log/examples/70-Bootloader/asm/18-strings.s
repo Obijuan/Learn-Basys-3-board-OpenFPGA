@@ -25,7 +25,7 @@ __reset:
     li a1, 13
     #li a1, 0xFFFFFFFF
     li a2, 1   #-- sin 0s iniciales
-    li a2, 0   #-- con 0s iniciales
+    #li a2, 0   #-- con 0s iniciales
     jal sprint_uint
 
     la a0, buff1
@@ -33,6 +33,11 @@ __reset:
     PUTCHARI '\n'
     PUTSI "---FIN\n"
 
+    la a0, 255
+    li a1, 1
+    jal print_uint
+
+    PUTCHARI '\n'
 
 
     #---- Imprimir numeros de 4 bits
