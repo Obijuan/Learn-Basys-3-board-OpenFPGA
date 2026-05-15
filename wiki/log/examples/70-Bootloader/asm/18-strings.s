@@ -20,10 +20,6 @@ __reset:
     ANSI_HOME
     ANSI_CLS
 
-    PRINT_UINTI 0xFFFFFFFF
-    PUTCHARI '\n'
-
-
     #---- Imprimir numeros de 4 bits
     PUTSI "--> Numeros de 4 bits\n"
     PUTSI "* Bin4: "
