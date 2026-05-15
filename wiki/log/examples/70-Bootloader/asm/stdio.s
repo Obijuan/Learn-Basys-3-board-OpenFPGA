@@ -301,6 +301,28 @@ sprint_uint:
     UNSTACK16
 
 
+#──────────────────────────────────────────────────────
+#──  Imprimir un caracter en un buffer
+#──
+#──  ENTRADAS:
+#──    a0: Buffer donde imprimir
+#──    a1: caracter
+#── 
+#──  SALIDAS:
+#──    a0: Direccion final del buffer
+#──────────────────────────────────────────────────────
+  .global sprint_char
+sprint_char:
+
+    #-- Almacenar caracter en buffer
+    sb a1, 0(a0)
+
+    #-- Incrementar direccion y devolverla
+    addi a0, a0, 1
+    ret
+
+
+
 
 #──────────────────────────────────────────────────────
 #──  Imprimir un numero en binario

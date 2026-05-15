@@ -36,12 +36,21 @@ msg\@: .string "\str"
 #-----------------------------------------
 #-- Imprmir una cadena en un buffer
 #-----------------------------------------
-.macro SPRINT buff, str
+.macro SPRINTI_BUFF buff, str
     .data
 msg\@:  .string "\str"
 
     .text
     la a0, \buff
+    la a1, msg\@
+    jal sprint
+.endm
+
+.macro SPRINTI str
+    .data
+msg\@:  .string "\str"
+
+    .text
     la a1, msg\@
     jal sprint
 .endm
@@ -146,5 +155,27 @@ msg\@:  .string "\str"
     li a0, \num
     li a1, 1  #-- Eliminar 0s iniciales
     jal print_uint
+.endm
+
+#---------------------------------------------------
+#-- Imprimir numero decimal en la consola
+#---------------------------------------------------
+.macro SPRINTI_UINTI_BUFF buff:req, num:req
+    li a0 \buff
+    li a1, \num  
+    li a2, 1  #-- Eliminar 0s iniciales
+    jal sprint_uint
+.endm
+
+
+.macro SPRINTI_UINT num:req
+    li a1, \num  
+    li a2, 1  #-- Eliminar 0s iniciales
+    jal sprint_uint
+.endm
+
+.macro SPRINTI_CHAR car:req
+    li a1, \car  
+    jal sprint_char
 .endm
 

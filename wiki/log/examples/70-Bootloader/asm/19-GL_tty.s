@@ -22,25 +22,30 @@ __reset:
     PUTSI "\033[5;10H"
     PUTSI "Hola\n"
 
+    SPRINTI_BUFF buffer, "test..."
+    SPRINTI "test2...\n"
     la a0, buffer
-    la a1, msg1
-    jal sprint
+    jal puts
 
-    la a1, msg1
-    jal sprint
-
-    #SPRINT buffer, "test..."
-
-    #la a1, msg1
-    #jal sprint
-
+    SPRINTI_BUFF buffer, "\033[10;10H"
+    # SPRINTI_UINT 10
+    # SPRINTI_CHAR ';'
+    # SPRINTI_UINT 10
+    # SPRINTI_CHAR 'H'
+    # #SPRINTI_CHAR '\n'
 
     la a0, buffer
     jal puts
 
+    #PUTSI "\033[10;10H"
+    PUTSI "Hola2\n"
+
+    
+
         .data
 msg1:    .string "Probando..."
-buffer: .space 255
+buffer:   .space 255
+buffer_2: .space 255
 
     halt
 
