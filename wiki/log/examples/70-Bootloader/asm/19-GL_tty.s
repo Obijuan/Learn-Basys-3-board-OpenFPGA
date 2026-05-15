@@ -27,7 +27,8 @@ __reset:
     la a0, buffer
     jal puts
 
-    SPRINTI_BUFF buffer, "\033[10;10H"
+    SPRINTI_BUFF buffer, "\033["
+    SPRINTI "10;10H"
     # SPRINTI_UINT 10
     # SPRINTI_CHAR ';'
     # SPRINTI_UINT 10
