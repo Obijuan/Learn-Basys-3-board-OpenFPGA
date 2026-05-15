@@ -234,44 +234,68 @@ sprint_hex:
 sprint_uint:
     STACK16
 
-    #-- Guardar los parametros
-    sw a0, 0(sp)  #-- Buffer
+    #-- Guardar los registros estaticos
+    sw s0, 0(sp)
+    sw s1, 4(sp)
+    sw s2, 8(sp)
+
+    #-- Almacenar parametros a0 y a2 para no perderlos
+    mv s0, a0  #-- Buffer
+    mv s1, a2  #-- Eliminar digitos
 
     #-- Convertir numero decimal a digitos bcd
     mv a0, a1
     jal uint32_to_bcd
-    
-    #-- a1 a0: Contiene el numero bcd
-    #-- Almacenar 32-bits de menor peso
-    sw a0, 4(sp)
 
-    #-- 1: Generar los digitos de mayor peso
-    #-- que estan en a1
-    #-- Convertir a array de digitos bcd
+    #-- a1 a0: Digitos bcd. a1: 2: a0: 8
+    #-- Almacenar a0
+    mv s2, a0
+
+    #-- Convertir la parte alta (a1) a bcd-array
+    li a2, 8     #-- Tamaño en bits
+    #-- a1 contiene el bcd
     la a0, __buff
-    li a2, 8
+    jal bcd_to_bcd_array
+
+    #-- Convertir la parta baja a bcd-array
+    li a2, 32    #-- Tamaño en bits
+    mv a1, s2
+    #-- a0: final del array
     jal bcd_to_bcd_array
 
     #-- Convertir a cadena
     la a0, __buff
-    li a1, 8
+    li a1, 10  #-- Tamaño en digitos (2 parte alta, 8 baja)
     jal bcd_array_to_string
 
-    #-- Eliminar los 0s iniciales
+    #-- Comprobar si hay que eliminar ceros iniciales o no
+    beq s1, zero, 1f
+
+    #-- Hay que eliminar los 0s
     la a0, __buff
     jal str_remove_leading_zeros
 
+    #-- a0: cadena sin ceros
+    j 2f
+
+# no_remove_ceros:
+1:
+    #-- Seleccionar cadena desde el principio
+    la a0, __buff
+
+2:
     #-- Copiar el numero-cadena en el buffer de la cadena
     #-- La cadena origen a0 contiene bien el numero completo
     #-- o bien apunta al numero sin 0s iniciales
-    lw a1, 0(sp)  #-- buffer destino
+    mv a1, s0  #-- buffer destino
     jal strcpy
 
+    #-- Recuperar los registros estaticos
+    lw s0, 0(sp)
+    lw s1, 4(sp)
+    lw s2, 8(sp)
+
     UNSTACK16
-
-
-
-
 
 
 

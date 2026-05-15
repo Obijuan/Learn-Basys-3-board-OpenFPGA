@@ -81,17 +81,29 @@ __reset:
     jal strcpy
 
 
-
-
     #-- Imprimir la cadena
     la a0, buff1
     jal puts
+
+    PUTCHARI '\n'
+    PUTSI "holi holi holi holi....\n"
 
     #-- DEBUG
     #li s0, 0x00200000
     #sw a0, 0(s0)
     #j .
 
+    la a0, buff1
+    li a1, 13
+    #li a1, 0xFFFFFFFF
+    li a2, 1   #-- sin 0s iniciales
+    li a2, 0   #-- con 0s iniciales
+    jal sprint_uint
+
+    la a0, buff1
+    jal puts
+    PUTCHARI '\n'
+    PUTSI "---FIN\n"
 
 
 
