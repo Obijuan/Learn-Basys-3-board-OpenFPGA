@@ -225,8 +225,7 @@ sprint_hex:
 #──  ENTRADAS:
 #──    a0: Buffer donde imprimir
 #──    a1: Numero a imprimir
-#──    a2: Tamaño del numero (4,8,16,32)
-#──    a3: Eliminar 0s iniciales (0=No, 1=si)
+#──    a2: Eliminar 0s iniciales (0: con ceros, 1: sin ceros)
 #── 
 #──  SALIDAS:
 #──    a0: Direccion donde comienza la cadena
@@ -237,60 +236,30 @@ sprint_uint:
 
     #-- Guardar los parametros
     sw a0, 0(sp)  #-- Buffer
-    sw a2, 4(sp)  #-- Tamaño del numero
-    sw a3, 8(sp)  #-- Espacios iniciales
 
     #-- Convertir numero decimal a digitos bcd
     mv a0, a1
     jal uint32_to_bcd
     
-    #-- DEBUG
-    #li t0, 0x00200000
-    #sw a0, 0(t0)
-    #j .
+    #-- a1 a0: Contiene el numero bcd
+    #-- Almacenar 32-bits de menor peso
+    sw a0, 4(sp)
 
-    #-- a1 y a0 tienen los digitos bcd
-    mv t0, a0
-    mv t1, a1
-
+    #-- 1: Generar los digitos de mayor peso
+    #-- que estan en a1
     #-- Convertir a array de digitos bcd
     la a0, __buff
-    mv a1, t0
-    lw a2, 4(sp)  #-- Tamaño en bits
-    #-- Caso especial: para los enteros hay que aumentar el tamaño:
-    #--  Un numero de 4 bits tiene 2 digitos
-    #--  un numero de 8 bits, 3 digitos
-    #--  un numero de 16 bits, 5 digitos
-    #--  Un numero de 32 bits, 10 digitos
-    #-- Duplicamos el tamaño para que entren todos los digitos:
-    slli a2, a2, 2
-    #-- TODO: Falta convertir a1 para numeros grandes
+    li a2, 8
     jal bcd_to_bcd_array
 
     #-- Convertir a cadena
     la a0, __buff
-    lw a1, 4(sp)    #-- Tamaño en bits
-    #srli a1, a1, 2  #-- Tamaño en digitos
-    #-- Caso especial: duplicamos los digitos
+    li a1, 8
     jal bcd_array_to_string
 
-    #-- Comprobar si hay que eliminar ceros iniciales o no
-    lw a3, 8(sp)
-    beq a3, zero, 1f
-
-    #-- Hay que eliminar los 0s
+    #-- Eliminar los 0s iniciales
     la a0, __buff
     jal str_remove_leading_zeros
-
-    #-- a0: cadena sin ceros
-    j 2f
-    
-# no_remove_ceros:
-1:
-    #-- Seleccionar cadena desde el principio
-    la a0, __buff
-
-2:
 
     #-- Copiar el numero-cadena en el buffer de la cadena
     #-- La cadena origen a0 contiene bien el numero completo

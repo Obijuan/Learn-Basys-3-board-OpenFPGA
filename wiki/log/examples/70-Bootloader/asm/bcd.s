@@ -83,6 +83,9 @@ bin_to_bcd_array:
 #──    a0: Direccion del comienzo del array
 #──    a1: Numero a convertir
 #──    a2: Tamaño en bits (4, 8, 16, 32)
+#── 
+#──  SALIDAS:
+#──    a0: Direccion al final del array
 #──────────────────────────────────────────────────────────────────────────
     .global bcd_to_bcd_array
 bcd_to_bcd_array:
