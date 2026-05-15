@@ -20,28 +20,27 @@ __reset:
     ANSI_HOME
     ANSI_CLS
 
-    #PUTCHARI '\n'
     PRINT_UINTI 0xFFFFFFFF
     PUTCHARI '\n'
 
 
     #---- Imprimir numeros de 4 bits
-    # PUTSI "--> Numeros de 4 bits\n"
-    # PUTSI "* Bin4: "
-    # PRINT_BIN4I 0xC
-    # PUTCHARI '\n'
+    PUTSI "--> Numeros de 4 bits\n"
+    PUTSI "* Bin4: "
+    PRINT_BIN4I 0xC
+    PUTCHARI '\n'
 
-    # PUTSI "* Hex4: "
-    # PRINT_HEX4I 0xC
-    # PUTCHARI '\n'
+    PUTSI "* Hex4: "
+    PRINT_HEX4I 0xC
+    PUTCHARI '\n'
 
-    # PUTSI "* Dec4: "
-    # PRINT_UINT4I 0xC
-    # PUTCHARI '\n'
+    PUTSI "* Dec4: "
+    PRINT_UINTI 0xC
+    PUTCHARI '\n'
 
-    # PUTSI "* Dec4 (max): "
-    # PRINT_UINT4I 0xF
-    # PUTCHARI '\n'
+    PUTSI "* Dec4 (max): "
+    PRINT_UINTI 0xF
+    PUTCHARI '\n'
 
     # PUTCHARI '\n'
 
