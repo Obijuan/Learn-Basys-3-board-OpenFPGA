@@ -20,14 +20,6 @@ __reset:
     ANSI_HOME
     ANSI_CLS
 
-
-    la a0, buff1
-    li a1, 13
-    #li a1, 0xFFFFFFFF
-    li a2, 1   #-- sin 0s iniciales
-    #li a2, 0   #-- con 0s iniciales
-    jal sprint_uint
-
     la a0, buff1
     jal puts
     PUTCHARI '\n'
