@@ -127,41 +127,11 @@ msg\@: .string "\str"
 
 
 #---------------------------------------------------
-#-- Imprimir numero decimal de 8 bit en consola
+#-- Imprimir numero decimal en la consola
 #---------------------------------------------------
-.macro PRINT_UINT8I num:req
+.macro PRINT_UINTI num:req
     li a0, \num
-    li a1, 8
-    li a2, 1  #-- Eliminar 0s iniciales
+    li a1, 1  #-- Eliminar 0s iniciales
     jal print_uint
 .endm
 
-#---------------------------------------------------
-#-- Imprimir numero decimal de 4 bit en consola
-#---------------------------------------------------
-.macro PRINT_UINT4I num:req
-    li a0, \num
-    li a1, 4
-    li a2, 1  #-- Eliminar 0s iniciales
-    jal print_uint
-.endm
-
-#---------------------------------------------------
-#-- Imprimir numero decimal de 16 bit en consola
-#---------------------------------------------------
-.macro PRINT_UINT16I num:req
-    li a0, \num
-    li a1, 16
-    li a2, 1  #-- Eliminar 0s iniciales
-    jal print_uint
-.endm
-
-#---------------------------------------------------
-#-- Imprimir numero decimal de 32 bit en consola
-#---------------------------------------------------
-.macro PRINT_UINT32I num:req
-    li a0, \num
-    li a1, 32
-    li a2, 1  #-- Eliminar 0s iniciales
-    jal print_uint
-.endm

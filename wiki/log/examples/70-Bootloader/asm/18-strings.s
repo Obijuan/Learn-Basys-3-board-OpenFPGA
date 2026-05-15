@@ -20,15 +20,8 @@ __reset:
     ANSI_HOME
     ANSI_CLS
 
-    la a0, buff1
-    jal puts
-    PUTCHARI '\n'
-    PUTSI "---FIN\n"
-
-    la a0, 255
-    li a1, 1
-    jal print_uint
-
+    #PUTCHARI '\n'
+    PRINT_UINTI 0xFFFFFFFF
     PUTCHARI '\n'
 
 
