@@ -4,6 +4,9 @@
 #──  ENTRADAS:
 #──    a0: Direccion cadena fuente (src)
 #──    a1: Direccion cadena destino (dst)
+#──
+#──  SALIDA:
+#──    a0: Direccion del final de la cadena destino
 #──────────────────────────────────────────────────────
     .global strcpy
 strcpy:
@@ -28,6 +31,8 @@ strcpy:
 
     #-- Fin
 2:
+    #-- Devolver la dirección del final de la cadena destino
+    mv a0, a1
     ret
 
 

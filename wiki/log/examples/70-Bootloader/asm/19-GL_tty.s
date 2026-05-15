@@ -28,8 +28,10 @@ __reset:
     jal puts
 
     SPRINTI_BUFF buffer, "\033["
-    SPRINTI "10;10H"
-    # SPRINTI_UINT 10
+    #SPRINTI_BUFF buffer, "ESC["
+    SPRINTI_UINT 10
+    SPRINTI ";10H"
+
     # SPRINTI_CHAR ';'
     # SPRINTI_UINT 10
     # SPRINTI_CHAR 'H'
@@ -39,7 +41,7 @@ __reset:
     jal puts
 
     #PUTSI "\033[10;10H"
-    PUTSI "Hola2\n"
+    PUTSI "**Hola2\n"
 
     
 
