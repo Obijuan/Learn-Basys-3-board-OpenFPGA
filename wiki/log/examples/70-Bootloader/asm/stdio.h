@@ -33,6 +33,19 @@ msg\@: .string "\str"
     jal puts
 .endm
 
+#-----------------------------------------
+#-- Imprmir una cadena en un buffer
+#-----------------------------------------
+.macro SPRINT buff, str
+    .data
+msg\@:  .string "\str"
+
+    .text
+    la a0, \buff
+    la a1, msg\@
+    jal sprint
+.endm
+
 #--------------------------------------------
 #-- Imprimir un numero de 8 bits en binario
 #--------------------------------------------

@@ -2,7 +2,7 @@
 
 rm -rf _build
 rm -rf obj_dir
-rm init.mem
+rm -rf init.mem
 
 
 

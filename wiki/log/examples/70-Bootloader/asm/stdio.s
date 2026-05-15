@@ -48,6 +48,9 @@ sprint:
 
 
   sprint_end:
+    #-- Devolver puntero al final del buffer
+    mv a0, s0
+
 	#-- Recuperar s0 y s1
 	lw s0, 0(sp)
     lw s1, 4(sp)
