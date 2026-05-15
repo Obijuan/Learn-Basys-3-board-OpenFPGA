@@ -19,23 +19,24 @@ __reset:
     ANSI_HOME
     ANSI_CLS
 
-    PUTSI "\033[5;10H"
+    #-- Codigo ANSI locate: "\033[y;xH"
+    SPRINTI_BUFF buffer, "\033["
+    SPRINTI_UINT 5    #-- Coordenada y
+    SPRINTI_CHAR ';'
+    SPRINTI_UINT 10   #-- Coordenada x
+    SPRINTI_CHAR 'H'
+
+    la a0, buffer
+    jal puts
+
+    #PUTSI "\033[5;10H"
     PUTSI "Hola\n"
 
+    
     SPRINTI_BUFF buffer, "test..."
     SPRINTI "test2...\n"
     la a0, buffer
     jal puts
-
-    SPRINTI_BUFF buffer, "\033["
-    #SPRINTI_BUFF buffer, "ESC["
-    SPRINTI_UINT 10
-    SPRINTI ";10H"
-
-    # SPRINTI_CHAR ';'
-    # SPRINTI_UINT 10
-    # SPRINTI_CHAR 'H'
-    # #SPRINTI_CHAR '\n'
 
     la a0, buffer
     jal puts
