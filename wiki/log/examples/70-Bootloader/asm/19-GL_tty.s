@@ -30,12 +30,10 @@ __reset:
     GL_SET_PIXEL_RGB_HERE 0x73, 0, 0
     GL_SET_PIXEL_RGB_HERE 0x6E, 0, 0
 
-    li a0, 5     #-- x
-    li a1, 7     #-- y
-    li a2, 0     #-- R
-    li a3, 0x80  #-- G
-    li a4, 0     #-- B
-    jal GL_setpixelRGB
+    GL_SET_PIXEL_RGB 5,  6,  0, 0x80, 0
+    GL_SET_PIXEL_RGB 30, 6,  0, 0x40, 0
+    GL_SET_PIXEL_RGB 5,  8,  0, 0, 0xFF
+    GL_SET_PIXEL_RGB 30, 8,  0, 0, 0x80a
 
 
     halt
