@@ -16,56 +16,61 @@ __reset:
     sw t0, 0(s0)
 
     #--- Borrar pantalla
+    ANSI_RESET
     ANSI_HOME
     ANSI_CLS
 
-    li a0, 0
-    li a1, 1  #-- Eliminar 0s iniciales
-    jal print_uint
+    # li a0, 0
+    # li a1, 1  #-- Eliminar 0s iniciales
+    # jal print_uint
 
-    # mv a1, \reg
-    # li a2, 1  #-- Eliminar 0s iniciales
-    # jal sprint_uint
+    GL_GOTOXY 10, 5
+    PUTSI "Hola"
 
-    # la a0, GL_buff
-    # jal puts
+    GL_GOTOXY 11, 6
+    PUTSI "Test"
 
-    # GL_GOTOXY 10, 5
-    # PUTSI "Hola"
+    li a0, 0x78  #-- RED
+    li a1, 0     #-- GREEN
+    li a2, 0     #-- BLUE
 
-    # GL_GOTOXY 11, 6
-    # PUTSI "Test"
+    mv s0, a0
+    mv s1, a1
+    mv s2, a2
 
-    # li a0, 0x78  #-- RED
-    # li a1, 0     #-- GREEN
-    # li a2, 0     #-- BLUE
+    #-- Imprimir el codigo ansi
+    la a0, GL_buff
+    la a1, ANSI_RGB
+    jal sprint
 
-    # mv s0, a0
-    # mv s1, a1
-    # mv s2, a2
+    #-- Color RED
+    mv a1, s0
+    li a2, 1   #-- Eliminar espacios iniciales
+    jal sprint_uint
 
-    # #-- Imprimir el codigo ansi
-    # la a0, GL_buff
-    # la a1, ANSI_RGB
-    # jal sprint
+    #-- Imprimir ';'
+    li a1, ';'
+    jal sprint_char
 
-    # #-- Color RED
-    # mv a1, s0
-    # li a2, 1   #-- Eliminar espacios iniciales
-    # jal sprint_uint
+    #-- Color GREEN
+    mv a1, s1
+    li a2, 1
+    jal sprint_uint
 
-    # #-- Imprimir ';'
-    # li a1, ';'
-    # jal sprint_char
+    #-- Imprimir ';'
+    li a1, ';'
+    jal sprint_char
 
-    # #-- Color GREEN
-    # mv a1, s1
-    # li a2, 1
-    # jal sprint_uint
+    #-- Color BLUE
+    mv a1, s2
+    li a2, 1
+    jal sprint_uint
+
+    SPRINTI "m "
 
 
-    # la a0, GL_buff
-    # jal puts
+    la a0, GL_buff
+    jal puts
     
 #     /**
 #  * \brief Sets the current graphics position
@@ -86,7 +91,7 @@ __reset:
     .data
 GL_buff: .space 30
 ESC: .string "ESC["
-ANSI_RGB: .string "ESC[48;2;"
+ANSI_RGB: .string "\033[48;2;"
 
 
     #-- DEBUG
