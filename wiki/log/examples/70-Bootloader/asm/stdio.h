@@ -33,38 +33,7 @@ msg\@: .string "\str"
     jal puts
 .endm
 
-#-----------------------------------------
-#-- Imprmir una cadena en un buffer
-#-----------------------------------------
-.macro SPRINTI_BUFF buff, str
-    .data
-msg\@:  .string "\str"
 
-    .text
-    la a0, \buff
-    la a1, msg\@
-    jal sprint
-.endm
-
-.macro SPRINTI str
-    .data
-msg\@:  .string "\str"
-
-    .text
-    la a1, msg\@
-    jal sprint
-.endm
-
-#--------------------------------------------
-#-- Imprimir un numero de 8 bits en binario
-#--------------------------------------------
-.macro SPRINT_BIN8 label:req, num:req
-    la a0, \label  #-- Buffer
-    li a1, \num    #-- Numero
-    li a2, 8      #-- Tamaño: 8 bits
-    li a3, 0      #-- Mostrar 0s iniciales
-    jal sprint_bin
-.endm
 
 #---------------------------------------------------
 #-- Imprimir numero binario de 8 bit en consola
@@ -160,8 +129,8 @@ msg\@:  .string "\str"
 #---------------------------------------------------
 #-- Imprimir numero decimal en la consola
 #---------------------------------------------------
-.macro SPRINTI_UINTI_BUFF buff:req, num:req
-    li a0 \buff
+.macro SPRINTI_UINT_BUFF buff:req, num:req
+    la a0 \buff
     li a1, \num  
     li a2, 1  #-- Eliminar 0s iniciales
     jal sprint_uint
@@ -179,3 +148,41 @@ msg\@:  .string "\str"
     jal sprint_char
 .endm
 
+#-----------------------------------------
+#-- Imprmir una cadena en un buffer
+#-----------------------------------------
+.macro SPRINTI_BUFF buff, str
+    .data
+msg\@:  .string "\str"
+
+    .text
+    la a0, \buff
+    la a1, msg\@
+    jal sprint
+.endm
+
+.macro SPRINTI str
+    .data
+msg\@:  .string "\str"
+
+    .text
+    la a1, msg\@
+    jal sprint
+.endm
+
+.macro SPRINTL_BUFF buff, label
+    la a0, \buff
+    la a1, \label
+    jal sprint
+.endm
+
+#--------------------------------------------
+#-- Imprimir un numero de 8 bits en binario
+#--------------------------------------------
+.macro SPRINTI_BIN8 label:req, num:req
+    la a0, \label  #-- Buffer
+    li a1, \num    #-- Numero
+    li a2, 8      #-- Tamaño: 8 bits
+    li a3, 0      #-- Mostrar 0s iniciales
+    jal sprint_bin
+.endm

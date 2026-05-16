@@ -20,7 +20,8 @@ __reset:
     ANSI_CLS
 
     #-- Codigo ANSI locate: "\033[y;xH"
-    SPRINTI_BUFF buffer, "\033["
+    #SPRINTI_BUFF buffer, "\033["
+    SPRINTL_BUFF buffer, _ANSI_LOCATE
     SPRINTI_UINT 5    #-- Coordenada y
     SPRINTI_CHAR ';'
     SPRINTI_UINT 10   #-- Coordenada x
