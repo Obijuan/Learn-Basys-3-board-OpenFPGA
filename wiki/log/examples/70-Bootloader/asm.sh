@@ -98,6 +98,12 @@ $GCC $ASM/algorithm_double_dabble.s -I $ASM \
      -c \
      -o $BUILD/algorithm_double_dabble.o
 
+#-- Ensamblado de las dependencias: GL_tty.s
+$GCC $ASM/GL_tty.s -I $ASM \
+     -fdata-sections -ffunction-sections  \
+     -c \
+     -o $BUILD/GL_tty.o
+
 
 #-- Linkado: generacion del elf
 $GCC -nostdlib -nostartfiles -mno-relax \
@@ -113,6 +119,7 @@ $GCC -nostdlib -nostartfiles -mno-relax \
      $BUILD/string.o \
      $BUILD/bcd.o \
      $BUILD/algorithm_double_dabble.o \
+     $BUILD/GL_tty.o \
      -o $BUILD/$NAME.elf \
      -lgcc
 

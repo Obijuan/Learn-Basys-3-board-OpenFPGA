@@ -38,6 +38,10 @@ strcpy:
 
 #──────────────────────────────────────────────────────
 #──  Eliminar los 0s iniciales de la cadena
+#──  Salvo si solo hay 1
+#──
+#──  Ej. "00012" ---> "12"
+#──  Ej. "00000" ---> "0"
 #──
 #──  ENTRADAS:
 #──    a0: Direccion cadena
@@ -54,21 +58,31 @@ str_remove_leading_zeros:
     lb t0, 0(a0)
 
     #-- Hemos llegado al final
-    beq t0, zero, 2f
+    beq t0, zero, 3f
 
-    #-- Si se alcanza un caracter diferente a '0'
-    #-- terminar
+    #-- Se alcanza un caracter diferente a '0'
+    #-- hay que terminar, sin hacer nada mas
     li t1, '0'
-    bne t0, t1, 2f
+    bne t0, t1, str_remove_leading_zeros_end
 
+    #-- Es un '0'
     #-- Pasar al siguiente caracter
     addi a0, a0, 1
 
     #-- Repetir
     j 1b
 
+    #-- Hay al menos un caracter diferente a '0' 
+2:  #-- Comprobar si habia 0's iniciales
+
     #-- Fin
-2:  #-- Devolver el puntero
+3:  #-- Se ha llegado al final de la cadena y NO hay caracteres
+    #-- diferentes a '0'. TODOS son '0'
+    #-- Apuntar al último '0'
+    addi a0, a0, -1
+
+str_remove_leading_zeros_end:
+    #-- Devolver el puntero
     ret
 
 
