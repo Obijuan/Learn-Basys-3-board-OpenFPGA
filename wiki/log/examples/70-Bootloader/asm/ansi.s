@@ -5,7 +5,9 @@
 .global _ANSI_BLUE
 .global _ANSI_RED
 .global _ANSI_RESET
+.global _ANSI_RGB
 .global _ESC
+
 
 .data
 _ANSI_HOME:  .string "\033[H"
@@ -14,4 +16,5 @@ _ANSI_GREEN: .string "\033[0;32m"
 _ANSI_BLUE:  .string "\033[0;34m"
 _ANSI_RED:   .string "\033[0;31m"
 _ANSI_RESET: .string "\033[0m"
+_ANSI_RGB:   .string "\033[48;2;"
 _ESC: .string "\033["   #-- Falta: y;xH

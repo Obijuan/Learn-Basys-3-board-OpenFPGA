@@ -63,6 +63,76 @@ GL_gotoxy:
 
     UNSTACK16
 
+#──────────────────────────────────────────────────────
+#──  Establecer el color de la posicion actual (RGB)
+#──
+#──  ENTRADAS:
+#──    a0: Color R (0-255)
+#──    a1: Color G (0-255)
+#──    a2: Color B (0-255)
+#──────────────────────────────────────────────────────
+    .global GL_setpixelRGBhere
+GL_setpixelRGBhere:
+    STACK16
+
+    #-- Guardar los registros estaticos
+    sw s0, 0(sp)
+    sw s1, 4(sp)
+    sw s2, 8(sp)
+
+
+    #-- Guardar los parametros
+    mv s0, a0
+    mv s1, a1
+    mv s2, a2
+
+    #-- Imprimir el codigo ansi
+    la a0, _GL_buff
+    la a1, _ANSI_RGB
+    jal sprint
+
+    #-- Color RED
+    mv a1, s0
+    li a2, 1   #-- Eliminar espacios iniciales
+    jal sprint_uint
+
+    #-- Imprimir ';'
+    li a1, ';'
+    jal sprint_char
+
+    #-- Color GREEN
+    mv a1, s1
+    li a2, 1
+    jal sprint_uint
+
+    #-- Imprimir ';'
+    li a1, ';'
+    jal sprint_char
+
+    #-- Color BLUE
+    mv a1, s2
+    li a2, 1
+    jal sprint_uint
+
+    #-- Imprimir 'm'
+    li a1, 'm'
+    jal sprint_char
+
+    #-- Imprimir ' '
+    li a1, ' '
+    jal sprint_char
+
+    #-- Imprimir la cadena
+    la a0, _GL_buff
+    jal puts
+
+    #-- Recuperar los registros estaticos
+    lw s0, 0(sp)
+    lw s1, 4(sp)
+    lw s2, 8(sp)
+
+    UNSTACK16
+
 
     .data
 _GL_buff: .space 20

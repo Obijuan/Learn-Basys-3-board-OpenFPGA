@@ -33,44 +33,55 @@ __reset:
     li a0, 0x78  #-- RED
     li a1, 0     #-- GREEN
     li a2, 0     #-- BLUE
-
-    mv s0, a0
-    mv s1, a1
-    mv s2, a2
-
-    #-- Imprimir el codigo ansi
-    la a0, GL_buff
-    la a1, ANSI_RGB
-    jal sprint
-
-    #-- Color RED
-    mv a1, s0
-    li a2, 1   #-- Eliminar espacios iniciales
-    jal sprint_uint
-
-    #-- Imprimir ';'
-    li a1, ';'
-    jal sprint_char
-
-    #-- Color GREEN
-    mv a1, s1
-    li a2, 1
-    jal sprint_uint
-
-    #-- Imprimir ';'
-    li a1, ';'
-    jal sprint_char
-
-    #-- Color BLUE
-    mv a1, s2
-    li a2, 1
-    jal sprint_uint
-
-    SPRINTI "m "
+    jal GL_setpixelRGBhere
 
 
-    la a0, GL_buff
-    jal puts
+
+
+
+
+    # mv s0, a0
+    # mv s1, a1
+    # mv s2, a2
+
+    # #-- Imprimir el codigo ansi
+    # la a0, GL_buff
+    # la a1, ANSI_RGB
+    # jal sprint
+
+    # #-- Color RED
+    # mv a1, s0
+    # li a2, 1   #-- Eliminar espacios iniciales
+    # jal sprint_uint
+
+    # #-- Imprimir ';'
+    # li a1, ';'
+    # jal sprint_char
+
+    # #-- Color GREEN
+    # mv a1, s1
+    # li a2, 1
+    # jal sprint_uint
+
+    # #-- Imprimir ';'
+    # li a1, ';'
+    # jal sprint_char
+
+    # #-- Color BLUE
+    # mv a1, s2
+    # li a2, 1
+    # jal sprint_uint
+
+    # #-- Imprimir 'm'
+    # li a1, ';'
+    # jal sprint_char
+
+    # #-- Imprimir ' '
+    # li a1, ';'
+    # jal sprint_char
+
+    # la a0, GL_buff
+    # jal puts
     
 #     /**
 #  * \brief Sets the current graphics position
