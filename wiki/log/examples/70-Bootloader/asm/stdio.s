@@ -319,6 +319,10 @@ sprint_char:
 
     #-- Incrementar direccion y devolverla
     addi a0, a0, 1
+
+    #-- Escribir \0 al final
+    sb zero, 0(a0) 
+
     ret
 
 

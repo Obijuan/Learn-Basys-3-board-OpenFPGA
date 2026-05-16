@@ -30,21 +30,17 @@ __reset:
     GL_SET_PIXEL_RGB_HERE 0x73, 0, 0
     GL_SET_PIXEL_RGB_HERE 0x6E, 0, 0
 
-
-    li a0, 0x78  #-- RED
-    li a1, 0     #-- GREEN
-    li a2, 0     #-- BLUE
-    jal GL_setpixelRGBhere
-
+    li a0, 5     #-- x
+    li a1, 7     #-- y
+    li a2, 0     #-- R
+    li a3, 0x80  #-- G
+    li a4, 0     #-- B
+    jal GL_setpixelRGB
 
 
     halt
     
     .data
-GL_buff: .space 30
-ESC: .string "ESC["
-ANSI_RGB: .string "\033[48;2;"
-
 
     #-- DEBUG
     # li t0, 0x00200000

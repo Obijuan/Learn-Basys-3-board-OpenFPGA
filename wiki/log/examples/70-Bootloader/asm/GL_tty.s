@@ -134,6 +134,42 @@ GL_setpixelRGBhere:
     UNSTACK16
 
 
+#──────────────────────────────────────────────────────
+#──  Establecer el color (RGB) de la posicion x,y
+#──
+#──  ENTRADAS:
+#──    a0: x
+#──    a1: y
+#──    a2: Color R (0-255)
+#──    a3: Color G (0-255)
+#──    a4: Color B (0-255)
+#──────────────────────────────────────────────────────
+    .global GL_setpixelRGB
+GL_setpixelRGB:
+    STACK16
+
+    #-- Almacenar registros estáticos
+    PUSH3 s0, s1, s2
+
+    #-- Guardar colores RGB
+    mv s0, a2
+    mv s1, a3
+    mv s2, a4
+
+    #-- Ir a la posicion (x,y)
+    jal GL_gotoxy
+
+    #-- Dibujar pixel RGB
+    mv a0, s0
+    mv a1, s1
+    mv a2, s2
+    jal GL_setpixelRGBhere
+
+    #-- Recuperar registros estaticos
+    POP3 s0, s1, s2
+
+    UNSTACK16
+
     .data
 _GL_buff: .space 20
 
