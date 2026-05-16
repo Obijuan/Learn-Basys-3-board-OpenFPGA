@@ -143,6 +143,12 @@ msg\@: .string "\str"
     jal sprint_uint
 .endm
 
+.macro SPRINTR_UINT reg:req
+    mv a1, \reg
+    li a2, 1  #-- Eliminar 0s iniciales
+    jal sprint_uint
+.endm
+
 .macro SPRINTI_CHAR car:req
     li a1, \car  
     jal sprint_char
