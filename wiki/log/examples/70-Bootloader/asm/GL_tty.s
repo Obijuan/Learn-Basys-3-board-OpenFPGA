@@ -186,6 +186,9 @@ GL_init:
     #-- HOME
     jal GL_home
 
+    #-- Borrar la pantalla
+    jal GL_clear
+
     UNSTACK16
 
 #────────────────────────────────────────────
@@ -201,13 +204,57 @@ GL_home:
 
     UNSTACK16
 
-# /**
-#  * \brief Moves current drawing position to top-left corner
-#  * \see GL_setpixelRGBhere() and GL_set2pixelsRGBhere()
-#  */
-# static inline void GL_home() {
-#     printf("\033[H");
-# }
+
+#────────────────────────────────────────────
+#──  Borrar la pantalla
+#────────────────────────────────────────────
+    .global GL_clear
+GL_clear:
+    STACK16
+
+    jal GL_restore_default_colors
+
+    #-- Borrar pantalla
+    la a0, _ANSI_CLS
+    jal puts
+
+    UNSTACK16
+
+#────────────────────────────────────────────
+#──  Establecer los colores por defecto
+#────────────────────────────────────────────
+    .global GL_respontore_default_colors
+GL_restore_default_colors:
+    STACK16
+
+    la a0, _ANSI_BACKGROUND_BLACK
+    jal puts
+
+    la a0, _ANSI_FOREGROUND_WHITE
+    jal puts
+
+    UNSTACK16
+
+
+#────────────────────────────────────────────
+#──  Cerrar la biblioteca grafica
+#────────────────────────────────────────────
+GL_terminate:
+    STACK16
+
+    jal GL_restore_default_colors
+
+    #-- Llevar el cursor al final
+    li a0, 0
+    li a1, GL_height
+    jal GL_gotoxy
+
+    #-- Mostrar el cursor
+    la a0, _ANSI_SHOW_CURSOR
+    jal puts
+
+    UNSTACK16
+
 
 
     .data

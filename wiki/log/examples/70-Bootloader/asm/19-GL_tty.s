@@ -18,10 +18,6 @@ __reset:
     #-- Inicializar la biblioteca
     jal GL_init
 
-    #--- Borrar pantalla
-    ANSI_RESET
-    ANSI_CLS
-
     GL_GOTOXY 10, 5
     PUTSI "Hola"
 
@@ -62,38 +58,3 @@ __reset:
 # }
 
 
-# /**
-#  * \brief Call this function each time graphics should be cleared
-#  */
-# static inline void GL_clear() {
-#     GL_restore_default_colors();
-#     printf("\033[2J"); // clear screen
-# }
-
-# /**
-#  * \brief Moves current drawing position to top-left corner
-#  * \see GL_setpixelRGBhere() and GL_set2pixelsRGBhere()
-#  */
-# static inline void GL_home() {
-#     printf("\033[H");
-# }
-
-# /**
-#  * \brief Call this function before starting drawing graphics 
-#  *  or each time graphics should be cleared
-#  */
-# static inline void GL_init() {
-#     printf("\033[?25l"); // hide cursor
-#     GL_home();
-#     GL_clear();
-# }
-
-
-# /**
-#  * \brief Call this function at the end of the program
-#  */
-# static inline void GL_terminate() {
-#     GL_restore_default_colors();
-#     GL_gotoxy(0,GL_height);
-#     printf("\033[?25h"); // show cursor
-# }
