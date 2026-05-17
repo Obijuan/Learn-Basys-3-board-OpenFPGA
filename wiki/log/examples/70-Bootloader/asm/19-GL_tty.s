@@ -27,6 +27,12 @@ __reset:
     #-- Componente Roja
     li s2, 0x78
 
+    #-- Componente Verde
+    li s3, 0
+
+    #-- Componente azul
+    li s4, 0
+
     #--- Bucle
  loop_y:
     li t0, GL_height
@@ -45,13 +51,26 @@ __reset:
     jal __mulsi3
     mv s2, a0
 
+    #-- Recalcular componente VERDE
+    # int g = i*5;
+    mv a0, s1
+    li a1, 5
+    jal __mulsi3
+    mv s3, a0
+
+    #-- Recalcular componente AZUL
+    # int b = j*3;
+    mv a0, s0
+    li a1, 3
+    jal __mulsi3
+    mv s4, a0
 
     #-- Dibujar pixel
     mv a0, s0   #-- x
     mv a1, s1   #-- y
     mv a2, s2   #-- R
-    li a3, 0   #-- G
-    li a4, 0   #-- B
+    mv a3, s3   #-- G
+    mv a4, s4   #-- B
     jal GL_setpixelRGB
 
     #-- Incrementar posicion x
