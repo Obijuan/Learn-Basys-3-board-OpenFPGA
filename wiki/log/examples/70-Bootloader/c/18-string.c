@@ -77,6 +77,26 @@ void main()
     _putchar('\n');
     _putchar('\n');
 
+    //----- Imprimir numeros de 32 bits
+    _puts("--> Numeros de 32 bits\n");
+    _puts("* Bin32: ");
+    print_bin(0xCAFEBACA, 32);
+    _putchar('\n');
+
+    _puts("* Hex32: ");
+    print_hex(0xCAFEBACA, 32);
+    _putchar('\n');
+
+    _puts("* Dec32: ");
+    print_uint(0xCAFEBACA, 32);
+    _putchar('\n');
+
+    _puts("* Dec32 (max): ");
+    print_uint(0xFFFFFFFF, 32);
+    _putchar('\n');
+    _putchar('\n');
+
+
 }
 
 
@@ -97,23 +117,7 @@ void print_uint(uint32_t num, int size)
 
 
 
-    // #----- Imprimir numeros de 32 bits
-    // PUTSI "--> Numeros de 32 bits\n"
-    // PUTSI "* Bin32: "
-    // PRINT_BIN32I 0xCAFEBACA
-    // PUTCHARI '\n'
-
-    // PUTSI "* Hex32: "
-    // PRINT_HEX32I 0xCAFEBACA
-    // PUTCHARI '\n'
-
-    // PUTSI "* Dec32: "
-    // PRINT_UINTI 0xCAFEBACA
-    // PUTCHARI '\n'
-
-    // PUTSI "* Dec32 (max): "
-    // PRINT_UINTI 0xFFFFFFFF
-    // PUTCHARI '\n'
+    
 
     // halt
 
