@@ -27,18 +27,18 @@ void main()
 
 
     //---- Imprimir numeros de 4 bits
-    // _puts("--> Numeros de 4 bits\n");
-    // _puts("* Bin4: ");
-    // print_bin(0xC, 4);
-    // _putchar('\n');
+    _puts("--> Numeros de 4 bits\n");
+    _puts("* Bin4: ");
+    print_bin(0xC, 4);
+    _putchar('\n');
 
-    // _puts("* Hex4: ");
-    // print_hex(0xC, 4);
-    // _putchar('\n');
+    _puts("* Hex4: ");
+    print_hex(0xC, 4);
+    _putchar('\n');
 
-    // _puts("* Dec4: ");
-    // print_uint(0xC, 4);
-    // _putchar('\n');
+    _puts("* Dec4: ");
+    print_uint(10, 4);
+    _putchar('\n');
 }
 
 //-- Buffer para usar con el algoritmo double_dabble
@@ -62,11 +62,11 @@ void algorithm_dd_shift1()
 
 
 //-- Aplicar un paso del algoritmo al numero
-int algorithm_dd_step(int num)
+uint32_t algorithm_dd_step(uint32_t num)
 {
     int bcd;
     int pos;
-    int mask;
+    uint32_t mask;
 
     //-- Recorrer los 8 digitos bcd
     for (int i=7; i>=0; i--) {
@@ -83,7 +83,7 @@ int algorithm_dd_step(int num)
         //-- Actualizar digito
         //-- Si dig > 4, dig = dig + 3
         if (bcd > 4)
-            bcd = bcd + 4;
+            bcd = bcd + 3;
 
         //-- Colocar digito en su posicion
         num = (num & ~mask) | (bcd << pos);
@@ -126,16 +126,16 @@ uint64_t uint_to_bcd(uint32_t num)
     for (int i=0; i<29; i++) {
         //-- Actualizar registro buffer
 	    //-- Hay que sumar 3 a cada digito BCD, si es > 4
-	    //buffer[0] = algorithm_dd_step(buffer[0]);
-        //buffer[1] = algorithm_dd_step(buffer[1]);
+	    buffer[0] = algorithm_dd_step(buffer[0]);
+        buffer[1] = algorithm_dd_step(buffer[1]);
 
 	    //-- Desplazar 1 bit a la izquierda registro buffer
 	    //-- buffer << 1
         algorithm_dd_shift1();
 
         //-- DEBUG
-        //print_hex(buffer[0], 32);
-        //print_hex(buffer[1], 32);
+        print_hex(buffer[0], 32);
+        print_hex(buffer[1], 32);
         print_hex(buffer[2], 32);
         _puts("\n");
     }
