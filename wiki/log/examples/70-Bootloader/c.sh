@@ -168,6 +168,22 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+#--------- Compilado de las dependencias: algorithm_double_dabble.c
+CMD="\
+$GCC $C/algorithm_double_dabble.c -I$C \
+     -fdata-sections -ffunction-sections  \
+     -c \
+     -o $BUILD/algorithm_double_dabble.o\
+"
+echo ""
+echo "➡️ $CMD"
+$CMD
+
+if [ $? -ne 0 ]; then
+    echo -e $RED"> Abortando...\n"$RESET
+    exit 1
+fi
+
 #---------- Linkado: generacion del elf
 CMD="\
 $GCC -nostdlib -nostartfiles -mno-relax \
@@ -181,6 +197,7 @@ $GCC -nostdlib -nostartfiles -mno-relax \
      $BUILD/uart.o \
      $BUILD/timer.o \
      $BUILD/bcd.o \
+     $BUILD/algorithm_double_dabble.o \
      -o $BUILD/$NAME.elf \
      -lgcc \
 "

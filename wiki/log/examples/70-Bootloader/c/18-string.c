@@ -6,6 +6,7 @@
 
 void print_uint(uint32_t num, int size);
 void algorithm_dd_shift1();
+uint64_t uint_to_bcd(uint32_t num);
 
 void main()
 {
@@ -16,6 +17,8 @@ void main()
     _puts(ANSI_RESET);
     _puts(ANSI_HOME);
     _puts(ANSI_CLS);
+
+    print_uint(20,32);
 
     //---- Imprimir numeros de 4 bits
     _puts("--> Numeros de 4 bits\n");
@@ -30,101 +33,53 @@ void main()
     _puts("* Dec4: ");
     print_uint(0xC, 4);
     _putchar('\n');
+
+    _puts("* Dec4 (max): ");
+    print_uint(0xF, 4);
+    _putchar('\n');
+    _putchar('\n');
+
+    //---- Imprimir numeros de 8 bits
+    _puts("--> Numeros de 8 bits\n");
+    _puts("* Bin8: ");
+    print_bin(0x55, 8);
+    _putchar('\n');
+
+    _puts("* Hex8: ");
+    print_hex(0x55, 8);
+    _putchar('\n');
+
+    _puts("* Dec8: ");
+    print_uint(0x55, 8);
+    _putchar('\n');
+
+    _puts("* Dec8 (max): ");
+    print_uint(0xFF, 8);
+    _putchar('\n');
+    _putchar('\n');
+
+    //----- Imprimir numeros de 16 bits
+    _puts("--> Numeros de 16 bits\n");
+    _puts("* Bin16: ");
+    print_bin(0xAAAA, 16);
+    _putchar('\n');
+
+    _puts("* Hex16: ");
+    print_hex(0xAAAA, 16);
+    _putchar('\n');
+
+    _puts("* Dec16: ");
+    print_uint(0xAAAA, 16);
+    _putchar('\n');
+
+    _puts("* Dec16 (max): ");
+    print_uint(0xFFFF, 16);
+    _putchar('\n');
+    _putchar('\n');
+
 }
 
-//-- Buffer para usar con el algoritmo double_dabble
-//-- buffer[2]: parte alta
-//-- buffer[1]: parte media
-//-- buffer[0]: Parte baja: Numero a convertir
-uint32_t buffer[3];
 
-//-- Desplazar el buffer un bit a la izquierda
-void algorithm_dd_shift1()
-{
-    //-- Desplazar el buffer 1 bit a la izquierda
-    buffer[0] = buffer[0] << 1;
-    buffer[0] = buffer[0] | (buffer[1] >> 31);
-
-    buffer[1] = buffer[1] << 1;
-    buffer[1] = buffer[1] | (buffer[2] >> 31);
-
-    buffer[2] = buffer[2] << 1;
-}
-
-
-//-- Aplicar un paso del algoritmo al numero
-uint32_t algorithm_dd_step(uint32_t num)
-{
-    int bcd;
-    int pos;
-    uint32_t mask;
-
-    //-- Recorrer los 8 digitos bcd
-    for (int i=7; i>=0; i--) {
-
-        //-- Posicion del digito (en bits)
-        pos = i << 2;  //(i * 4)
-
-        //-- Mascara para seleccionar el digito actual
-        mask = 0xFF << pos;
-
-        //-- Obtener digito bcd actual
-        bcd = (num & mask) >> pos;
-
-        //-- Actualizar digito
-        //-- Si dig > 4, dig = dig + 3
-        if (bcd > 4)
-            bcd = bcd + 3;
-
-        //-- Colocar digito en su posicion
-        num = (num & ~mask) | (bcd << pos);
-    }
-
-    //-- Devolver el nuevo valor
-    return num;
-}
-
-//-- Convertir un numero entero de 32bits a sus 10 digitos bcd
-uint64_t uint_to_bcd(uint32_t num)
-{
-    //-- Inicializar el buffer
-    buffer[0] = 0;
-    buffer[1] = 0;
-    buffer[2] = num;
-
-    //-- Desplazar el buffer 3 bits a la izquierda
-    for (int i=0; i<3; i++) {
-        algorithm_dd_shift1();
-    }
-
-    //-- Bucle principal del algoritmo
-    for (int i=0; i<29; i++) {
-        //-- Actualizar registro buffer
-	    //-- Hay que sumar 3 a cada digito BCD, si es > 4
-	    buffer[0] = algorithm_dd_step(buffer[0]);
-        buffer[1] = algorithm_dd_step(buffer[1]);
-
-	    //-- Desplazar 1 bit a la izquierda registro buffer
-	    //-- buffer << 1
-        algorithm_dd_shift1();
-
-        //-- DEBUG
-        // print_hex(buffer[0], 32);
-        // print_hex(buffer[1], 32);
-        // print_hex(buffer[2], 32);
-        // _puts("\n");
-    }
-
-
-    //-- DEBUG!!!!!
-    //print_hex(buffer[1], 8);
-    //_puts("\n");
-
-
-    //-- Buffer[0] contiene 2 digitos bcd
-    //-- Buffer[1] contiene 8 digitos bcd
-    return (uint64_t)buffer[0]<<32 | buffer[1];
-}
 
 void print_uint(uint32_t num, int size)
 {
@@ -136,53 +91,11 @@ void print_uint(uint32_t num, int size)
     print_hex(num_bcd, 32);
 
 }
+
+
     
 
-    // PUTSI "* Dec4 (max): "
-    // PRINT_UINTI 0xF
-    // PUTCHARI '\n'
 
-    // PUTCHARI '\n'
-
-    // #---- Imprimir numeros de 8 bits
-    // PUTSI "--> Numeros de 8 bits\n"
-    // PUTSI "* Bin8: "
-    // PRINT_BIN8I 0x55
-    // PUTCHARI '\n'
-
-    // PUTSI "* Hex8: "
-    // PRINT_HEX8I 0x55
-    // PUTCHARI '\n'
-
-    // PUTSI "* Dec8: "
-    // PRINT_UINTI 0x55
-    // PUTCHARI '\n'
-
-    // PUTSI "* Dec8 (max): "
-    // PRINT_UINTI 0xFF
-    // PUTCHARI '\n'
-
-    // PUTCHARI '\n'
-
-    // #----- Imprimir numeros de 16 bits
-    // PUTSI "--> Numeros de 16 bits\n"
-    // PUTSI "* Bin16: "
-    // PRINT_BIN16I 0xAAAA
-    // PUTCHARI '\n'
-
-    // PUTSI "* Hex16: "
-    // PRINT_HEX16I 0xAAAA
-    // PUTCHARI '\n'
-
-    // PUTSI "* Dec16: "
-    // PRINT_UINTI 0xAAAA
-    // PUTCHARI '\n'
-
-    // PUTSI "* Dec16 (max): "
-    // PRINT_UINTI 0xFFFF
-    // PUTCHARI '\n'
-
-    // PUTCHARI '\n'
 
     // #----- Imprimir numeros de 32 bits
     // PUTSI "--> Numeros de 32 bits\n"
