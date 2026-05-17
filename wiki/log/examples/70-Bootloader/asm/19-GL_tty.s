@@ -20,7 +20,7 @@ __reset:
 
     #--- Borrar pantalla
     ANSI_RESET
-    ANSI_HOME
+    #ANSI_HOME
     ANSI_CLS
 
     GL_GOTOXY 10, 5

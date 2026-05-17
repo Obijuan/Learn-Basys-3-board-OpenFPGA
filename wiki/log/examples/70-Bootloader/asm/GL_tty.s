@@ -179,12 +179,32 @@ GL_setpixelRGB:
 GL_init:
     STACK16
 
-    #-- Ocultar el curso
+    #-- Ocultar el cursor
     la a0,  _ANSI_HIDE_CURSOR
     jal puts
 
     UNSTACK16
 
+#────────────────────────────────────────────
+#──  Llevar la posicion actual a la esquina
+#──  superior izquierda
+#────────────────────────────────────────────
+    .global GL_home
+GL_home:
+    STACK16
+
+    la a0, _ANSI_HOME
+    jal puts
+
+    UNSTACK16
+
+# /**
+#  * \brief Moves current drawing position to top-left corner
+#  * \see GL_setpixelRGBhere() and GL_set2pixelsRGBhere()
+#  */
+# static inline void GL_home() {
+#     printf("\033[H");
+# }
 
 
     .data
