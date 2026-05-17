@@ -183,6 +183,9 @@ GL_init:
     la a0,  _ANSI_HIDE_CURSOR
     jal puts
 
+    #-- HOME
+    jal GL_home
+
     UNSTACK16
 
 #────────────────────────────────────────────
