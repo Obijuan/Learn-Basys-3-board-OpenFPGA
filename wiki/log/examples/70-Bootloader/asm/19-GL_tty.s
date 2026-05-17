@@ -18,32 +18,64 @@ __reset:
     #-- Inicializar la biblioteca
     jal GL_init
 
-    GL_GOTOXY 10, 5
-    PUTSI "Hola"
+    #-- Coordenada x
+    li s0, 0
 
-    GL_GOTOXY 11, 6
-    PUTSI "Test"
+    #-- Coordenada y
+    li s1, 0
 
-    GL_SET_PIXEL_RGB_HERE 0x78, 0, 0
-    GL_SET_PIXEL_RGB_HERE 0x73, 0, 0
-    GL_SET_PIXEL_RGB_HERE 0x6E, 0, 0
+    #-- Componente Roja
+    li s2, 0x78
 
-    GL_SET_PIXEL_RGB 5,  6,  0, 0x80, 0
-    GL_SET_PIXEL_RGB 30, 6,  0, 0x40, 0
-    GL_SET_PIXEL_RGB 5,  8,  0, 0, 0xFF
-    GL_SET_PIXEL_RGB 30, 8,  0, 0, 0x80a
+    #--- Bucle
+ loop_y:
+    li t0, GL_height
+    bge s1, t0, end_loop_y
+
+ loop_x:
+    li t0, GL_width
+    bge s0, t0, end_loop_x
+
+    #-- Recalcular componente RED
+    # int r = (24-i)*5;
+    # s2 = (24-s1)*5
+    li t0, 24
+    sub a0, t0, s1
+    li a1, 5
+    jal __mulsi3
+    mv s2, a0
+
+
+    #-- Dibujar pixel
+    mv a0, s0   #-- x
+    mv a1, s1   #-- y
+    mv a2, s2   #-- R
+    li a3, 0   #-- G
+    li a4, 0   #-- B
+    jal GL_setpixelRGB
+
+    #-- Incrementar posicion x
+    addi s0, s0, 1
+
+    #-- Repetir x
+    j loop_x
+
+end_loop_x:
+
+    #-- Incrementar posicion y
+    addi s1, s1, 1
+
+    #-- x=0
+    li s0, 0
+
+    j loop_y
+
+end_loop_y:
 
     #-- Terminar
     jal GL_terminate
 
     halt
-    
-    .data
-
-    #-- DEBUG
-    # li t0, 0x00200000
-    # li t1, 1
-    # sw t1, 0(t0)
 
 
 # int main() {
@@ -58,5 +90,7 @@ __reset:
 #     }
 #     GL_terminate();
 # }
+
+
 
 

@@ -4,11 +4,7 @@
 #──  Ported from ansi_graphics.h by Bruno Levy
 #──────────────────────────────────────────────────────
     .include "stack.h"
-
-#-- Tamaño de la pantalla grafica
-.equ GL_widtht,  80
-.equ GL_height,  25
-
+    .include "GL_tty.h"
 
 #──────────────────────────────────────────────────────
 #──  Situar el cursor en la posicion (x,y)

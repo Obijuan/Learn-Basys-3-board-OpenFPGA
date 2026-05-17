@@ -1,3 +1,6 @@
+#-- Tamaño de la pantalla grafica
+.equ GL_width,  80
+.equ GL_height,  25
 
 
 .macro GL_GOTOXY x:req, y:req 
