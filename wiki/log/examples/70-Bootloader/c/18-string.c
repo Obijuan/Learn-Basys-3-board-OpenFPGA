@@ -17,15 +17,6 @@ void main()
     _puts(ANSI_HOME);
     _puts(ANSI_CLS);
 
-
-    print_hex(0x60000000, 32);
-    _putchar('\n');
-    print_hex(0x80000000, 32);
-    _putchar('\n');
-    print_hex(0xC0000000, 32);
-    _putchar('\n');
-
-
     //---- Imprimir numeros de 4 bits
     _puts("--> Numeros de 4 bits\n");
     _puts("* Bin4: ");
@@ -37,7 +28,7 @@ void main()
     _putchar('\n');
 
     _puts("* Dec4: ");
-    print_uint(10, 4);
+    print_uint(0xC, 4);
     _putchar('\n');
 }
 
@@ -101,26 +92,10 @@ uint64_t uint_to_bcd(uint32_t num)
     buffer[1] = 0;
     buffer[2] = num;
 
-    //-- DEBUG
-    _puts("\n");
-    print_hex(buffer[0], 32);
-    print_hex(buffer[1], 32);
-    print_hex(buffer[2], 32);
-    _puts("\n");
-
     //-- Desplazar el buffer 3 bits a la izquierda
     for (int i=0; i<3; i++) {
         algorithm_dd_shift1();
-
-        //-- DEBUG
-        print_hex(buffer[0], 32);
-        print_hex(buffer[1], 32);
-        print_hex(buffer[2], 32);
-        _puts("\n");
     }
-
-    //-- DEBUG
-    _puts("-----\n");
 
     //-- Bucle principal del algoritmo
     for (int i=0; i<29; i++) {
@@ -134,10 +109,10 @@ uint64_t uint_to_bcd(uint32_t num)
         algorithm_dd_shift1();
 
         //-- DEBUG
-        print_hex(buffer[0], 32);
-        print_hex(buffer[1], 32);
-        print_hex(buffer[2], 32);
-        _puts("\n");
+        // print_hex(buffer[0], 32);
+        // print_hex(buffer[1], 32);
+        // print_hex(buffer[2], 32);
+        // _puts("\n");
     }
 
 
@@ -158,7 +133,7 @@ void print_uint(uint32_t num, int size)
     //-- 1º: Convertir numero a digitos BCD
     num_bcd = uint_to_bcd(num);
 
-    //print_hex(num_bcd, 8);
+    print_hex(num_bcd, 32);
 
 }
     
