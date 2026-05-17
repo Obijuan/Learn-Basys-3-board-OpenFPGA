@@ -96,9 +96,7 @@ void main()
     _putchar('\n');
     _putchar('\n');
 
-
 }
-
 
 
 void print_uint(uint32_t num, int size)
@@ -114,14 +112,5 @@ void print_uint(uint32_t num, int size)
 
 
     
-
-
-
-    
-
-    // halt
-
-
-
 
 
