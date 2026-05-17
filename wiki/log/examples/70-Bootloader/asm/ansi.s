@@ -7,9 +7,11 @@
 .global _ANSI_RESET
 .global _ANSI_RGB
 .global _ESC
+.global _ANSI_HIDE_CURSOR
 
 
 .data
+_ESC: .string "\033["
 _ANSI_HOME:  .string "\033[H"
 _ANSI_CLS:   .string "\033[2J" 
 _ANSI_GREEN: .string "\033[0;32m"
@@ -17,4 +19,5 @@ _ANSI_BLUE:  .string "\033[0;34m"
 _ANSI_RED:   .string "\033[0;31m"
 _ANSI_RESET: .string "\033[0m"
 _ANSI_RGB:   .string "\033[48;2;"
-_ESC: .string "\033["   #-- Falta: y;xH
+_ANSI_HIDE_CURSOR:  .string "\033[?25l"
+

@@ -170,6 +170,23 @@ GL_setpixelRGB:
 
     UNSTACK16
 
+
+
+#──────────────────────────────────────
+#──  Inicializar la biblioteca
+#──────────────────────────────────────
+    .global GL_init
+GL_init:
+    STACK16
+
+    #-- Ocultar el curso
+    la a0,  _ANSI_HIDE_CURSOR
+    jal puts
+
+    UNSTACK16
+
+
+
     .data
 _GL_buff: .space 20
 
