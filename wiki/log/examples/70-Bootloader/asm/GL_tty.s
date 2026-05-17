@@ -233,16 +233,23 @@ GL_restore_default_colors:
     la a0, _ANSI_FOREGROUND_WHITE
     jal puts
 
+    la a0, _ANSI_RESET
+    jal puts
+
     UNSTACK16
 
 
 #────────────────────────────────────────────
 #──  Cerrar la biblioteca grafica
 #────────────────────────────────────────────
+    .global GL_terminate
 GL_terminate:
     STACK16
 
     jal GL_restore_default_colors
+
+    la a0, _ANSI_RESET
+    jal puts
 
     #-- Llevar el cursor al final
     li a0, 0

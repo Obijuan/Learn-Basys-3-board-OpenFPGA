@@ -33,6 +33,8 @@ __reset:
     GL_SET_PIXEL_RGB 5,  8,  0, 0, 0xFF
     GL_SET_PIXEL_RGB 30, 8,  0, 0, 0x80a
 
+    #-- Terminar
+    jal GL_terminate
 
     halt
     
