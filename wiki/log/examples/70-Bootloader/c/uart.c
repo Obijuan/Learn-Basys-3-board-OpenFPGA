@@ -3,6 +3,7 @@
 //──  Funciones de bajo nivel
 //──────────────────────────────────────────────────────
 #include "peripherals.h"
+#include "bcd.h"
 
 
 //──────────────────────────────────────────────────────
@@ -66,6 +67,48 @@ void print_bin(int num_bin, int size)
 
     //-- Fin de la cadena
     buffer[size] = 0;
+
+    //-- Imprimir el buffer
+    _puts(buffer);
+}
+
+//──────────────────────────────────────────────────────
+//──  Imprimir un numero en hexadecimal
+//──
+//──  ENTRADAS:
+//──    * num_hex: Numero a imprimir en hexadecimal
+//──    * size: Tamaño del Numero en bits (32, 16, 8, 4) 
+//──────────────────────────────────────────────────────
+void print_hex(int num_hex, int size)
+{
+    char buffer[9];
+    int ndig;
+    int size_dig;  //-- Tamaño en digitos
+    int dig;
+    int shift;
+
+    //-- Obtener el tamaño en digitos
+    size_dig = size >> 2;
+
+    //-- Recorrer el buffer
+    for (int i=0; i < size_dig; i++) {
+
+        //-- Numero de Digito actual del numero
+        ndig = (size_dig-1)-i;
+
+        //-- Bits a desplazar para obtener el digito actual
+        shift = ndig << 2;  // ndig*4
+
+        //-- Obtener el digito actual en binario
+        dig = (num_hex & (0xF << shift)) >> shift;
+
+        //-- Convertir el digito actual a caracter
+        //-- y almacenarlo
+        buffer[i] = bcd_to_ascii(dig);
+    }
+
+    //-- Fin de la cadena
+    buffer[size_dig] = 0;
 
     //-- Imprimir el buffer
     _puts(buffer);

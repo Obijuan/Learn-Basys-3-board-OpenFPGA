@@ -2,11 +2,7 @@
 #include "uart.h"
 #include "ansi.h"
 #include "stdio.h"
-
-
-void print_hex(int num_hex, int size);
-char bcd_to_ascii(int bcd);
-
+#include "bcd.h"
 
 void main()
 {
@@ -28,43 +24,6 @@ void main()
     print_hex(0xC, 4);
     _putchar('\n');
 }
-
-void print_hex(int num_hex, int size)
-{
-    char buffer[9];
-    int ndig;
-    int size_dig;  //-- Tamaño en digitos
-    int dig;
-    int shift;
-
-    //-- Obtener el tamaño en digitos
-    size_dig = size >> 2;
-
-    //-- Recorrer el buffer
-    for (int i=0; i < size_dig; i++) {
-
-        //-- Numero de Digito actual del numero
-        ndig = (size_dig-1)-i;
-
-        //-- Bits a desplazar para obtener el digito actual
-        shift = ndig << 2;  // ndig*4
-
-        //-- Obtener el digito actual en binario
-        dig = (num_hex & (0xF << shift)) >> shift;
-
-        //-- Convertir el digito actual a caracter
-        //-- y almacenarlo
-        buffer[i] = bcd_to_ascii(dig);
-    }
-
-    //-- Fin de la cadena
-    buffer[size_dig] = 0;
-
-    //-- Imprimir el buffer
-    _puts(buffer);
-}
-
-
 
 
     // PUTSI "* Dec4: "
