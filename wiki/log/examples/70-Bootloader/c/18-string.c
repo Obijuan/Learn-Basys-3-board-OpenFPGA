@@ -106,6 +106,10 @@ void print_uint(uint32_t num, int size)
     //-- 1º: Convertir numero a digitos BCD
     num_bcd = uint_to_bcd(num);
 
+    //-- Imprimir parte alta
+    print_hex(num_bcd >> 32, 32);
+
+    //-- Imprimir parte baja
     print_hex(num_bcd, 32);
 
 }

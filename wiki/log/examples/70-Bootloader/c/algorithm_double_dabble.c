@@ -67,28 +67,4 @@ uint64_t algorithm_dd_get_result()
     return (uint64_t)buffer[0]<<32 | buffer[1];
 }
 
-//-- Convertir un numero entero de 32bits a sus 10 digitos bcd
-uint64_t uint_to_bcd(uint32_t num)
-{
-    //-- Inicializar algoritmo
-    algorithm_dd_init(num);
 
-    //-- Desplazar el buffer 3 bits a la izquierda
-    for (int i=0; i<3; i++) {
-        algorithm_dd_shift1();
-    }
-
-    //-- Bucle principal del algoritmo
-    for (int i=0; i<29; i++) {
-        //-- Actualizar registro buffer
-	    //-- Hay que sumar 3 a cada digito BCD, si es > 4
-	    algorithm_dd_step(0);
-        algorithm_dd_step(1);
-
-	    //-- Desplazar 1 bit a la izquierda registro buffer
-	    //-- buffer << 1
-        algorithm_dd_shift1();
-    }
-
-    return algorithm_dd_get_result();
-}
