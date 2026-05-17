@@ -3,7 +3,9 @@
 #include "ansi.h"
 #include "stdio.h"
 
-void print_bin(int num_bin, int size);
+
+void print_hex(int num_hex, int size);
+char bcd_to_ascii(int bcd);
 
 
 void main()
@@ -21,158 +23,49 @@ void main()
     _puts("* Bin4: ");
     print_bin(0xC, 4);
     _putchar('\n');
+
+    _puts("* Hex4: ");
+    print_hex(0xC, 4);
+    _putchar('\n');
 }
 
-//──────────────────────────────────────────────────────
-//──  Imprimir un numero en binario
-//──
-//──  ENTRADAS:
-//──    * num_bin: Numero a imprimir en binario
-//──    * size: Tamaño del Numero en bits (digitos) 
-//──────────────────────────────────────────────────────
-void print_bin(int num_bin, int size)
+void print_hex(int num_hex, int size)
 {
-    char buffer[33];
-    int bit;
+    char buffer[9];
+    int ndig;
+    int size_dig;  //-- Tamaño en digitos
+    int dig;
+    int shift;
+
+    //-- Obtener el tamaño en digitos
+    size_dig = size >> 2;
 
     //-- Recorrer el buffer
-    for (int i=0; i<size; i++) {
+    for (int i=0; i < size_dig; i++) {
 
-        //-- Bit actual del numero
-        bit = (size-1)-i;
+        //-- Numero de Digito actual del numero
+        ndig = (size_dig-1)-i;
 
-        //-- Convertir el bit actual a caracter
-        buffer[i] = (num_bin & (1 << bit)) ? '1' : '0';  
+        //-- Bits a desplazar para obtener el digito actual
+        shift = ndig << 2;  // ndig*4
+
+        //-- Obtener el digito actual en binario
+        dig = (num_hex & (0xF << shift)) >> shift;
+
+        //-- Convertir el digito actual a caracter
+        //-- y almacenarlo
+        buffer[i] = bcd_to_ascii(dig);
     }
 
     //-- Fin de la cadena
-    buffer[size] = 0;
+    buffer[size_dig] = 0;
 
     //-- Imprimir el buffer
     _puts(buffer);
 }
 
 
-// #──────────────────────────────────────────────────────
-// #──  Convertir un numero binario de n bits a un array
-// #──  de caracteres bcd
-// #──
-// #──  Ej. n=3: 110 --> 0001, 0001, 0000
-// #── 
-// #──  ENTRADAS:
-// #──    a0: Direccion del comienzo del array
-// #──    a1: Numero a convertir
-// #──    a2: Tamaño en bits
-// #──────────────────────────────────────────────────────
-//     .global bin_to_bcd_array
-// bin_to_bcd_array:
 
-//     #-- t1: Nº de bit (el de mayor peso)
-//     addi t1, a2, -1
-
-//     #-- t0: Mascara del bit actual
-//     li t2, 1
-//     sll t0, t2, t1  #-- 1 << t1
-
-// 1:
-//     #-- Obtener bit i-simo
-//     and t2, a1, t0   #-- t2 = n & mask
-//     srl t2, t2, t1   #-- t2 >> i
-
-//     #-- Almacenar bit i
-//     andi t2, t2, 1   #-- Eliminar todo menos el bit 0
-//     sb t2, 0(a0)
-
-//     #-- Apuntar al siguiente elemento del array
-//     addi a0, a0, 1
-
-//     #-- Siguiente mascara
-//     srli t0, t0, 1   #-- mask >> 1
-
-//     #-- Siguiente bit
-//     addi t1, t1, -1
-
-//     #-- Si mascara es 0, hemos terminado
-//     bne t0, zero, 1b
-
-//     ret
-
-
-
-// #---------------------------------------------------
-// #-- Imprimir numero binario de 4 bit en consola
-// #---------------------------------------------------
-// .macro PRINT_BIN4I num:req
-//     li a0, \num
-//     li a1, 4
-//     li a2, 0  #-- Mostrar 0s iniciales
-//     jal print_bin
-// .endm
-
-// #──────────────────────────────────────────────────────
-// #──  Imprimir un numero en binario, de 4 bits
-// #──  En un buffer de memoria
-// #──
-// #──  ENTRADAS:
-// #──    a0: Buffer donde imprimir
-// #──    a1: Numero a imprimir en binario
-// #──    a2: Tamaño del numero binario (en bits)
-// #──    a3: Eliminar 0s iniciales (0=No, 1=si)
-// #── 
-// #──  SALIDAS:
-// #──    a0: Direccion donde comienza la cadena
-// #──────────────────────────────────────────────────────
-//   .global sprint_bin
-// sprint_bin:
-//     STACK16
-
-//     #-- Guardar los parametros
-//     sw a0, 0(sp)  #-- Buffer
-//     sw a2, 4(sp)  #-- Tamaño del numero
-//     sw a3, 8(sp)  #-- Espacios iniciales
-
-//     #-- Convertir a array bcd
-//     #-- Guardarlo en un buffer interno
-//     la a0, __buff
-//     jal bin_to_bcd_array
-
-//     #-- Convertir a cadena
-//     la a0, __buff
-//     lw a1, 4(sp)  #-- Tamaño
-//     jal bcd_array_to_string
-
-//     #-- Comprobar si hay que eliminar ceros iniciales o no
-//     lw a3, 8(sp)
-//     beq a3, zero, no_remove_ceros
-
-//     #-- Hay que eliminar los 0s
-//     la a0, __buff
-//     jal str_remove_leading_zeros
-
-//     #-- a0: cadena sin ceros
-//     j cont
-    
-// no_remove_ceros:
-//     #-- Seleccionar cadena desde el principio
-//     la a0, __buff
-
-// cont:
-
-//     #-- Copiar el numero-cadena en el buffer de la cadena
-//     #-- La cadena origen a0 contiene bien el numero completo
-//     #-- o bien apunta al numero sin 0s iniciales
-//     lw a1, 0(sp)  #-- buffer destino
-//     jal strcpy
-
-//     UNSTACK16
-
-
-
-
-
-    // PUTSI "* Hex4: "
-    // PRINT_HEX4I 0xC
-    // PUTCHARI '\n'
 
     // PUTSI "* Dec4: "
     // PRINT_UINTI 0xC
