@@ -79,13 +79,13 @@ void print_bin(int num_bin, int size)
 //──    * num_hex: Numero a imprimir en hexadecimal
 //──    * size: Tamaño del Numero en bits (32, 16, 8, 4) 
 //──────────────────────────────────────────────────────
-void print_hex(int num_hex, int size)
+void print_hex(uint32_t num_hex, int size)
 {
     char buffer[9];
     int ndig;
     int size_dig;  //-- Tamaño en digitos
     int dig;
-    int shift;
+    uint32_t shift;
 
     //-- Obtener el tamaño en digitos
     size_dig = size >> 2;
