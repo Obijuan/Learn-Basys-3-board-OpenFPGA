@@ -311,23 +311,41 @@ void test_7segments()
 // ------------------------------------------------------------------------------------------------
 // |                                             UART                                             |
 // ------------------------------------------------------------------------------------------------
-void test_uart_send() {
+void test_uart_send() 
+{
     static uint32_t last_glob_val = 0;
     static uint8_t  trigger_send = 0;
+
+    //-- Cuando haya un cambio, disparar la
+    //-- transmision de un caracter
     if (last_glob_val != glob_value) {
         last_glob_val = glob_value;
         trigger_send  = 1;
     }
-    // read the status
-    uint8_t uart_rx_status = *UART_RX_STATUS_ADDRESS;
-    uint8_t uart_tx_status = *UART_TX_STATUS_ADDRESS;
-    // signal rx/tx error on leds
+
+    //-- Leer los registros de estado
+    uint8_t uart_rx_status = UART_RX_STATUS;
+    uint8_t uart_tx_status = UART_TX_STATUS;
+
+    //-- Si hay errores mostrarlos en los LEDs
     signalUartErrorOnLeds(uart_tx_status, uart_rx_status);
+
     // send global value if buffer empty and last != current
-    if (trigger_send && (uart_tx_status & (1<<UART_TX_STATUS_IDX_EMPTY))) {
-        trigger_send = 0;
-        // send global value
-        *UART_BUFFER_ADDRESS = (uint8_t)(glob_value & 0xFF);
+    if (trigger_send && 
+       (uart_tx_status & UART_TX_STATUS_EMPTY_MASK)) {
+            trigger_send = 0;
+
+            //-- Transmitir el contador global, si es un caracter ascii
+            //-- visible. Si no, enviar '*'
+            uint8_t car = glob_value & 0xFF;
+
+            if ((car > 32) && (car < 128))
+
+                //-- Es caracter visible
+                UART_BUFFER = (uint8_t)(glob_value & 0xFF);
+            else
+                //-- Caracter NO visible
+                UART_BUFFER = '*';
     }
 }
 
@@ -493,7 +511,7 @@ void main() {
             enableDisable_uartInterrupts(0, 0);
 
             //-- Apagar los LEDs
-            LEDS     = 0;
+            LEDS = 0;
 
             //-- Apagar los displays de 7 segmentos
             SEGMENTS = 0;
@@ -523,7 +541,9 @@ void main() {
                     SEGMENTS = 0; //-- Apagar los displays
                     break;
 
-                case TEST_UART_SEND           : break;
+                case TEST_UART_SEND: 
+                    break;
+
                 case TEST_UART_ECHO           : break;
                 case TEST_UART_SEND_INTERRUPT :
                     //enableDisable_externalInterrupts(1);
@@ -569,7 +589,10 @@ void main() {
                 test_7segments(); //-- Contador en los 7 segmentos 
                 break;
 
-            case TEST_UART_SEND           : test_uart_send(); break;
+            case TEST_UART_SEND: 
+                test_uart_send(); 
+                break;
+
             case TEST_UART_ECHO           : test_uart_echo(); break;
             case TEST_UART_SEND_INTERRUPT: 
                 //test_uart_send_interrupt(); 
