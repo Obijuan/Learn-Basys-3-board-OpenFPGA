@@ -1,3 +1,4 @@
+#include <stdbool.h>
 #include "peripherals.h"
 #include "uart.h"
 #include "ansi.h"
@@ -18,8 +19,6 @@ void main()
     _puts(ANSI_HOME);
     _puts(ANSI_CLS);
 
-    print_uint(20,32);
-
     //---- Imprimir numeros de 4 bits
     _puts("--> Numeros de 4 bits\n");
     _puts("* Bin4: ");
@@ -27,7 +26,7 @@ void main()
     _putchar('\n');
 
     _puts("* Hex4: ");
-    print_hex(0xC, 4);
+    print_hex(0xC, 4, true);
     _putchar('\n');
 
     _puts("* Dec4: ");
@@ -46,7 +45,7 @@ void main()
     _putchar('\n');
 
     _puts("* Hex8: ");
-    print_hex(0x55, 8);
+    print_hex(0x55, 8, true);
     _putchar('\n');
 
     _puts("* Dec8: ");
@@ -65,7 +64,7 @@ void main()
     _putchar('\n');
 
     _puts("* Hex16: ");
-    print_hex(0xAAAA, 16);
+    print_hex(0xAAAA, 16, true);
     _putchar('\n');
 
     _puts("* Dec16: ");
@@ -84,7 +83,7 @@ void main()
     _putchar('\n');
 
     _puts("* Hex32: ");
-    print_hex(0xCAFEBACA, 32);
+    print_hex(0xCAFEBACA, 32, true);
     _putchar('\n');
 
     _puts("* Dec32: ");
@@ -107,10 +106,10 @@ void print_uint(uint32_t num, int size)
     num_bcd = uint_to_bcd(num);
 
     //-- Imprimir parte alta
-    print_hex(num_bcd >> 32, 32);
+    print_hex(num_bcd >> 32, 32, false);
 
     //-- Imprimir parte baja
-    print_hex(num_bcd, 32);
+    print_hex(num_bcd, 32, false);
 
 }
 

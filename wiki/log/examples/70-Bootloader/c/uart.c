@@ -2,6 +2,7 @@
 //──    BIBLIOTECA PARA LA UART
 //──  Funciones de bajo nivel
 //──────────────────────────────────────────────────────
+#include <stdbool.h>
 #include "peripherals.h"
 #include "bcd.h"
 
@@ -77,11 +78,13 @@ void print_bin(int num_bin, int size)
 //──
 //──  ENTRADAS:
 //──    * num_hex: Numero a imprimir en hexadecimal
-//──    * size: Tamaño del Numero en bits (32, 16, 8, 4) 
+//──    * size: Tamaño del Numero en bits (32, 16, 8, 4)
+ //──   * ceros: Ceros iniciales (0=no, 1=si)
 //──────────────────────────────────────────────────────
-void print_hex(uint32_t num_hex, int size)
+void print_hex(uint32_t num_hex, int size, bool ceros)
 {
     char buffer[9];
+    char *sin_ceros;
     int ndig;
     int size_dig;  //-- Tamaño en digitos
     int dig;
@@ -110,7 +113,16 @@ void print_hex(uint32_t num_hex, int size)
     //-- Fin de la cadena
     buffer[size_dig] = 0;
 
-    //-- Imprimir el buffer
-    _puts(buffer);
+    //-- Eliminar 0s iniciales
+    if (!ceros) {
+        sin_ceros = buffer;
+        while( *sin_ceros == '0')
+            sin_ceros++;
+
+        _puts(sin_ceros);
+    }
+    else 
+        //-- Imprimir el buffer
+        _puts(buffer);
 }
 
