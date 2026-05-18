@@ -5,6 +5,7 @@
  * File: basys3_demo.c
  */
 #include "buttons.h"
+#include "delay.h"
 
 
 // ------------------------------------------------------------------------------------------------
@@ -88,24 +89,33 @@ void waitSomeCycles() {
     }
 }
 
+//-- Mostrar el estado de la UART en los LEDs
 void signalUartErrorOnLeds(uint8_t tx_status, uint8_t rx_status) {
+
     uint16_t err_leds_data = 0;
-    if (tx_status & (1<<UART_TX_STATUS_IDX_ER)) { 
-        err_leds_data |= (0x00F0 | (uint16_t)tx_status)<<8; 
+
+    //-- Mostrar en la parte alta de los LEDs el registro
+    //-- de estado de transmisión, si hay error
+    //-- El nibble superior del registro de estatus se muestra como 0xF
+    if (tx_status & UART_TX_STATUS_ER_MASK) { 
+        err_leds_data = err_leds_data | (0xF0 | tx_status)<<8; 
     }
 
-    if (rx_status & (1<<UART_RX_STATUS_IDX_ER)) {
-         err_leds_data |= (0x00F0 | (uint16_t)rx_status)<<0; 
+
+    //-- Mostrar el registro de estatus del receptor en la parte baja
+    //-- de los LEDs, si hay error
+    //-- NOTA: por alguna extraña razón... el bit de error del RX está a 1...
+    if (rx_status & UART_RX_STATUS_ER_MASK) {
+        err_leds_data = err_leds_data | (0xF0 | rx_status); 
     }
 
+    //-- Si hay error, mostrar el estado correspondiente en los LEDs
     if (err_leds_data != 0) {
-        *LEDS_ADDR = err_leds_data;
-        waitSomeCycles();
-    }
+        LEDS = err_leds_data;
 
-    //-- DEBUG
-    LEDS = 0xFFFF;
-    while(1);
+        //-- Esperar
+        delay(_1s);
+    }
 }
 
 // ------------------------------------------------------------------------------------------------
@@ -348,10 +358,10 @@ void main() {
     //-- Set interrupt/exception handler
     asm("csrw mtvec, %0": : "r"(interrupt));
 
-    // check if there was an uart error
+    //-- Comprobar si hay algun error en la UART
     uint8_t uart_rx_status = *UART_RX_STATUS_ADDRESS;
     uint8_t uart_tx_status = *UART_TX_STATUS_ADDRESS;
-    //signalUartErrorOnLeds(uart_tx_status, uart_rx_status);
+    signalUartErrorOnLeds(uart_tx_status, uart_rx_status);
 
     // Activate machine interrupts
     enableDisable_externalInterrupts(0);

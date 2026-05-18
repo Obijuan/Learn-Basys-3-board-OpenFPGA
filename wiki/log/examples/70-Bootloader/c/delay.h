@@ -1,3 +1,8 @@
+#include <stdint.h>
+
+//-- Prototipos
+void delay(uint32_t);
+
 //-- Calculo python:
 //--- hex(int(0.250 * 25_000_000 / 6))
 //-- Valores para las pausas
@@ -8,5 +13,6 @@
 #define _500ms _250ms * 2
 #define _1s _250ms * 4
 
-//-- Prototipos
-void delay(uint32_t);
+
+
+
