@@ -258,15 +258,22 @@ void test_leds_walk()
     }
 }
 
-// ------------------------------------------------------------------------------------------------
-// |                                           BUTTONS                                            |
-// ------------------------------------------------------------------------------------------------
-void test_buttons() {
+// -----------------------------------------------------------
+// |               BUTTONS                                   |
+// -----------------------------------------------------------
+
+//-- Mostrar los botones en los LEDs
+void test_buttons() 
+{
     uint8_t buttons;
-    // BYTE: x|x|x|south|east|west|north|center
-    buttons = *BUTTONS_ADDR;
-    *LEDS_ADDR = (uint16_t)buttons;
+
+    //-- Leer pulsadores
+    buttons = BUTTONS;
+
+    //-- Mostrarlos en los LEDs
+    LEDS = (uint16_t)buttons;
 }
+
 
 // ------------------------------------------------------------------------------------------------
 // |                                           SWITCHES                                           |
@@ -490,9 +497,16 @@ void main() {
                     LEDS = 0;  
                     break;
 
-                case TEST_LEDS_WALK           : *LEDS_ADDR = 1;  break;
-                case TEST_BUTTONS             : break;
-                case TEST_SWITCHES            : break;
+                case TEST_LEDS_WALK: 
+                    LEDS = 1;  //-- Valor inicial secuencia
+                    break;
+
+                case TEST_BUTTONS: 
+                    break;
+
+                case TEST_SWITCHES: 
+                    break;
+
                 case TEST_7_SEGMENTS          : *SEGMENTS_ADDR = 0; break;
                 case TEST_UART_SEND           : break;
                 case TEST_UART_ECHO           : break;
@@ -528,7 +542,10 @@ void main() {
                 test_leds_walk(); 
                 break;
 
-            case TEST_BUTTONS             : test_buttons(); break;
+            case TEST_BUTTONS:  //-- Mostrar botones en LEDs 
+                test_buttons(); 
+                break;
+
             case TEST_SWITCHES            : test_switches(); break;
             case TEST_7_SEGMENTS          : test_7segments(); break;
             case TEST_UART_SEND           : test_uart_send(); break;
