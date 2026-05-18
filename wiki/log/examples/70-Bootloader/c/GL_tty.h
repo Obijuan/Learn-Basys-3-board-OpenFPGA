@@ -141,12 +141,28 @@ static inline void GL_set2pixelsIhere(
     if(c1 == c2) {
 	GL_setpixelIhere(cmap, c1);
     } else {
-	printf("\033[48;2;%sm",cmap[c1]);	   	   
-	printf("\033[38;2;%sm",cmap[c2]);
+
+
+	//printf("\033[48;2;%sm",cmap[c1]);	   	   
+	//printf("\033[38;2;%sm",cmap[c2]);
+
+    _puts("\033[48;2;");
+    _puts(cmap[c1]);
+    _puts("m");
+
+	//printf("\033[38;2;%sm",cmap[c2]);
+
+    _puts("\033[38;2;");
+    _puts(cmap[c2]);
+    _puts("m");
+
+
 	// https://www.w3.org/TR/xml-entity-names/025.html
 	// https://onlineunicodetools.com/convert-unicode-to-utf8
 	// https://copypastecharacter.com/
-	printf("\xE2\x96\x83");
+	//printf("\xE2\x96\x83");
+    _puts("\xE2\x96\x83");
+
     }
 }
 
@@ -155,8 +171,8 @@ static inline void GL_set2pixelsIhere(
  * \details Background and foreground colors are set to black.
  */
 static inline void GL_newline() {
-    printf("\033[38;2;0;0;0m");	   
-    printf("\033[48;2;0;0;0m\n");
+    _puts("\033[38;2;0;0;0m");	   
+    _puts("\033[48;2;0;0;0m\n");
 }
 
 /**
