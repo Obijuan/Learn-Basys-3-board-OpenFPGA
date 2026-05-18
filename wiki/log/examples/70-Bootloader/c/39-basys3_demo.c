@@ -226,10 +226,14 @@ void interrupt()
 }
 
 
-// ------------------------------------------------------------------------------------------------
-// |                                             LEDs                                             |
-// ------------------------------------------------------------------------------------------------
-void test_leds() {
+// --------------------------------------------------------------
+// |                 LEDs                                       |
+// --------------------------------------------------------------
+
+//-- Prueba de LEDs: Mostrar un contador incrementando
+//-- mediante interrupciones
+void test_leds() 
+{
     *LEDS_ADDR = glob_value;
 }
 
@@ -438,26 +442,38 @@ void main() {
         //-- Leer los pulsadores
         uint8_t buttons = read_buttons();
 
-        //-- Se ha pulsado el botón de la derecha
+        //-- Se ha pulsado el botón derecho
+        //-- Pasar al siguiente TEST
         if (buttons & BTN_RIGHT) {
 
-            //-- DEBUG
-            LEDS = 0x000F;
-            while(1);
-
-            // Jump to next test
+            //-- Seleccionar el siguiente TEST
             test_nr++;
 
-            if (test_nr >= TEST_DUMMY_FINAL) { test_nr = 0; }
-            // Setup test
+            //-- Si estamos en el ultimo TEST, volver
+            //-- al comienzo
+            if (test_nr >= TEST_DUMMY_FINAL)  
+                test_nr = 0; 
+
+
+            //----- Configuraciones generales para todos
+            //-- los tests
+            //  Deshabilitar las interrupciones
             enableDisable_machineInterrupts(0);
             enableDisable_externalInterrupts(0);
             enableDisable_uartInterrupts(0, 0);
-            *LEDS_ADDR     = 0;
-            *SEGMENTS_ADDR = 0;
-            if (test_nr > TEST_7_SEGMENTS) {
-                *SEGMENTS_ADDR = number2segment(test_nr);
-            }
+
+            //-- Apagar los LEDs
+            LEDS     = 0;
+
+            //-- Apagar los displays de 7 segmentos
+            SEGMENTS = 0;
+
+            //-- A partir de los tests de los 7 segmentos en 
+            //-- adelante, mostrar el numero de test en los displays
+            if (test_nr > TEST_7_SEGMENTS) 
+                SEGMENTS = number2segment(test_nr);
+            
+            //-- Configuraciones especificas segun el TEST actual
             switch (test_nr) {
                 case TEST_LEDS                : *LEDS_ADDR = 0;  break;
                 case TEST_LEDS_WALK           : *LEDS_ADDR = 1;  break;
@@ -487,9 +503,13 @@ void main() {
         }
         
         
-        // run demo test
+        //-- Acción a realizar en el test actual
         switch (test_nr) {
-            case TEST_LEDS                : test_leds(); break;
+
+            case TEST_LEDS:   //-- Contador en los LEDs 
+                test_leds();  //-- Mediante interrupciones
+                break;
+
             case TEST_LEDS_WALK           : test_leds_walk(); break;
             case TEST_BUTTONS             : test_buttons(); break;
             case TEST_SWITCHES            : test_switches(); break;
@@ -508,4 +528,10 @@ void main() {
                 break;
         }
     }
+    
 }
+
+    //-- DEBUG
+    //LEDS = 0x000F;
+    //while(1);
+
