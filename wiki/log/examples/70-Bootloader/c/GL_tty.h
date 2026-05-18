@@ -428,7 +428,7 @@ static inline void GL_line(
 	    while(ex >= 0)  {
 		x++;
 		ex -= dy << 1;
-	        putchar(' ');
+	        _putchar(' ');
 	    }
 	    ex += dx << 1;
 	}
