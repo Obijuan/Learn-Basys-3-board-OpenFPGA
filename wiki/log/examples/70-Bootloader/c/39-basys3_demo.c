@@ -6,6 +6,7 @@
  */
 #include "buttons.h"
 #include "delay.h"
+#include "uart.h"
 
 
 // ------------------------------------------------------------------------------------------------
@@ -67,15 +68,22 @@ enum Test {
     TEST_DUMMY_FINAL // only for recognizing last test
 };
 
-// ------------------------------------------------------------------------------------------------
-// |                                           Helpers                                            |
-// ------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------
+// |                  Helpers                                   |
+// --------------------------------------------------------------
+
+//-- Incrementar el contador global
 void incrementGlobValue() {
     glob_value++;
+
+    //-- Es un contador de 16-bits (porque es lo que se muestra
+    //-- en los leds). Cuando se activa el bit 16, se vuelve a 0
     if (glob_value >> 16) {
         glob_value = 0;
     }
 }
+
+
 int str_length(const char* str_to_check) {
     int count;
     for (count = 0; str_to_check[count] != '\0'; ++count);
@@ -116,15 +124,22 @@ void signalUartErrorOnLeds(uint8_t tx_status, uint8_t rx_status) {
     }
 }
 
-// ------------------------------------------------------------------------------------------------
-// |                                          Interrupt                                           |
-// ------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------
+// |                   Interrupt                                      |
+// --------------------------------------------------------------------
+
+//-- Interrupcion del temporizador
 void handleTimerInterrupt() {
+
+    //-- Incrementar contador global
     incrementGlobValue();
-    // reset counter
-    *TIMER_MTIME_ADDR  = 0;
-    *TIMER_MTIMEH_ADDR = 0;
+
+    //--Resetear el contador
+    TIMER_MTIME  = 0;
+    TIMER_MTIMEH = 0;
 }
+
+
 void handleExternalInterrupt() {
     static uint8_t  tx_char_idx = 0;
     // check uart transmit interrupt
@@ -154,32 +169,62 @@ void handleExternalInterrupt() {
 }
 
 __attribute__((interrupt))
-void interrupt() {
-    // check which interrupt / exception is triggered
+void interrupt() 
+{
     uint16_t err_leds_data = 0;
     uint32_t mcause = 0;
+
+    //-- Leer la causa de interrupcion
     asm volatile("csrr %0, mcause": "=r"(mcause));
+
+    //-- Si es una excepcion, sacar 0x7FFF por los LEDs!
     switch (mcause) {
-        case ((0<<31) |  0): err_leds_data = 0x7FFF; break; // FETCH_MISALIGNED
-        case ((0<<31) |  1): err_leds_data = 0x7FFF; break; // FETCH_FAULT
-        case ((0<<31) |  2): err_leds_data = 0x7FFF; break; // ILLEGAL_INSTRUCTION
-        case ((0<<31) |  3): err_leds_data = 0x7FFF; break; // EBREAK
-        case ((0<<31) |  4): err_leds_data = 0x7FFF; break; // LOAD_MISALIGNED
-        case ((0<<31) |  5): err_leds_data = 0x7FFF; break; // LOAD_FAULT
-        case ((0<<31) |  6): err_leds_data = 0x7FFF; break; // STORE_MISALIGNED
-        case ((0<<31) |  7): err_leds_data = 0x7FFF; break; // STORE_FAULT
-        case ((0<<31) | 11): err_leds_data = 0x7FFF; break; // ECALL
-        case ((1<<31) |  7): handleTimerInterrupt(); break; // TIMER INTERRUPT
-        case ((1<<31) | 11): handleExternalInterrupt(); break; // EXTERNAL INTERRUPT
-        default:             err_leds_data = 0x7FFF; break; // UNKNOWN EXCEPTION/INTERRUPT
+
+        //-- EXCEPCIONES!
+        case 0:  // FETCH_MISALIGNED 
+        case 1:  // FETCH_FAULT
+        case 2:  // ILLEGAL_INSTRUCTION
+        case 3:  // EBREAK
+        case 4:  // LOAD_MISALIGNED
+        case 5:  // LOAD_FAULT
+        case 6:  // STORE_MISALIGNED
+        case 7:  // STORE_FAULT
+        case 11: // ECALL
+            err_leds_data = 0x7FFF; 
+            break; 
+
+        //-- INTERRUPCIONES!!
+        case ((1<<31) |  7):    // TIMER INTERRUPT
+            handleTimerInterrupt(); 
+            break; 
+        case ((1<<31) | 11):    // EXTERNAL INTERRUPT
+            handleExternalInterrupt(); 
+            break; 
+
+        //-- UNKNOWN EXCEPTION/INTERRUPT!
+        default: 
+            err_leds_data = 0x7FFF; 
+            break;
     }
-    // if exception or unknown mcause => wait some time
+
+    //-- Si ocurre una excepcion, realizar una pausa
     if (err_leds_data) {
-        *LEDS_ADDR = err_leds_data | ((mcause>>31 & 0b1)<<15);
-        *SEGMENTS_ADDR = number2segment(mcause & (~(1<<31)) );
-        waitSomeCycles();
+
+        //-- Poner el tipo (exc/int) en el LED15
+        LEDS = err_leds_data | ((mcause>>31 & 0b1)<<15);
+
+        //-- Sacar por el 7 segmentos la causa de interrupcion
+        SEGMENTS = number2segment(mcause & (~(1<<31)) );
+
+        //-- pausa
+        delay(_1s);
     }
+
+    //-- En caso de excepción, vuelve a saltar aquí otra vez
+    //-- (Porque el registro mepc contiene la dirección de la instrucción
+    //--  que ha generado la excepcion)
 }
+
 
 // ------------------------------------------------------------------------------------------------
 // |                                             LEDs                                             |
@@ -339,9 +384,9 @@ void test_vga_mixed_idx() {
     else                                                          { px_color = VGA_COLOR_BLACK;         px_idx  = 0; }
 }
 
-// ------------------------------------------------------------------------------------------------
-// |                                             MAIN                                             |
-// ------------------------------------------------------------------------------------------------
+// ----------------------------------------------------------
+// |                      MAIN                              |
+// ----------------------------------------------------------
 void main() {
 
     //-- Numero de test
@@ -359,30 +404,36 @@ void main() {
     //-- Comprobar si hay algun error en la UART
     signalUartErrorOnLeds(UART_TX_STATUS, UART_RX_STATUS);
 
-    // Activate machine interrupts
+    //-- Interrupcion del temporizador y externas deshabilitadas
+    //-- por defecto
     enableDisable_externalInterrupts(0);
     enableDisable_timerInterrupts(0);
+
+    //-- Activar las interrupciones globales
     enableDisable_machineInterrupts(1);
 
-#ifdef USE_TIMER_INTERRUPT_TO_INCREMENT_GLOB_VALUE
-    // Set timer interrupt every 0.5 second
-    uint32_t ns_per_cycle = *TIMER_STATUS_ADDR & 0xFF;
+
+    //------- Establecer las interrupciones del temporizador
+    //-------  cada 0.5 segundos
+    //-- Leer duracion de cada ciclo de temporizador
+    //-- (Para 25Mhz es de 40)
+    uint32_t ns_per_cycle = TIMER_STATUS & 0xFF;
+
+    //-- Calcular los ciclos que deben transcurrir para llegar 
+    //-- a 0.5 segundos
     uint32_t cycles_per_second = 500000000 / ns_per_cycle;
-    *TIMER_MTIMECMP_ADDR  = cycles_per_second;
-    *TIMER_MTIMECMPH_ADDR = 0;
+
+    //-- Configurar temporizador para producir una interrupcion
+    //-- transcurrido ese tiempo
+    TIMER_MTIMECMP  = cycles_per_second;
+    TIMER_MTIMECMPH = 0;
+
+    //-- Habilitar interrupcion del temporizador!!!!
     enableDisable_timerInterrupts(1);
-#endif
 
-    //-- Start Main loop
+    
+    //-- Bucle principal!!
     while (1) {
-
-#ifndef USE_TIMER_INTERRUPT_TO_INCREMENT_GLOB_VALUE
-        // Manipulate the global value if timer interrupt disabled
-        if (loop_cnt == 0) {
-            loop_cnt = (1<<18);
-            incrementGlobValue();
-        }
-#endif
 
         //-- Leer los pulsadores
         uint8_t buttons = read_buttons();
