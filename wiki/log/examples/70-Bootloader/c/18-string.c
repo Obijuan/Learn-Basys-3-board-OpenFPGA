@@ -16,9 +16,6 @@ void main()
     _puts(ANSI_HOME);
     _puts(ANSI_CLS);
 
-    print_uint(0);
-    _puts("\n");
-
     //---- Imprimir numeros de 4 bits
     _puts("--> Numeros de 4 bits\n");
     _puts("* Bin4: ");
