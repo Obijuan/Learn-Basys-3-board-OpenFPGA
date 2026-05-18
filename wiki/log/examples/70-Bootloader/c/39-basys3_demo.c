@@ -368,12 +368,7 @@ void main() {
 #endif
 
     //-- Start Main loop
-    uint32_t loop_cnt = 1;
-    int32_t  button_debounce_cnt = (1<<10);
-    uint32_t button_east_state_now  = 0;
-    uint32_t button_east_state_prev = 0;
     while (1) {
-        loop_cnt--;
 
 #ifndef USE_TIMER_INTERRUPT_TO_INCREMENT_GLOB_VALUE
         // Manipulate the global value if timer interrupt disabled
@@ -384,72 +379,57 @@ void main() {
 #endif
 
         //-- Leer los pulsadores
-        buttons = read_buttons();
+        uint8_t buttons = read_buttons();
 
-        //-- Execute next test if button east pressed
-        if (button_debounce_cnt > 0) {
-            button_debounce_cnt--;
-        } else {
+        //-- Se ha pulsado el botón de la derecha
+        if (buttons & BTN_RIGHT) {
 
-            uint8_t button_state = *BUTTONS_ADDR;
-            button_east_state_now = (button_state & (1<<BTN_RIGHT)) ? 1 : 0;
+            //-- DEBUG
+            LEDS = 0x000F;
+            while(1);
 
-            //-- Check if positive edge triggered
-            if (button_east_state_prev == 0 && button_east_state_now == 1) {
+            // Jump to next test
+            test_nr++;
 
-                //-- DEBUG
-                LEDS = 0x000F;
-                while(1);
-
-                // Set button debounce
-                button_debounce_cnt = (1<<10);
-
-                // Jump to next test
-                test_nr++;
-
-                if (test_nr >= TEST_DUMMY_FINAL) { test_nr = 0; }
-                // Setup test
-                enableDisable_machineInterrupts(0);
-                enableDisable_externalInterrupts(0);
-                enableDisable_uartInterrupts(0, 0);
-                *LEDS_ADDR     = 0;
-                *SEGMENTS_ADDR = 0;
-                if (test_nr > TEST_7_SEGMENTS) {
-                    *SEGMENTS_ADDR = number2segment(test_nr);
-                }
-                switch (test_nr) {
-                    case TEST_LEDS                : *LEDS_ADDR = 0;  break;
-                    case TEST_LEDS_WALK           : *LEDS_ADDR = 1;  break;
-                    case TEST_BUTTONS             : break;
-                    case TEST_SWITCHES            : break;
-                    case TEST_7_SEGMENTS          : *SEGMENTS_ADDR = 0; break;
-                    case TEST_UART_SEND           : break;
-                    case TEST_UART_ECHO           : break;
-                    case TEST_UART_SEND_INTERRUPT :
-                        enableDisable_externalInterrupts(1);
-                        enableDisable_uartInterrupts(0, 1);
-                        break;
-                    case TEST_UART_ECHO_INTERRUPT :
-                        enableDisable_externalInterrupts(1);
-                        enableDisable_uartInterrupts(1, 0);
-                        break;
-                    case TEST_VGA_PX_IDX          : break;
-                    case TEST_VGA_BYTE_IDX        : break;
-                    case TEST_VGA_HALFWORD_IDX    : break;
-                    case TEST_VGA_WORD_IDX        : break;
-                    case TEST_VGA_MIXED_IDX       : break;
-                    default :
-                        test_nr = 0;
-                        break;
-                }
-                enableDisable_machineInterrupts(1);
+            if (test_nr >= TEST_DUMMY_FINAL) { test_nr = 0; }
+            // Setup test
+            enableDisable_machineInterrupts(0);
+            enableDisable_externalInterrupts(0);
+            enableDisable_uartInterrupts(0, 0);
+            *LEDS_ADDR     = 0;
+            *SEGMENTS_ADDR = 0;
+            if (test_nr > TEST_7_SEGMENTS) {
+                *SEGMENTS_ADDR = number2segment(test_nr);
             }
-            // update previous button state
-            if (button_east_state_prev != button_east_state_now) {
-                button_east_state_prev = button_east_state_now;
+            switch (test_nr) {
+                case TEST_LEDS                : *LEDS_ADDR = 0;  break;
+                case TEST_LEDS_WALK           : *LEDS_ADDR = 1;  break;
+                case TEST_BUTTONS             : break;
+                case TEST_SWITCHES            : break;
+                case TEST_7_SEGMENTS          : *SEGMENTS_ADDR = 0; break;
+                case TEST_UART_SEND           : break;
+                case TEST_UART_ECHO           : break;
+                case TEST_UART_SEND_INTERRUPT :
+                    enableDisable_externalInterrupts(1);
+                    enableDisable_uartInterrupts(0, 1);
+                    break;
+                case TEST_UART_ECHO_INTERRUPT :
+                    enableDisable_externalInterrupts(1);
+                    enableDisable_uartInterrupts(1, 0);
+                    break;
+                case TEST_VGA_PX_IDX          : break;
+                case TEST_VGA_BYTE_IDX        : break;
+                case TEST_VGA_HALFWORD_IDX    : break;
+                case TEST_VGA_WORD_IDX        : break;
+                case TEST_VGA_MIXED_IDX       : break;
+                default :
+                    test_nr = 0;
+                    break;
             }
+            enableDisable_machineInterrupts(1);
         }
-
+        
+        
         // run demo test
         switch (test_nr) {
             case TEST_LEDS                : test_leds(); break;
