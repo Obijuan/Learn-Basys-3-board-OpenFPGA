@@ -308,9 +308,10 @@ void test_7segments()
     }
 }
 
-// ------------------------------------------------------------------------------------------------
-// |                                             UART                                             |
-// ------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------
+// |                     UART                                 |
+// ------------------------------------------------------------
+//-- Envio de caracteres
 void test_uart_send() 
 {
     static uint32_t last_glob_val = 0;
@@ -330,7 +331,7 @@ void test_uart_send()
     //-- Si hay errores mostrarlos en los LEDs
     signalUartErrorOnLeds(uart_tx_status, uart_rx_status);
 
-    // send global value if buffer empty and last != current
+    //-- Enviar un caracter, si toca
     if (trigger_send && 
        (uart_tx_status & UART_TX_STATUS_EMPTY_MASK)) {
             trigger_send = 0;
@@ -349,18 +350,24 @@ void test_uart_send()
     }
 }
 
-void test_uart_echo() {
-    // read the status
-    uint8_t uart_rx_status = *UART_RX_STATUS_ADDRESS;
-    uint8_t uart_tx_status = *UART_TX_STATUS_ADDRESS;
-    // signal rx/tx error on leds
+//-- Hacer eco de todo lo recibido
+void test_uart_echo() 
+{
+    //-- Leer registros de estado
+    uint8_t uart_rx_status = UART_RX_STATUS;
+    uint8_t uart_tx_status = UART_TX_STATUS;
+
+    //-- Mostrar errores en los LEDs
     signalUartErrorOnLeds(uart_tx_status, uart_rx_status);
-    // echo received byte
-    if (uart_rx_status & (1<<UART_RX_STATUS_IDX_FULL)) {
-        // read out received byte
-        uint8_t received_byte = *UART_BUFFER_ADDRESS;
-        // send received byte back
-        *UART_BUFFER_ADDRESS = received_byte;
+
+    //-- Si se ha recibido un caracter...
+    if (uart_rx_status & UART_RX_STATUS_FULL_MASK) {
+
+        //-- Leer caracter
+        uint8_t received_byte = UART_BUFFER;
+
+        //-- Hacer eco
+        UART_BUFFER = received_byte;
     }
 }
 
@@ -544,7 +551,9 @@ void main() {
                 case TEST_UART_SEND: 
                     break;
 
-                case TEST_UART_ECHO           : break;
+                case TEST_UART_ECHO:
+                    break;
+
                 case TEST_UART_SEND_INTERRUPT :
                     //enableDisable_externalInterrupts(1);
                     //enableDisable_uartInterrupts(0, 1);
@@ -590,10 +599,13 @@ void main() {
                 break;
 
             case TEST_UART_SEND: 
-                test_uart_send(); 
+                test_uart_send(); //-- Envio de caracteres
                 break;
 
-            case TEST_UART_ECHO           : test_uart_echo(); break;
+            case TEST_UART_ECHO: 
+                test_uart_echo(); //-- Eco 
+                break;
+
             case TEST_UART_SEND_INTERRUPT: 
                 //test_uart_send_interrupt(); 
                 break;
