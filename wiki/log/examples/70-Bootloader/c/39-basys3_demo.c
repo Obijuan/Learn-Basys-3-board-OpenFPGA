@@ -289,15 +289,22 @@ void test_switches()
     LEDS = switches;
 }
 
-// ------------------------------------------------------------------------------------------------
-// |                                          7-Segments                                          |
-// ------------------------------------------------------------------------------------------------
-void test_7segments() {
+// --------------------------------------------------------
+// |             7-Segments                               |
+// --------------------------------------------------------
+
+//-- Mostrar el contador global en el display de 7 segmentos
+void test_7segments() 
+{
     static uint32_t last_glob_val = 0;
+
+    //-- Detectar cambio en el contador global
     if (last_glob_val != glob_value) {
         last_glob_val = glob_value;
+
+        //-- Mostrar el contador en los displays 7 seg
         uint32_t segment_dec = number2segment(glob_value);
-        *SEGMENTS_ADDR = segment_dec;
+        SEGMENTS = segment_dec;
     }
 }
 
@@ -512,7 +519,10 @@ void main() {
                 case TEST_SWITCHES: 
                     break;
 
-                case TEST_7_SEGMENTS          : *SEGMENTS_ADDR = 0; break;
+                case TEST_7_SEGMENTS: 
+                    SEGMENTS = 0; //-- Apagar los displays
+                    break;
+
                 case TEST_UART_SEND           : break;
                 case TEST_UART_ECHO           : break;
                 case TEST_UART_SEND_INTERRUPT :
@@ -555,7 +565,10 @@ void main() {
                 test_switches(); 
                 break;
 
-            case TEST_7_SEGMENTS          : test_7segments(); break;
+            case TEST_7_SEGMENTS: 
+                test_7segments(); //-- Contador en los 7 segmentos 
+                break;
+
             case TEST_UART_SEND           : test_uart_send(); break;
             case TEST_UART_ECHO           : test_uart_echo(); break;
             case TEST_UART_SEND_INTERRUPT: 
