@@ -5,16 +5,12 @@
 */
 
 #include <stdio.h>
-
-#ifdef __linux__
-#include <unistd.h>
-#else
-//#include "io.h"
 #include "uart.h"
-#endif
+#include "delay.h"
 
-#define W 46
-#define H 46
+
+#define W 30
+#define H 30
 
 #define mandel_shift 10
 #define mandel_mul (1 << mandel_shift)
@@ -90,6 +86,7 @@ int main() {
 	 last_color = -1;
       }
       ++frame;
+      delay(_1s);
 #ifdef __linux__       
         usleep(100000);
 #endif
