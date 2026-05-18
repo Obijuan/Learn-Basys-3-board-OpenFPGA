@@ -8,6 +8,7 @@
 #define GL_FPS 2
 #define GL_USE_TURTLE
 #include "GL_tty.h"
+#include "delay.h"
 
 void tree(Turtle* T, int L, int depth, int max_depth, int branch_angle) {
     int branch_L = L-1;
@@ -44,7 +45,9 @@ int main() {
             Turtle_pen_down(&T);
             tree(&T,6,depth,13,26);
             GL_swapbuffers();
+            delay(_1s);
         }
+        
     }
    
     GL_terminate();
