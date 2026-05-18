@@ -84,4 +84,11 @@
 #define UART_RX_STATUS_IE_MASK     (1 << UART_RX_STATUS_IDX_IE)
 
 
+#define VGA_START_ADDRESS             (((volatile uint32_t *) ((0x00090000    ) << 2)))
+#define VGA_START_BYTE_ADDRESS        (((volatile uint8_t  *) ((0x00090000    ) << 2)))
+#define VGA_START_HALFWORD_ADDRESS    (((volatile uint16_t *) ((0x00090000    ) << 2)))
+#define VGA_START_WORD_ADDRESS        (((volatile uint32_t *) ((0x00090000    ) << 2)))
+
+
+
 #endif //_PERIPHERALS_
