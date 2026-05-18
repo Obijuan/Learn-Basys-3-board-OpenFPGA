@@ -483,12 +483,12 @@ void main() {
                 case TEST_UART_SEND           : break;
                 case TEST_UART_ECHO           : break;
                 case TEST_UART_SEND_INTERRUPT :
-                    enableDisable_externalInterrupts(1);
-                    enableDisable_uartInterrupts(0, 1);
+                    //enableDisable_externalInterrupts(1);
+                    //enableDisable_uartInterrupts(0, 1);
                     break;
                 case TEST_UART_ECHO_INTERRUPT :
-                    enableDisable_externalInterrupts(1);
-                    enableDisable_uartInterrupts(1, 0);
+                    //enableDisable_externalInterrupts(1);
+                    //enableDisable_uartInterrupts(1, 0);
                     break;
                 case TEST_VGA_PX_IDX          : break;
                 case TEST_VGA_BYTE_IDX        : break;
@@ -516,13 +516,27 @@ void main() {
             case TEST_7_SEGMENTS          : test_7segments(); break;
             case TEST_UART_SEND           : test_uart_send(); break;
             case TEST_UART_ECHO           : test_uart_echo(); break;
-            case TEST_UART_SEND_INTERRUPT : test_uart_send_interrupt(); break;
-            case TEST_UART_ECHO_INTERRUPT : test_uart_echo_interrupt(); break;
-            case TEST_VGA_PX_IDX          : test_vga(1); break;
-            case TEST_VGA_BYTE_IDX        : test_vga(2); break;
-            case TEST_VGA_HALFWORD_IDX    : test_vga(4); break;
-            case TEST_VGA_WORD_IDX        : test_vga(8); break;
-            case TEST_VGA_MIXED_IDX       : test_vga_mixed_idx(); break;
+            case TEST_UART_SEND_INTERRUPT: 
+                //test_uart_send_interrupt(); 
+                break;
+            case TEST_UART_ECHO_INTERRUPT: 
+                //test_uart_echo_interrupt(); 
+                break;
+            case TEST_VGA_PX_IDX: 
+                //test_vga(1); 
+                break;
+            case TEST_VGA_BYTE_IDX: 
+                //test_vga(2); 
+                break;
+            case TEST_VGA_HALFWORD_IDX:
+                //test_vga(4); 
+                break;
+            case TEST_VGA_WORD_IDX: 
+                //test_vga(8); break;
+                break;
+            case TEST_VGA_MIXED_IDX: 
+                //test_vga_mixed_idx(); 
+                break;
             default :
                 test_nr = 0;
                 break;

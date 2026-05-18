@@ -152,31 +152,73 @@ uint8_t setPixelWord(int px_idx, vga_color_t color) {
     return 1;
 }
 
-// ------------------------------------------------------------------------------------------------
-// |                             enable/disable individual interrupts                             |
-// ------------------------------------------------------------------------------------------------
-void enableDisable_machineInterrupts(uint8_t enable_disable) {
+// ----------------------------------------------------------------
+// |       enable/disable individual interrupts                   |
+// ----------------------------------------------------------------
+
+//-- Habilitar/deshabilitar interrupciones globales
+void enableDisable_machineInterrupts(uint8_t enable_disable) 
+{
+    //-- Leer registro de status
     uint32_t mstatus = 0;
     asm volatile("csrr %0, mstatus": "=r"(mstatus));
-    if (enable_disable) { mstatus |=  (1<<3); } // MSTATUS_MIE
-    else                { mstatus &= ~(1<<3); } // MSTATUS_MIE
+
+    //-- Activar interrupciones!
+    if (enable_disable) 
+        mstatus |=  (1<<3);  // MSTATUS_MIE
+
+    //-- Deshabilitar interrupciones1
+    else 
+        mstatus &= ~(1<<3);  // MSTATUS_MIE
+
+    //-- Establecer registro de status
     asm volatile("csrw mstatus, %0": : "r"(mstatus));
 }
-void enableDisable_timerInterrupts(uint8_t enable_disable) {
+
+//-- Habilitar/deshabilitar interrupciones del timer
+void enableDisable_timerInterrupts(uint8_t enable_disable) 
+{
+
+    //-- Leer registro mie
     uint32_t mie = 0;
     asm volatile("csrr %0, mie": "=r"(mie));
-    if (enable_disable) { mie |=  (1<<7); } // MIE_MTIE
-    else                { mie &= ~(1<<7); } // MIE_MTIE
+
+
+    //-- Activar interrupcion
+    if (enable_disable)  
+        mie |=  (1<<7);  // MIE_MTIE
+
+    //-- Deshabilitar interrupciones
+    else  
+        mie &= ~(1<<7); // MIE_MTIE
+
+    //-- Establecer registro mie
     asm volatile("csrw mie, %0": : "r"(mie));
 }
-void enableDisable_externalInterrupts(uint8_t enable_disable) {
+
+//-- Habilitar/deshabilitar interrupciones externas (UART!)
+void enableDisable_externalInterrupts(uint8_t enable_disable) 
+{
+
+    //-- Leer registro mie
     uint32_t mie = 0;
     asm volatile("csrr %0, mie": "=r"(mie));
-    if (enable_disable) { mie |=  (1<<11); } // MIE_MEIE
-    else                { mie &= ~(1<<11); } // MIE_MEIE
+
+    //-- Activar interrupciones
+    if (enable_disable) 
+        mie |=  (1<<11);  // MIE_MEIE
+    else 
+        mie &= ~(1<<11);  // MIE_MEIE
+
+    //-- Establecer registro mie
     asm volatile("csrw mie, %0": : "r"(mie));
 }
-void enableDisable_uartInterrupts(uint8_t enable_disable_rx, uint8_t enable_disable_tx) {
+
+//-- Habilitar/deshabilitar interrupciones de la UART
+void enableDisable_uartInterrupts(
+        uint8_t enable_disable_rx, 
+        uint8_t enable_disable_tx) 
+{
     // rx
     if (enable_disable_rx) { *UART_RX_STATUS_ADDRESS |=  (1<<UART_RX_STATUS_IDX_IE); }
     else                   { *UART_RX_STATUS_ADDRESS &= ~(1<<UART_RX_STATUS_IDX_IE); }
@@ -184,3 +226,4 @@ void enableDisable_uartInterrupts(uint8_t enable_disable_rx, uint8_t enable_disa
     if (enable_disable_tx) { *UART_TX_STATUS_ADDRESS |=  (1<<UART_TX_STATUS_IDX_IE); }
     else                   { *UART_TX_STATUS_ADDRESS &= ~(1<<UART_TX_STATUS_IDX_IE); }
 }
+
