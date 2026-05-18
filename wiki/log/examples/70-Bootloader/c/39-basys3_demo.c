@@ -101,10 +101,8 @@ void signalUartErrorOnLeds(uint8_t tx_status, uint8_t rx_status) {
         err_leds_data = err_leds_data | (0xF0 | tx_status)<<8; 
     }
 
-
     //-- Mostrar el registro de estatus del receptor en la parte baja
     //-- de los LEDs, si hay error
-    //-- NOTA: por alguna extraña razón... el bit de error del RX está a 1...
     if (rx_status & UART_RX_STATUS_ER_MASK) {
         err_leds_data = err_leds_data | (0xF0 | rx_status); 
     }
@@ -359,9 +357,7 @@ void main() {
     asm("csrw mtvec, %0": : "r"(interrupt));
 
     //-- Comprobar si hay algun error en la UART
-    uint8_t uart_rx_status = *UART_RX_STATUS_ADDRESS;
-    uint8_t uart_tx_status = *UART_TX_STATUS_ADDRESS;
-    signalUartErrorOnLeds(uart_tx_status, uart_rx_status);
+    signalUartErrorOnLeds(UART_TX_STATUS, UART_RX_STATUS);
 
     // Activate machine interrupts
     enableDisable_externalInterrupts(0);
