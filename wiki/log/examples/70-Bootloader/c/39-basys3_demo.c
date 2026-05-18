@@ -237,12 +237,24 @@ void test_leds()
     *LEDS_ADDR = glob_value;
 }
 
-void test_leds_walk() {
+
+//-- Secuencia en los LEDs
+void test_leds_walk() 
+{
     static uint32_t last_glob_val = 0;
+
+    //-- Comprobar si hay cambio en el contador global
     if (last_glob_val != glob_value) {
+
+        //-- Cambio. Actualizar valor actual
         last_glob_val = glob_value;
-        *LEDS_ADDR = (*LEDS_ADDR<<1);
-        if (*LEDS_ADDR == 0) { *LEDS_ADDR = 1; }
+
+        //-- Desplazar a la izquierda el valor en los LEDs
+        LEDS = (LEDS << 1);
+
+        //-- Restaurar el valor cuando sale por la izquierda
+        if (LEDS == 0)
+            LEDS = 1;
     }
 }
 
@@ -454,7 +466,6 @@ void main() {
             if (test_nr >= TEST_DUMMY_FINAL)  
                 test_nr = 0; 
 
-
             //----- Configuraciones generales para todos
             //-- los tests
             //  Deshabilitar las interrupciones
@@ -475,7 +486,10 @@ void main() {
             
             //-- Configuraciones especificas segun el TEST actual
             switch (test_nr) {
-                case TEST_LEDS                : *LEDS_ADDR = 0;  break;
+                case TEST_LEDS: 
+                    LEDS = 0;  
+                    break;
+
                 case TEST_LEDS_WALK           : *LEDS_ADDR = 1;  break;
                 case TEST_BUTTONS             : break;
                 case TEST_SWITCHES            : break;
@@ -510,7 +524,10 @@ void main() {
                 test_leds();  //-- Mediante interrupciones
                 break;
 
-            case TEST_LEDS_WALK           : test_leds_walk(); break;
+            case TEST_LEDS_WALK:  //-- Secuencia en LEDs
+                test_leds_walk(); 
+                break;
+
             case TEST_BUTTONS             : test_buttons(); break;
             case TEST_SWITCHES            : test_switches(); break;
             case TEST_7_SEGMENTS          : test_7segments(); break;
