@@ -6,5 +6,5 @@ char _getchar();
 void _puts(const char *s);
 void print_bin(int num_bin, int size);
 void print_hex(uint32_t num_hex, int size, bool ceros);
-void print_uint(uint32_t num, int size);
+void print_uint(uint32_t num);
 
