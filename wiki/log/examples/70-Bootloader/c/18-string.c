@@ -16,6 +16,9 @@ void main()
     _puts(ANSI_HOME);
     _puts(ANSI_CLS);
 
+    print_uint(0);
+    _puts("\n");
+
     //---- Imprimir numeros de 4 bits
     _puts("--> Numeros de 4 bits\n");
     _puts("* Bin4: ");
@@ -27,11 +30,11 @@ void main()
     _putchar('\n');
 
     _puts("* Dec4: ");
-    print_uint(0xC, 4);
+    print_uint(0xC);
     _putchar('\n');
 
     _puts("* Dec4 (max): ");
-    print_uint(0xF, 4);
+    print_uint(0xF);
     _putchar('\n');
     _putchar('\n');
 
@@ -46,11 +49,11 @@ void main()
     _putchar('\n');
 
     _puts("* Dec8: ");
-    print_uint(0x55, 8);
+    print_uint(0x55);
     _putchar('\n');
 
     _puts("* Dec8 (max): ");
-    print_uint(0xFF, 8);
+    print_uint(0xFF);
     _putchar('\n');
     _putchar('\n');
 
@@ -65,11 +68,11 @@ void main()
     _putchar('\n');
 
     _puts("* Dec16: ");
-    print_uint(0xAAAA, 16);
+    print_uint(0xAAAA);
     _putchar('\n');
 
     _puts("* Dec16 (max): ");
-    print_uint(0xFFFF, 16);
+    print_uint(0xFFFF);
     _putchar('\n');
     _putchar('\n');
 
@@ -84,11 +87,11 @@ void main()
     _putchar('\n');
 
     _puts("* Dec32: ");
-    print_uint(0xCAFEBACA, 32);
+    print_uint(0xCAFEBACA);
     _putchar('\n');
 
     _puts("* Dec32 (max): ");
-    print_uint(0xFFFFFFFF, 32);
+    print_uint(0xFFFFFFFF);
     _putchar('\n');
     _putchar('\n');
 

@@ -116,8 +116,9 @@ void print_hex(uint32_t num_hex, int size, bool ceros)
     //-- Eliminar 0s iniciales
     if (!ceros) {
         sin_ceros = buffer;
-        while( *sin_ceros == '0')
+        while( *sin_ceros == '0') {
             sin_ceros++;
+        }
 
         _puts(sin_ceros);
     }
@@ -139,10 +140,15 @@ void print_uint(uint32_t num, int size)
     //-- 1º: Convertir numero a digitos BCD
     num_bcd = uint_to_bcd(num);
 
-    //-- Imprimir parte alta
-    print_hex(num_bcd >> 32, 32, false);
+    //-- Caso especial
+    if (num_bcd == 0)
+        _putchar('0');
+    else {
+        //-- Imprimir parte alta
+        print_hex(num_bcd >> 32, 32, false);
 
-    //-- Imprimir parte baja
-    print_hex(num_bcd, 32, false);
+        //-- Imprimir parte baja
+        print_hex(num_bcd, 32, false);
+    }
 
 }

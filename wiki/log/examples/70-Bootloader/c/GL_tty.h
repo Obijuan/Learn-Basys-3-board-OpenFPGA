@@ -98,7 +98,7 @@ static inline void GL_set2pixelsRGBhere(
     print_uint((int)g1);
     _puts(";");
     print_uint((int)b1);
-    _puts("m ");
+    _puts("m");
 
 
 	//printf("\033[38;2;%d;%d;%dm",(int)r2,(int)g2,(int)b2);
@@ -109,7 +109,7 @@ static inline void GL_set2pixelsRGBhere(
     print_uint((int)g2);
     _puts(";");
     print_uint((int)b2);
-    _puts("m ");
+    _puts("m");
 
 
 
