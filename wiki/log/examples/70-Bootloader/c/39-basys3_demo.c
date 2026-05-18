@@ -275,13 +275,18 @@ void test_buttons()
 }
 
 
-// ------------------------------------------------------------------------------------------------
-// |                                           SWITCHES                                           |
-// ------------------------------------------------------------------------------------------------
-void test_switches() {
+// ---------------------------------------------------
+// |           SWITCHES                              |
+// ---------------------------------------------------
+void test_switches() 
+{
     uint16_t switches;
-    switches = *SWITCHES_ADDR;
-    *LEDS_ADDR = switches;
+
+    //-- Leer los switches
+    switches = SWITCHES;
+
+    //-- Mostrarlos en los LEDs
+    LEDS = switches;
 }
 
 // ------------------------------------------------------------------------------------------------
@@ -546,7 +551,10 @@ void main() {
                 test_buttons(); 
                 break;
 
-            case TEST_SWITCHES            : test_switches(); break;
+            case TEST_SWITCHES: //-- Mostrar switches en LEDs
+                test_switches(); 
+                break;
+
             case TEST_7_SEGMENTS          : test_7segments(); break;
             case TEST_UART_SEND           : test_uart_send(); break;
             case TEST_UART_ECHO           : test_uart_echo(); break;
