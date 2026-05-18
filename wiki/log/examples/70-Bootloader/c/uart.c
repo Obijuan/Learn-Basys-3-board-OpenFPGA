@@ -126,3 +126,23 @@ void print_hex(uint32_t num_hex, int size, bool ceros)
         _puts(buffer);
 }
 
+//──────────────────────────────────────────────────────
+//──  Imprimir un entero en decimal
+//──
+//──  ENTRADAS:
+//──    * num: Numero a imprimir en hexadecimal
+//──────────────────────────────────────────────────────
+void print_uint(uint32_t num, int size)
+{
+    uint64_t num_bcd;
+
+    //-- 1º: Convertir numero a digitos BCD
+    num_bcd = uint_to_bcd(num);
+
+    //-- Imprimir parte alta
+    print_hex(num_bcd >> 32, 32, false);
+
+    //-- Imprimir parte baja
+    print_hex(num_bcd, 32, false);
+
+}

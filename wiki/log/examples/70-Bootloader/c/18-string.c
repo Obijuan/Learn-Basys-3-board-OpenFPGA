@@ -5,9 +5,6 @@
 #include "stdio.h"
 #include "bcd.h"
 
-void print_uint(uint32_t num, int size);
-void algorithm_dd_shift1();
-uint64_t uint_to_bcd(uint32_t num);
 
 void main()
 {
@@ -98,20 +95,6 @@ void main()
 }
 
 
-void print_uint(uint32_t num, int size)
-{
-    uint64_t num_bcd;
-
-    //-- 1º: Convertir numero a digitos BCD
-    num_bcd = uint_to_bcd(num);
-
-    //-- Imprimir parte alta
-    print_hex(num_bcd >> 32, 32, false);
-
-    //-- Imprimir parte baja
-    print_hex(num_bcd, 32, false);
-
-}
 
 
     
