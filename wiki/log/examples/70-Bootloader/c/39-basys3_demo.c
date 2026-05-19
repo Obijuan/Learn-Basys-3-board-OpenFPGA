@@ -147,14 +147,6 @@ void handleExternalInterrupt() {
     //-- Comprobar si la interrupcion es del transmisor
     if (UART_TX_STATUS & UART_TX_STATUS_EMPTY_MASK) {
 
-        //-- Transmitir el siguiente caracter
-        // UART_BUFFER = 'A';
-        // enableDisable_uartInterrupts(0, 0);
-
-        //-- DEBUG
-        //LEDS = 7;
-        //while(1);
-
         if (tx_char_idx < str_length(uart_transmit_message)) {
             UART_BUFFER = uart_transmit_message[tx_char_idx];
             tx_char_idx++;
@@ -163,16 +155,18 @@ void handleExternalInterrupt() {
              tx_char_idx = 0;
         }
     }
-    // check uart receive interrupt
-    // uint8_t uart_rx_status = *UART_RX_STATUS_ADDRESS;
-    // uint8_t uart_rx_status_mask = (1<<UART_RX_STATUS_IDX_IE) | (1<<UART_RX_STATUS_IDX_FULL);
-    // if ((uart_rx_status & uart_rx_status_mask) == uart_rx_status_mask) {
-    //     // get received data
-    //     uint8_t uart_rx_data = *UART_BUFFER_ADDRESS;
-    //     // echo received data and reset errors
-    //     *UART_BUFFER_ADDRESS = (uint32_t)uart_rx_data;
+
+    //-- Comprobar si la interrupcion es del receptor
+    // if (UART_RX_STATUS & 
+    //     UART_RX_STATUS_FULL_MASK) {
+
+    //     //-- Leer caracter recibido
+    //     uint8_t uart_rx_data = UART_BUFFER;
+
+    //     //-- Hacer eco y resetear los errores
+    //     UART_BUFFER = (uint32_t)uart_rx_data;
     // }
-    // check rx/tx error on leds
+    //check rx/tx error on leds
     //signalUartErrorOnLeds(UART_TX_STATUS, UART_RX_STATUS);
 }
 
@@ -471,6 +465,10 @@ void main() {
     //-- Set interrupt/exception handler
     asm("csrw mtvec, %0": : "r"(interrupt));
 
+    //-- UART: resetear estado de la UART
+    UART_RX_STATUS = 0;
+    UART_TX_STATUS = 0;
+
     //-- Comprobar si hay algun error en la UART
     signalUartErrorOnLeds(UART_TX_STATUS, UART_RX_STATUS);
 
@@ -500,7 +498,8 @@ void main() {
 
     //-- Habilitar interrupcion del temporizador!!!!
     enableDisable_timerInterrupts(1);
-    
+
+
     //-- Bucle principal!!
     while (1) {
 
@@ -568,8 +567,8 @@ void main() {
                     enableDisable_uartInterrupts(0, 1);
                     break;
                 case TEST_UART_ECHO_INTERRUPT :
-                    //enableDisable_externalInterrupts(1);
-                    //enableDisable_uartInterrupts(1, 0);
+                    enableDisable_externalInterrupts(1);
+                    enableDisable_uartInterrupts(1, 0);
                     break;
                 case TEST_VGA_PX_IDX          : break;
                 case TEST_VGA_BYTE_IDX        : break;
@@ -619,7 +618,7 @@ void main() {
                 test_uart_send_interrupt(); 
                 break;
             case TEST_UART_ECHO_INTERRUPT: 
-                //test_uart_echo_interrupt(); 
+                test_uart_echo_interrupt(); 
                 break;
             case TEST_VGA_PX_IDX: 
                 //test_vga(1); 
