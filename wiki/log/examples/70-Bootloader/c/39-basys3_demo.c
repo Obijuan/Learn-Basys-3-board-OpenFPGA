@@ -500,12 +500,6 @@ void main() {
 
     //-- Habilitar interrupcion del temporizador!!!!
     enableDisable_timerInterrupts(1);
-
-    //-- DEBUG
-    enableDisable_externalInterrupts(1);
-    enableDisable_uartInterrupts(0, 1);
-
-
     
     //-- Bucle principal!!
     while (1) {
