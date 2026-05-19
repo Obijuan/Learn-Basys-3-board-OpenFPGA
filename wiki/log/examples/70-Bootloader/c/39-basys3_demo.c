@@ -551,8 +551,6 @@ void main() {
 
                 case TEST_LEDS_WALK: 
                     LEDS = 1;  //-- Valor inicial secuencia
-                    enableDisable_externalInterrupts(1);
-                    enableDisable_uartInterrupts(0, 1);
                     break;
 
                 case TEST_BUTTONS: 
@@ -572,8 +570,8 @@ void main() {
                     break;
 
                 case TEST_UART_SEND_INTERRUPT :
-                    //enableDisable_externalInterrupts(1);
-                    //enableDisable_uartInterrupts(0, 1);
+                    enableDisable_externalInterrupts(1);
+                    enableDisable_uartInterrupts(0, 1);
                     break;
                 case TEST_UART_ECHO_INTERRUPT :
                     //enableDisable_externalInterrupts(1);
@@ -601,7 +599,6 @@ void main() {
 
             case TEST_LEDS_WALK:  //-- Secuencia en LEDs
                 test_leds_walk(); 
-                test_uart_send_interrupt();
                 break;
 
             case TEST_BUTTONS:  //-- Mostrar botones en LEDs 
@@ -625,7 +622,7 @@ void main() {
                 break;
 
             case TEST_UART_SEND_INTERRUPT: 
-                //test_uart_send_interrupt(); 
+                test_uart_send_interrupt(); 
                 break;
             case TEST_UART_ECHO_INTERRUPT: 
                 //test_uart_echo_interrupt(); 
