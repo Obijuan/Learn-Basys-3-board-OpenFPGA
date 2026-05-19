@@ -547,12 +547,12 @@ void main() {
             switch (test_nr) {
                 case TEST_LEDS: 
                     LEDS = 0;  
-                    enableDisable_externalInterrupts(1);
-                    enableDisable_uartInterrupts(0, 1);
                     break;
 
                 case TEST_LEDS_WALK: 
                     LEDS = 1;  //-- Valor inicial secuencia
+                    enableDisable_externalInterrupts(1);
+                    enableDisable_uartInterrupts(0, 1);
                     break;
 
                 case TEST_BUTTONS: 
@@ -596,12 +596,12 @@ void main() {
         switch (test_nr) {
 
             case TEST_LEDS:   //-- Contador en los LEDs 
-                test_leds();  //-- Mediante interrupciones
-                test_uart_send_interrupt(); 
+                test_leds();  //-- Mediante interrupciones 
                 break;
 
             case TEST_LEDS_WALK:  //-- Secuencia en LEDs
                 test_leds_walk(); 
+                test_uart_send_interrupt();
                 break;
 
             case TEST_BUTTONS:  //-- Mostrar botones en LEDs 
