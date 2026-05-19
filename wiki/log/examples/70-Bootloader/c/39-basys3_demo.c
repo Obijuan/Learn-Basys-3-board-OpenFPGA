@@ -48,7 +48,7 @@
 #define USE_TIMER_INTERRUPT_TO_INCREMENT_GLOB_VALUE
 
 uint32_t    glob_value = 0;
-const char* uart_transmit_message = "Transmitting char by char using interrupts seems to work!\n";
+const char* uart_transmit_message = "TESTING!!\n";
 
 enum Test {
     TEST_LEDS,
@@ -139,33 +139,41 @@ void handleTimerInterrupt() {
     TIMER_MTIMEH = 0;
 }
 
-
+//-- Interrupcion de la UART
 void handleExternalInterrupt() {
+
     static uint8_t  tx_char_idx = 0;
-    // check uart transmit interrupt
-    uint8_t uart_tx_status = *UART_TX_STATUS_ADDRESS;
-    uint8_t uart_tx_status_mask = (1<<UART_TX_STATUS_IDX_IE) | (1<<UART_TX_STATUS_IDX_EMPTY);
-    if ((uart_tx_status & uart_tx_status_mask) == uart_tx_status_mask) {
-        // transmit next char
+
+    //-- Comprobar si la interrupcion es del transmisor
+    if (UART_TX_STATUS & UART_TX_STATUS_EMPTY_MASK) {
+
+        //-- Transmitir el siguiente caracter
+        // UART_BUFFER = 'A';
+        // enableDisable_uartInterrupts(0, 0);
+
+        //-- DEBUG
+        //LEDS = 7;
+        //while(1);
+
         if (tx_char_idx < str_length(uart_transmit_message)) {
-            *UART_BUFFER_ADDRESS = uart_transmit_message[tx_char_idx];
+            UART_BUFFER = uart_transmit_message[tx_char_idx];
             tx_char_idx++;
         } else {
-            enableDisable_uartInterrupts(0, 0); // (enabled again after some time)
-            tx_char_idx = 0;
+             enableDisable_uartInterrupts(0, 0); // (enabled again after some time)
+             tx_char_idx = 0;
         }
     }
     // check uart receive interrupt
-    uint8_t uart_rx_status = *UART_RX_STATUS_ADDRESS;
-    uint8_t uart_rx_status_mask = (1<<UART_RX_STATUS_IDX_IE) | (1<<UART_RX_STATUS_IDX_FULL);
-    if ((uart_rx_status & uart_rx_status_mask) == uart_rx_status_mask) {
-        // get received data
-        uint8_t uart_rx_data = *UART_BUFFER_ADDRESS;
-        // echo received data and reset errors
-        *UART_BUFFER_ADDRESS = (uint32_t)uart_rx_data;
-    }
+    // uint8_t uart_rx_status = *UART_RX_STATUS_ADDRESS;
+    // uint8_t uart_rx_status_mask = (1<<UART_RX_STATUS_IDX_IE) | (1<<UART_RX_STATUS_IDX_FULL);
+    // if ((uart_rx_status & uart_rx_status_mask) == uart_rx_status_mask) {
+    //     // get received data
+    //     uint8_t uart_rx_data = *UART_BUFFER_ADDRESS;
+    //     // echo received data and reset errors
+    //     *UART_BUFFER_ADDRESS = (uint32_t)uart_rx_data;
+    // }
     // check rx/tx error on leds
-    signalUartErrorOnLeds(uart_tx_status, uart_rx_status);
+    //signalUartErrorOnLeds(UART_TX_STATUS, UART_RX_STATUS);
 }
 
 __attribute__((interrupt))
@@ -198,6 +206,7 @@ void interrupt()
             handleTimerInterrupt(); 
             break; 
         case ((1<<31) | 11):    // EXTERNAL INTERRUPT
+            //-- DEBUG
             handleExternalInterrupt(); 
             break; 
 
@@ -371,7 +380,8 @@ void test_uart_echo()
     }
 }
 
-void test_uart_send_interrupt() {
+void test_uart_send_interrupt() 
+{
     static uint32_t last_glob_val = 0;
     // enable interrupts after some time
     if (last_glob_val != glob_value) {
@@ -491,6 +501,11 @@ void main() {
     //-- Habilitar interrupcion del temporizador!!!!
     enableDisable_timerInterrupts(1);
 
+    //-- DEBUG
+    enableDisable_externalInterrupts(1);
+    enableDisable_uartInterrupts(0, 1);
+
+
     
     //-- Bucle principal!!
     while (1) {
@@ -532,6 +547,8 @@ void main() {
             switch (test_nr) {
                 case TEST_LEDS: 
                     LEDS = 0;  
+                    enableDisable_externalInterrupts(1);
+                    enableDisable_uartInterrupts(0, 1);
                     break;
 
                 case TEST_LEDS_WALK: 
@@ -580,6 +597,7 @@ void main() {
 
             case TEST_LEDS:   //-- Contador en los LEDs 
                 test_leds();  //-- Mediante interrupciones
+                test_uart_send_interrupt(); 
                 break;
 
             case TEST_LEDS_WALK:  //-- Secuencia en LEDs

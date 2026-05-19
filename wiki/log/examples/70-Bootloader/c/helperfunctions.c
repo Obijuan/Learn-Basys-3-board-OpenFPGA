@@ -219,11 +219,14 @@ void enableDisable_uartInterrupts(
         uint8_t enable_disable_rx, 
         uint8_t enable_disable_tx) 
 {
-    // rx
-    if (enable_disable_rx) { *UART_RX_STATUS_ADDRESS |=  (1<<UART_RX_STATUS_IDX_IE); }
-    else                   { *UART_RX_STATUS_ADDRESS &= ~(1<<UART_RX_STATUS_IDX_IE); }
-    // tx
-    if (enable_disable_tx) { *UART_TX_STATUS_ADDRESS |=  (1<<UART_TX_STATUS_IDX_IE); }
-    else                   { *UART_TX_STATUS_ADDRESS &= ~(1<<UART_TX_STATUS_IDX_IE); }
+    //-- Receptor
+    if (enable_disable_rx)  
+        UART_RX_STATUS |= UART_RX_STATUS_IE_MASK; 
+    else UART_RX_STATUS &= ~(UART_RX_STATUS_IE_MASK); 
+
+    //-- Transmisor
+    if (enable_disable_tx)  
+        UART_TX_STATUS |=  UART_TX_STATUS_IE_MASK; 
+    else UART_TX_STATUS &= ~(UART_TX_STATUS_IE_MASK);
 }
 
