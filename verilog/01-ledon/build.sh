@@ -8,7 +8,10 @@ YELLOW='\033[1;33m'
 RESET='\033[0m'  #-- Color por defecto
 
 #-- Nombre de la entidad top a probar, sin extension
-TOP=ledon
+#-- Se lee directamente del nombre del directorio actual,
+#-- eliminado el numero inicial
+CURRENT_DIR=${PWD##*/}
+TOP=${CURRENT_DIR:3}
 
 #-- Fichero de restricciones
 XDC=../../basys3.xdc
@@ -48,7 +51,7 @@ fi
 #--------------------------------------
 echo -e $BLUE"➡️  Rutando..."$RESET
 nextpnr-xilinx --chipdb $CHIPDB/$PART.bin \
-       --xdc $XDC --json $TOP.json --fasm TOP.fasm #-q
+       --xdc $XDC --json $TOP.json --fasm $TOP.fasm #-q
 
 if [ $? -ne 0 ]; then
     echo -e $RED"> Abortando...\n"$RESET
