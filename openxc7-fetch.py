@@ -3,8 +3,17 @@
 import subprocess
 import shutil
 import re
+from pathlib import Path
 
 import ansi
+
+
+# ------ Nombre relativos de los directorios
+# -- Base de la distribucion
+DIST = "dist"
+BIN = "bin"
+LIBEXEC = "libexec"
+LIB = "lib"
 
 
 # ------------------------------------------------------------------
@@ -71,8 +80,17 @@ print("OPENXC7-FETCH")
 print("─────────────────────────")
 print(ansi.DEFAULT, end='', flush=True)
 
+
+# -- Obtener la ruta de yosys
+yosys_ruta = Path(str(shutil.which("yosys")))
+
 # -- Leer las dependencias de yosys
 yosys_deps = get_dependencies("yosys")
+
+# -- Copiar el ejecutable de yosys al directorio de la distribucion
+yosys_target = Path.cwd() / DIST / LIBEXEC
+shutil.copy2(yosys_ruta, yosys_target)
+
 
 # -- Imprimir todas las dependencias
 for library in yosys_deps:
