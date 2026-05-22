@@ -64,9 +64,9 @@ fi
 
 #-- Generacion del bitstream
 echo -e $BLUE"➡️  Generando bitstream..."$RESET
-openxc7.fasm2frames --part $PART1 \
-  --db-root $PRJXRAY_DB_DIR \
-  $NAME.fasm > $NAME.frames 2> /dev/null
+fasm2frames --part $PART1 \
+  --db-root $CHIPDB \
+  $TOP.fasm > $TOP.frames 2> /dev/null
 
 if [ $? -ne 0 ]; then
     echo -e $RED"> Abortando...\n"$RESET

@@ -5,11 +5,11 @@ stdenv.mkDerivation rec {
   version = "bdbc665852b82f589ff775a8f6498542dbec0a07";
 
   src = fetchFromGitHub {
-    owner = "f4pga";
+    owner = "openXC7";
     repo = "prjxray";
-    rev = "bdbc665852b82f589ff775a8f6498542dbec0a07";
+    rev = "132342f7a27c650a7cbedda663e2f33bc4a582f5";
     fetchSubmodules = true;
-    hash = "sha256-lV4o62lS7CMG0EYPhp9bTB4fg0hOixy8CC8yGxKhGQE=";
+    hash = "sha256-b/UQAu4hvAJ5Jng6z1XmlVpRUN1mb1igefcy9/c2HbM=";
   };
 
   nativeBuildInputs = [ cmake git ];
