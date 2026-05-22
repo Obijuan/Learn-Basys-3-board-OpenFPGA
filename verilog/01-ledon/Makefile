@@ -135,8 +135,8 @@ ${CHIPDB}:
 	@echo
 
 #-- Borrado de la base de datos
-.PHONY: clean-chipdb
-clean-chipdb:
+.PHONY: clean-db
+clean-db:
 	@echo
 	@echo -e ${BLUE}"─────────────────────────────────────"${RESET}
 	@echo -e ${BLUE}"➡️  Borrando base de datos..."${RESET}
