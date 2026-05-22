@@ -3,4 +3,5 @@ chipdb/
 *.frames
 *.bit
 ledon.json
+*.pyc
 
