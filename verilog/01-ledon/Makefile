@@ -24,6 +24,7 @@ CHIPDB = ${CHIPDB_DIR}/${PART}.bin
 #──────────────────────────────────────────────────
 #─── Objetivo principal: GENERAR BITSTREAM BINARIO
 #──────────────────────────────────────────────────
+.PHONY: all
 all: ${TOP}.bit
 
 
@@ -93,6 +94,7 @@ $(TOP).bit: $(TOP).frames
 #──────────────────────────────────────────────────
 #───  Construccion de la base de datos
 #──────────────────────────────────────────────────
+.PHONY: chipdb
 chipdb: ${CHIPDB}
 	
 ${CHIPDB}:
@@ -107,6 +109,7 @@ ${CHIPDB}:
 	@echo
 
 #-- Borrado de la base de datos
+.PHONY: clean-chipdb
 clean-chipdb:
 	@echo
 	@echo -e ${BLUE}"─────────────────────────────────────"${RESET}
@@ -119,6 +122,7 @@ clean-chipdb:
 #──────────────────────────────────────────────────
 #───  PROGRAMACION: Grabacion del bitstream en RAM
 #──────────────────────────────────────────────────
+.PHONY: prog
 prog:	${TOP}.bit
 	@echo -e ${YELLOW}"─────────────────────────────────────"${RESET}
 	@echo -e ${YELLOW}"➡️  Cargando bitstream en RAM..."${RESET}
@@ -133,6 +137,7 @@ prog:	${TOP}.bit
 #──────────────────────────────────────────────────
 #───  PROGRAMACION: Grabacion en memoria FLASH
 #──────────────────────────────────────────────────
+.PHONY: flash
 flash:  ${TOP}.bit
 	@echo -e ${YELLOW}"─────────────────────────────────────"${RESET}
 	@echo -e ${YELLOW}"➡️  Cargando bitstream en FLASH..."${RESET}
@@ -147,6 +152,7 @@ flash:  ${TOP}.bit
 #──────────────────────────────────────────────────
 #───  LIMPIEZA
 #──────────────────────────────────────────────────
+.PHONY: clean
 clean:
 	@echo
 	@echo -e ${RED}"➡️  Borrando ficheros..."${RESET}
