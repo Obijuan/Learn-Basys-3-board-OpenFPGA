@@ -1,5 +1,6 @@
 chipdb/
 *.fasm
 *.frames
+*.bit
 ledon.json
 

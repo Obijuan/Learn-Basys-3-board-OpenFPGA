@@ -58,12 +58,31 @@ $(TOP).fasm: ${TOP}.json ${CHIPDB}
 $(TOP).frames: $(TOP).fasm
 	@echo
 	@echo -e ${BLUE}"─────────────────────────────────────"${RESET}
-	@echo -e $BLUE"➡️  Generando bitstream..."${RESET}
+	@echo -e ${BLUE}"➡️  Generando bitstream..."${RESET}
 	@echo -e ${BLUE}"─────────────────────────────────────"${RESET}
 	fasm2frames --part ${PART1} \
   		--db-root ${PRJXRAY_DB_DIR}/artix7 \
   		${TOP}.fasm > ${TOP}.frames
 	@echo
+
+
+#------------------------------
+#-- Compresion del Bitstream
+#------------------------------
+#--- .frames ---> .bit
+$(TOP).bit: $(TOP).frames
+	@echo
+	@echo -e ${BLUE}"─────────────────────────────────────"${RESET}
+	@echo -e ${BLUE}"➡️  Comprimiendo..."${RESET}
+	@echo -e ${BLUE}"─────────────────────────────────────"${RESET}
+	xc7frames2bit --part_file ${PRJXRAY_DB_DIR}/artix7/${PART1}/part.yaml \
+  		--part_name ${PART1} --frm_file ${TOP}.frames \
+  		--output_file ${TOP}.bit
+	@echo
+	@echo -e ${GREEN}"─────────────────────────────────"
+	@echo -e ${GREEN}"✅ OK!"${RESET}
+	@echo -e ${GREEN}"─────────────────────────────────\n"${RESET}
+
 
 
 #──────────────────────────────────────────────────
@@ -96,6 +115,6 @@ clean-chipdb:
 clean:
 	@echo
 	@echo -e ${RED}"➡️  Borrando ficheros..."${RESET}
-	rm -rf *.fasm *.frames *.json
+	rm -rf *.fasm *.frames *.json *.bit
 	@echo
 
