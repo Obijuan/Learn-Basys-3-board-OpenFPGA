@@ -3,6 +3,8 @@ GREEN='\033[0;32m'
 RED='\033[0;31m'
 BLUE='\033[0;34m'
 YELLOW='\033[1;33m'
+CYAN="\033[36m"
+MAG="\033[35m"
 RESET='\033[0m'  #-- Color por defecto
 
 #-- Top module
@@ -20,6 +22,30 @@ CHIPDB_DIR = ../../chipdb
 
 #-- Fichero con la base de datos
 CHIPDB = ${CHIPDB_DIR}/${PART}.bin
+
+#──────────────────────────────────────────────────
+#─── MOSTRAR LA AYUDA
+#──────────────────────────────────────────────────
+.PHONY: help
+help:
+	@echo ""
+	@echo -e ${BLUE}"─────────────────────────────────────────"${RESET}
+	@echo -e ${BLUE}"SINTESIS DE HARDWARE EN PLACA BASYS3"${RESET}
+	@echo -e $(GREEN)"FPGA ARTIX7 de Xilinx/AMD"${RESET}
+	@echo -e ${BLUE}"─────────────────────────────────────────"${RESET}
+	@echo "Uso:"
+	@echo -e "  "${YELLOW}"make"${RESET}"  ---> Generar bitstream"
+	@echo -e "  "${YELLOW}"make"${CYAN}" TARGET"${RESET}
+	@echo ""
+	@echo -e ${CYAN}"TARGET:"${RESET}
+	@echo -e ${MAG}"  help"${RESET}"         Sacar esta ayuda"
+	@echo -e ${MAG}"  clean"${RESET}"        Borrar archivos de construccion"
+	@echo -e ${MAG}"  chipdb"${RESET}"       Crear la base de datos para la Artix7"
+	@echo -e ${MAG}"  clean-db"${RESET}"     Borrar la base de datos"
+	@echo -e ${MAG}"  prog"${RESET}"         Cargar el bitstream en la FPGA (RAM)"
+	@echo -e ${MAG}"  flash"${RESET}"        Grabar el bitstream en la memoria Flash"
+	@echo ""
+
 
 #──────────────────────────────────────────────────
 #─── Objetivo principal: GENERAR BITSTREAM BINARIO
