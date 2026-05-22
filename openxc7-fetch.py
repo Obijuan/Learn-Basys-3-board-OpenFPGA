@@ -64,10 +64,44 @@ def get_dependencies(binary: str) -> dict:
         elif "linux-vdso" in linea:
             match_vdso = re.search(r'(\S+)', linea)
             if match_vdso:
-                deps[match_vdso.group(1)] = "Inyectada por el kernel"
+                deps[match_vdso.group(1)] = ""
 
     # -- Devolver el diccionario
     return deps
+
+
+# ------------------------------------------------------
+# -- Copiar el ejecutable indicado en la distribucion
+# -- junto con TODAS sus librerias
+# ------------------------------------------------------
+def copy_with_deps(binary: str):
+    # -- Obtener la ruta del ejecutable
+    executable_path = Path(str(shutil.which(binary)))
+
+    # -- Leer las librerias dependencias del ejecutable
+    executable_deps = get_dependencies(binary)
+
+    # -- Copiar el ejecutable de yosys al directorio de la distribucion
+    executable_target_dir = Path.cwd() / DIST / LIBEXEC
+    executable_target = executable_target_dir / binary
+
+    if not executable_target.exists():
+        shutil.copy(executable_path, executable_target)
+
+    # -- Directorio destino para las librerias
+    libs_target_dir = Path.cwd() / DIST / LIB
+
+    # -- Copiar todas las dependencias de yosys
+    for lib_name, libs_path in executable_deps.items():
+
+        if libs_path != "":
+            # -- Ruta completa del archivo en destino
+            lib_target = libs_target_dir / Path(libs_path).name
+
+            if not lib_target.exists():
+                shutil.copy(libs_path, libs_target_dir)
+                print(f"Copiando {lib_name}")
+    print()
 
 
 # -----------------
@@ -80,22 +114,13 @@ print("OPENXC7-FETCH")
 print("─────────────────────────")
 print(ansi.DEFAULT, end='', flush=True)
 
-
-# -- Obtener la ruta de yosys
-yosys_ruta = Path(str(shutil.which("yosys")))
-
-# -- Leer las dependencias de yosys
-yosys_deps = get_dependencies("yosys")
-
-# -- Copiar el ejecutable de yosys al directorio de la distribucion
-yosys_target = Path.cwd() / DIST / LIBEXEC
-shutil.copy2(yosys_ruta, yosys_target)
-
-
-# -- Imprimir todas las dependencias
-for library in yosys_deps:
-    print(f"🔵 {library}")
-
+# ----- Procesar YOSYS
 print()
-for ruta in yosys_deps.values():
-    print(f"{ruta}")
+print(f"{ansi.GREEN}────── Yosys ──────")
+print(ansi.DEFAULT, end='', flush=True)
+copy_with_deps("yosys")
+
+
+# TODO
+# Crea el directorio de destino y todos sus padres si no existen
+# destino_directorio.mkdir(parents=True, exist_ok=True)
