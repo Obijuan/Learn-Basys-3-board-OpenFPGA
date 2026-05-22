@@ -33,3 +33,7 @@ El resultado se muestra en esta animación:
 
 ![Animacion de la carga en laplaca](wiki/images/basys-demo.gif)
 
+# Creditos
+
+Las herramientas libres para las FPGAs de Xilinx las tenemos gracias al [Proyecto openXC7](https://github.com/openxc7). Están haciendo un trabajo increible. ¡Muchísimas gracias!
+
