@@ -21,6 +21,11 @@ CHIPDB_DIR = ../../chipdb
 #-- Fichero con la base de datos
 CHIPDB = ${CHIPDB_DIR}/${PART}.bin
 
+#──────────────────────────────────────────────────
+#─── Objetivo principal: GENERAR BITSTREAM BINARIO
+#──────────────────────────────────────────────────
+all: ${TOP}.bit
+
 
 #──────────────────────────────────────────────────
 #─── SINTESIS
@@ -66,9 +71,9 @@ $(TOP).frames: $(TOP).fasm
 	@echo
 
 
-#------------------------------
-#-- Compresion del Bitstream
-#------------------------------
+#──────────────────────────────────────────────────
+#───  COMPRESION DEL BIT STREAM. FINAL: .bit
+#──────────────────────────────────────────────────
 #--- .frames ---> .bit
 $(TOP).bit: $(TOP).frames
 	@echo
@@ -80,7 +85,7 @@ $(TOP).bit: $(TOP).frames
   		--output_file ${TOP}.bit
 	@echo
 	@echo -e ${GREEN}"─────────────────────────────────"
-	@echo -e ${GREEN}"✅ OK!"${RESET}
+	@echo -e ${GREEN}"✅ OK! Bitstream GENERADO"${RESET}
 	@echo -e ${GREEN}"─────────────────────────────────\n"${RESET}
 
 
@@ -111,7 +116,37 @@ clean-chipdb:
 	@echo
 
 
-#---------- LIMPIEZA
+#──────────────────────────────────────────────────
+#───  PROGRAMACION: Grabacion del bitstream en RAM
+#──────────────────────────────────────────────────
+prog:	${TOP}.bit
+	@echo -e ${YELLOW}"─────────────────────────────────────"${RESET}
+	@echo -e ${YELLOW}"➡️  Cargando bitstream en RAM..."${RESET}
+	@echo -e ${YELLOW}"─────────────────────────────────────"${RESET}
+	openFPGALoader --board basys3 --bitstream ${TOP}.bit
+	@echo -e ${GREEN}"─────────────────────────────────"
+	@echo -e ${GREEN}"✅ OK! Bitstream CARGADO"${RESET}
+	@echo -e ${GREEN}"─────────────────────────────────\n"${RESET}
+	@echo
+
+
+#──────────────────────────────────────────────────
+#───  PROGRAMACION: Grabacion en memoria FLASH
+#──────────────────────────────────────────────────
+flash:  ${TOP}.bit
+	@echo -e ${YELLOW}"─────────────────────────────────────"${RESET}
+	@echo -e ${YELLOW}"➡️  Cargando bitstream en FLASH..."${RESET}
+	@echo -e ${YELLOW}"─────────────────────────────────────"${RESET}
+	openFPGALoader --board basys3 --write-flash ${TOP}.bit
+	@echo -e ${GREEN}"─────────────────────────────────"
+	@echo -e ${GREEN}"✅ OK! Bitstream GRABADO"${RESET}
+	@echo -e ${GREEN}"─────────────────────────────────\n"${RESET}
+	@echo
+
+
+#──────────────────────────────────────────────────
+#───  LIMPIEZA
+#──────────────────────────────────────────────────
 clean:
 	@echo
 	@echo -e ${RED}"➡️  Borrando ficheros..."${RESET}
