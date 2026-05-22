@@ -118,8 +118,13 @@ print(ansi.DEFAULT, end='', flush=True)
 print()
 print(f"{ansi.GREEN}────── Yosys ──────")
 print(ansi.DEFAULT, end='', flush=True)
-copy_with_deps("yosys")
+# copy_with_deps("yosys")
 
+# ----- Procesar NEXTPNR-XILINX
+print()
+print(f"{ansi.GREEN}────── Nextpnr-Xilinx ──────")
+print(ansi.DEFAULT, end='', flush=True)
+copy_with_deps("nextpnr-xilinx")
 
 # TODO
 # Crea el directorio de destino y todos sus padres si no existen

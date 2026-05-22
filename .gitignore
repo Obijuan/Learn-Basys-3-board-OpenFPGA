@@ -4,5 +4,7 @@ chipdb/
 *.bit
 ledon.json
 *.pyc
-dist/
+dist/lib/
+dist/libexec/
+
 
