@@ -37,9 +37,9 @@ ${TOP}.json: ${TOP}.v
 	@echo
 
 
-#--------------------------------------
-#-- RUTADO
-#--------------------------------------
+#──────────────────────────────────────────────────
+#─── RUTADO
+#──────────────────────────────────────────────────
 #-- .json --> .fasm
 $(TOP).fasm: ${TOP}.json ${CHIPDB}
 	@echo
@@ -50,6 +50,20 @@ $(TOP).fasm: ${TOP}.json ${CHIPDB}
        --xdc ${XDC} --json ${TOP}.json --fasm ${TOP}.fasm -q
 	@echo
 
+
+#──────────────────────────────────────────────────
+#───  GENERACION DEL BITSTREAM
+#──────────────────────────────────────────────────
+#-- .fasm ---> .frames
+$(TOP).frames: $(TOP).fasm
+	@echo
+	@echo -e ${BLUE}"─────────────────────────────────────"${RESET}
+	@echo -e $BLUE"➡️  Generando bitstream..."${RESET}
+	@echo -e ${BLUE}"─────────────────────────────────────"${RESET}
+	fasm2frames --part ${PART1} \
+  		--db-root ${PRJXRAY_DB_DIR}/artix7 \
+  		${TOP}.fasm > ${TOP}.frames
+	@echo
 
 
 #──────────────────────────────────────────────────
