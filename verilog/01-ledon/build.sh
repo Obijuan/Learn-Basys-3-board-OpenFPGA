@@ -14,7 +14,7 @@ CURRENT_DIR=${PWD##*/}
 TOP=${CURRENT_DIR:3}
 
 #-- Fichero de restricciones
-XDC=../../basys3.xdc
+XDC=../../config/basys3.xdc
 
 #-- Dependencias
 DEPS=""
@@ -36,9 +36,11 @@ echo -e "$YELLOW─────────────────────�
 #-- SINTESIS
 #------------------------------
 echo -e $BLUE"➡️  Sintetizando..."$RESET
-yosys -p "synth_xilinx  \
-              -arch xc7 -top $TOP; write_json $TOP.json" \
-              $TOP.v $DEPS -q
+
+#-- Mostrar el comando que se ejecuta
+set -x
+yosys -p "synth_xilinx -arch xc7 -top $TOP; write_json $TOP.json" $TOP.v $DEPS -q
+set +x
 
 if [ $? -ne 0 ]; then
     echo -e $RED"> Abortando...\n"$RESET
@@ -50,8 +52,10 @@ fi
 #-- RUTADO
 #--------------------------------------
 echo -e $BLUE"➡️  Rutando..."$RESET
+set -x
 nextpnr-xilinx --chipdb $CHIPDB/$PART.bin \
        --xdc $XDC --json $TOP.json --fasm $TOP.fasm -q
+set +x
 
 if [ $? -ne 0 ]; then
     echo -e $RED"> Abortando...\n"$RESET
@@ -64,9 +68,11 @@ fi
 
 #-- Generacion del bitstream
 echo -e $BLUE"➡️  Generando bitstream..."$RESET
+set -x
 fasm2frames --part $PART1 \
-  --db-root $CHIPDB \
+  --db-root ${PRJXRAY_DB_DIR} \
   $TOP.fasm > $TOP.frames 2> /dev/null
+set +x
 
 if [ $? -ne 0 ]; then
     echo -e $RED"> Abortando...\n"$RESET
@@ -76,10 +82,12 @@ fi
 #------------------------------
 #-- Compresion del Bitstream
 #------------------------------
-echo -e $BLUE"➡️  Comprimiendo..."
-openxc7.xc7frames2bit --part_file $PRJXRAY_DB_DIR/$PART1/part.yaml \
+echo -e $BLUE"➡️  Comprimiendo..."$RESET
+set -x
+xc7frames2bit --part_file $PRJXRAY_DB_DIR/$PART1/part.yaml \
   --part_name $PART1 --frm_file $NAME.frames \
   --output_file $NAME.bit
+set +x
 
 if [ $? -ne 0 ]; then
     echo -e $RED"> Abortando...\n"$RESET
