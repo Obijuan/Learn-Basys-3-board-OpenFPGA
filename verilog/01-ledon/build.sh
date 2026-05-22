@@ -51,7 +51,7 @@ fi
 #--------------------------------------
 echo -e $BLUE"➡️  Rutando..."$RESET
 nextpnr-xilinx --chipdb $CHIPDB/$PART.bin \
-       --xdc $XDC --json $TOP.json --fasm $TOP.fasm #-q
+       --xdc $XDC --json $TOP.json --fasm $TOP.fasm -q
 
 if [ $? -ne 0 ]; then
     echo -e $RED"> Abortando...\n"$RESET
