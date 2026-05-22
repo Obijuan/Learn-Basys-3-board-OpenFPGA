@@ -10,27 +10,26 @@ More information on the [wiki](https://github.com/Obijuan/Learn-Basys-3-board-Op
 curl -L https://nixos.org/nix/install | sh
 ```
 
-2. Abrir una shell de nix, desde el directorio principal del proyecto `nix-shell`
+2. Clonar este repositorio
 
-La primera vez se instalaran todos los paquetes necesario y tardará un rato. Las siguientes veces irá muy rápido
+3. Entrar en el directorio Learn-Basys-3-board-openFPGA
 
-```bash
-obijuan@JANEL:~/Develop/Learn-Basys-3-board-OpenFPGA$ nix-shell 
-FPGA Artix7 Xilinx. Placa Basys3
+4. Ejecutar `nix-develop`
 
-[nix-shell:~/Develop/Learn-Basys-3-board-OpenFPGA]$ 
-```
+  La primera vez se empezarán a bajar, compilar e instalar todas las herramientas. Esto llevará bastante tiempo (20 minnutos en mi ordenador)
+  (Estoy trabajando en otras soluciones para mejorar esto)
 
-3. La primera vez hay que **generar la base de datos** de la FPGA. Ejecuta el script `generate-db.sh`
+5. Ejemplo HOLA-MUNDO
 
-```bash
-[nix-shell:~/Develop/Learn-Basys-3-board-OpenFPGA]$ ./generate-db.sh 
-➡️  Generando fichero ./chipdb/xc7a35tcpg236.bin
-pypy3 /nix/store/j6pri4nf2z3s8p3fdf4fa1ydz9wfmyym-nextpnr-xilinx-0.8.2-unstable-2026-03-13/share/nextpnr/python/bbaexport.py --device xc7a35tcpg236-1 --bba ./chipdb/xc7a35tcpg236.bba
-Exporting tile and site type data...
-Exporting nodes...
-Exporting tile and site instances...
-bbasm -l ./chipdb/xc7a35tcpg236.bba ./chipdb/xc7a35tcpg236.bin
+  Vamos a hacer una prueba: encender el LED 15 de la Basys3
 
-[nix-shell:~/Develop/Learn-Basys-3-board-OpenFPGA]$
-```
+  1. Entrar en el directorio verilog/01-ledon
+  2. Ejecutar `make prog`
+
+Se realiza la síntesis completa y se carga el bitstream en la placa
+El resultado es que el LED 15 se enciende
+
+El resultado se muestra en esta animación:
+
+![Animacion de la carga en laplaca](wiki/images/basys-demo.gif)
+
