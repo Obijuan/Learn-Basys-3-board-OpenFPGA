@@ -192,10 +192,12 @@ for fich, tipo in yosys_files.items():
     elif tipo == PYTHON:
         print(f"🔵 {fich}:")
         copy_exec(fich)
+        print()
 
     elif tipo == SHELL_SCRIPT:
         print(f"🔵 {fich}:")
         copy_exec(fich)
+        print()
 
 print()
 
