@@ -129,7 +129,7 @@ def copy_with_deps(binary: str):
             lib_target = libs_target_dir / Path(libs_path).name
 
             # -- Imprimir nombre de la biblioteca
-            print(f"{ansi.BLUE}  🧾  Lib: ",
+            print(f"{ansi.BLUE}  🧾 Lib: ",
                   end='', flush=True)
             print(f"{ansi.DEFAULT}{lib_name}", end='', flush=True)
 
@@ -168,13 +168,26 @@ copy_with_deps("yosys")
 print("🔵 yosys-abc:")
 copy_with_deps("yosys-abc")
 
-# -- No es un ejecutable, es un script bash
+print("🔵 yosys-filterlib:")
+copy_with_deps("yosys-filterlib")
+
+# -- Script bash
 print("🔵 yosys-config:")
 copy_exec("yosys-config")
+print()
+
+# -- Scripts python
+print("🔵 yosys-smtbmc:")
+copy_exec("yosys-smtbmc")
+print()
+
+print("🔵 yosys-witness:")
+copy_exec("yosys-witness")
+print()
 
 print()
 # -- Siguiente paso: Observar lo que hay en la carpeta yosys de nix
-# yosys-filterlib  yosys-smtbmc  yosys-witness
+# yosys-witness
 
 # ----- Procesar NEXTPNR-XILINX
 # print()
