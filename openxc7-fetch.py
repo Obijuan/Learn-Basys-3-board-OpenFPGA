@@ -82,9 +82,13 @@ def copy_exec(binary: str):
     executable_target_dir = Path.cwd() / DIST / LIBEXEC
     executable_target = executable_target_dir / binary
 
+    # -- Si no existe, copiarlo!
     if not executable_target.exists():
         shutil.copy(executable_path, executable_target)
-        print(f"🔵 Copiado: {binary}")
+        print(f"  ➡️  Ejecutable: {binary}✅")
+    else:
+        # -- Si existe, imprimir solo el nombre, sin copiar
+        print(f"  ➡️  Ejecutable: {binary}📌")
 
 
 # ------------------------------------------------------
@@ -92,18 +96,12 @@ def copy_exec(binary: str):
 # -- junto con TODAS sus librerias
 # ------------------------------------------------------
 def copy_with_deps(binary: str):
-    # -- Obtener la ruta del ejecutable
-    executable_path = Path(str(shutil.which(binary)))
+
+    # -- Copiar primero el ejecutable
+    copy_exec(binary)
 
     # -- Leer las librerias dependencias del ejecutable
     executable_deps = get_dependencies(binary)
-
-    # -- Copiar el ejecutable de yosys al directorio de la distribucion
-    executable_target_dir = Path.cwd() / DIST / LIBEXEC
-    executable_target = executable_target_dir / binary
-
-    if not executable_target.exists():
-        shutil.copy(executable_path, executable_target)
 
     # -- Directorio destino para las librerias
     libs_target_dir = Path.cwd() / DIST / LIB
@@ -138,7 +136,7 @@ print(ansi.DEFAULT, end='', flush=True)
 
 # -- Obtener el ejecutable y las librerias
 # -- en los directorio dist/libexe y dist/lib
-print("* yosys:")
+print("🔵 yosys:")
 copy_with_deps("yosys")
 
 print("* yosys-abc:")
