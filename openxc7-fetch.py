@@ -20,19 +20,6 @@ EJECUTABLE = 0
 SHELL_SCRIPT = 1
 PYTHON = 2
 
-# -- Informacion sobre yosys
-# -- Se ha introducido MANUALMENTE
-# -- TODO: Automatizar su creacion
-# --   Usando file podemos saber qué tipo de fichero es
-yosys_files = {
-    'yosys': EJECUTABLE,
-    'yosys-abc': EJECUTABLE,
-    'yosys-filterlib': EJECUTABLE,
-    'yosys-config': SHELL_SCRIPT,
-    'yosys-smtbmc': PYTHON,
-    'yosys-witness': PYTHON
-}
-
 
 # ------------------------------------------------------------------
 # -- Obtener las librerias dinámicas que son dependencias del
@@ -288,30 +275,6 @@ for fich in list_exec:
 
     print()
 
-
-# 2. Obtener su directorio
-# 3. Obtener todos los ficheros de su directorio
-
-
-# -- Procesar todos los ficheros "ejecutables"
-# -- de yosys, segun lo que sean (ejecutable, shell, python...)
-# -- Copiar ejecutables a dist/libexec
-# -- Copiar librerias a dist/lib
-
-# for fich, tipo in yosys_files.items():
-#     if tipo == EJECUTABLE:
-#         print(f"🔵 {fich}:")
-#         copy_with_deps(fich)
-
-#     elif tipo == PYTHON:
-#         print(f"🔵 {fich}:")
-#         copy_exec(fich)
-#         print()
-
-#     elif tipo == SHELL_SCRIPT:
-#         print(f"🔵 {fich}:")
-#         copy_exec(fich)
-#         print()
 
 print()
 
