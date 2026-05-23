@@ -160,7 +160,71 @@ def copy_with_deps(binary: str):
             else:
                 # -- Marca que indica que ya existe
                 print("📌")
-    print()
+
+
+# ------------------------------------
+# -- Ejecutar el comando "file -b fich"
+# -- Se devuelve la cadena procesada y
+# -- en minusculas
+# -------------------------------------
+def cmd_file(fich: Path) -> str:
+    # -- Ejecutar "file -b fich"
+    resultado = subprocess.run(
+        ['file', '-b', fich],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+        check=True
+    )
+
+    # -- Obtener la salida en crudo
+    output_cmd = resultado.stdout.strip()
+
+    # -- Pasarla a minusculas
+    output_cmd = output_cmd.lower()
+
+    # -- Devolver resultado
+    return output_cmd
+
+
+# ----------------------------------------------------
+# -- Comprobar si el fichero es un ejecutable ELF
+# -- Se hace llamando al comando "file"
+# ----------------------------------------------------
+def is_elf(fich: Path) -> bool:
+
+    # -- Ejecutar comando "file -b fich"
+    # -- Para saber el tipo de fichero
+    output = cmd_file(fich)
+
+    # -- Detectar el patron "elf"
+    return "elf " in output
+
+
+# -----------------------------------------------------
+# -- Comprobar si es un programa PYTHON
+# -----------------------------------------------------
+def is_python_script(fich: Path) -> bool:
+
+    # -- Ejecutar comando "file -b fich"
+    # -- Para saber el tipo de fichero
+    output = cmd_file(fich)
+
+    # -- Detectar si es un script python
+    return "python script" in output
+
+
+# -----------------------------------------------------
+# -- Comprobar si es un script shell
+# -----------------------------------------------------
+def is_shell_script(fich: Path) -> bool:
+
+    # -- Ejecutar comando "file -b fich"
+    # -- Para saber el tipo de fichero
+    output = cmd_file(fich)
+
+    # -- Detectar si es un script shell
+    return "bash script" in output
 
 
 # -----------------
@@ -179,25 +243,75 @@ print(f"{ansi.GREEN}────── Yosys ──────")
 print(ansi.DEFAULT, end='', flush=True)
 
 
+# -- Obtener la ruta del ejecutable
+executable_path = Path(str(shutil.which("yosys")))
+
+# -- Obtener su directorio
+executable_path_dir = executable_path.parent
+
+# -- Leer todos los ficheros que hay en ese directorio
+list_exec = [fich for fich in executable_path_dir.iterdir()
+             if fich.is_file()]
+
+# -- Recorrer todos los ficheros
+for fich in list_exec:
+
+    # -- Informar del fichero actual
+    print(f"🔵 {fich.name}", end='')
+
+    # -- Es un EJECUTABLE
+    if is_elf(fich):
+
+        print("(ELF)")
+
+        # -- Copiarlo a la distribucion
+        # -- Junto a todas librerias
+        copy_with_deps(fich.name)
+
+    # -- Es un Script Python
+    elif is_python_script(fich):
+        print("(PYTHON)")
+
+        # -- Copiarlo a la distribucion, sin mas
+        copy_exec(fich.name)
+
+    # -- Es un script shell
+    elif is_shell_script(fich):
+        print("(SHELL)")
+
+        # -- Copiarlo a la distribucion, sin mas
+        copy_exec(fich.name)
+
+    # -- Es otro tipo de archivo
+    else:
+        print("(UNKNOWN)")
+
+    print()
+
+
+# 2. Obtener su directorio
+# 3. Obtener todos los ficheros de su directorio
+
+
 # -- Procesar todos los ficheros "ejecutables"
 # -- de yosys, segun lo que sean (ejecutable, shell, python...)
 # -- Copiar ejecutables a dist/libexec
 # -- Copiar librerias a dist/lib
 
-for fich, tipo in yosys_files.items():
-    if tipo == EJECUTABLE:
-        print(f"🔵 {fich}:")
-        copy_with_deps(fich)
+# for fich, tipo in yosys_files.items():
+#     if tipo == EJECUTABLE:
+#         print(f"🔵 {fich}:")
+#         copy_with_deps(fich)
 
-    elif tipo == PYTHON:
-        print(f"🔵 {fich}:")
-        copy_exec(fich)
-        print()
+#     elif tipo == PYTHON:
+#         print(f"🔵 {fich}:")
+#         copy_exec(fich)
+#         print()
 
-    elif tipo == SHELL_SCRIPT:
-        print(f"🔵 {fich}:")
-        copy_exec(fich)
-        print()
+#     elif tipo == SHELL_SCRIPT:
+#         print(f"🔵 {fich}:")
+#         copy_exec(fich)
+#         print()
 
 print()
 
