@@ -15,6 +15,24 @@ BIN = "bin"
 LIBEXEC = "libexec"
 LIB = "lib"
 
+# -- TIPOS DE FICHERO
+EJECUTABLE = 0
+SHELL_SCRIPT = 1
+PYTHON = 2
+
+# -- Informacion sobre yosys
+# -- Se ha introducido MANUALMENTE
+# -- TODO: Automatizar su creacion
+# --   Usando file podemos saber qué tipo de fichero es
+yosys_files = {
+    'yosys': EJECUTABLE,
+    'yosys-abc': EJECUTABLE,
+    'yosys-filterlib': EJECUTABLE,
+    'yosys-config': SHELL_SCRIPT,
+    'yosys-smtbmc': PYTHON,
+    'yosys-witness': PYTHON
+}
+
 
 # ------------------------------------------------------------------
 # -- Obtener las librerias dinámicas que son dependencias del
@@ -160,34 +178,26 @@ print()
 print(f"{ansi.GREEN}────── Yosys ──────")
 print(ansi.DEFAULT, end='', flush=True)
 
-# -- Obtener el ejecutable y las librerias
-# -- en los directorio dist/libexe y dist/lib
-print("🔵 yosys:")
-copy_with_deps("yosys")
 
-print("🔵 yosys-abc:")
-copy_with_deps("yosys-abc")
+# -- Procesar todos los ficheros "ejecutables"
+# -- de yosys, segun lo que sean (ejecutable, shell, python...)
+# -- Copiar ejecutables a dist/libexec
+# -- Copiar librerias a dist/lib
 
-print("🔵 yosys-filterlib:")
-copy_with_deps("yosys-filterlib")
+for fich, tipo in yosys_files.items():
+    if tipo == EJECUTABLE:
+        print(f"🔵 {fich}:")
+        copy_with_deps(fich)
 
-# -- Script bash
-print("🔵 yosys-config:")
-copy_exec("yosys-config")
-print()
+    elif tipo == PYTHON:
+        print(f"🔵 {fich}:")
+        copy_exec(fich)
 
-# -- Scripts python
-print("🔵 yosys-smtbmc:")
-copy_exec("yosys-smtbmc")
-print()
-
-print("🔵 yosys-witness:")
-copy_exec("yosys-witness")
-print()
+    elif tipo == SHELL_SCRIPT:
+        print(f"🔵 {fich}:")
+        copy_exec(fich)
 
 print()
-# -- Siguiente paso: Observar lo que hay en la carpeta yosys de nix
-# yosys-witness
 
 # ----- Procesar NEXTPNR-XILINX
 # print()
