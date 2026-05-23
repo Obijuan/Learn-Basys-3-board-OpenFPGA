@@ -70,6 +70,23 @@ def get_dependencies(binary: str) -> dict:
     return deps
 
 
+# ------------------------------------------------
+# -- Copiar solo el fichero ejecutable indicado
+# -- sin sus dependencias
+# ------------------------------------------------
+def copy_exec(binary: str):
+    # -- Obtener la ruta del ejecutable
+    executable_path = Path(str(shutil.which(binary)))
+
+    # -- Copiar el ejecutable  al directorio de la distribucion
+    executable_target_dir = Path.cwd() / DIST / LIBEXEC
+    executable_target = executable_target_dir / binary
+
+    if not executable_target.exists():
+        shutil.copy(executable_path, executable_target)
+        print(f"🔵 Copiado: {binary}")
+
+
 # ------------------------------------------------------
 # -- Copiar el ejecutable indicado en la distribucion
 # -- junto con TODAS sus librerias
@@ -114,17 +131,32 @@ print("OPENXC7-FETCH")
 print("─────────────────────────")
 print(ansi.DEFAULT, end='', flush=True)
 
-# ----- Procesar YOSYS
+# ------------- Procesar YOSYS
 print()
 print(f"{ansi.GREEN}────── Yosys ──────")
 print(ansi.DEFAULT, end='', flush=True)
-# copy_with_deps("yosys")
+
+# -- Obtener el ejecutable y las librerias
+# -- en los directorio dist/libexe y dist/lib
+print("* yosys:")
+copy_with_deps("yosys")
+
+print("* yosys-abc:")
+copy_with_deps("yosys-abc")
+
+# -- No es un ejecutable, es un script bash
+print("* yosys-config:")
+copy_exec("yosys-config")
+
+print()
+# -- Siguiente paso: Observar lo que hay en la carpeta yosys de nix
+# yosys-filterlib  yosys-smtbmc  yosys-witness
 
 # ----- Procesar NEXTPNR-XILINX
-print()
-print(f"{ansi.GREEN}────── Nextpnr-Xilinx ──────")
-print(ansi.DEFAULT, end='', flush=True)
-copy_with_deps("nextpnr-xilinx")
+# print()
+# print(f"{ansi.GREEN}────── Nextpnr-Xilinx ──────")
+# print(ansi.DEFAULT, end='', flush=True)
+# copy_with_deps("nextpnr-xilinx")
 
 # TODO
 # Crea el directorio de destino y todos sus padres si no existen
