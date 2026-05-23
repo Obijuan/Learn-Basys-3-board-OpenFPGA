@@ -93,22 +93,23 @@ def copy_exec(binary: str):
     executable_target_dir = Path.cwd() / DIST / LIBEXEC
     executable_target = executable_target_dir / binary
 
-    # -- Imprimir nombre del ejecutable
-    print(f"{ansi.GREEN}  ⚙️  Ejecutable: ",
-          end='', flush=True)
-    print(f"{ansi.DEFAULT}{binary}", end='', flush=True)
+    # -- Marca para indicar el tipo de archivo
+    mark = ""
 
     # -- Si no existe, copiarlo!
     if not executable_target.exists():
         shutil.copy(executable_path, executable_target)
         # -- Marca para indicar que se ha copiad
-        print("✅")
+        mark = "✅"
     else:
         # -- Si existe, imprimir solo el nombre, sin copiar
         # -- Marca para indicar que ya estaba
-        print("📌")
+        mark = "📌"
 
-    print(ansi.DEFAULT, end='', flush=True)
+    # -- Imprimir nombre del ejecutable
+    print(f"{ansi.GREEN}  ⚙️  Ejecutable: ",
+          end='', flush=True)
+    print(f"{ansi.DEFAULT}{mark}{binary}")
 
 
 # ------------------------------------------------------
@@ -126,6 +127,10 @@ def copy_with_deps(binary: str):
     # -- Directorio destino para las librerias
     libs_target_dir = Path.cwd() / DIST / LIB
 
+    # -- Marca para indicar si el archivo se ha copiado (✅)
+    # -- o bien no ha sido necesario porque ya estaba (📌)
+    mark = ""
+
     # -- Copiar todas las dependencias de yosys
     for lib_name, libs_path in executable_deps.items():
 
@@ -133,20 +138,20 @@ def copy_with_deps(binary: str):
             # -- Ruta completa del archivo en destino
             lib_target = libs_target_dir / Path(libs_path).name
 
-            # -- Imprimir nombre de la biblioteca
-            print(f"{ansi.BLUE}  🧾 Lib: ",
-                  end='', flush=True)
-            print(f"{ansi.DEFAULT}{lib_name}", end='', flush=True)
-
             # -- Copiar la libreria si no existe ya...
             if not lib_target.exists():
                 shutil.copy(libs_path, libs_target_dir)
                 # -- Marca que indica que no existe
-                print("✅")
+                mark = "✅"
             # -- Ya existe. No copiar, solo informar
             else:
                 # -- Marca que indica que ya existe
-                print("📌")
+                mark = "📌"
+
+            # -- Imprimir nombre de la biblioteca
+            print(f"{ansi.BLUE}  🧾 Lib: ",
+                  end='', flush=True)
+            print(f"{ansi.DEFAULT}{mark}{lib_name}")
 
 
 # ------------------------------------
@@ -214,6 +219,60 @@ def is_shell_script(fich: Path) -> bool:
     return "bash script" in output
 
 
+def run_fase1(name: str):
+    print(ansi.YELLOW, end='')
+    print("Fase 1: Copiando ejecutables a la distribucion")
+    print(ansi.DEFAULT, end='')
+    print("Ejecutables ---> dist/libexec")
+    print("Bibliotecas ---> dist/lib")
+    print()
+
+    # -- Obtener la ruta del ejecutable
+    executable_path = Path(str(shutil.which(name)))
+
+    # -- Obtener su directorio
+    executable_path_dir = executable_path.parent
+
+    # -- Leer todos los ficheros que hay en ese directorio
+    list_exec = [fich for fich in executable_path_dir.iterdir()
+                 if fich.is_file()]
+
+    # -- Recorrer todos los ficheros
+    for fich in list_exec:
+
+        # -- Informar del fichero actual
+        print(f"🔵 {fich.name}", end='')
+
+        # -- Es un EJECUTABLE
+        if is_elf(fich):
+
+            print("(ELF)")
+
+            # -- Copiarlo a la distribucion
+            # -- Junto a todas librerias
+            copy_with_deps(fich.name)
+
+        # -- Es un Script Python
+        elif is_python_script(fich):
+            print("(PYTHON)")
+
+            # -- Copiarlo a la distribucion, sin mas
+            copy_exec(fich.name)
+
+        # -- Es un script shell
+        elif is_shell_script(fich):
+            print("(SHELL)")
+
+            # -- Copiarlo a la distribucion, sin mas
+            copy_exec(fich.name)
+
+        # -- Es otro tipo de archivo
+        else:
+            print("(UNKNOWN)")
+
+        print()
+
+
 # -----------------
 #    MAIN
 # -----------------
@@ -225,55 +284,13 @@ print("────────────────────────�
 print(ansi.DEFAULT, end='', flush=True)
 
 # ------------- Procesar YOSYS
+name = "yosys"
 print()
-print(f"{ansi.GREEN}────── Yosys ──────")
+print(f"{ansi.GREEN}────── {name.capitalize()} ────────────────────────────")
 print(ansi.DEFAULT, end='', flush=True)
 
-
-# -- Obtener la ruta del ejecutable
-executable_path = Path(str(shutil.which("yosys")))
-
-# -- Obtener su directorio
-executable_path_dir = executable_path.parent
-
-# -- Leer todos los ficheros que hay en ese directorio
-list_exec = [fich for fich in executable_path_dir.iterdir()
-             if fich.is_file()]
-
-# -- Recorrer todos los ficheros
-for fich in list_exec:
-
-    # -- Informar del fichero actual
-    print(f"🔵 {fich.name}", end='')
-
-    # -- Es un EJECUTABLE
-    if is_elf(fich):
-
-        print("(ELF)")
-
-        # -- Copiarlo a la distribucion
-        # -- Junto a todas librerias
-        copy_with_deps(fich.name)
-
-    # -- Es un Script Python
-    elif is_python_script(fich):
-        print("(PYTHON)")
-
-        # -- Copiarlo a la distribucion, sin mas
-        copy_exec(fich.name)
-
-    # -- Es un script shell
-    elif is_shell_script(fich):
-        print("(SHELL)")
-
-        # -- Copiarlo a la distribucion, sin mas
-        copy_exec(fich.name)
-
-    # -- Es otro tipo de archivo
-    else:
-        print("(UNKNOWN)")
-
-    print()
+# -- Ejecutar fase 1: Copiar ejecutables y bibliotecas
+run_fase1(name)
 
 
 print()
