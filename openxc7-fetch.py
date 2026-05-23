@@ -49,6 +49,12 @@ def get_dependencies(binary: str) -> dict:
             # -- Guardar la biblioteca y su path en el diccionario
             nombre_lib = match.group(1)
             ruta_lib = match.group(2)
+
+            # -- Caso especial: ld-linux-x86-64.so.2
+            # -- En nix viene con la ruta completa en el nombre. Lo truncamos 
+            # -- solo al nombre
+            if "ld-linux-x86" in nombre_lib:
+                nombre_lib = Path(nombre_lib).name
             deps[nombre_lib] = ruta_lib
 
         # Caso especial: El cargador dinámico (ej: /lib64/ld-linux-x86-64.so.2)
@@ -82,13 +88,22 @@ def copy_exec(binary: str):
     executable_target_dir = Path.cwd() / DIST / LIBEXEC
     executable_target = executable_target_dir / binary
 
+    # -- Imprimir nombre del ejecutable
+    print(f"{ansi.GREEN}  ⚙️  Ejecutable: ",
+          end='', flush=True)
+    print(f"{ansi.DEFAULT}{binary}", end='', flush=True)
+
     # -- Si no existe, copiarlo!
     if not executable_target.exists():
         shutil.copy(executable_path, executable_target)
-        print(f"  ➡️  Ejecutable: {binary}✅")
+        # -- Marca para indicar que se ha copiad
+        print("✅")
     else:
         # -- Si existe, imprimir solo el nombre, sin copiar
-        print(f"  ➡️  Ejecutable: {binary}📌")
+        # -- Marca para indicar que ya estaba
+        print("📌")
+
+    print(ansi.DEFAULT, end='', flush=True)
 
 
 # ------------------------------------------------------
@@ -113,9 +128,20 @@ def copy_with_deps(binary: str):
             # -- Ruta completa del archivo en destino
             lib_target = libs_target_dir / Path(libs_path).name
 
+            # -- Imprimir nombre de la biblioteca
+            print(f"{ansi.BLUE}  🧾  Lib: ",
+                  end='', flush=True)
+            print(f"{ansi.DEFAULT}{lib_name}", end='', flush=True)
+
+            # -- Copiar la libreria si no existe ya...
             if not lib_target.exists():
                 shutil.copy(libs_path, libs_target_dir)
-                print(f"Copiando {lib_name}")
+                # -- Marca que indica que no existe
+                print("✅")
+            # -- Ya existe. No copiar, solo informar
+            else:
+                # -- Marca que indica que ya existe
+                print("📌")
     print()
 
 
@@ -139,11 +165,11 @@ print(ansi.DEFAULT, end='', flush=True)
 print("🔵 yosys:")
 copy_with_deps("yosys")
 
-print("* yosys-abc:")
+print("🔵 yosys-abc:")
 copy_with_deps("yosys-abc")
 
 # -- No es un ejecutable, es un script bash
-print("* yosys-config:")
+print("🔵 yosys-config:")
 copy_exec("yosys-config")
 
 print()
