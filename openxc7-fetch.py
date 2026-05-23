@@ -51,7 +51,7 @@ def get_dependencies(binary: str) -> dict:
             ruta_lib = match.group(2)
 
             # -- Caso especial: ld-linux-x86-64.so.2
-            # -- En nix viene con la ruta completa en el nombre. Lo truncamos 
+            # -- En nix viene con la ruta completa en el nombre. Lo truncamos
             # -- solo al nombre
             if "ld-linux-x86" in nombre_lib:
                 nombre_lib = Path(nombre_lib).name
