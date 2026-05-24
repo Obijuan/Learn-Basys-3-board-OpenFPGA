@@ -3,6 +3,7 @@
 import subprocess
 import shutil
 import re
+import stat
 from pathlib import Path
 
 import ansi
@@ -67,6 +68,9 @@ export PATH="$release_bindir_abs:$PATH"
             print("❌ Directorio no existe")
         except Exception as e:
             print(f"❌ Error inesperado al escribir el archivo: {e}")
+
+        # -- Dar permisos de ejecucion
+        wrapper_file.chmod(wrapper_file.stat().st_mode | stat.S_IXUSR)
 
 
 # ------------------------------------------------------------------
@@ -269,7 +273,8 @@ def is_shell_script(fich: Path) -> bool:
 
 def run_fase1(name: str):
     print(ansi.YELLOW, end='')
-    print("Fase 1: Copiando ejecutables a la distribucion")
+    print("───────────────────────────────────")
+    print("Fase 1: Ejecutables y bibliotecas")
     print(ansi.DEFAULT, end='')
     print("Ejecutables ---> dist/libexec")
     print("Bibliotecas ---> dist/lib")
@@ -321,6 +326,38 @@ def run_fase1(name: str):
         print()
 
 
+def run_fase2(name: str):
+    print(ansi.YELLOW, end='')
+    print("─────────────────────────────────────────────────────")
+    print("Fase 2: Generacion de wrappers")
+    print(ansi.DEFAULT, end='')
+    print()
+
+    # -- Obtener la ruta del ejecutable
+    executable_path = Path(str(shutil.which(name)))
+
+    # -- Obtener su directorio
+    executable_path_dir = executable_path.parent
+
+    # -- Leer todos los ficheros que hay en ese directorio
+    list_exec = [fich for fich in executable_path_dir.iterdir()
+                 if fich.is_file()]
+
+    # -- Recorrer todos los ficheros
+    for fich in list_exec:
+
+        # -- Es un EJECUTABLE
+        if is_elf(fich):
+            # -- Informar del fichero actual
+            print(f"🔵 {fich.name}")
+
+            # -- Crear el wrapper
+            wrapper = ToolWrapper(fich.name)
+            wrapper.add_debug()
+            wrapper.add_exec()
+            wrapper.write_bin()
+
+
 # -----------------
 #    MAIN
 # -----------------
@@ -334,43 +371,17 @@ print(ansi.DEFAULT, end='', flush=True)
 # ------------- Procesar YOSYS
 name = "yosys"
 print()
-print(f"{ansi.GREEN}────── {name.capitalize()} ────────────────────────────")
+print(f"{ansi.GREEN}──────────────────────────────────")
+print(f"  {name.capitalize()}")
+print(f"{ansi.GREEN}──────────────────────────────────")
 print(ansi.DEFAULT, end='', flush=True)
+print()
 
 # -- Ejecutar fase 1: Copiar ejecutables y bibliotecas
 run_fase1(name)
-print()
 
 # -- Fase 2: Crear los wrappers para los ejecutables
-name = "yosys"
-print(ansi.YELLOW, end='')
-print("Fase 2: Creando ejecutables (wrappers) en dist/bin")
-print(ansi.DEFAULT, end='')
-
-# -- Obtener la ruta del ejecutable
-executable_path = Path(str(shutil.which(name)))
-
-# -- Obtener su directorio
-executable_path_dir = executable_path.parent
-
-# -- Leer todos los ficheros que hay en ese directorio
-list_exec = [fich for fich in executable_path_dir.iterdir()
-             if fich.is_file()]
-
-# -- Recorrer todos los ficheros
-for fich in list_exec:
-
-    # -- Es un EJECUTABLE
-    if is_elf(fich):
-        # -- Informar del fichero actual
-        print(f"🔵 {fich.name}")
-
-        # -- Crear el wrapper
-        wrapper = ToolWrapper(fich.name)
-        wrapper.add_debug()
-        wrapper.add_exec()
-        wrapper.write_bin()
-
+run_fase2(name)
 print()
 
 
