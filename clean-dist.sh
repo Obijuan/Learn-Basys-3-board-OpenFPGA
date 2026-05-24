@@ -8,3 +8,6 @@ rm -f dist/libexec/*
 
 # -- Borrar los "wrappers"
 rm -f dist/bin/*
+
+# -- Borrar informacion adicional
+sudo rm -rf dist/share/yosys/python3/*

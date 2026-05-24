@@ -137,12 +137,12 @@ def get_dependencies(binary: str) -> dict:
 # -- Copiar solo el fichero ejecutable indicado
 # -- sin sus dependencias
 # ------------------------------------------------
-def copy_exec(binary: str):
+def copy_exec(binary: str, target_dir: str = LIBEXEC):
     # -- Obtener la ruta del ejecutable
     executable_path = Path(str(shutil.which(binary)))
 
     # -- Copiar el ejecutable  al directorio de la distribucion
-    executable_target_dir = Path.cwd() / DIST / LIBEXEC
+    executable_target_dir = Path.cwd() / DIST / target_dir
     executable_target = executable_target_dir / binary
 
     # -- Marca para indicar el tipo de archivo
@@ -271,6 +271,51 @@ def is_shell_script(fich: Path) -> bool:
     return "bash script" in output
 
 
+# -----------------------------------------
+# --  Añadir un shebang a un archivo python
+# -----------------------------------------
+def python_shebang_add(file_path: Path):
+
+    try:
+        # -- Leer archivo python
+        contents = file_path.read_text(encoding="utf-8")
+
+        # -- Shebang a añadir
+        shebang = "#!/usr/bin/env python3\n"
+
+        # -- Añadir shebang!
+        contents = shebang + contents
+
+        # -- Escribir nuevos contenidos
+        file_path.write_text(contents, encoding="utf-8")
+        print(f"✔️ Shebang añadido con éxito a: {file_path}")
+
+    except PermissionError:
+        print(f"❌ Error: Sin permisos '{file_path}'.")
+    except Exception as e:
+        print(f"❌ Ocurrió un error inesperado: {e}")
+
+
+# -----------------------------------------
+# -- Dar permisos de escritura al fichero
+# -----------------------------------------
+def write_access(file_path: Path):
+
+    try:
+        # Obtener los permisos
+        permissions = file_path.stat().st_mode
+
+        # Activar permisso de escritura
+        permissions = permissions | stat.S_IWUSR
+
+        # Aplicar los cambios
+        file_path.chmod(permissions)
+        print(f"✔️ Permiso de escritura añadido a: {file_path}")
+
+    except PermissionError:
+        print("❌ Error: No tienes permiso")
+
+
 def run_fase1(name: str):
     print(ansi.YELLOW, end='')
     print("───────────────────────────────────")
@@ -310,7 +355,15 @@ def run_fase1(name: str):
             print("(PYTHON)")
 
             # -- Copiarlo a la distribucion, sin mas
-            copy_exec(fich.name)
+            # -- en el directorio dist/bin
+            copy_exec(fich.name, BIN)
+
+            # -- Dar permisos de escritura al fichero python
+            python_file_path = Path.cwd() / DIST / BIN / fich.name
+            write_access(python_file_path)
+
+            # -- Añadir un shee bang al comienzo
+            python_shebang_add(python_file_path)
 
         # -- Es un script shell
         elif is_shell_script(fich):
@@ -386,6 +439,26 @@ print(ansi.DEFAULT, end='', flush=True)
 
 # ---- Prcesar cada una de las herramientas
 procesar("yosys")
+
+# -- Para yosys: Copiar el directorio share/yosys/python3
+# -- en dist/share/yosys
+# -- Obtener la ruta del ejecutable
+executable_path = Path(str(shutil.which("yosys")))
+
+# -- Obtener su directorio
+data_dir = executable_path.parent.parent
+data_dir = data_dir / "share" / "yosys" / "python3"
+
+origen = data_dir
+destino_final = Path.cwd() / DIST / "share" / "yosys" / "python3"
+
+try:
+    shutil.copytree(origen, destino_final, dirs_exist_ok=True)
+    print(f"✔️ Carpeta copiada en: {destino_final}")
+except Exception as e:
+    print(f"❌ Error al copiar: {e}")
+
+
 # procesar("nextpnr-xilinx")
 
 # --- Herramienta fasm
