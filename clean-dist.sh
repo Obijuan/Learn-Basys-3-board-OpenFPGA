@@ -5,3 +5,6 @@ rm -f dist/lib/*
 
 # -- Borrar los ejecutables
 rm -f dist/libexec/*
+
+# -- Borrar los "wrappers"
+rm -f dist/bin/*

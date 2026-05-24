@@ -385,7 +385,72 @@ print("────────────────────────�
 print(ansi.DEFAULT, end='', flush=True)
 
 # ---- Prcesar cada una de las herramientas
-# procesar("yosys")
-procesar("nextpnr-xilinx")
+procesar("yosys")
+# procesar("nextpnr-xilinx")
+
+# --- Herramienta fasm
+# -- Herramienta PYTHON!
+# -- Ficheros:
+# 🔵 fasm
+# 🔵 .fasm-wrapped
+# name = "fasm"
+# print()
+# print(f"{ansi.GREEN}──────────────────────────────────")
+# print(f"{name.capitalize()}")
+# print(f"{ansi.GREEN}──────────────────────────────────")
+# print(ansi.DEFAULT, end='', flush=True)
+# print()
+
+
+# ---- herramienta prjxray. Hay que procesar todos estos ejecutables
+# 🔵 bitread (elf)
+# 🔵 xc7patch (elf)
+# 🔵 xc7frames2bit (elf)
+# 🔵 bit2fasm (python)
+# 🔵 fasm2frames (python)
+
+# ------ prjxray
+# name = "fasm2frames"
+# print()
+# print(f"{ansi.GREEN}──────────────────────────────────")
+# print(f"{name.capitalize()}")
+# print(f"{ansi.GREEN}──────────────────────────────────")
+# print(ansi.DEFAULT, end='', flush=True)
+# print()
+
+
+# print(ansi.YELLOW, end='')
+# print("───────────────────────────────────")
+# print("Fase 1: Ejecutables y bibliotecas")
+# print(ansi.DEFAULT, end='')
+# print("Ejecutables ---> dist/libexec")
+# print("Bibliotecas ---> dist/lib")
+# print()
+
+# # -- Obtener la ruta del ejecutable
+# executable_path = Path(str(shutil.which(name)))
+
+# # -- Obtener su directorio
+# executable_path_dir = executable_path.parent
+
+# # -- Leer todos los ficheros que hay en ese directorio
+# list_exec = [fich for fich in executable_path_dir.iterdir()
+#                 if fich.is_file()]
+
+# # -- Recorrer todos los ficheros
+# for fich in list_exec:
+
+#     # -- Informar del fichero actual
+#     print(f"🔵 {fich.name}")
+
+#     # -- Es un EJECUTABLE
+#     if is_elf(fich):
+
+#         print("(ELF)")
+
+#         # -- Copiarlo a la distribucion
+#         # -- Junto a todas librerias
+#         copy_with_deps(fich.name)
+
 
 print()
