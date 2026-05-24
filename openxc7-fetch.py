@@ -414,24 +414,13 @@ def run_fase2(name: str):
 # -----------------------------------------
 # -- Copiar archivos especificos de yosys
 # -----------------------------------------
-def copy_yosys_data():
-    # -- Para yosys: Copiar el directorio share/yosys/python3
-    # -- en dist/share/yosys
-    # -- Obtener la ruta del ejecutable
-    executable_path = Path(str(shutil.which("yosys")))
-
-    # -- Obtener su directorio
-    data_dir = executable_path.parent.parent
-    data_dir = data_dir / "share" / "yosys" / "python3"
-
-    origen = data_dir
-    destino_final = Path.cwd() / DIST / "share" / "yosys" / "python3"
+def copy_tree(src: Path, dst: Path):
 
     mark = ""
 
     try:
-        shutil.copytree(origen, destino_final, dirs_exist_ok=True)
-        write_access(destino_final)
+        shutil.copytree(src, dst, dirs_exist_ok=True)
+        write_access(dst)
         mark = "✅"
 
     except Exception:  # as e:
@@ -439,7 +428,28 @@ def copy_yosys_data():
         # print(f"❌ Error: {e}")
 
     finally:
-        print(f"{mark} dist/share/yosys/python3")
+        print(f"{mark} {dst.relative_to(Path.cwd())}")
+
+
+# ------------------------------------------------
+# -- Copiar solo el fichero ejecutable indicado
+# -- sin sus dependencias
+# ------------------------------------------------
+def copy_file(src: Path, dst: Path):
+
+    mark = ""
+
+    try:
+        shutil.copy(src, dst)
+        write_access(dst)
+        mark = "✅"
+
+    except Exception:  # as e:
+        mark = "📌"
+        # print(f"❌ Error: {e}")
+
+    finally:
+        print(f"{mark} {dst.relative_to(Path.cwd())}")
 
 
 def run_fase3_yosys():
@@ -448,7 +458,15 @@ def run_fase3_yosys():
     print("Fase 3: Copiar datos de yosys")
     print()
     print(ansi.DEFAULT, end='')
-    copy_yosys_data()
+
+    # ---- Obtener directorios
+    # -- Directorio base de yosys
+    base_dir = Path(str(shutil.which("yosys"))).parent.parent
+
+    # -- Copiar /share/yosys
+    origen = base_dir / "share" / "yosys" 
+    destino = Path.cwd() / DIST / "share" / "yosys"
+    copy_tree(origen, destino)
 
 
 def procesar(name: str):
