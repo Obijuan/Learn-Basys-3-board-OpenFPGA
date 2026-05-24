@@ -384,23 +384,8 @@ print("OPENXC7-FETCH")
 print("─────────────────────────")
 print(ansi.DEFAULT, end='', flush=True)
 
-# ------------- Procesar YOSYS
+# ---- Prcesar cada una de las herramientas
 # procesar("yosys")
+procesar("nextpnr-xilinx")
 
-# ----- Procesar NEXTPNR-XILINX
-name = "nextpnr-xilinx"
-print()
-print(f"{ansi.GREEN}──────────────────────────────────")
-print(f"  {name.capitalize()}")
-print(f"{ansi.GREEN}──────────────────────────────────")
-print(ansi.DEFAULT, end='', flush=True)
-print()
-
-# -- Ejecutar fase 1: Copiar ejecutables y bibliotecas
-run_fase1(name)
-
-print()
-
-# -- Fase 2: Crear los wrappers para los ejecutables
-run_fase2(name)
 print()
