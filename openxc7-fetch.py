@@ -358,6 +358,22 @@ def run_fase2(name: str):
             wrapper.write_bin()
 
 
+def procesar(name: str):
+    print()
+    print(f"{ansi.GREEN}──────────────────────────────────")
+    print(f"  {name.capitalize()}")
+    print(f"{ansi.GREEN}──────────────────────────────────")
+    print(ansi.DEFAULT, end='', flush=True)
+    print()
+
+    # -- Ejecutar fase 1: Copiar ejecutables y bibliotecas
+    run_fase1(name)
+
+    # -- Fase 2: Crear los wrappers para los ejecutables
+    run_fase2(name)
+    print()
+
+
 # -----------------
 #    MAIN
 # -----------------
@@ -369,28 +385,13 @@ print("────────────────────────�
 print(ansi.DEFAULT, end='', flush=True)
 
 # ------------- Procesar YOSYS
-name = "yosys"
+# procesar("yosys")
+
+# ----- Procesar NEXTPNR-XILINX
+name = "nextpnr-xilinx"
 print()
 print(f"{ansi.GREEN}──────────────────────────────────")
 print(f"  {name.capitalize()}")
 print(f"{ansi.GREEN}──────────────────────────────────")
 print(ansi.DEFAULT, end='', flush=True)
 print()
-
-# -- Ejecutar fase 1: Copiar ejecutables y bibliotecas
-run_fase1(name)
-
-# -- Fase 2: Crear los wrappers para los ejecutables
-run_fase2(name)
-print()
-
-
-# ----- Procesar NEXTPNR-XILINX
-# print()
-# print(f"{ansi.GREEN}────── Nextpnr-Xilinx ──────")
-# print(ansi.DEFAULT, end='', flush=True)
-# copy_with_deps("nextpnr-xilinx")
-
-# TODO
-# Crea el directorio de destino y todos sus padres si no existen
-# destino_directorio.mkdir(parents=True, exist_ok=True)
