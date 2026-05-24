@@ -268,7 +268,7 @@ def is_shell_script(fich: Path) -> bool:
     output = cmd_file(fich)
 
     # -- Detectar si es un script shell
-    return "bash script" in output
+    return ("bash script" in output) or ("bash -e script" in output)
 
 
 # -----------------------------------------
@@ -496,10 +496,11 @@ print("────────────────────────�
 print(ansi.DEFAULT, end='', flush=True)
 
 # ---- Prcesar cada una de las herramientas
-procesar("yosys")
-run_fase3_yosys()
+# -- Yosys
+# procesar("yosys")
+# run_fase3_yosys()
 
-
+# -- Nextpnr-xilinx
 # procesar("nextpnr-xilinx")
 
 # --- Herramienta fasm
@@ -507,13 +508,54 @@ run_fase3_yosys()
 # -- Ficheros:
 # 🔵 fasm
 # 🔵 .fasm-wrapped
-# name = "fasm"
-# print()
-# print(f"{ansi.GREEN}──────────────────────────────────")
-# print(f"{name.capitalize()}")
-# print(f"{ansi.GREEN}──────────────────────────────────")
-# print(ansi.DEFAULT, end='', flush=True)
-# print()
+name = "fasm"
+print()
+print(f"{ansi.GREEN}──────────────────────────────────")
+print(f"{name.capitalize()}")
+print(f"{ansi.GREEN}──────────────────────────────────")
+print(ansi.DEFAULT, end='', flush=True)
+print()
+
+# -- Obtener la ruta del ejecutable
+executable_path = Path(str(shutil.which(name)))
+
+# -- Obtener su directorio
+executable_path_dir = executable_path.parent
+
+# -- Leer todos los ficheros que hay en ese directorio
+list_exec = [fich for fich in executable_path_dir.iterdir()
+             if fich.is_file()]
+
+# -- Recorrer todos los ficheros
+for fich in list_exec:
+
+    # -- Informar del fichero actual
+    print(f"🔵 {fich.name}")
+
+    # -- Es un Script Python
+    if is_python_script(fich):
+        print("(PYTHON)")
+
+        # -- Copiarlo a la distribucion, sin mas
+        # -- en el directorio dist/bin
+        copy_exec(fich.name, BIN)
+
+        # -- Dar permisos de escritura al fichero python
+        python_file_path = Path.cwd() / DIST / BIN / fich.name
+        write_access(python_file_path)
+
+        # -- Añadir un shee bang al comienzo
+        python_shebang_add(python_file_path)
+
+    # -- Es un script shell
+    elif is_shell_script(fich):
+        print("(SHELL)")
+
+        # -- Copiarlo a la distribucion, sin mas
+        copy_exec(fich.name)
+
+    else:
+        print("What?")
 
 
 # ---- herramienta prjxray. Hay que procesar todos estos ejecutables

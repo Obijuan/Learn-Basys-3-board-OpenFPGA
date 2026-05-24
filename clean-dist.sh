@@ -8,6 +8,7 @@ rm -f dist/libexec/*
 
 # -- Borrar los "wrappers"
 rm -f dist/bin/*
+rm -f dist/bin/.fasm*
 
 # -- Borrar informacion adicional
 chmod +w dist/share/yosys
