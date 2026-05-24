@@ -10,4 +10,5 @@ rm -f dist/libexec/*
 rm -f dist/bin/*
 
 # -- Borrar informacion adicional
+chmod +w dist/share/yosys/python3
 sudo rm -rf dist/share/yosys/python3/*

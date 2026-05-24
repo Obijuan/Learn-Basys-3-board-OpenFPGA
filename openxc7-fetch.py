@@ -310,7 +310,7 @@ def write_access(file_path: Path):
 
         # Aplicar los cambios
         file_path.chmod(permissions)
-        print(f"✔️ Permiso de escritura añadido a: {file_path}")
+        # print(f"✔️ Permiso de escritura añadido a: {file_path}")
 
     except PermissionError:
         print("❌ Error: No tienes permiso")
@@ -411,6 +411,46 @@ def run_fase2(name: str):
             wrapper.write_bin()
 
 
+# -----------------------------------------
+# -- Copiar archivos especificos de yosys
+# -----------------------------------------
+def copy_yosys_data():
+    # -- Para yosys: Copiar el directorio share/yosys/python3
+    # -- en dist/share/yosys
+    # -- Obtener la ruta del ejecutable
+    executable_path = Path(str(shutil.which("yosys")))
+
+    # -- Obtener su directorio
+    data_dir = executable_path.parent.parent
+    data_dir = data_dir / "share" / "yosys" / "python3"
+
+    origen = data_dir
+    destino_final = Path.cwd() / DIST / "share" / "yosys" / "python3"
+
+    mark = ""
+
+    try:
+        shutil.copytree(origen, destino_final, dirs_exist_ok=True)
+        write_access(destino_final)
+        mark = "✅"
+
+    except Exception:  # as e:
+        mark = "📌"
+        # print(f"❌ Error: {e}")
+
+    finally:
+        print(f"{mark} dist/share/yosys/python3")
+
+
+def run_fase3_yosys():
+    print(ansi.YELLOW, end='')
+    print("───────────────────────────────────")
+    print("Fase 3: Copiar datos de yosys")
+    print()
+    print(ansi.DEFAULT, end='')
+    copy_yosys_data()
+
+
 def procesar(name: str):
     print()
     print(f"{ansi.GREEN}──────────────────────────────────")
@@ -439,24 +479,7 @@ print(ansi.DEFAULT, end='', flush=True)
 
 # ---- Prcesar cada una de las herramientas
 procesar("yosys")
-
-# -- Para yosys: Copiar el directorio share/yosys/python3
-# -- en dist/share/yosys
-# -- Obtener la ruta del ejecutable
-executable_path = Path(str(shutil.which("yosys")))
-
-# -- Obtener su directorio
-data_dir = executable_path.parent.parent
-data_dir = data_dir / "share" / "yosys" / "python3"
-
-origen = data_dir
-destino_final = Path.cwd() / DIST / "share" / "yosys" / "python3"
-
-try:
-    shutil.copytree(origen, destino_final, dirs_exist_ok=True)
-    print(f"✔️ Carpeta copiada en: {destino_final}")
-except Exception as e:
-    print(f"❌ Error al copiar: {e}")
+run_fase3_yosys()
 
 
 # procesar("nextpnr-xilinx")
