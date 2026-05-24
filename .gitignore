@@ -6,5 +6,6 @@ ledon.json
 *.pyc
 dist/lib/
 dist/libexec/
+dist/bin/
 
 

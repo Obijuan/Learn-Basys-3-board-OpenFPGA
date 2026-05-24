@@ -21,6 +21,54 @@ SHELL_SCRIPT = 1
 PYTHON = 2
 
 
+class ToolWrapper:
+
+    # -- Cabecera del shell wrapper, comun a todos los wrappers
+    BIN_WRAPPER = """\
+#!/usr/bin/env bash\n
+release_bindir="$(dirname "${BASH_SOURCE[0]}")"
+release_bindir_abs="$(readlink -f "$release_bindir")"
+release_topdir_abs="$(readlink -f "$release_bindir/..")"
+export PATH="$release_bindir_abs:$PATH"
+"""
+
+    def __init__(self, bin_name: str):
+
+        # -- Guardar el nombre del binario
+        self.bin = bin_name
+
+        # -- Shell: contenido del wrapper
+        self.shell = self.BIN_WRAPPER
+
+    # -- Añadir trazas de depuracion
+    def add_debug(self):
+        self.shell += 'echo Bindir: ${release_bindir}\n'
+        self.shell += 'echo Bindir_abs: ${release_bindir_abs}\n'
+        self.shell += 'echo Topdir_abs: ${release_topdir_abs}\n'
+
+    def add_exec(self):
+        self.shell += 'exec "$release_topdir_abs"/lib/ld-linux-x86-64.so.2 '\
+                      '--inhibit-cache '\
+                      '--inhibit-rpath "" '\
+                      '--library-path "$release_topdir_abs"/lib '\
+                      f'"$release_topdir_abs"/libexec/{self.bin} "$@"\n'
+
+    def write_bin(self):
+
+        # -- Obtener el path donde escribir el wrapper
+        wrapper_file = Path.cwd() / DIST / BIN / self.bin
+
+        try:
+            wrapper_file.write_text(self.shell, encoding="utf-8")
+
+        except PermissionError:
+            print(f"❌ Error: sin permisos '{self.bin}'.")
+        except FileNotFoundError:
+            print("❌ Directorio no existe")
+        except Exception as e:
+            print(f"❌ Error inesperado al escribir el archivo: {e}")
+
+
 # ------------------------------------------------------------------
 # -- Obtener las librerias dinámicas que son dependencias del
 # -- fichero ejecutable indicado
@@ -291,9 +339,40 @@ print(ansi.DEFAULT, end='', flush=True)
 
 # -- Ejecutar fase 1: Copiar ejecutables y bibliotecas
 run_fase1(name)
+print()
 
+# -- Fase 2: Crear los wrappers para los ejecutables
+name = "yosys"
+print(ansi.YELLOW, end='')
+print("Fase 2: Creando ejecutables (wrappers) en dist/bin")
+print(ansi.DEFAULT, end='')
+
+# -- Obtener la ruta del ejecutable
+executable_path = Path(str(shutil.which(name)))
+
+# -- Obtener su directorio
+executable_path_dir = executable_path.parent
+
+# -- Leer todos los ficheros que hay en ese directorio
+list_exec = [fich for fich in executable_path_dir.iterdir()
+             if fich.is_file()]
+
+# -- Recorrer todos los ficheros
+for fich in list_exec:
+
+    # -- Es un EJECUTABLE
+    if is_elf(fich):
+        # -- Informar del fichero actual
+        print(f"🔵 {fich.name}")
+
+        # -- Crear el wrapper
+        wrapper = ToolWrapper(fich.name)
+        wrapper.add_debug()
+        wrapper.add_exec()
+        wrapper.write_bin()
 
 print()
+
 
 # ----- Procesar NEXTPNR-XILINX
 # print()
