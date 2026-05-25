@@ -294,8 +294,11 @@ def nix_locate(text: str) -> Path:
 # -----------------------------------------------------------------------
 def copy_python_dep(name: str, version: str):
 
+    # -- Nombre del paquete (nombre + version)
+    pack_name = f"{name}" if version == "" else f"{name}-{version}"
+
     # -- Localizar la carpeta donde esta el paquete
-    dir = nix_locate(f"python3.12-{name}-{version}")
+    dir = nix_locate(f"python3.12-{pack_name}")
 
     # -- Directorio origen
     site_pack = dir / "lib" / "python3.12" / "site-packages"
@@ -317,7 +320,7 @@ def copy_python_dep(name: str, version: str):
         shutil.copytree(origen, destino, dirs_exist_ok=True)
         mark = "✅"
 
-    print(f"➡️  Dep: {mark}{name}-{version}")
+    print(f"➡️  Dep: {mark}{pack_name}")
 
 
 # ------------------------------------
@@ -652,6 +655,18 @@ def run_fase3_yosys():
     copy_python_dep("click", "8.1.7")
 
 
+def run_fase3_fasm():
+    print(ansi.YELLOW, end='')
+    print("───────────────────────────────────")
+    print("Fase 3: Copiar datos de fasm")
+    print()
+    print(ansi.DEFAULT, end='')
+
+    # --- Copiar fasm y sus dependencias
+    copy_python_dep("fasm", "")
+    copy_python_dep("textx", "4.0.1")
+
+
 def procesar(name: str):
     print()
     print(f"{ansi.GREEN}──────────────────────────────────")
@@ -691,7 +706,8 @@ procesar("nextpnr-xilinx")
 # -- Ficheros:
 # 🔵 fasm
 # 🔵 .fasm-wrapped
-# procesar("fasm")
+procesar("fasm")
+run_fase3_fasm()
 
 # name = "fasm"
 # print()
