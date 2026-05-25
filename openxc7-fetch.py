@@ -308,7 +308,7 @@ def copy_python_dep(name: str, version: str):
     dst_site_pack = Path.cwd() / DIST / LIB / "python3.12" / "site-packages"
     destino = dst_site_pack / name
 
-    # -- Dar permisos de escritura al directorio "site-packges" 
+    # -- Dar permisos de escritura al directorio "site-packges"
     # -- de la distribucion
     write_access(dst_site_pack)
 
