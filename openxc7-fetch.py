@@ -219,12 +219,53 @@ def copy_with_deps(binary: str):
             print(f"{ansi.DEFAULT}{mark}{lib_name}")
 
 
+# -----------------------------------------------------------
+# -- Copiar todas las dependencias de python
+# --
+# -- store/tabbypy3 --> dist/bin
+# -- nix-python/bin/python3.12 --> dist/libexec
+# -- nix-python/lib/python3.12/* --> dist/lib/python3.12/
+# -----------------------------------------------------------
+def copy_python():
+
+    # --- Copiar el wrapper (tabbypy3)
+    origen = Path.cwd() / "store" / "tabbypy3"
+    destino = Path.cwd() / DIST / BIN / "tabbypy3"
+    if destino.exists():
+        mark = "📌"
+    else:
+        shutil.copy(origen, destino)
+        mark = "✅"
+    print(f"  ➡️  Dep: {mark}bin/tabbypy3")
+
+    # -- Copiar el ejecutable de python
+    origen = Path(str(shutil.which("python3.12")))
+    destino = Path.cwd() / DIST / LIBEXEC / "python3.12"
+    if destino.exists():
+        mark = "📌"
+    else:
+        shutil.copy(origen, destino)
+        mark = "✅"
+    print(f"  ➡️  Dep: {mark}libexec/{origen.name}")
+
+    # -- Copiar el directorio completo de python
+    origen = origen.parent.parent / "lib" / "python3.12"
+    destino = Path.cwd() / DIST / LIB / "python3.12"
+    if destino.exists():
+        mark = "📌"
+    else:
+        shutil.copytree(origen, destino, dirs_exist_ok=True)
+        mark = "✅"
+    print(f"  ➡️  Dep: {mark}lib/{origen.name}/")
+
+
 # ------------------------------------
 # -- Ejecutar el comando "file -b fich"
 # -- Se devuelve la cadena procesada y
 # -- en minusculas
 # -------------------------------------
 def cmd_file(fich: Path) -> str:
+
     # -- Ejecutar "file -b fich"
     resultado = subprocess.run(
         ['file', '-b', fich],
@@ -301,7 +342,7 @@ def python_shebang_add(file_path: Path):
 
         # -- Escribir nuevos contenidos
         file_path.write_text(contents, encoding="utf-8")
-        print(f"✔️ Shebang añadido con éxito a: {file_path}")
+        # print(f"✔️ Shebang añadido con éxito a: {file_path}")
 
     except PermissionError:
         print(f"❌ Error: Sin permisos '{file_path}'.")
@@ -379,6 +420,7 @@ def run_fase1(name: str):
             python_shebang_add(python_file_path)
 
             # -- TODO: Copiar las dependencias de python
+            copy_python()
             # -- bin/tabbypy3
             # -- lib/python3.11/
             # -- lib/libpython3.11.so
@@ -485,19 +527,19 @@ def copy_tree(src: Path, dst: Path):
 # ------------------------------------------------
 def copy_file(src: Path, dst: Path):
 
-    mark = ""
+    # mark = ""
 
     try:
         shutil.copy(src, dst)
         write_access(dst)
-        mark = "✅"
+        # mark = "✅"
 
     except Exception:  # as e:
-        mark = "📌"
+        pass
+        # mark = "📌"
         # print(f"❌ Error: {e}")
 
-    finally:
-        print(f"{mark} {dst.relative_to(Path.cwd())}")
+    # print(f"{mark} {dst.relative_to(Path.cwd())}")
 
 
 def run_fase3_yosys():

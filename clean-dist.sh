@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # -- Borrar las librerias
-rm -f dist/lib/*
+sudo rm -rf dist/lib/*
 
 # -- Borrar los ejecutables
 rm -f dist/libexec/*
@@ -11,6 +11,6 @@ rm -f dist/bin/*
 rm -f dist/bin/.fasm*
 
 # -- Borrar informacion adicional
-chmod +w dist/share/yosys
+#chmod +w dist/share/yosys
 sudo rm -rf dist/share/yosys
 
