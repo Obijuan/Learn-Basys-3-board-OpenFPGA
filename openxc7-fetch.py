@@ -236,7 +236,7 @@ def copy_python():
     else:
         shutil.copy(origen, destino)
         mark = "✅"
-    print(f"  ➡️  Dep: {mark}bin/tabbypy3")
+    print(f"➡️  Dep: {mark}bin/tabbypy3")
 
     # -- Copiar el ejecutable de python
     origen = Path(str(shutil.which("python3.12")))
@@ -246,7 +246,7 @@ def copy_python():
     else:
         shutil.copy(origen, destino)
         mark = "✅"
-    print(f"  ➡️  Dep: {mark}libexec/{origen.name}")
+    print(f"➡️  Dep: {mark}libexec/{origen.name}")
 
     # -- Copiar el directorio completo de python
     origen = origen.parent.parent / "lib" / "python3.12"
@@ -257,7 +257,7 @@ def copy_python():
         shutil.copytree(origen, destino, dirs_exist_ok=True)
         mark = "✅"
     write_access(destino)
-    print(f"  ➡️  Dep: {mark}lib/{origen.name}/")
+    print(f"➡️  Dep: {mark}lib/{origen.name}/")
 
 
 # ----------------------------------------------------------------
@@ -317,7 +317,7 @@ def copy_python_dep(name: str, version: str):
         shutil.copytree(origen, destino, dirs_exist_ok=True)
         mark = "✅"
 
-    print(f"  ➡️  Dep: {mark}{name}-{version}")
+    print(f"➡️  Dep: {mark}{name}-{version}")
 
 
 # ------------------------------------
@@ -480,14 +480,6 @@ def run_fase1(name: str):
             # -- Añadir un shee bang al comienzo
             python_shebang_add(python_file_path)
 
-            # -- Copiar las dependencias de python
-            copy_python()
-
-            # -- Copiar los paquetes especificos de python
-            # -- que necesita cada herramienta
-            # -- Yosys:
-            copy_python_dep("click", "8.1.7")
-
         # -- Es un script shell
         elif is_shell_script(fich):
             print("(SHELL)")
@@ -614,9 +606,18 @@ def run_fase3_yosys():
     base_dir = Path(str(shutil.which("yosys"))).parent.parent
 
     # -- Copiar /share/yosys
-    origen = base_dir / "share" / "yosys" 
+    origen = base_dir / "share" / "yosys"
     destino = Path.cwd() / DIST / "share" / "yosys"
     copy_tree(origen, destino)
+
+    # -- TODO: Copiar aqui las dependencias de python...
+    # -- Copiar las dependencias de python
+    copy_python()
+
+    # -- Copiar los paquetes especificos de python
+    # -- que necesita cada herramienta
+    # -- Yosys:
+    copy_python_dep("click", "8.1.7")
 
 
 def procesar(name: str):
