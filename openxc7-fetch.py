@@ -41,11 +41,20 @@ export PATH="$release_bindir_abs:$PATH"
         # -- Shell: contenido del wrapper
         self.shell = self.BIN_WRAPPER
 
+        # -- Guardar el path completo
+        self.path = Path.cwd() / DIST / BIN / self.bin
+
     # -- Añadir trazas de depuracion
     def add_debug(self):
         self.shell += 'echo Bindir: ${release_bindir}\n'
         self.shell += 'echo Bindir_abs: ${release_bindir_abs}\n'
         self.shell += 'echo Topdir_abs: ${release_topdir_abs}\n'
+
+    def add_exec_python(self):
+        self.shell += 'export PYTHONEXECUTABLE='\
+                      '"$release_bindir_abs/tabbypy3"\n'\
+                      'exec "$release_bindir_abs/tabbypy3" '\
+                      '"$release_topdir_abs"/libexec/yosys-smtbmc "$@"\n'
 
     def add_exec(self):
         self.shell += 'exec "$release_topdir_abs"/lib/ld-linux-x86-64.so.2 '\
@@ -54,10 +63,14 @@ export PATH="$release_bindir_abs:$PATH"
                       '--library-path "$release_topdir_abs"/lib '\
                       f'"$release_topdir_abs"/libexec/{self.bin} "$@"\n'
 
+    # -- Devolver el path completo del wrapper
+    def get_path(self) -> Path:
+        return self.path
+
     def write_bin(self):
 
         # -- Obtener el path donde escribir el wrapper
-        wrapper_file = Path.cwd() / DIST / BIN / self.bin
+        wrapper_file = self.path
 
         try:
             wrapper_file.write_text(self.shell, encoding="utf-8")
@@ -356,14 +369,22 @@ def run_fase1(name: str):
 
             # -- Copiarlo a la distribucion, sin mas
             # -- en el directorio dist/bin
-            copy_exec(fich.name, BIN)
+            copy_exec(fich.name)
 
             # -- Dar permisos de escritura al fichero python
-            python_file_path = Path.cwd() / DIST / BIN / fich.name
+            python_file_path = Path.cwd() / DIST / LIBEXEC / fich.name
             write_access(python_file_path)
 
             # -- Añadir un shee bang al comienzo
             python_shebang_add(python_file_path)
+
+            # -- TODO: Copiar las dependencias de python
+            # -- bin/tabbypy3
+            # -- lib/python3.11/
+            # -- lib/libpython3.11.so
+            # -- lib/libpython3.11.so.1.0
+            # -- lib/libpython3.so
+            # -- libexec/python3.11
 
         # -- Es un script shell
         elif is_shell_script(fich):
@@ -396,19 +417,46 @@ def run_fase2(name: str):
     list_exec = [fich for fich in executable_path_dir.iterdir()
                  if fich.is_file()]
 
+    mark = ""
+    info = ""
+
     # -- Recorrer todos los ficheros
     for fich in list_exec:
 
         # -- Es un EJECUTABLE
         if is_elf(fich):
-            # -- Informar del fichero actual
-            print(f"🔵 {fich.name}")
 
             # -- Crear el wrapper
             wrapper = ToolWrapper(fich.name)
             wrapper.add_debug()
             wrapper.add_exec()
+
+            wrapper_path = wrapper.get_path()
+            mark = "⬇️ " if wrapper_path.exists() else "✅"
             wrapper.write_bin()
+
+            info = f"🔵 {mark}{fich.name}(ELF)"
+
+        elif is_python_script(fich):
+
+            # -- Crear el wrapper
+            wrapper = ToolWrapper(fich.name)
+            wrapper.add_debug()
+            wrapper.add_exec_python()
+
+            wrapper_path = wrapper.get_path()
+            mark = "⬇️ " if wrapper_path.exists() else "✅"
+            wrapper.write_bin()
+            info = f"🔵 {mark}{fich.name}(ELF)"
+
+        elif is_shell_script(fich):
+            info = f"❌ {fich.name}(SHELL)"
+
+        else:
+            info = f"❌ {fich.name}(UNKNOWN)"
+
+        # -- Informar del fichero actual
+        print(f"{info}")
 
 
 # -----------------------------------------
@@ -497,8 +545,8 @@ print(ansi.DEFAULT, end='', flush=True)
 
 # ---- Prcesar cada una de las herramientas
 # -- Yosys
-# procesar("yosys")
-# run_fase3_yosys()
+procesar("yosys")
+run_fase3_yosys()
 
 # -- Nextpnr-xilinx
 # procesar("nextpnr-xilinx")
@@ -508,54 +556,89 @@ print(ansi.DEFAULT, end='', flush=True)
 # -- Ficheros:
 # 🔵 fasm
 # 🔵 .fasm-wrapped
-name = "fasm"
-print()
-print(f"{ansi.GREEN}──────────────────────────────────")
-print(f"{name.capitalize()}")
-print(f"{ansi.GREEN}──────────────────────────────────")
-print(ansi.DEFAULT, end='', flush=True)
-print()
+# procesar("fasm")
 
-# -- Obtener la ruta del ejecutable
-executable_path = Path(str(shutil.which(name)))
+# name = "fasm"
+# print()
+# print(f"{ansi.GREEN}──────────────────────────────────")
+# print(f"{name.capitalize()}")
+# print(f"{ansi.GREEN}──────────────────────────────────")
+# print(ansi.DEFAULT, end='', flush=True)
+# print()
 
-# -- Obtener su directorio
-executable_path_dir = executable_path.parent
+# # -- Ejecutar fase 1: Copiar ejecutables y bibliotecas
+# run_fase1(name)
 
-# -- Leer todos los ficheros que hay en ese directorio
-list_exec = [fich for fich in executable_path_dir.iterdir()
-             if fich.is_file()]
+# print(ansi.YELLOW, end='')
+# print("─────────────────────────────────────────────────────")
+# print("Fase 2: Generacion de wrappers")
+# print(ansi.DEFAULT, end='')
+# print()
 
-# -- Recorrer todos los ficheros
-for fich in list_exec:
+# # -- Obtener la ruta del ejecutable
+# executable_path = Path(str(shutil.which(name)))
 
-    # -- Informar del fichero actual
-    print(f"🔵 {fich.name}")
+# # -- Obtener su directorio
+# executable_path_dir = executable_path.parent
 
-    # -- Es un Script Python
-    if is_python_script(fich):
-        print("(PYTHON)")
+# # -- Leer todos los ficheros que hay en ese directorio
+# list_exec = [fich for fich in executable_path_dir.iterdir()
+#              if fich.is_file()]
 
-        # -- Copiarlo a la distribucion, sin mas
-        # -- en el directorio dist/bin
-        copy_exec(fich.name, BIN)
+# # -- Recorrer todos los ficheros
+# for fich in list_exec:
 
-        # -- Dar permisos de escritura al fichero python
-        python_file_path = Path.cwd() / DIST / BIN / fich.name
-        write_access(python_file_path)
+#     if is_python_script(fich) or is_shell_script(fich):
+#         # -- Informar del fichero actual
+#         print(f"🔵 {fich.name}")
 
-        # -- Añadir un shee bang al comienzo
-        python_shebang_add(python_file_path)
+#         # -- Crear el wrapper
+#         wrapper = ToolWrapper(fich.name)
+#         wrapper.add_debug()
+#         wrapper.add_exec()
+#         wrapper.write_bin()
 
-    # -- Es un script shell
-    elif is_shell_script(fich):
-        print("(SHELL)")
 
-        # -- Copiarlo a la distribucion, sin mas
-        copy_exec(fich.name)
+# # -- Obtener la ruta del ejecutable
+# executable_path = Path(str(shutil.which(name)))
 
-    else:
-        print("What?")
+# # -- Obtener su directorio
+# executable_path_dir = executable_path.parent
+
+# # -- Leer todos los ficheros que hay en ese directorio
+# list_exec = [fich for fich in executable_path_dir.iterdir()
+#              if fich.is_file()]
+
+# # -- Recorrer todos los ficheros
+# for fich in list_exec:
+
+#     # -- Informar del fichero actual
+#     print(f"🔵 {fich.name}")
+
+#     # -- Es un Script Python
+#     if is_python_script(fich):
+#         print("(PYTHON)")
+
+#         # -- Copiarlo a la distribucion, sin mas
+#         # -- en el directorio dist/bin
+#         copy_exec(fich.name, BIN)
+
+#         # -- Dar permisos de escritura al fichero python
+#         python_file_path = Path.cwd() / DIST / BIN / fich.name
+#         write_access(python_file_path)
+
+#         # -- Añadir un shee bang al comienzo
+#         python_shebang_add(python_file_path)
+
+#     # -- Es un script shell
+#     elif is_shell_script(fich):
+#         print("(SHELL)")
+
+#         # -- Copiarlo a la distribucion, sin mas
+#         copy_exec(fich.name, BIN)
+
+#     else:
+#         print("What?")
 
 
 # ---- herramienta prjxray. Hay que procesar todos estos ejecutables
