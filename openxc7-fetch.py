@@ -256,7 +256,68 @@ def copy_python():
     else:
         shutil.copytree(origen, destino, dirs_exist_ok=True)
         mark = "✅"
+    write_access(destino)
     print(f"  ➡️  Dep: {mark}lib/{origen.name}/")
+
+
+# ----------------------------------------------------------------
+# -- Localizar el path nix cuyo nombre contiene la cadena 'text'
+# -- Devuelve el path completo
+# --
+# --  Ej.  nix_locate("python3.12-click-8.1.7") devuelve
+# --       7b7509xv9aqdrayjf1fv5ialf4gbi5wd-python3.12-click-8.1.7
+# ------------------------------------------------------------------
+def nix_locate(text: str) -> Path:
+
+    # -- Path de la tienda nix
+    nix_store = Path("/nix/store")
+
+    # -- Patron de busqueda
+    patron = f"*{text}*"
+
+    paths = [dir for dir in nix_store.glob(patron)
+             if dir.is_dir()]
+
+    # -- Devolver la primera coincidencia
+    return paths[0]
+
+
+# -----------------------------------------------------------------------
+# -- Copiar una biblioteca de python de nix a la distribucion
+# -- El directorio del paquete copia a dist/lib/python3.12/site-packages
+# --
+# -- Ej. paquete click
+# --    - Origen:
+# --    /nix/store/xxx-python3.12-click/lib/python3.12/site-packages/
+# --    - Desino:
+# --      dist/lib/python3.12/site-packages
+# -----------------------------------------------------------------------
+def copy_python_dep(name: str, version: str):
+
+    # -- Localizar la carpeta donde esta el paquete
+    dir = nix_locate(f"python3.12-{name}-{version}")
+
+    # -- Directorio origen
+    site_pack = dir / "lib" / "python3.12" / "site-packages"
+    origen = site_pack / name
+
+    # -- Directorio destino
+    dst_site_pack = Path.cwd() / DIST / LIB / "python3.12" / "site-packages"
+    destino = dst_site_pack / name
+
+    # -- Dar permisos de escritura al directorio "site-packges" 
+    # -- de la distribucion
+    write_access(dst_site_pack)
+
+    mark = ""
+
+    if destino.exists():
+        mark = "📌"
+    else:
+        shutil.copytree(origen, destino, dirs_exist_ok=True)
+        mark = "✅"
+
+    print(f"  ➡️  Dep: {mark}{name}-{version}")
 
 
 # ------------------------------------
@@ -419,14 +480,13 @@ def run_fase1(name: str):
             # -- Añadir un shee bang al comienzo
             python_shebang_add(python_file_path)
 
-            # -- TODO: Copiar las dependencias de python
+            # -- Copiar las dependencias de python
             copy_python()
-            # -- bin/tabbypy3
-            # -- lib/python3.11/
-            # -- lib/libpython3.11.so
-            # -- lib/libpython3.11.so.1.0
-            # -- lib/libpython3.so
-            # -- libexec/python3.11
+
+            # -- Copiar los paquetes especificos de python
+            # -- que necesita cada herramienta
+            # -- Yosys:
+            copy_python_dep("click", "8.1.7")
 
         # -- Es un script shell
         elif is_shell_script(fich):
