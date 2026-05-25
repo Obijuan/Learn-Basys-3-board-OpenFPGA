@@ -412,6 +412,31 @@ def python_shebang_add(file_path: Path):
 
 
 # -----------------------------------------
+# -- Añadir un shebang a un archivo bash
+# -----------------------------------------
+def bash_shebang_add(file_path: Path):
+
+    try:
+        # -- Leer archivo bash
+        contents = file_path.read_text(encoding="utf-8")
+
+        # -- Shebang a añadir
+        shebang = "#!/usr/bin/env bash\n"
+
+        # -- Añadir shebang!
+        contents = shebang + contents
+
+        # -- Escribir nuevos contenidos
+        file_path.write_text(contents, encoding="utf-8")
+        # print(f"✔️ Shebang añadido con éxito a: {file_path}")
+
+    except PermissionError:
+        print(f"❌ Error: Sin permisos '{file_path}'.")
+    except Exception as e:
+        print(f"❌ Ocurrió un error inesperado: {e}")
+
+
+# -----------------------------------------
 # -- Dar permisos de escritura al fichero
 # -----------------------------------------
 def write_access(file_path: Path):
@@ -485,7 +510,14 @@ def run_fase1(name: str):
             print("(SHELL)")
 
             # -- Copiarlo a la distribucion, sin mas
-            copy_exec(fich.name)
+            copy_exec(fich.name, BIN)
+
+            # -- Dar permisos de escritura al fichero bash
+            bash_file_path = Path.cwd() / DIST / BIN / fich.name
+            write_access(bash_file_path)
+
+            # -- Añadir un shee bang al comienzo
+            bash_shebang_add(bash_file_path)
 
         # -- Es otro tipo de archivo
         else:
@@ -541,7 +573,7 @@ def run_fase2(name: str):
             wrapper_path = wrapper.get_path()
             mark = "⬇️ " if wrapper_path.exists() else "✅"
             wrapper.write_bin()
-            info = f"🔵 {mark}{fich.name}(ELF)"
+            info = f"🔵 {mark}{fich.name}(PYTHON)"
 
         elif is_shell_script(fich):
             info = f"❌ {fich.name}(SHELL)"
@@ -652,7 +684,7 @@ procesar("yosys")
 run_fase3_yosys()
 
 # -- Nextpnr-xilinx
-# procesar("nextpnr-xilinx")
+procesar("nextpnr-xilinx")
 
 # --- Herramienta fasm
 # -- Herramienta PYTHON!
