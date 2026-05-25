@@ -292,10 +292,13 @@ def nix_locate(text: str) -> Path:
 # --    - Desino:
 # --      dist/lib/python3.12/site-packages
 # -----------------------------------------------------------------------
-def copy_python_dep(name: str, version: str):
+def copy_python_dep(pyname: str, version: str, name: str = ""):
+
+    if name == "":
+        name = pyname
 
     # -- Nombre del paquete (nombre + version)
-    pack_name = f"{name}" if version == "" else f"{name}-{version}"
+    pack_name = f"{pyname}" if version == "" else f"{pyname}-{version}"
 
     # -- Localizar la carpeta donde esta el paquete
     dir = nix_locate(f"python3.12-{pack_name}")
@@ -667,6 +670,42 @@ def run_fase3_fasm():
     copy_python_dep("textx", "4.0.1")
 
 
+def run_fase3_prjxray():
+    print(ansi.YELLOW, end='')
+    print("───────────────────────────────────")
+    print("Fase 3: Copiar datos de prjxray")
+    print()
+    print(ansi.DEFAULT, end='')
+
+    # ---- Prjxray
+    # {prjxray}/usr/share/python3/prjxray -->
+    # ---> dist/lib/python3.12/site-packages/prjxray
+    # -- Localizar la carpeta donde esta el paquete
+    dir = nix_locate("prjxray")
+    origen = dir / "usr" / "share" / "python3" / "prjxray"
+    destino = Path.cwd() / DIST / LIB / "python3.12" \
+        / "site-packages" / "prjxray"
+
+    mark = ""
+    if destino.exists():
+        mark = "📌"
+    else:
+        shutil.copytree(origen, destino, dirs_exist_ok=True)
+        mark = "✅"
+
+    print(f"➡️  Dep: {mark}prjxray")
+
+    # -- Paquetes python
+    copy_python_dep("pyyaml", "6.0.1", "yaml")
+    copy_python_dep("simplejson", "3.19.2")
+    copy_python_dep("intervaltree", "3.1.0")
+    copy_python_dep("sortedcontainers", "2.4.0")
+
+    # -- DEBUG
+    # dir = nix_locate("sortedcontainers")
+    # print(dir)
+
+
 def procesar(name: str):
     print()
     print(f"{ansi.GREEN}──────────────────────────────────")
@@ -683,164 +722,52 @@ def procesar(name: str):
     print()
 
 
+# -------------------------
+# -- Temporal function
+# -------------------------
+def stable():
+
+    print(ansi.CLS, end='', flush=True)
+    print(f"{ansi.BLUE}", end='', flush=True)
+    print("─────────────────────────")
+    print("OPENXC7-FETCH")
+    print("─────────────────────────")
+    print(ansi.DEFAULT, end='', flush=True)
+
+    # ---- Prcesar cada una de las herramientas
+    # -- Yosys
+    procesar("yosys")
+    run_fase3_yosys()
+
+    # -- Nextpnr-xilinx
+    procesar("nextpnr-xilinx")
+
+    # --- Herramienta fasm
+    # -- Herramienta PYTHON!
+    # -- Ficheros:
+    # 🔵 fasm
+    # 🔵 .fasm-wrapped
+    procesar("fasm")
+    run_fase3_fasm()
+
+
 # -----------------
 #    MAIN
 # -----------------
-print(ansi.CLS, end='', flush=True)
-print(f"{ansi.BLUE}", end='', flush=True)
-print("─────────────────────────")
-print("OPENXC7-FETCH")
-print("─────────────────────────")
-print(ansi.DEFAULT, end='', flush=True)
 
-# ---- Prcesar cada una de las herramientas
-# -- Yosys
-procesar("yosys")
-run_fase3_yosys()
-
-# -- Nextpnr-xilinx
-procesar("nextpnr-xilinx")
-
-# --- Herramienta fasm
-# -- Herramienta PYTHON!
-# -- Ficheros:
-# 🔵 fasm
-# 🔵 .fasm-wrapped
-procesar("fasm")
-run_fase3_fasm()
-
-# name = "fasm"
-# print()
-# print(f"{ansi.GREEN}──────────────────────────────────")
-# print(f"{name.capitalize()}")
-# print(f"{ansi.GREEN}──────────────────────────────────")
-# print(ansi.DEFAULT, end='', flush=True)
-# print()
-
-# # -- Ejecutar fase 1: Copiar ejecutables y bibliotecas
-# run_fase1(name)
-
-# print(ansi.YELLOW, end='')
-# print("─────────────────────────────────────────────────────")
-# print("Fase 2: Generacion de wrappers")
-# print(ansi.DEFAULT, end='')
-# print()
-
-# # -- Obtener la ruta del ejecutable
-# executable_path = Path(str(shutil.which(name)))
-
-# # -- Obtener su directorio
-# executable_path_dir = executable_path.parent
-
-# # -- Leer todos los ficheros que hay en ese directorio
-# list_exec = [fich for fich in executable_path_dir.iterdir()
-#              if fich.is_file()]
-
-# # -- Recorrer todos los ficheros
-# for fich in list_exec:
-
-#     if is_python_script(fich) or is_shell_script(fich):
-#         # -- Informar del fichero actual
-#         print(f"🔵 {fich.name}")
-
-#         # -- Crear el wrapper
-#         wrapper = ToolWrapper(fich.name)
-#         wrapper.add_debug()
-#         wrapper.add_exec()
-#         wrapper.write_bin()
-
-
-# # -- Obtener la ruta del ejecutable
-# executable_path = Path(str(shutil.which(name)))
-
-# # -- Obtener su directorio
-# executable_path_dir = executable_path.parent
-
-# # -- Leer todos los ficheros que hay en ese directorio
-# list_exec = [fich for fich in executable_path_dir.iterdir()
-#              if fich.is_file()]
-
-# # -- Recorrer todos los ficheros
-# for fich in list_exec:
-
-#     # -- Informar del fichero actual
-#     print(f"🔵 {fich.name}")
-
-#     # -- Es un Script Python
-#     if is_python_script(fich):
-#         print("(PYTHON)")
-
-#         # -- Copiarlo a la distribucion, sin mas
-#         # -- en el directorio dist/bin
-#         copy_exec(fich.name, BIN)
-
-#         # -- Dar permisos de escritura al fichero python
-#         python_file_path = Path.cwd() / DIST / BIN / fich.name
-#         write_access(python_file_path)
-
-#         # -- Añadir un shee bang al comienzo
-#         python_shebang_add(python_file_path)
-
-#     # -- Es un script shell
-#     elif is_shell_script(fich):
-#         print("(SHELL)")
-
-#         # -- Copiarlo a la distribucion, sin mas
-#         copy_exec(fich.name, BIN)
-
-#     else:
-#         print("What?")
-
+# -------- Herramienta prjxray
+# 🔵 bitread (elf)
+# 🔵 xc7patch (elf)
+# 🔵 xc7frames2bit (elf)
+# 🔵 bit2fasm (python)
+# 🔵 fasm2frames (python)
+procesar("fasm2frames")
+run_fase3_prjxray()
 
 # ---- herramienta prjxray. Hay que procesar todos estos ejecutables
 # 🔵 bitread (elf)
 # 🔵 xc7patch (elf)
 # 🔵 xc7frames2bit (elf)
 # 🔵 bit2fasm (python)
-# 🔵 fasm2frames (python)
-
-# ------ prjxray
-# name = "fasm2frames"
-# print()
-# print(f"{ansi.GREEN}──────────────────────────────────")
-# print(f"{name.capitalize()}")
-# print(f"{ansi.GREEN}──────────────────────────────────")
-# print(ansi.DEFAULT, end='', flush=True)
-# print()
-
-
-# print(ansi.YELLOW, end='')
-# print("───────────────────────────────────")
-# print("Fase 1: Ejecutables y bibliotecas")
-# print(ansi.DEFAULT, end='')
-# print("Ejecutables ---> dist/libexec")
-# print("Bibliotecas ---> dist/lib")
-# print()
-
-# # -- Obtener la ruta del ejecutable
-# executable_path = Path(str(shutil.which(name)))
-
-# # -- Obtener su directorio
-# executable_path_dir = executable_path.parent
-
-# # -- Leer todos los ficheros que hay en ese directorio
-# list_exec = [fich for fich in executable_path_dir.iterdir()
-#                 if fich.is_file()]
-
-# # -- Recorrer todos los ficheros
-# for fich in list_exec:
-
-#     # -- Informar del fichero actual
-#     print(f"🔵 {fich.name}")
-
-#     # -- Es un EJECUTABLE
-#     if is_elf(fich):
-
-#         print("(ELF)")
-
-#         # -- Copiarlo a la distribucion
-#         # -- Junto a todas librerias
-#         copy_with_deps(fich.name)
-
 
 print()
