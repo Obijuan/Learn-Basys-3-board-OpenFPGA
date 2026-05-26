@@ -2,6 +2,19 @@
 # -- Queremos usar el bash como shell
 SHELL := /usr/bin/env bash
 
+# -- INSTALACION DE Tools-openxc7
+# -- Colocar en esta variable el path donde estan instaladas
+# -- las tools-openxc7 en el sistema
+# -- CAMBIA ESTO PARA ADAPTARLO A TU SISTEMA!!!!
+TOOLS_OPENXC7 = /home/obijuan/Develop/Learn-Basys-3-board-OpenFPGA/dist
+              
+
+# -- Ruta donde esta la base de datos de prjxray
+PRJXRAY_DB_DIR = ${TOOLS_OPENXC7}/share/nextpnr/external/prjxray-db
+
+# -- Ruta de herramientas python de nextpnr
+NEXTPNR_XILINX_PYTHON_DIR = ${TOOLS_OPENXC7}/share/nextpnr/python
+
 # -- Variables de entorno
 # -- PRJXRAY_DB_DIR: Ruta de la base de datos de prjxray
 # -- Ej
