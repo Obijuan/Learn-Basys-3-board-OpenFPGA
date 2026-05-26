@@ -922,6 +922,29 @@ def generar_db():
     print()
 
 
+# ------------------------------------------------------
+# -- Configuraciones finales
+# -- * Copiar el fichero environment en la raiz de la
+# -- distribucion
+# ------------------------------------------------------
+def generar_env():
+    # -- Configuraciones finales
+    print()
+    print(f"{ansi.GREEN}──────────────────────────────────")
+    print("  CONFIGURACION FINAL")
+    print(f"{ansi.GREEN}──────────────────────────────────")
+    print(ansi.DEFAULT, end='', flush=True)
+    print()
+
+    # -- Incluir el fichero environment
+    # -- config/environment --> dist
+    src = Path.cwd() / "config/environment"
+    dst = Path.cwd() / "dist"
+    msg = copy_file(src, dst)
+    print(msg)
+    print()
+
+
 # -----------------
 #    MAIN
 # -----------------
@@ -941,3 +964,6 @@ generar_binarios()
 # --- Generacion de la base de datos
 # --- xc7a35tcpg236.bin
 generar_db()
+
+# -- Configuraciones finales
+generar_env()
