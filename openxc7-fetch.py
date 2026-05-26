@@ -613,24 +613,33 @@ def copy_tree(src: Path, dst: Path):
 
 
 # ------------------------------------------------
-# -- Copiar solo el fichero ejecutable indicado
-# -- sin sus dependencias
+# -- Copiar el fichero del directorio fuente
+# -- al destino, si es que no existe ya
+# --
+# -- Se devuelve una cadena con el nombre del fichero
+# -- y una marca que indica si se ha copiado✅ o
+# -- se mantiene la version anterior 📌
 # ------------------------------------------------
-def copy_file(src: Path, dst: Path):
+def copy_file(src: Path, dst: Path) -> str:
 
     # mark = ""
 
-    try:
-        shutil.copy(src, dst)
-        write_access(dst)
-        # mark = "✅"
+    # -- Comprobar si el fichero ya existe en el
+    # -- directorio destino
+    if (dst / src.name).exists():
 
-    except Exception:  # as e:
-        pass
-        # mark = "📌"
-        # print(f"❌ Error: {e}")
+        # -- Ya existe, indicarlo
+        mark = "📌"
+    else:
+        # -- No existe, copiarlo!
+        try:
+            shutil.copy2(src, dst)
+        except Exception as e:
+            print(f"❌ Error: {e}")
+        mark = "✅"
 
-    # print(f"{mark} {dst.relative_to(Path.cwd())}")
+    # -- Devolver cadena
+    return (f"➡️  Dep: {mark}{src.name}")
 
 
 def run_fase3_yosys():
@@ -694,23 +703,15 @@ def run_fase3_fasm():
     patron = "libantlr4-runtime.so.*"
     files = list(src.glob(patron))
     for file in files:
-        if (dst / file.name).exists():
-            mark = "📌"
-        else:
-            shutil.copy2(file, dst)
-            mark = "✅"
-        print(f"➡️  Dep: {mark}{file.name}")
+        msg = copy_file(file, dst)
+        print(msg)
 
     # -- libuuid.so.1
     dir = nix_locate("linux-minimal-2.42-lib")
     src = dir / "lib" / "libuuid.so.1"
     dst = Path.cwd() / "dist" / "lib"
-    if (dst / src.name).exists():
-        mark = "📌"
-    else:
-        shutil.copy2(src, dst)
-        mark = "✅"
-    print(f"➡️  Dep: {mark}{src.name}")
+    msg = copy_file(src, dst)
+    print(msg)
 
 
 def run_fase3_prjxray():
