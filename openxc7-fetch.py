@@ -821,6 +821,7 @@ def procesar(name: str):
 #    +-- bin  --> Wrappers para los binarios
 #    +-- libexec --> Ejecutables (elf, bash shell, python)
 #    +-- lib     --> Bibliotecas dinamicas
+#    +-- chipdb  --> binary database
 # ----------------------------------------------------------
 def distribution_init():
     # -- Directorio base de la distribucion
@@ -830,6 +831,7 @@ def distribution_init():
     (base_dir / "bin").mkdir(parents=True, exist_ok=True)
     (base_dir / "lib").mkdir(parents=True, exist_ok=True)
     (base_dir / "libexec").mkdir(parents=True, exist_ok=True)
+    (base_dir / "chipdb").mkdir(parents=True, exist_ok=True)
 
 
 # -----------------------------------------------------------
@@ -887,23 +889,32 @@ print(f"{ansi.GREEN}────────────────────
 print(ansi.DEFAULT, end='', flush=True)
 print()
 
-# -- Ejecutar comando 1
+# ------ Ejecutar comando 1
 bbaexport_cmd = Path.cwd() / "dist/share/nextpnr/python/bbaexport.py"
 part = "xc7a35tcpg236"
+fich_bba = Path.cwd() / f"dist/chipdb/{part}.bba"
+cmd = ["pypy3", str(bbaexport_cmd),
+       "--device", f"{part}-1", "--bba", str(fich_bba)]
+cmd_str = " ".join(cmd)
 
-bbaexport_raw = subprocess.run(["pypy3", str(bbaexport_cmd),
-                                "--device", f"{part}-1",
-                                "--bba", f"{part}.bba"],
-                               capture_output=True,
-                               text=True,
-                               check=True)
+print(f"🔵 Fichero: {fich_bba.name}")
+print(f"  ⚙️  {cmd_str}")
+# bbaexport_raw = subprocess.run(cmd,
+#                                capture_output=True,
+#                                text=True,
+#                                check=True)
+# print(bbaexport_raw.stdout)
 
-print(bbaexport_raw.stdout)
+# ------ Comando 2
+fich_bin = Path.cwd() / f"dist/chipdb/{part}.bin"
+cmd = ["bbasm", "-l", str(fich_bba), str(fich_bin)]
+md_str = " ".join(cmd)
 
-# pypy3 ${NEXTPNR_XILINX_PYTHON_DIR}/bbaexport.py \
-# 	  --device ${PART1} --bba ${PART}.bba
-# bbasm -l ${PART}.bba ${CHIPDB}
-# rm -f ${PART}.bba
-
-
+print(f"🔵 Fichero: {fich_bin.name}")
+print(f"  ⚙️  {cmd_str}")
+bbasm_raw = subprocess.run(cmd,
+                           capture_output=True,
+                           text=True,
+                           check=True)
+print(bbasm_raw.stdout)
 print()
