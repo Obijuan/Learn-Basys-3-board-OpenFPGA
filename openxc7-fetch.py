@@ -463,6 +463,20 @@ def write_access(file_path: Path):
         print("❌ Error: No tienes permiso")
 
 
+# ------------------------------------------------------
+# -- Cada herramienta tiene varios archivos ejecutables
+# -- que se copian el libexec
+# -- 
+# -- Si el ejecutable es un ELF, se analizan todas sus
+# -- librerias dinamicas de las que depende y se copian
+# -- en lib
+# --
+# -- Si el ejecutable es un python, se añade una shebang
+# -- y se copia en libexec
+# --
+# -- Si el ejecutable es un script shell, se añade shebang
+# -- y se copia en bin
+# --------------------------------------------------------
 def run_fase1(name: str):
     print(ansi.YELLOW, end='')
     print("───────────────────────────────────")
@@ -502,7 +516,6 @@ def run_fase1(name: str):
             print("(PYTHON)")
 
             # -- Copiarlo a la distribucion, sin mas
-            # -- en el directorio dist/bin
             copy_exec(fich.name)
 
             # -- Dar permisos de escritura al fichero python
@@ -533,6 +546,21 @@ def run_fase1(name: str):
         print()
 
 
+# -----------------------------------------------------------------
+# -- Procesado de herramient: Generacion de los wrappers
+# --
+# --  Cada fichero ejecutable (elf, python o shell) habita
+# -- en el directorio libexec, y tiene otro ejecutable en bin
+# -- con el mismo nombre, que es donde apunta el PATh y es por
+# -- tanto el que se ejecuta: su wrapper
+# --
+# -- Lo que hace es llamar a verdadero ejecutable, pero
+# -- estableciendo el directorio base donde se encuentran las
+# -- librerias y datos, para que NO use los del sistema
+# --
+# -- Este metodo sería equivalente a tener bibliotecas estaticas
+# -- pero usando librerias dinamicas
+# ----------------------------------------------------------------
 def run_fase2(name: str):
     print(ansi.YELLOW, end='')
     print("─────────────────────────────────────────────────────")
@@ -658,13 +686,10 @@ def run_fase3_yosys():
     destino = Path.cwd() / DIST / "share" / "yosys"
     copy_tree(origen, destino)
 
-    # -- TODO: Copiar aqui las dependencias de python...
     # -- Copiar las dependencias de python
     copy_python()
 
     # -- Copiar los paquetes especificos de python
-    # -- que necesita cada herramienta
-    # -- Yosys:
     copy_python_dep("click", "8.1.7")
 
 
@@ -766,6 +791,27 @@ def procesar(name: str):
     print()
 
 
+# ----------------------------------------------------------
+# -- Inicializar la distribucion
+# --
+# -- Crear la estructura de directorio inicial
+# --
+#    dist
+#    |
+#    +-- bin  --> Wrappers para los binarios
+#    +-- libexec --> Ejecutables (elf, bash shell, python)
+#    +-- lib     --> Bibliotecas dinamicas
+# ----------------------------------------------------------
+def distribution_init():
+    # -- Directorio base de la distribucion
+    base_dir = Path.cwd() / "dist"
+
+    # -- Crear la estructura
+    (base_dir / "bin").mkdir(parents=True, exist_ok=True)
+    (base_dir / "lib").mkdir(parents=True, exist_ok=True)
+    (base_dir / "libexec").mkdir(parents=True, exist_ok=True)
+
+
 # -----------------
 #    MAIN
 # -----------------
@@ -776,25 +822,15 @@ print("OPENXC7-FETCH")
 print("─────────────────────────")
 print(ansi.DEFAULT, end='', flush=True)
 
-# -- Primero creamos la estructura base de la distribucion
-# dist
-#  |
-#  +-- bin     --> Wrappers para los binarios
-#  +-- libexec --> Ejecutables (elf, bash shell, python)
-#  +-- lib     --> Bibliotecas dinamicas
-
-# -- Directorio base de la distribucion
-base_dir = Path.cwd() / "dist"
-
-# -- Crear la estructura
-(base_dir / "bin").mkdir(parents=True, exist_ok=True)
-(base_dir / "lib").mkdir(parents=True, exist_ok=True)
-(base_dir / "libexec").mkdir(parents=True, exist_ok=True)
-
+# -- Inicializar distribucion
+distribution_init()
 
 # ------ Prcesar cada una de las herramientas
 # ------ Copiar los binarios, bibliotecas y datos
 # ------ a la distribucion
+# ------ Cada herramienta tiene un procesado que es comun
+# ------ para todas (procesar), y uno específico (run_fase3())
+
 # -- Yosys
 procesar("yosys")
 run_fase3_yosys()
@@ -808,13 +844,7 @@ procesar("fasm")
 run_fase3_fasm()
 
 # -------- Herramienta prjxray
-# 🔵 bitread (elf)
-# 🔵 xc7patch (elf)
-# 🔵 xc7frames2bit (elf)
-# 🔵 bit2fasm (python)
-# 🔵 fasm2frames (python)
 procesar("fasm2frames")
 run_fase3_prjxray()
 
-# -- BUG
 print()
