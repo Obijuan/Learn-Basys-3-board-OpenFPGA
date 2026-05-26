@@ -15,6 +15,9 @@ PRJXRAY_DB_DIR = ${TOOLS_OPENXC7}/share/nextpnr/external/prjxray-db
 # -- Ruta de herramientas python de nextpnr
 NEXTPNR_XILINX_PYTHON_DIR = ${TOOLS_OPENXC7}/share/nextpnr/python
 
+# -- Directorio de la Base de datos binaria
+CHIPDB_DIR = ${TOOLS_OPENXC7}/chipdb
+
 # -- Variables de entorno
 # -- PRJXRAY_DB_DIR: Ruta de la base de datos de prjxray
 # -- Ej
@@ -49,13 +52,8 @@ PART1=${PART}"-1"
 #-- Fichero de restricciones
 XDC = ../../config/basys3.xdc
 
-#-- Directorio de la base de datos
-CHIPDB_DIR = ../../chipdb
-
 #-- Fichero con la base de datos
 CHIPDB = ${CHIPDB_DIR}/${PART}.bin
-
-
 
 #──────────────────────────────────────────────────
 #─── Objetivo principal: GENERAR BITSTREAM BINARIO
