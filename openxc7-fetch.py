@@ -832,6 +832,36 @@ def distribution_init():
     (base_dir / "libexec").mkdir(parents=True, exist_ok=True)
 
 
+# -----------------------------------------------------------
+# -- Obtener todos los bianrios, librerias y dependencias
+# -- necesarios de TODAS las herramientas para realizar
+# -- la sintesis
+# -----------------------------------------------------------
+def generar_binarios():
+    # ------ Prcesar cada una de las herramientas
+    # ------ Copiar los binarios, bibliotecas y datos
+    # ------ a la distribucion
+    # ------ Cada herramienta tiene un procesado que es comun
+    # ------ para todas (procesar), y uno específico (run_fase3())
+
+    # -- Yosys
+    procesar("yosys")
+    run_fase3_yosys()
+
+    # -- Nextpnr-xilinx
+    procesar("nextpnr-xilinx")
+    run_fase3_nextpnr_xilinx()
+
+    # --- fasm
+    procesar("fasm")
+    run_fase3_fasm()
+
+    # -------- Herramienta prjxray
+    procesar("fasm2frames")
+    run_fase3_prjxray()
+    print()
+
+
 # -----------------
 #    MAIN
 # -----------------
@@ -845,26 +875,34 @@ print(ansi.DEFAULT, end='', flush=True)
 # -- Inicializar distribucion
 distribution_init()
 
-# ------ Prcesar cada una de las herramientas
-# ------ Copiar los binarios, bibliotecas y datos
-# ------ a la distribucion
-# ------ Cada herramienta tiene un procesado que es comun
-# ------ para todas (procesar), y uno específico (run_fase3())
+# -- Obtener binarios, bibliotecas y datos necesarios
+# generar_binarios()
 
-# -- Yosys
-procesar("yosys")
-run_fase3_yosys()
+# --- Generacion de la base de datos
+# --- xc7a35tcpg236.bin
+print()
+print(f"{ansi.GREEN}──────────────────────────────────")
+print("  GENERACION DE LA BASE DE DATOS")
+print(f"{ansi.GREEN}──────────────────────────────────")
+print(ansi.DEFAULT, end='', flush=True)
+print()
 
-# -- Nextpnr-xilinx
-procesar("nextpnr-xilinx")
-run_fase3_nextpnr_xilinx()
+# -- Ejecutar comando 1
+bbaexport_cmd = Path.cwd() / "dist/share/nextpnr/python/bbaexport.py"
 
-# --- fasm
-procesar("fasm")
-run_fase3_fasm()
+bbaexport_raw = subprocess.run(["pypy3", str(bbaexport_cmd),
+                                "--device", "xc7a35tcpg236-1",
+                                "--bba", "xc7a35tcpg236.bba"],
+                               capture_output=True,
+                               text=True,
+                               check=True)
 
-# -------- Herramienta prjxray
-procesar("fasm2frames")
-run_fase3_prjxray()
+print(bbaexport_raw.stdout)
+
+# pypy3 ${NEXTPNR_XILINX_PYTHON_DIR}/bbaexport.py \
+# 	  --device ${PART1} --bba ${PART}.bba
+# bbasm -l ${PART}.bba ${CHIPDB}
+# rm -f ${PART}.bba
+
 
 print()
