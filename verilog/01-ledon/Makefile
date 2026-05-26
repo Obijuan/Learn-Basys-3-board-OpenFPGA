@@ -84,7 +84,7 @@ $(TOP).fasm: ${TOP}.json ${CHIPDB}
 	@echo -e ${BLUE}"➡️  Rutando..."${RESET}
 	@echo -e ${BLUE}"─────────────────────────────────────"${RESET}
 	nextpnr-xilinx --chipdb ${CHIPDB} \
-       --xdc ${XDC} --json ${TOP}.json --fasm ${TOP}.fasm -q
+       --xdc ${XDC} --json ${TOP}.json --fasm ${TOP}.fasm #-q
 	@echo
 
 

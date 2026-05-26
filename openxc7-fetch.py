@@ -266,6 +266,7 @@ def copy_python():
 # --
 # --  Ej.  nix_locate("python3.12-click-8.1.7") devuelve
 # --       7b7509xv9aqdrayjf1fv5ialf4gbi5wd-python3.12-click-8.1.7
+# -- Se descartan los paquetes que acaben en "-dev"
 # ------------------------------------------------------------------
 def nix_locate(text: str) -> Path:
 
@@ -276,7 +277,7 @@ def nix_locate(text: str) -> Path:
     patron = f"*{text}*"
 
     paths = [dir for dir in nix_store.glob(patron)
-             if dir.is_dir()]
+             if dir.is_dir() and not str(dir).endswith("-dev")]
 
     # -- Devolver la primera coincidencia
     return paths[0]
@@ -560,7 +561,7 @@ def run_fase2(name: str):
 
             # -- Crear el wrapper
             wrapper = ToolWrapper(fich.name)
-            wrapper.add_debug()
+            # wrapper.add_debug()
             wrapper.add_exec()
 
             wrapper_path = wrapper.get_path()
@@ -573,7 +574,7 @@ def run_fase2(name: str):
 
             # -- Crear el wrapper
             wrapper = ToolWrapper(fich.name)
-            wrapper.add_debug()
+            # wrapper.add_debug()
             wrapper.add_exec_python()
 
             wrapper_path = wrapper.get_path()
@@ -599,7 +600,7 @@ def copy_tree(src: Path, dst: Path):
     mark = ""
 
     try:
-        shutil.copytree(src, dst, dirs_exist_ok=True)
+        shutil.copytree(src, dst)  # dirs_exist_ok=True)
         write_access(dst)
         mark = "✅"
 
@@ -658,6 +659,23 @@ def run_fase3_yosys():
     copy_python_dep("click", "8.1.7")
 
 
+def run_fase3_nextpnr_xilinx():
+    print(ansi.YELLOW, end='')
+    print("───────────────────────────────────")
+    print("Fase 3: Copiar datos de nextpnr-xilinx")
+    print()
+    print(ansi.DEFAULT, end='')
+
+    # -- nextpnr-xilinx-0.8.2/share/nextpnr/external/prjxray-db/artix7/
+    # -- ---> dist/share/nextpnr/external/prjxray-db/artix7/
+    db_dir = "share/nextpnr/external/prjxray-db/artix7"
+    base_src_dir = Path(str(shutil.which("nextpnr-xilinx"))).parent.parent
+    origen = base_src_dir / db_dir
+
+    destino = Path.cwd() / DIST / db_dir
+    copy_tree(origen, destino)
+
+
 def run_fase3_fasm():
     print(ansi.YELLOW, end='')
     print("───────────────────────────────────")
@@ -668,6 +686,31 @@ def run_fase3_fasm():
     # --- Copiar fasm y sus dependencias
     copy_python_dep("fasm", "")
     copy_python_dep("textx", "4.0.1")
+
+    # -- libantlr4
+    dir = nix_locate("antl")
+    src = dir / "lib"
+    dst = Path.cwd() / "dist" / "lib"
+    patron = "libantlr4-runtime.so.*"
+    files = list(src.glob(patron))
+    for file in files:
+        if (dst / file.name).exists():
+            mark = "📌"
+        else:
+            shutil.copy2(file, dst)
+            mark = "✅"
+        print(f"➡️  Dep: {mark}{file.name}")
+
+    # -- libuuid.so.1
+    dir = nix_locate("linux-minimal-2.42-lib")
+    src = dir / "lib" / "libuuid.so.1"
+    dst = Path.cwd() / "dist" / "lib"
+    if (dst / src.name).exists():
+        mark = "📌"
+    else:
+        shutil.copy2(src, dst)
+        mark = "✅"
+    print(f"➡️  Dep: {mark}{src.name}")
 
 
 def run_fase3_prjxray():
@@ -702,7 +745,7 @@ def run_fase3_prjxray():
     copy_python_dep("sortedcontainers", "2.4.0")
 
     # -- DEBUG
-    # dir = nix_locate("sortedcontainers")
+    # dir = nix_locate("nextpnr-xilinx")
     # print(dir)
 
 
@@ -722,38 +765,46 @@ def procesar(name: str):
     print()
 
 
-# -------------------------
-# -- Temporal function
-# -------------------------
-def stable():
-
-    print(ansi.CLS, end='', flush=True)
-    print(f"{ansi.BLUE}", end='', flush=True)
-    print("─────────────────────────")
-    print("OPENXC7-FETCH")
-    print("─────────────────────────")
-    print(ansi.DEFAULT, end='', flush=True)
-
-    # ---- Prcesar cada una de las herramientas
-    # -- Yosys
-    procesar("yosys")
-    run_fase3_yosys()
-
-    # -- Nextpnr-xilinx
-    procesar("nextpnr-xilinx")
-
-    # --- Herramienta fasm
-    # -- Herramienta PYTHON!
-    # -- Ficheros:
-    # 🔵 fasm
-    # 🔵 .fasm-wrapped
-    procesar("fasm")
-    run_fase3_fasm()
-
-
 # -----------------
 #    MAIN
 # -----------------
+print(ansi.CLS, end='', flush=True)
+print(f"{ansi.BLUE}", end='', flush=True)
+print("─────────────────────────")
+print("OPENXC7-FETCH")
+print("─────────────────────────")
+print(ansi.DEFAULT, end='', flush=True)
+
+# -- Primero creamos la estructura base de la distribucion
+# dist
+#  |
+#  +-- bin     --> Wrappers para los binarios
+#  +-- libexec --> Ejecutables (elf, bash shell, python)
+#  +-- lib     --> Bibliotecas dinamicas
+
+# -- Directorio base de la distribucion
+base_dir = Path.cwd() / "dist"
+
+# -- Crear la estructura
+(base_dir / "bin").mkdir(parents=True, exist_ok=True)
+(base_dir / "lib").mkdir(parents=True, exist_ok=True)
+(base_dir / "libexec").mkdir(parents=True, exist_ok=True)
+
+
+# ------ Prcesar cada una de las herramientas
+# ------ Copiar los binarios, bibliotecas y datos
+# ------ a la distribucion
+# -- Yosys
+procesar("yosys")
+run_fase3_yosys()
+
+# -- Nextpnr-xilinx
+procesar("nextpnr-xilinx")
+run_fase3_nextpnr_xilinx()
+
+# --- fasm
+procesar("fasm")
+run_fase3_fasm()
 
 # -------- Herramienta prjxray
 # 🔵 bitread (elf)
@@ -764,10 +815,5 @@ def stable():
 procesar("fasm2frames")
 run_fase3_prjxray()
 
-# ---- herramienta prjxray. Hay que procesar todos estos ejecutables
-# 🔵 bitread (elf)
-# 🔵 xc7patch (elf)
-# 🔵 xc7frames2bit (elf)
-# 🔵 bit2fasm (python)
-
+# -- BUG
 print()
