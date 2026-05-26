@@ -1,4 +1,21 @@
+# -- Variable de makefile
+# -- Queremos usar el bash como shell
 SHELL := /usr/bin/env bash
+
+# -- Variables de entorno
+# -- PRJXRAY_DB_DIR: Ruta de la base de datos de prjxray
+# -- Ej
+# -- PRJXRAY_DB_DIR=/home/obijuan/Develop/Learn-Basys-3-board-OpenFPGA/
+# --     dist/share/nextpnr/external/prjxray-db
+# --
+# -- NEXTPNR_XILINX_PYTHON_DIR: Ruta a herramientas python de nextpnr
+# --
+# -- Ej.
+# -- NEXTPNR_XILINX_PYTHON_DIR = 
+# --      /home/obijuan/Develop/Learn-Basys-3-board-OpenFPGA/
+# --      dist/share/nextpnr/python
+
+
 
 #-- Colores
 GREEN='\033[0;32m'

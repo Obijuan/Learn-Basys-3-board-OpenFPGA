@@ -466,7 +466,7 @@ def write_access(file_path: Path):
 # ------------------------------------------------------
 # -- Cada herramienta tiene varios archivos ejecutables
 # -- que se copian el libexec
-# -- 
+# --
 # -- Si el ejecutable es un ELF, se analizan todas sus
 # -- librerias dinamicas de las que depende y se copian
 # -- en lib
@@ -482,8 +482,6 @@ def run_fase1(name: str):
     print("───────────────────────────────────")
     print("Fase 1: Ejecutables y bibliotecas")
     print(ansi.DEFAULT, end='')
-    print("Ejecutables ---> dist/libexec")
-    print("Bibliotecas ---> dist/lib")
     print()
 
     # -- Obtener la ruta del ejecutable
@@ -708,6 +706,28 @@ def run_fase3_nextpnr_xilinx():
 
     destino = Path.cwd() / DIST / db_dir
     copy_tree(origen, destino)
+
+    # -- nextpnr-xilinx-0.8.2/share/nextpnr/python --->
+    # -- dist/share/nextpnr/python
+    python_dir = "share/nextpnr/python"
+    src = base_src_dir / python_dir
+    dst = Path.cwd() / DIST / python_dir
+    copy_tree(src, dst)
+
+    # -- nextpnr-xilinx-0.8.2/share/nextpnr/constids.inc -->
+    # -- dist/share/nextpnr
+    src = base_src_dir / "share/nextpnr/constids.inc"
+    dst = Path.cwd() / "dist/share/nextpnr"
+    msg = copy_file(src, dst)
+    print(msg)
+
+    # -- nextpnr-xilinx-0.8.2/share/nextpnr/external/nextpnr-xilinx-meta/
+    # --  artix7 -->
+    # -- dist/share/nextpnr/external/nextpnr-xilinx-meta/artix7
+    meta_dir = "share/nextpnr/external/nextpnr-xilinx-meta/artix7"
+    src = base_src_dir / meta_dir
+    dst = Path.cwd() / DIST / meta_dir
+    copy_tree(src, dst)
 
 
 def run_fase3_fasm():
