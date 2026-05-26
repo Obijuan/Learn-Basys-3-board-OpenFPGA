@@ -5,3 +5,4 @@ chipdb/
 ledon.json
 *.pyc
 dist/
+tools-openxc7/

@@ -4,7 +4,9 @@ import subprocess
 import shutil
 import re
 import stat
+# import tarfile
 from pathlib import Path
+from datetime import datetime
 
 import ansi
 
@@ -945,6 +947,80 @@ def generar_env():
     print()
 
 
+# -----------------------------------
+# -- Devolver la fecha actual en
+# -- formato año-mes-dia
+# --
+# -- Ej. "20260526"
+# ------------------------------------
+def get_date() -> str:
+
+    now = datetime.now()
+
+    # -- Formato a utilizar
+    # %Y = Año con 4 dígitos (ej. 2026)
+    # %m = Mes con 2 dígitos (ej. 05)
+    # %d = Día del mes con 2 dígitos (ej. 26)
+    date = now.strftime("%Y%m%d")
+
+    return date
+
+
+# --------------------------------------------------
+# -- Generar el fichero con la version, que se
+# -- copia en la distribucion
+# -- Devuelve el texto con la version
+# --------------------------------------------------
+def generar_version() -> str:
+    print(f"{ansi.GREEN}──────────────────────────────────")
+    print("  GENERANDO LA VERSION")
+    print(f"{ansi.GREEN}──────────────────────────────────")
+    print(ansi.DEFAULT, end='', flush=True)
+    print()
+
+    date = get_date()
+    archivo_version = Path("dist/VERSION")
+    archivo_version.write_text(date, encoding="utf-8")
+    print(f"🏷️  Version: {date}")
+    print(f"🔵 Fichero: ✅{archivo_version.name}")
+    print()
+
+    # -- Devolver cadena con la version
+    return date
+
+
+# ----------------------------------------------------
+# -- Construir el fichero .tgz con la distribucion
+# --
+# -- tools-openxc7-linux-x64-version.tgz
+# ----------------------------------------------------
+def construir_tarball(version: str):
+
+    # -- Generar tarball
+    print(f"{ansi.GREEN}──────────────────────────────────")
+    print("  GENERANDO TARBALL")
+    print(f"{ansi.GREEN}──────────────────────────────────")
+    print(ansi.DEFAULT, end='', flush=True)
+    print()
+
+    # -- Nombre del paquete
+    tarball_name = Path(f"tools-openxc7-linux-x64-{date}.tgz")
+
+    # -- Comprimir llamando a tar en la shell
+    print(f"➡️  {tarball_name}")
+    print("⏳ Comprimiendo...")
+    comando = ["tar", "-czf", f"{tarball_name}",
+               "--transform=s|^dist|tools-openxc7|", "dist/"]
+    subprocess.run(comando,
+                   check=True,
+                   capture_output=True,
+                   text=True)
+
+    # -- Mostrar nombre del tarball al usuario
+    print(f"🔵 ✅{tarball_name}")
+    print()
+
+
 # -----------------
 #    MAIN
 # -----------------
@@ -959,11 +1035,17 @@ print(ansi.DEFAULT, end='', flush=True)
 distribution_init()
 
 # -- Obtener binarios, bibliotecas y datos necesarios
-generar_binarios()
+# generar_binarios()
 
 # --- Generacion de la base de datos
 # --- xc7a35tcpg236.bin
-generar_db()
+# generar_db()
 
 # -- Configuraciones finales
 generar_env()
+
+# -- Generar la version
+date = generar_version()
+
+# -- Generar el tarball
+construir_tarball(date)
