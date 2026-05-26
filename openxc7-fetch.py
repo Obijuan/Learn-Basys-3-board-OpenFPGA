@@ -889,10 +889,11 @@ print()
 
 # -- Ejecutar comando 1
 bbaexport_cmd = Path.cwd() / "dist/share/nextpnr/python/bbaexport.py"
+part = "xc7a35tcpg236"
 
 bbaexport_raw = subprocess.run(["pypy3", str(bbaexport_cmd),
-                                "--device", "xc7a35tcpg236-1",
-                                "--bba", "xc7a35tcpg236.bba"],
+                                "--device", f"{part}-1",
+                                "--bba", f"{part}.bba"],
                                capture_output=True,
                                text=True,
                                check=True)
