@@ -864,6 +864,64 @@ def generar_binarios():
     print()
 
 
+# --------------------------------------------
+# -- Generar la base de datos
+# -- Se genera el fichero:
+# --- dist/chipdb/xc7a35tcpg236.bin
+# --------------------------------------------
+def generar_db():
+    print()
+    print(f"{ansi.GREEN}──────────────────────────────────")
+    print("  GENERACION DE LA BASE DE DATOS")
+    print(f"{ansi.GREEN}──────────────────────────────────")
+    print(ansi.DEFAULT, end='', flush=True)
+    print()
+
+    # ------ Ejecutar comando 1
+    bbaexport_cmd = Path.cwd() / "dist/share/nextpnr/python/bbaexport.py"
+    part = "xc7a35tcpg236"
+    fich_bba = Path.cwd() / f"dist/chipdb/{part}.bba"
+    cmd = ["pypy3", str(bbaexport_cmd),
+           "--device", f"{part}-1", "--bba", str(fich_bba)]
+    cmd_str = " ".join(cmd)
+
+    if not fich_bba.exists():
+        print(f"➡️  Generando {fich_bba.name}")
+        print(f"  ⚙️  {cmd_str}")
+        bbaexport_raw = subprocess.run(cmd,
+                                       capture_output=True,
+                                       text=True,
+                                       check=True)
+        print(bbaexport_raw.stdout)
+        print(f"🔵 ✅{fich_bba.name}")
+    else:
+        print(f"🔵 📌{fich_bba.name}")
+
+    # ------ Comando 2
+    fich_bin = Path.cwd() / f"dist/chipdb/{part}.bin"
+    cmd = ["bbasm", "-l", str(fich_bba), str(fich_bin)]
+    cmd_str = " ".join(cmd)
+
+    if not fich_bin.exists():
+        print()
+        print(f"➡️  Generando {fich_bin.name}")
+        print(f"  ⚙️  {cmd_str}")
+        bbasm_raw = subprocess.run(cmd,
+                                   capture_output=True,
+                                   text=True,
+                                   check=True)
+        print(bbasm_raw.stdout)
+        print(f"🔵 ✅{fich_bin.name}")
+    else:
+        print(f"🔵 📌{fich_bin.name}")
+
+    # --- Eliminar fichero temporal .bba
+    subprocess.run(["rm", fich_bba])
+    # print(f"{ansi.GREEN}OK!")
+    # print(f"{ansi.DEFAULT}")
+    print()
+
+
 # -----------------
 #    MAIN
 # -----------------
@@ -878,58 +936,8 @@ print(ansi.DEFAULT, end='', flush=True)
 distribution_init()
 
 # -- Obtener binarios, bibliotecas y datos necesarios
-# generar_binarios()
+generar_binarios()
 
 # --- Generacion de la base de datos
 # --- xc7a35tcpg236.bin
-print()
-print(f"{ansi.GREEN}──────────────────────────────────")
-print("  GENERACION DE LA BASE DE DATOS")
-print(f"{ansi.GREEN}──────────────────────────────────")
-print(ansi.DEFAULT, end='', flush=True)
-print()
-
-# ------ Ejecutar comando 1
-bbaexport_cmd = Path.cwd() / "dist/share/nextpnr/python/bbaexport.py"
-part = "xc7a35tcpg236"
-fich_bba = Path.cwd() / f"dist/chipdb/{part}.bba"
-cmd = ["pypy3", str(bbaexport_cmd),
-       "--device", f"{part}-1", "--bba", str(fich_bba)]
-cmd_str = " ".join(cmd)
-
-if not fich_bba.exists():
-    print(f"➡️  Generando {fich_bba.name}")
-    print(f"  ⚙️  {cmd_str}")
-    bbaexport_raw = subprocess.run(cmd,
-                                   capture_output=True,
-                                   text=True,
-                                   check=True)
-    print(bbaexport_raw.stdout)
-    print(f"🔵 ✅{fich_bba.name}")
-else:
-    print(f"🔵 📌{fich_bba.name}")
-
-
-# ------ Comando 2
-fich_bin = Path.cwd() / f"dist/chipdb/{part}.bin"
-cmd = ["bbasm", "-l", str(fich_bba), str(fich_bin)]
-cmd_str = " ".join(cmd)
-
-if not fich_bin.exists():
-    print()
-    print(f"➡️  Generando {fich_bin.name}")
-    print(f"  ⚙️  {cmd_str}")
-    bbasm_raw = subprocess.run(cmd,
-                               capture_output=True,
-                               text=True,
-                               check=True)
-    print(bbasm_raw.stdout)
-    print(f"🔵 ✅{fich_bin.name}")
-else:
-    print(f"🔵 📌{fich_bin.name}")
-
-# --- Eliminar fichero temporal .bba
-subprocess.run(["rm", fich_bba])
-# print(f"{ansi.GREEN}OK!")
-# print(f"{ansi.DEFAULT}")
-print()
+generar_db()
