@@ -51,6 +51,10 @@ make
 make prog
 ```
 
+El LED15 de la Basys3 estará encendido
+
+![Placa Basys3 con el LED15 encendido](wiki/images/Basys3-ledon.png)
+
 # Creditos
 
 Las herramientas libres para las FPGAs de Xilinx las tenemos gracias al [Proyecto openXC7](https://github.com/openxc7). Están haciendo un trabajo increible. ¡Muchísimas gracias!
