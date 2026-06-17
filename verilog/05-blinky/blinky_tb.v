@@ -9,7 +9,7 @@
 module blinky_tb ();
 
   //-- Simulation time: 1us (10 * 100ns)
-  parameter DURATION = 30;
+  parameter DURATION = 10 * 3; //-- 3us
 
   //-- System clock
   reg clk;
@@ -23,12 +23,13 @@ module blinky_tb ();
       .leds(leds)
   );
 
-//-- Led Real que parpadea
-//-- Como la simulacion es muy corta, siempre se vera a 0
+//-- Real blinking led
+//-- It is always 0 because the simulation is too short
 wire led0 = leds[0];
 
-//-- Led virtual para ver el parpadeo
-//-- Se usa el bit 1 del contador interno
+//-- Virtual led, to see it blinking in simulation
+//-- The internal counter bit 1 is used instead of the
+//-- one used for the real blinky (bit 24)
 wire led_sim = UUT.counter[1];
 
 
