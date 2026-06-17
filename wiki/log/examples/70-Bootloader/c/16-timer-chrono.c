@@ -8,7 +8,7 @@
 #include "timer.h"
 
 
-void main() 
+void main()
 {
     uint16_t contador_bcd = 0;
     uint8_t decimas = 3;

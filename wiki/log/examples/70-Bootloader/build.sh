@@ -1,5 +1,19 @@
 #!/usr/bin/env bash
 
+# -- Directorio donde esta instala la toolchain
+TOOLS_OPENXC7=${HOME}/.local/openxc7
+
+# -- Directorio de la Base de datos binaria
+CHIPDB_DIR=${TOOLS_OPENXC7}/chipdb
+
+#-- Descripcion de la FPGA usada
+PART=xc7a35tcpg236
+PART1=${PART}"-1"
+
+#-- Fichero con la base de datos
+CHIPDB=${CHIPDB_DIR}/${PART}.bin
+
+
 #-- Colores
 GREEN='\033[0;32m'
 RED='\033[0;31m'
@@ -75,13 +89,13 @@ echo -e "$YELLOW─────────────────────�
 #-- SINTESIS
 #------------------------------
 echo -e $BLUE"➡️  Sintetizando..."$RESET
-apio raw -- yosys -m slang \
+yosys -m slang \
     -p "read -sv $LIB/memory.sv" \
     -p "read_slang --ignore-unknown-modules \
        -I../lib $DEPS $SRC/top.sv" \
     -p "synth_xilinx -arch xc7 -top top; \
         write_json $BUILD/top.json" \
-    -q
+    > report_yosys.txt
 
 if [ $? -ne 0 ]; then
     echo -e $RED"> Abortando...\n"$RESET
@@ -93,9 +107,9 @@ fi
 #-- RUTADO
 #--------------------------------------
 echo -e $BLUE"➡️  Rutando..."$RESET
-openxc7.nextpnr-xilinx --chipdb ../chipdb/$PART.bin \
+nextpnr-xilinx --chipdb ${CHIPDB} \
        --xdc $SRC/basys3.xdc --json $BUILD/top.json  \
-       --fasm $BUILD/top.fasm #-q
+       --fasm $BUILD/top.fasm 2> report_nextpnr.txt
 
 if [ $? -ne 0 ]; then
     echo -e $RED"> Abortando...\n"$RESET
@@ -108,7 +122,7 @@ fi
 
 #-- Generacion del bitstream
 echo -e $BLUE"➡️  Generando bitstream..."$RESET
-openxc7.fasm2frames --part $PART1 \
+fasm2frames --part $PART1 \
   --db-root $PRJXRAY_DB_DIR \
   $BUILD/top.fasm > $BUILD/top.frames 2> /dev/null
 
@@ -121,7 +135,7 @@ fi
 #-- Compresion del Bitstream
 #------------------------------
 echo -e $BLUE"➡️  Comprimiendo..."
-openxc7.xc7frames2bit --part_file $PRJXRAY_DB_DIR/$PART1/part.yaml \
+xc7frames2bit --part_file $PRJXRAY_DB_DIR/$PART1/part.yaml \
   --part_name $PART1 --frm_file $BUILD/top.frames \
   --output_file $BUILD/top.bit
 
