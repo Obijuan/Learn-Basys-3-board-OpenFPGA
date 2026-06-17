@@ -1,0 +1,30 @@
+[*]
+[*] GTKWave Analyzer v3.4.0 (w)1999-2022 BSI
+[*] Wed Jun 17 07:19:58 2026
+[*]
+[dumpfile] "/home/obijuan/Develop/Learn-Basys-3-board-OpenFPGA/verilog/03-led8/_build/default/led8_tb.vcd"
+[dumpfile_mtime] "Wed Jun 17 07:18:57 2026"
+[dumpfile_size] 651
+[savefile] "/home/obijuan/Develop/Learn-Basys-3-board-OpenFPGA/verilog/03-led8/led8_tb.gtkw"
+[timestart] 0
+[size] 1000 600
+[pos] -1 -1
+*-8.448691 276 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[sst_width] 297
+[signals_width] 118
+[sst_expanded] 1
+[sst_vpaned_height] 158
+@28
+ledon_tb.led0
+ledon_tb.led1
+ledon_tb.led2
+ledon_tb.led3
+ledon_tb.led4
+ledon_tb.led5
+ledon_tb.led6
+ledon_tb.led7
+@22
+[color] 3
+ledon_tb.leds[7:0]
+[pattern_trace] 1
+[pattern_trace] 0
