@@ -1,0 +1,126 @@
+`default_nettype none   
+`include "buttons.vh" 
+
+module main (
+    input wire clk, 
+    input wire [4:0] buttons, 
+    output wire [15:0] leds
+);
+
+
+//-- Valores iniciales de la partícula
+localparam POS_INI = 0;
+localparam VEL_INI = 9'd22;
+
+//────────────────────────────────────────────
+//── PULSADORES
+//────────────────────────────────────────────
+//-- Se usa el pulsador UP para comenzar la simulacion
+wire btn_up;
+wire btn_up_press;
+normal_button u_btn_up(
+    .clk(clk),
+    .btn_pin(buttons[BTN_UP]),  
+    .btn_state(btn_up),
+    .tic_press(btn_up_press),
+    .tic_release(),  //-- No usado
+);
+
+
+//──────────────────────────────────────────
+//── TEMPORIZADOR DE TIEMPO DE SIMULACION
+//──────────────────────────────────────────
+localparam TBIT = 22;
+
+reg [TBIT:0] sim_time = 0;
+always @(posedge clk) begin
+    if (step)
+      sim_time <= 0;
+    else begin
+        sim_time <= sim_time + 1;
+    end
+end
+
+//-- Señal de paso de simulacion 
+wire step;
+assign step = sim_time[TBIT]; 
+
+//-- Señal de comienzo
+wire start;
+assign start = btn_up;
+
+//-- Señal de contacto con el suelo
+wire is_ground;
+
+
+//─────────────────────────────────
+//── AUTOMATA
+//─────────────────────────────────
+//-- Estados
+reg E0 = 1;  //-- REPOSO
+reg E1 = 0;  //-- MOVIMIENTO
+
+//-- Señal de actualizacion al siguiente estado
+wire next;
+
+//-- Evolucion del estado
+always @(posedge clk) begin
+    if (next) begin
+        E0 <= E1;
+        E1 <= E0;
+    end
+end
+
+//-- Transiciones
+wire T01;
+assign T01 = E0 && start && step;
+
+wire T10;
+assign T10 = E1 && is_ground && step;
+
+//-- Señal de actualizacion de estado
+assign next = T01 || T10;
+
+
+//-- Detectar colision con suelo!
+assign is_ground = pos[8] || pos==8'h0;
+
+//────────────────────────────────────────────
+//──  Posicion de la particula
+//──  Usamos 8 bits
+//────────────────────────────────────────────
+reg [8:0] pos = POS_INI;
+always @(posedge clk) begin
+    if (T10) 
+        pos <= POS_INI;
+    
+    else if ((E1 && step) || T01)
+        pos <= pos + vel;
+end
+
+//────────────────────────────────────────────
+///──   Velocidad de la particula
+//────────────────────────────────────────────
+reg [8:0] vel = VEL_INI;
+always @(posedge clk) begin
+    if (T10)
+        vel <= VEL_INI;
+    else if ((E1 && step) || T01)
+        vel <= vel + accel;
+end 
+
+//-- Gravedad. Es una constante
+wire [8:0] accel = 9'h1FF; //(-1)
+
+//-- Convertir la posicion a coordenadas de pantalla
+//-- Decodificador de 4 a 16
+//-- Técnica de subpixel. Solo se usan los 4 bits de mayor peso
+//-- de la posicion
+wire [15:0] screen;
+assign screen = 1 << pos[7:4];
+
+//-- Mostrar la particula en los leds!
+assign leds[15:0] = screen;
+
+endmodule
+
