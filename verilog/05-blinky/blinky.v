@@ -1,6 +1,6 @@
 `default_nettype none
 
-//-- Led parpadeante
+//-- Blinking led
 module main (
     input clk,
     output wire [15:0] leds

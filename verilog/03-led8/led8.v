@@ -1,6 +1,6 @@
 `default_nettype none   
 
-//-- Mostrar un numero de 8 bits en los leds
+//-- Show an 8-bit number on the LEDs
 module main (
     output wire [7:0] leds
 );

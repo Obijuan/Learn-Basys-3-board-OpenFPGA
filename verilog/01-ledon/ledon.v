@@ -1,6 +1,6 @@
 `default_nettype none   
 
-//-- Ejemplo basico para encender un led
+//-- Turn on one LED
 module ledon (
 
     //-- LEDs de la BASYS3

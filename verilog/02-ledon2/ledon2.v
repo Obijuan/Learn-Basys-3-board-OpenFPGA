@@ -1,6 +1,6 @@
 `default_nettype none
 
-//-- Encender dos leds
+//-- Turn on 2 LEDs
 module ledon2 (
     output wire [1:0] leds
 );

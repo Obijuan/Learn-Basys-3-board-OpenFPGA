@@ -1,6 +1,6 @@
 `default_nettype none   
 
-//-- Mostrar un numero de 16 bits en los leds
+//-- Show a 16-bit number on the LEDs
 module main (
     output wire [15:0] leds
 );
