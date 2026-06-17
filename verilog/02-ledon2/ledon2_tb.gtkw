@@ -1,0 +1,22 @@
+[*]
+[*] GTKWave Analyzer v3.4.0 (w)1999-2022 BSI
+[*] Wed Jun 17 07:13:47 2026
+[*]
+[dumpfile] "/home/obijuan/Develop/Learn-Basys-3-board-OpenFPGA/verilog/02-ledon2/_build/default/ledon2_tb.vcd"
+[dumpfile_mtime] "Wed Jun 17 07:13:27 2026"
+[dumpfile_size] 435
+[savefile] "/home/obijuan/Develop/Learn-Basys-3-board-OpenFPGA/verilog/02-ledon2/ledon2_tb.gtkw"
+[timestart] 0
+[size] 1000 600
+[pos] -1 -1
+*-8.448691 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] ledon_tb.
+[sst_width] 297
+[signals_width] 102
+[sst_expanded] 1
+[sst_vpaned_height] 158
+@28
+ledon_tb.led0
+ledon_tb.led1
+[pattern_trace] 1
+[pattern_trace] 0
