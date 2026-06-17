@@ -1,0 +1,20 @@
+[*]
+[*] GTKWave Analyzer v3.4.0 (w)1999-2022 BSI
+[*] Wed Jun 17 07:26:43 2026
+[*]
+[dumpfile] "/home/obijuan/Develop/Learn-Basys-3-board-OpenFPGA/verilog/04-led16/_build/default/led16_tb.vcd"
+[dumpfile_mtime] "Wed Jun 17 07:26:31 2026"
+[dumpfile_size] 463
+[savefile] "/home/obijuan/Develop/Learn-Basys-3-board-OpenFPGA/verilog/04-led16/led16_tb.gtkw"
+[timestart] 0
+[size] 1000 600
+[pos] -1 -1
+*-8.489549 276 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[sst_width] 297
+[signals_width] 118
+[sst_expanded] 1
+[sst_vpaned_height] 158
+@22
+led8_tb.leds[15:0]
+[pattern_trace] 1
+[pattern_trace] 0
